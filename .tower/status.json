@@ -1,0 +1,24 @@
+{
+  "project": "sensor-forensics",
+  "title": "Sensor Forensics",
+  "updated": "2026-10-30T19:57:41-04:00",
+  "milestone": "M0",
+  "milestone_title": "Data audit",
+  "progress": {
+    "done": 0,
+    "total": 58
+  },
+  "last_checkpoint": null,
+  "headline": "Plan approved; setting up the repo and starting the M0 data audit.",
+  "needs_stewart": [
+    {
+      "id": "Q-004",
+      "text": "OK to keep the project in the Sensor forensics folder?",
+      "default": "Stay in Sensor forensics",
+      "needed_by": "Any time"
+    }
+  ],
+  "blocked": false,
+  "blocker": null,
+  "highlights": []
+}
