@@ -1,0 +1,94 @@
+{
+ "case": "gimbal",
+ "fields": {
+  "airspeed": {
+   "n": 100,
+   "errors": 2,
+   "error_rate": 0.02,
+   "unreadable_to_person": 0,
+   "disagreements": [
+    {
+     "frame": 4,
+     "verifier": "239",
+     "lab": "238"
+    },
+    {
+     "frame": 12,
+     "verifier": "239",
+     "lab": "238"
+    }
+   ]
+  },
+  "altitude": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "azimuth": {
+   "n": 100,
+   "errors": 3,
+   "error_rate": 0.03,
+   "unreadable_to_person": 0,
+   "disagreements": [
+    {
+     "frame": 152,
+     "verifier": "48L",
+     "lab": "47L"
+    },
+    {
+     "frame": 194,
+     "verifier": "45L",
+     "lab": "46L"
+    },
+    {
+     "frame": 812,
+     "verifier": "8L",
+     "lab": "7L"
+    }
+   ]
+  },
+  "clock": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "elevation": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "mach": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "polarity": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "zoom": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  }
+ },
+ "unreadable_to_person": 0,
+ "overall": {
+  "n": 800,
+  "errors": 5,
+  "error_rate": 0.0063
+ }
+}

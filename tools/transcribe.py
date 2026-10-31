@@ -27,13 +27,24 @@ def main() -> int:
     ap.add_argument("--device", default="auto")
     a = ap.parse_args()
 
+    # Decode the 16 kHz mono WAV here (stdlib), before the model loads, instead of letting
+    # faster-whisper use PyAV, whose newer releases reject an argument faster-whisper passes.
+    import wave
+
+    import numpy as np
+
+    with open(a.wav, "rb") as fh, wave.open(fh, "rb") as w:
+        if w.getframerate() != 16000 or w.getnchannels() != 1 or w.getsampwidth() != 2:
+            raise SystemExit("expected 16 kHz mono 16-bit WAV (ffmpeg -i <video> -vn -ac 1 -ar 16000 out.wav)")
+        audio = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).astype(np.float32) / 32768.0
+
     from faster_whisper import WhisperModel
 
     try:
         model = WhisperModel(a.model, device=a.device, compute_type="float16" if a.device != "cpu" else "int8")
     except Exception:  # no usable CUDA runtime: fall back to CPU
         model = WhisperModel(a.model, device="cpu", compute_type="int8")
-    segments, info = model.transcribe(str(a.wav), language="en", word_timestamps=True,
+    segments, info = model.transcribe(audio, language="en", word_timestamps=True,
                                       vad_filter=False, beam_size=5, temperature=0.0)
     segs = []
     for s in segments:
