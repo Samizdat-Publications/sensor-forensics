@@ -159,13 +159,13 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - Test: a Playwright round trip.
 - [x] 6. **[me]** Cross-check against the Sitrec CSVs, field by field. Every disagreement gets reviewed in the correction tool.
 - [x] 7. **[bg]** Full extraction runs for GIMBAL, GOFAST and FLIR1.
-- [~] 8. **[V] blind check:**
+- [x] 8. **[V] blind check:**
    - `tools/sample_frames.py --seed 2026 --n 100` picks 100 frames per video for GIMBAL and GOFAST (200 total).
    - Review sheets show raw crops only, never the extracted values.
    - The verifier types its own readings into a CSV.
    - `tools/score_blind.py` reports the error rate per field.
 
-**CP-02 acceptance:** per-frame tables for GOFAST and GIMBAL, with 100 randomly sampled frames per video hand-checked blind by the verifier and the error rate logged. Target: at most 1% per digit field.
+**CP-02: PASSED 10/31/2026 (round 2), see checkpoints/CP-02.md.** CP-02 acceptance: per-frame tables for GOFAST and GIMBAL, with 100 randomly sampled frames per video hand-checked blind by the verifier and the error rate logged. Target: at most 1% per digit field.
 
 **How I prove it:** the blind-check CSVs, the score report, and the Sitrec agreement report in `checkpoints/CP-02.md`.
 

@@ -1,36 +1,24 @@
 {
   "project": "sensor-forensics",
   "title": "Sensor Forensics",
-  "updated": "2026-10-31T03:04:10-04:00",
-  "milestone": "M1",
-  "milestone_title": "Symbology extraction",
+  "updated": "2026-10-31T19:34:42-04:00",
+  "milestone": "M2",
+  "milestone_title": "Geometry solver",
   "progress": {
-    "done": 27,
+    "done": 29,
     "total": 58
   },
   "last_checkpoint": {
-    "id": "CP-01",
-    "title": "Data audit",
-    "file": "checkpoints/CP-01.md"
+    "id": "CP-02",
+    "title": "Symbology extraction",
+    "file": "checkpoints/CP-02.md"
   },
-  "headline": "CP-01 passed. Paused at the 65% weekly quota cap with CP-02 open (second blind sample and an intermittent test to fix).",
+  "headline": "CP-02 passed on a fresh blind sample. M2 under way: GOFAST reproduction of Sitrec passes; GIMBAL reproductions, trajectory families, weather and testimony running.",
   "needs_stewart": [
     {
-      "id": "Q-004",
-      "text": "OK to keep the project in the Sensor forensics folder?",
-      "default": "Stay in Sensor forensics",
-      "needed_by": "Any time"
-    },
-    {
-      "id": "Q-005",
-      "text": "Freeze the PURSUE scope at the start of M5?",
-      "default": "Freeze at M5 start",
-      "needed_by": "CP-06"
-    },
-    {
-      "id": "Q-006",
-      "text": "OK to define the case file format here as schema v0.1?",
-      "default": "v0.1 in this repo",
+      "id": "Q-003",
+      "text": "Publish results on the hub later?",
+      "default": "Private",
       "needed_by": "CP-07"
     }
   ],
