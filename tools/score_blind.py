@@ -58,26 +58,49 @@ def score(case: str, tag: str = "blind") -> dict:
     ours = pd.read_csv(ROOT / "data" / "derived" / case / "symbology_final.csv", dtype=str)
     ours["frame"] = ours["frame"].astype(int)
     lookup = {(r.frame, r.field): r.value for r in ours.itertuples()}
-    res: dict = {"case": case, "fields": {}, "unreadable_to_person": 0}
+    # Interlaced transition frames flagged by extract/transitions.py carry two values.
+    trans: dict = {}
+    tpath = ROOT / "data" / "derived" / case / "transitions.csv"
+    if tpath.exists():
+        t = pd.read_csv(tpath, dtype=str)
+        for r in t[t["transition"] == "1"].itertuples():
+            trans[(int(r.frame), r.field)] = {r.value_before, r.value_after}
+    res: dict = {"case": case, "fields": {}, "unreadable_to_person": 0,
+                 "note": "raw = verifier cell (one value, or both values of an interlaced cell written a/b) "
+                         "vs the lab's single reading; with_flags also accepts either value on frames the lab "
+                         "flags as transitions"}
     for field, g in ver.groupby("field"):
-        n = err = unread = 0
+        n = err = err_flags = unread = 0
         bad = []
         for r in g.itertuples():
-            v = str(r.value).strip()
+            v = "" if pd.isna(r.value) else str(r.value).strip()
             if v == "?":
                 unread += 1
                 continue
-            a, b = norm(field, v), norm(field, lookup.get((int(r.frame), field)))
+            fr = int(r.frame)
+            ver_vals = {norm(field, x) for x in v.split("/")} if "/" in v else {norm(field, v)}
+            lab = norm(field, lookup.get((fr, field)))
+            lab_vals = {lab} | {norm(field, x) for x in trans.get((fr, field), set())}
             n += 1
-            if a != b:
+            raw_ok = lab in ver_vals
+            flag_ok = bool(ver_vals & lab_vals)
+            if not raw_ok:
                 err += 1
-                bad.append({"frame": int(r.frame), "verifier": a, "lab": b})
+            if not flag_ok:
+                err_flags += 1
+            if not raw_ok or not flag_ok:
+                bad.append({"frame": fr, "verifier": "/".join(sorted(ver_vals)), "lab": lab,
+                            "lab_flagged_alternatives": sorted(lab_vals - {lab}), "ok_with_flags": flag_ok})
         res["fields"][field] = {"n": n, "errors": err, "error_rate": round(err / n, 4) if n else None,
+                                "errors_with_flags": err_flags,
+                                "error_rate_with_flags": round(err_flags / n, 4) if n else None,
                                 "unreadable_to_person": unread, "disagreements": bad}
         res["unreadable_to_person"] += unread
     tot_n = sum(f["n"] for f in res["fields"].values())
     tot_e = sum(f["errors"] for f in res["fields"].values())
-    res["overall"] = {"n": tot_n, "errors": tot_e, "error_rate": round(tot_e / tot_n, 4) if tot_n else None}
+    tot_f = sum(f["errors_with_flags"] for f in res["fields"].values())
+    res["overall"] = {"n": tot_n, "errors": tot_e, "error_rate": round(tot_e / tot_n, 4) if tot_n else None,
+                      "errors_with_flags": tot_f, "error_rate_with_flags": round(tot_f / tot_n, 4) if tot_n else None}
     (d / "score.json").write_text(json.dumps(res, indent=1) + "\n", encoding="utf-8")
     return res
 
@@ -89,10 +112,11 @@ def main() -> int:
         tag = args.pop(0).split("=", 1)[1]
     for case in args:
         r = score(case, tag)
-        print(f"{case}: overall {r['overall']['errors']}/{r['overall']['n']} = {r['overall']['error_rate']}"
+        print(f"{case}: overall raw {r['overall']['errors']}/{r['overall']['n']} = {r['overall']['error_rate']}, "
+              f"with transition flags {r['overall']['errors_with_flags']}/{r['overall']['n']}"
               f" (unreadable to a person: {r['unreadable_to_person']})")
         for f, v in r["fields"].items():
-            print(f"  {f:10s} {v['errors']:3d}/{v['n']:3d}  {v['error_rate']}  {[x['frame'] for x in v['disagreements']][:12]}")
+            print(f"  {f:10s} raw {v['errors']:3d}/{v['n']:3d}  flags {v['errors_with_flags']:3d}  {[x['frame'] for x in v['disagreements']][:12]}")
     return 0
 
 

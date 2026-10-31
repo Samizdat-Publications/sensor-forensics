@@ -5,17 +5,23 @@
    "n": 100,
    "errors": 2,
    "error_rate": 0.02,
+   "errors_with_flags": 2,
+   "error_rate_with_flags": 0.02,
    "unreadable_to_person": 0,
    "disagreements": [
     {
      "frame": 4,
      "verifier": "239",
-     "lab": "238"
+     "lab": "238",
+     "lab_flagged_alternatives": [],
+     "ok_with_flags": false
     },
     {
      "frame": 12,
      "verifier": "239",
-     "lab": "238"
+     "lab": "238",
+     "lab_flagged_alternatives": [],
+     "ok_with_flags": false
     }
    ]
   },
@@ -23,6 +29,8 @@
    "n": 100,
    "errors": 0,
    "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": []
   },
@@ -30,22 +38,36 @@
    "n": 100,
    "errors": 3,
    "error_rate": 0.03,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": [
     {
      "frame": 152,
      "verifier": "48L",
-     "lab": "47L"
+     "lab": "47L",
+     "lab_flagged_alternatives": [
+      "48L"
+     ],
+     "ok_with_flags": true
     },
     {
      "frame": 194,
      "verifier": "45L",
-     "lab": "46L"
+     "lab": "46L",
+     "lab_flagged_alternatives": [
+      "45L"
+     ],
+     "ok_with_flags": true
     },
     {
      "frame": 812,
      "verifier": "8L",
-     "lab": "7L"
+     "lab": "7L",
+     "lab_flagged_alternatives": [
+      "8L"
+     ],
+     "ok_with_flags": true
     }
    ]
   },
@@ -53,6 +75,8 @@
    "n": 100,
    "errors": 0,
    "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": []
   },
@@ -60,6 +84,8 @@
    "n": 100,
    "errors": 0,
    "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": []
   },
@@ -67,6 +93,8 @@
    "n": 100,
    "errors": 0,
    "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": []
   },
@@ -74,6 +102,8 @@
    "n": 100,
    "errors": 0,
    "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": []
   },
@@ -81,14 +111,19 @@
    "n": 100,
    "errors": 0,
    "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
    "unreadable_to_person": 0,
    "disagreements": []
   }
  },
  "unreadable_to_person": 0,
+ "note": "raw = verifier cell (one value, or both values of an interlaced cell written a/b) vs the lab's single reading; with_flags also accepts either value on frames the lab flags as transitions",
  "overall": {
   "n": 800,
   "errors": 5,
-  "error_rate": 0.0063
+  "error_rate": 0.0063,
+  "errors_with_flags": 2,
+  "error_rate_with_flags": 0.0025
  }
 }

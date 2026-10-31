@@ -1,0 +1,94 @@
+{
+ "case": "gimbal",
+ "fields": {
+  "airspeed": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "altitude": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "azimuth": {
+   "n": 100,
+   "errors": 1,
+   "error_rate": 0.01,
+   "errors_with_flags": 1,
+   "error_rate_with_flags": 0.01,
+   "unreadable_to_person": 0,
+   "disagreements": [
+    {
+     "frame": 377,
+     "verifier": "35L",
+     "lab": "36L",
+     "lab_flagged_alternatives": [],
+     "ok_with_flags": false
+    }
+   ]
+  },
+  "clock": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "elevation": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "mach": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "polarity": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "zoom": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  }
+ },
+ "unreadable_to_person": 0,
+ "note": "raw = verifier cell (one value, or both values of an interlaced cell written a/b) vs the lab's single reading; with_flags also accepts either value on frames the lab flags as transitions",
+ "overall": {
+  "n": 800,
+  "errors": 1,
+  "error_rate": 0.0013,
+  "errors_with_flags": 1,
+  "error_rate_with_flags": 0.0013
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "case": "gofast",
+ "fields": {
+  "airspeed": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "altitude": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "azimuth": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "clock": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "closure": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "elevation": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "mach": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "polarity": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "range": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  },
+  "zoom": {
+   "n": 100,
+   "errors": 0,
+   "error_rate": 0.0,
+   "errors_with_flags": 0,
+   "error_rate_with_flags": 0.0,
+   "unreadable_to_person": 0,
+   "disagreements": []
+  }
+ },
+ "unreadable_to_person": 0,
+ "note": "raw = verifier cell (one value, or both values of an interlaced cell written a/b) vs the lab's single reading; with_flags also accepts either value on frames the lab flags as transitions",
+ "overall": {
+  "n": 1000,
+  "errors": 0,
+  "error_rate": 0.0,
+  "errors_with_flags": 0,
+  "error_rate_with_flags": 0.0
+ }
+}
