@@ -1,0 +1,17 @@
+# Field boxes for GOFAST (NAVAIR 2020 copy, 640x480). x0, y0, x1, y1 in pixels.
+# First pass from visual inspection of frames 0, 400, 1030 (M0 audit); refined in M1.
+video: gofast
+size: [640, 480]
+fields:
+  azimuth:   {box: [296, 42, 356, 60],  kind: text, format: "NN° L|R"}
+  elevation: {box: [128, 218, 182, 236], kind: text, format: "-NN°"}
+  range:     {box: [404, 148, 450, 166], kind: text, format: "N.N RNG (nmi)"}
+  closure:   {box: [436, 190, 476, 208], kind: text, format: "NNN Vc (kt)"}
+  altitude:  {box: [420, 420, 482, 440], kind: text, format: "NNNNN B (ft)"}
+  airspeed:  {box: [168, 410, 204, 426], kind: text, format: "NNN (kt, indicated)"}
+  mach:      {box: [158, 425, 218, 439], kind: text, format: "M N.NN"}
+  clock:     {box: [296, 436, 350, 454], kind: text, format: "MMSS + letter"}
+  zoom:      {box: [156, 44, 214, 62],  kind: text, format: "Z N.N"}
+  sensor:    {box: [300, 26, 334, 42],  kind: text, format: "IR|TV"}
+  polarity:  {box: [160, 440, 200, 455], kind: text, format: "BLK|WHT"}
+  horizon:   {box: [226, 146, 412, 230], kind: graphic, format: "artificial horizon bars (bank)"}

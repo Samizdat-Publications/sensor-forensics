@@ -1,0 +1,150 @@
+{
+  "note": "Video files are gitignored; this manifest (hashes, sources, ffprobe) is committed.",
+  "videos": {
+    "gofast_navy2020": {
+      "video": "GOFAST",
+      "file": "GOFAST_navy2020.wmv",
+      "official_copy": true,
+      "provenance": "Wayback copy of the NAVAIR file",
+      "source_url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/3%20-%20GOFAST.wmv",
+      "retrieved": "2026-10-30T20:39:29-04:00",
+      "sha256": "c858b22d8370a26d58ec77ba35e95b9ba6f56fa7632258ca8f2bbf2621bcf5a8",
+      "bytes": 13509612,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "wmv1",
+            "width": 640,
+            "height": 480,
+            "r_frame_rate": "30000/1001",
+            "avg_frame_rate": "30000/1001",
+            "duration": "34.458000",
+            "nb_read_frames": "1031"
+          }
+        ],
+        "format": {
+          "format_name": "asf",
+          "duration": "34.515000",
+          "size": "13509612"
+        }
+      },
+      "attempts": [
+        {
+          "when": "2026-10-30T20:38:15-04:00",
+          "source": "NAVAIR FOIA 2020 release",
+          "url": "https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/3%20-%20GOFAST.wmv",
+          "result": "curl exit 22: curl: (22) The requested URL returned error: 403"
+        },
+        {
+          "when": "2026-10-30T20:39:29-04:00",
+          "source": "Wayback copy of the NAVAIR file",
+          "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/3%20-%20GOFAST.wmv",
+          "result": "ok"
+        }
+      ]
+    },
+    "flir1_navy2020": {
+      "video": "FLIR1",
+      "file": "FLIR1_navy2020.mp4",
+      "official_copy": true,
+      "provenance": "Wayback copy of the NAVAIR file",
+      "source_url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/1%20-%20FLIR.mp4",
+      "retrieved": "2026-10-30T20:41:26-04:00",
+      "sha256": "eff0ffa55bcafee5dd7b0c4668c5bb21a9617feae8f0d01912a8c73a859dc170",
+      "bytes": 5619302,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 352,
+            "height": 264,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "duration": "76.266667",
+            "nb_read_frames": "2288"
+          }
+        ],
+        "format": {
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "duration": "76.300771",
+          "size": "5619302"
+        }
+      },
+      "attempts": [
+        {
+          "when": "2026-10-30T20:39:30-04:00",
+          "source": "NAVAIR FOIA 2020 release",
+          "url": "https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/1%20-%20FLIR.mp4",
+          "result": "curl exit 22: curl: (22) The requested URL returned error: 403"
+        },
+        {
+          "when": "2026-10-30T20:41:26-04:00",
+          "source": "Wayback copy of the NAVAIR file",
+          "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/1%20-%20FLIR.mp4",
+          "result": "ok"
+        }
+      ]
+    },
+    "flir1_2007_f4": {
+      "video": "FLIR1",
+      "file": "FLIR1_2007_f4.mpg",
+      "official_copy": false,
+      "provenance": "2007 vision-unlimited.de copy via Wayback",
+      "source_url": "https://web.archive.org/web/20070209104330id_/http://www.vision-unlimited.de/extern/f4.mpg",
+      "retrieved": "2026-10-30T20:43:36-04:00",
+      "sha256": "caf4167ccbca1059c52701f3c96f2afc933f7a0957b11b494521c02fb5411108",
+      "bytes": 13127696,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mpeg1video",
+            "width": 352,
+            "height": 240,
+            "r_frame_rate": "60000/1001",
+            "avg_frame_rate": "30000/1001",
+            "duration": "76.292956",
+            "nb_read_frames": "2289",
+            "side_data_list": [
+              {}
+            ]
+          }
+        ],
+        "format": {
+          "format_name": "mpeg",
+          "duration": "76.538778",
+          "size": "13127696"
+        }
+      },
+      "attempts": [
+        {
+          "when": "2026-10-30T20:43:36-04:00",
+          "source": "2007 vision-unlimited.de copy via Wayback",
+          "url": "https://web.archive.org/web/20070209104330id_/http://www.vision-unlimited.de/extern/f4.mpg",
+          "result": "ok"
+        }
+      ]
+    }
+  },
+  "failed": {
+    "gimbal_navy2020": [
+      {
+        "when": "2026-10-30T20:35:31-04:00",
+        "source": "NAVAIR FOIA 2020 release",
+        "url": "https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+        "result": "curl exit 22: curl: (22) The requested URL returned error: 403"
+      },
+      {
+        "when": "2026-10-30T20:38:14-04:00",
+        "source": "Wayback copy of the NAVAIR file",
+        "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+        "result": "curl exit 56: curl: (56) Recv failure: Connection was reset"
+      }
+    ]
+  }
+}

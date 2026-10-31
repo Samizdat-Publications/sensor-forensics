@@ -1,0 +1,11 @@
+{
+  "case": "flir1_navy",
+  "source_video": "data\\videos\\FLIR1_navy2020.mp4",
+  "source_sha256": "eff0ffa55bcafee5dd7b0c4668c5bb21a9617feae8f0d01912a8c73a859dc170",
+  "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "fps_nominal": 30.0,
+  "n_frames": 2288,
+  "n_pts": 2288,
+  "n_exact_duplicates": 3,
+  "frame_set_sha256": "f60831123ef8bf4a32726d64454287081898c33e086ae7ba8abd2648143fd681"
+}

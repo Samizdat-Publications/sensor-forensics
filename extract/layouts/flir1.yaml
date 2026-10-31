@@ -1,0 +1,17 @@
+# Field boxes for FLIR1 (NAVAIR 2020 copy, 352x264). x0, y0, x1, y1 in pixels.
+# First pass from visual inspection of frame 300 (M0 audit); refined in M1.
+# Glyphs are about 5 to 6 px tall in this copy.
+video: flir1
+size: [352, 264]
+fields:
+  azimuth:   {box: [164, 24, 200, 35],  kind: text, format: "N° L|R"}
+  elevation: {box: [76, 119, 102, 133], kind: text, format: "N° (signed)"}
+  zoom:      {box: [62, 74, 88, 86],    kind: text, format: "N.N (zoom ladder)"}
+  altitude:  {box: [229, 230, 277, 245], kind: text, format: "NNNNN B (ft)"}
+  airspeed:  {box: [88, 225, 112, 237], kind: text, format: "NNN (kt, indicated)"}
+  mach:      {box: [80, 234, 114, 246], kind: text, format: "M N.NN"}
+  clock:     {box: [158, 241, 186, 253], kind: text, format: "MMSS"}
+  sensor:    {box: [163, 14, 184, 26],  kind: text, format: "IR|TV"}
+  fov:       {box: [80, 14, 112, 26],   kind: text, format: "NAR|MFOV|WFOV"}
+  polarity:  {box: [84, 242, 110, 253], kind: text, format: "WHT|BLK"}
+  horizon:   {box: [122, 92, 228, 112], kind: graphic, format: "artificial horizon bars (bank)"}

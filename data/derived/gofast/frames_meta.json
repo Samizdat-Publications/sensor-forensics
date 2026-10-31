@@ -1,0 +1,11 @@
+{
+  "case": "gofast",
+  "source_video": "data\\videos\\GOFAST_navy2020.wmv",
+  "source_sha256": "c858b22d8370a26d58ec77ba35e95b9ba6f56fa7632258ca8f2bbf2621bcf5a8",
+  "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "fps_nominal": 29.97002997002997,
+  "n_frames": 1031,
+  "n_pts": 1031,
+  "n_exact_duplicates": 0,
+  "frame_set_sha256": "7221a3743624f1e3d641199786a36d1d57530055313fc5111ab3876d22ad8824"
+}

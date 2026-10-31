@@ -1,0 +1,11 @@
+{
+  "case": "flir1_f4",
+  "source_video": "data\\videos\\FLIR1_2007_f4.mpg",
+  "source_sha256": "caf4167ccbca1059c52701f3c96f2afc933f7a0957b11b494521c02fb5411108",
+  "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "fps_nominal": 59.94005994005994,
+  "n_frames": 2289,
+  "n_pts": 2289,
+  "n_exact_duplicates": 2,
+  "frame_set_sha256": "e236db578d9c1157ace23d03330eb12f8a3a3a802b593aed0066d72db3ffe80c"
+}
