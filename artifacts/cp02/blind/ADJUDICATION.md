@@ -47,3 +47,9 @@ So: 1 clear lab error, 2 verifier misreads, 5 frames where the display changed b
 1. Transition frames are real and frequent enough to matter: at each change of a readout, one frame can carry both values. The reader now has to flag them (method `transition`, both values recorded) rather than pick one. Logged as an M1 fix item.
 2. The solver already treats each readout as an interval valid between 6-frame display updates (see `docs/prior-work/FINDINGS-LOG.md`), so a one-frame ambiguity at a change does not move the geometry.
 3. No correction was applied to the sampled frames only (that would bias the estimate); fixes go into the reader and apply to every frame.
+
+## Fix applied (10/31/2026)
+
+`extract/transitions.py` compares each field crop's even and odd rows with the frames before and after; a frame whose rows split between its two neighbors is flagged as a transition, with both values (`data/derived/<case>/transitions.csv`). Result: all 5 adjudicated transition frames are flagged (split ratios 1.49 to 4.09 against a threshold of 1.3), and so is f194 (the one clear reader error), whose interval then contains the true value. The flag is conservative: 58 of 256 change-adjacent frames in GIMBAL and 75 of 259 in GOFAST are marked, and each marked frame is treated by the solver as "either value". Tests: `tests/test_transitions.py`.
+
+With transition frames read as "either value", none of the 8 blind-check disagreements is a wrong value: 2 were verifier misreads and the other 6 fall on flagged frames.
