@@ -1,0 +1,113 @@
+clip_id,release,dvids_url,notes
+FBI-UAP-PR007,5,https://www.dvidshub.net/video/1017801,sensor=Infrared; behavior=Tracked; number=Multiple
+DOW-UAP-PR19,1,https://www.dvidshub.net/video/1006056,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR21,1,https://www.dvidshub.net/video/1006059,sensor=Infrared; behavior=Tracked; number=Multiple
+DOW-UAP-PR22,1,https://www.dvidshub.net/video/1006060,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR23,1,https://www.dvidshub.net/video/1006062,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR024,4,https://www.dvidshub.net/video/1014100,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR26,1,https://www.dvidshub.net/video/1006063,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR27,1,https://www.dvidshub.net/video/1006067,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR28,1,https://www.dvidshub.net/video/1006073,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR29,1,https://www.dvidshub.net/video/1006074,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR030,4,https://www.dvidshub.net/video/1014102,sensor=Infrared; behavior=Transit; number=Multiple
+DOW-UAP-PR31,1,https://www.dvidshub.net/video/1006076,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR32,1,https://www.dvidshub.net/video/1006078,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR33,1,https://www.dvidshub.net/video/1006079,sensor=Infrared; behavior=Tracked; number=Multiple
+DOW-UAP-PR34,1,https://www.dvidshub.net/video/1006080,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR35,1,https://www.dvidshub.net/video/1006082,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR36,1,https://www.dvidshub.net/video/1006083,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR37,1,https://www.dvidshub.net/video/1006087,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR38,1,https://www.dvidshub.net/video/1006088,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR39,1,https://www.dvidshub.net/video/1006089,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR40,1,https://www.dvidshub.net/video/1006093,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR41,1,https://www.dvidshub.net/video/1006094,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR42,1,https://www.dvidshub.net/video/1006097,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR43,1,https://www.dvidshub.net/video/1006159,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR44,1,https://www.dvidshub.net/video/1006104,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR45,1,https://www.dvidshub.net/video/1006105,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR46,1,https://www.dvidshub.net/video/1006106,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR47,1,https://www.dvidshub.net/video/1006107,sensor=Infrared; behavior=Tracked; number=Multiple
+DOW-UAP-PR48,1,https://www.dvidshub.net/video/1006110,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR49,1,https://www.dvidshub.net/video/1006111,sensor=Electro-optical; behavior=Tracked; number=Multiple
+DOW-UAP-PR050,2,https://www.dvidshub.net/video/1007706,sensor=Infrared and electro-optical; behavior=Transit; number=Multiple
+DOW-UAP-PR051,2,https://www.dvidshub.net/video/1007707,sensor=Infrared and electro-optical; behavior=Both; number=One
+DOW-UAP-PR052,2,https://www.dvidshub.net/video/1007708,sensor=Infrared and electro-optical; behavior=Transit; number=Multiple
+DOW-UAP-PR053,2,https://www.dvidshub.net/video/1007709,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR054,2,https://www.dvidshub.net/video/1007711,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR055,2,https://www.dvidshub.net/video/1007713,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR056,2,https://www.dvidshub.net/video/1007718,sensor=Infrared and electro-optical; behavior=Tracked; number=One
+DOW-UAP-PR057a,2,https://www.dvidshub.net/video/1007720,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR058,2,https://www.dvidshub.net/video/1007723,sensor=Infrared and electro-optical; behavior=Tracked; number=One
+DOW-UAP-PR059,2,https://www.dvidshub.net/video/1007727,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR060,2,https://www.dvidshub.net/video/1007734,sensor=Infrared and electro-optical; behavior=Transit; number=One
+DOW-UAP-PR061,2,https://www.dvidshub.net/video/1007735,sensor=Infrared and electro-optical; behavior=Transit; number=One
+DOW-UAP-PR062,2,https://www.dvidshub.net/video/1007739,sensor=Infrared and electro-optical; behavior=Transit; number=One
+DOW-UAP-PR063,2,https://www.dvidshub.net/video/1007740,sensor=Infrared and electro-optical; behavior=Transit; number=One
+DOW-UAP-PR064,2,https://www.dvidshub.net/video/1007741,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR065,2,https://www.dvidshub.net/video/1007777,sensor=Electro-optical; behavior=Transit; number=One
+DOW-UAP-PR066,2,https://www.dvidshub.net/video/1007778,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR067,2,https://www.dvidshub.net/video/1007779,sensor=Infrared; behavior=Transit; number=Multiple
+DOW-UAP-PR068,2,https://www.dvidshub.net/video/1007780,sensor=Infrared; behavior=Tracked; number=Multiple
+DOW-UAP-PR069,2,https://www.dvidshub.net/video/1007781,sensor=Infrared and electro-optical; behavior=Both; number=One
+DOW-UAP-PR070,2,https://www.dvidshub.net/video/1007783,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR071,2,https://www.dvidshub.net/video/1007784,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR072,2,https://www.dvidshub.net/video/1007788,sensor=Electro-optical; behavior=Tracked; number=One
+DOW-UAP-PR073,2,https://www.dvidshub.net/video/1007790,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR074,2,https://www.dvidshub.net/video/1007791,sensor=Infrared and electro-optical; behavior=Transit; number=Multiple
+DOW-UAP-PR075,2,https://www.dvidshub.net/video/1007795,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR076,2,https://www.dvidshub.net/video/1007804,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR077,2,https://www.dvidshub.net/video/1007809,"sensor=ATFLIR, channel unstated; behavior=Both; number=Multiple"
+DOW-UAP-PR078,2,https://www.dvidshub.net/video/1007812,"sensor=ATFLIR, channel unstated; behavior=Both; number=Multiple"
+DOW-UAP-PR079,2,https://www.dvidshub.net/video/1007816,sensor=Infrared and electro-optical; behavior=Tracked; number=Multiple
+DOW-UAP-PR080,2,https://www.dvidshub.net/video/1007803,sensor=Infrared; behavior=Transit; number=Multiple
+DOW-UAP-PR081,2,https://www.dvidshub.net/video/1007805,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR082,2,https://www.dvidshub.net/video/1007807,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR083,2,https://www.dvidshub.net/video/1007808,sensor=Infrared and electro-optical; behavior=Both; number=Multiple
+DOW-UAP-PR084,2,https://www.dvidshub.net/video/1007810,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR085,2,https://www.dvidshub.net/video/1007796,"sensor=ATFLIR, channel unstated; behavior=Transit; number=One"
+DOW-UAP-PR086,2,https://www.dvidshub.net/video/1007797,sensor=Electro-optical; behavior=Transit; number=One
+DOW-UAP-PR087,2,https://www.dvidshub.net/video/1007799,sensor=Infrared; behavior=Transit; number=Multiple
+DOW-UAP-PR088,2,https://www.dvidshub.net/video/1007800,"sensor=ATFLIR, channel unstated; behavior=Both; number=Multiple"
+DOW-UAP-PR089,2,https://www.dvidshub.net/video/1007712,"sensor=ATFLIR, channel unstated; behavior=Both; number=Multiple"
+DOW-UAP-PR090,2,https://www.dvidshub.net/video/1007719,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR091,2,https://www.dvidshub.net/video/1007716,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR092,2,https://www.dvidshub.net/video/1007715,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR093,2,https://www.dvidshub.net/video/1007721,"sensor=ATFLIR, channel unstated; behavior=Transit; number=Multiple"
+DOW-UAP-PR094,2,https://www.dvidshub.net/video/1007722,sensor=Infrared and electro-optical; behavior=Both; number=One
+DOW-UAP-PR095,2,https://www.dvidshub.net/video/1007725,"sensor=ATFLIR, channel unstated; behavior=Both; number=Multiple"
+DOW-UAP-PR096,2,https://www.dvidshub.net/video/1007726,sensor=Infrared; behavior=Transit; number=Multiple
+DOW-UAP-PR097,2,https://www.dvidshub.net/video/1007728,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR098,2,https://www.dvidshub.net/video/1007737,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR099,2,https://www.dvidshub.net/video/1007738,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR100,4,https://www.dvidshub.net/video/1014096,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR101,4,https://www.dvidshub.net/video/1014097,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR102,4,https://www.dvidshub.net/video/1014098,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR103,4,https://www.dvidshub.net/video/1014099,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR104,4,https://www.dvidshub.net/video/1014101,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR105,4,https://www.dvidshub.net/video/1014103,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR106,4,https://www.dvidshub.net/video/1014104,sensor=Electro-optical; behavior=Transit; number=One
+DOW-UAP-PR107,4,https://www.dvidshub.net/video/1014105,sensor=Infrared and electro-optical; behavior=Both; number=One
+DOW-UAP-PR108,4,https://www.dvidshub.net/video/1014106,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR109,4,https://www.dvidshub.net/video/1014108,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR110,4,https://www.dvidshub.net/video/1014112,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR111,4,https://www.dvidshub.net/video/1014114,"sensor=ATFLIR, channel unstated; behavior=Both; number=Multiple"
+DOW-UAP-PR112,4,https://www.dvidshub.net/video/1014128,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR113,4,https://www.dvidshub.net/video/1014119,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR114,4,https://www.dvidshub.net/video/1014121,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR115,4,https://www.dvidshub.net/video/1014123,sensor=Infrared; behavior=Both; number=One
+DOW-UAP-PR116,4,https://www.dvidshub.net/video/1014124,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR117,5,https://www.dvidshub.net/video/1017793,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR118,5,https://www.dvidshub.net/video/1017795,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR119,5,https://www.dvidshub.net/video/1017798,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR120,5,https://www.dvidshub.net/video/1017800,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR121,5,https://www.dvidshub.net/video/1017802,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR122,5,https://www.dvidshub.net/video/1017803,sensor=Infrared; behavior=Both; number=Multiple
+DOW-UAP-PR123,5,https://www.dvidshub.net/video/1017805,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR124,5,https://www.dvidshub.net/video/1017806,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR125,5,https://www.dvidshub.net/video/1017788,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR126,5,https://www.dvidshub.net/video/1017790,sensor=Electro-optical; behavior=Tracked; number=One
+DOW-UAP-PR127,5,https://www.dvidshub.net/video/1017791,sensor=Electro-optical; behavior=Tracked; number=One
+DOW-UAP-PR134,5,https://www.dvidshub.net/video/1017792,sensor=Infrared and electro-optical; behavior=Transit; number=One
+DOW-UAP-PR136,5,https://www.dvidshub.net/video/1017796,sensor=Infrared; behavior=Tracked; number=One
+DOW-UAP-PR142,5,https://www.dvidshub.net/video/1017797,sensor=Infrared; behavior=Transit; number=One
+DOW-UAP-PR149,5,https://www.dvidshub.net/video/1017799,sensor=Infrared; behavior=Both; number=One
