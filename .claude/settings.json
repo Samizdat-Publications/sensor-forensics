@@ -99,7 +99,15 @@
       "Bash(git add . *)",
       "PowerShell(git add -A*)",
       "PowerShell(git add .)",
-      "PowerShell(git add . *)"
+      "PowerShell(git add . *)",
+      "Bash(cat .env*)",
+      "Bash(cat ./.env*)",
+      "Bash(head .env*)",
+      "Bash(tail .env*)",
+      "Bash(grep * .env*)",
+      "PowerShell(Get-Content *.env*)",
+      "PowerShell(cat *.env*)",
+      "Read(./.env.*)"
     ]
   }
 }

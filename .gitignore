@@ -22,3 +22,4 @@ app/data/frames/
 .claude/settings.local.json
 .pytest_cache/
 artifacts/tmp/
+artifacts/tmp_*

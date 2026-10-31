@@ -1,0 +1,31 @@
+[project]
+name = "sensor-forensics"
+version = "0.1.0"
+description = "Forensic reconstruction of the Navy GIMBAL, GOFAST, FLIR1 and PURSUE sensor videos"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "numpy>=2.1",
+  "scipy>=1.14",
+  "pandas>=2.2",
+  "opencv-python-headless>=4.10",
+  "scikit-image>=0.24",
+  "matplotlib>=3.9",
+  "pyyaml>=6",
+  "jsonschema>=4.23",
+  "requests>=2.32",
+  "pytest>=8.3",
+]
+
+[project.optional-dependencies]
+weather = ["xarray>=2024.10", "zarr>=2.18", "gcsfs>=2024.10"]
+ocr = ["rapidocr>=3.0", "onnxruntime>=1.19"]
+audio = ["faster-whisper>=1.1"]
+capture = ["playwright>=1.48"]
+fetch = ["yt-dlp>=2025.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.uv]
+package = false
