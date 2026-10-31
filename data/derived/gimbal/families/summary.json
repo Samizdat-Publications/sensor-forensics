@@ -1,0 +1,274 @@
+{
+ "note": "PROVISIONAL: jet heading 315 deg at frame 0 and wind 120 kt from 270 at all altitudes are placeholders until solve/weather.py and the heading study land.",
+ "convention": "level",
+ "frames": 1031,
+ "jet": {
+  "tas_kt_mean": 351.3941970383812,
+  "heading_change_deg": -67.02406250032823,
+  "bank_deg_mean": -31.931573869721188
+ },
+ "noise_interval": {
+  "half_width_deg": [
+   0.5,
+   0.5
+  ],
+  "sigma_deg": 0.1,
+  "n_eff": "n/6"
+ },
+ "constant_velocity": {
+  "constant_velocity_el-2.0": {
+   "best_range_nmi": 60.0,
+   "best_misfit_deg_rms": 0.34465061743902703,
+   "best_ground_speed_kt": 555.1051973185773,
+   "misfit_deg_rms_5_to_40nmi_min_max": [
+    0.3472457843085406,
+    1.5210627100130776
+   ],
+   "at": {
+    "8nmi": {
+     "ground_speed_kt": 749.008246399101,
+     "ground_speed_1sigma_kt": [
+      470.2663611997996,
+      1029.1172392038218
+     ],
+     "air_speed_kt_placeholder_wind": 868.1471827615641,
+     "mean_alt_ft": 22838.9527024477,
+     "misfit_deg_rms": 1.2047025588543159
+    },
+    "30nmi": {
+     "ground_speed_kt": 905.8259758117804,
+     "ground_speed_1sigma_kt": [
+      830.635340240084,
+      981.2795610271677
+     ],
+     "air_speed_kt_placeholder_wind": 786.0507421255472,
+     "mean_alt_ft": 20309.16706137399,
+     "misfit_deg_rms": 0.3516638963445621
+    }
+   }
+  },
+  "constant_velocity_el-2.5": {
+   "best_range_nmi": 60.0,
+   "best_misfit_deg_rms": 0.3445385685804055,
+   "best_ground_speed_kt": 555.0754848472202,
+   "misfit_deg_rms_5_to_40nmi_min_max": [
+    0.3471483388450728,
+    1.5207299207232376
+   ],
+   "at": {
+    "8nmi": {
+     "ground_speed_kt": 751.3058758821903,
+     "ground_speed_1sigma_kt": [
+      472.1122471692764,
+      1031.8635882597393
+     ],
+     "air_speed_kt_placeholder_wind": 870.4194685123597,
+     "mean_alt_ft": 22263.411606283582,
+     "misfit_deg_rms": 1.2046834285813954
+    },
+    "30nmi": {
+     "ground_speed_kt": 906.3543525587748,
+     "ground_speed_1sigma_kt": [
+      831.1555467439322,
+      981.8148787357432
+     ],
+     "air_speed_kt_placeholder_wind": 786.6447587882141,
+     "mean_alt_ft": 18987.94654827305,
+     "misfit_deg_rms": 0.3515965066349994
+    }
+   }
+  },
+  "constant_velocity_el-1.5": {
+   "best_range_nmi": 60.0,
+   "best_misfit_deg_rms": 0.34473771849147,
+   "best_ground_speed_kt": 555.129219189567,
+   "misfit_deg_rms_5_to_40nmi_min_max": [
+    0.34732140627329394,
+    1.5213212273495866
+   ],
+   "at": {
+    "8nmi": {
+     "ground_speed_kt": 747.2117238968162,
+     "ground_speed_1sigma_kt": [
+      468.82225621016477,
+      1026.9705615135226
+     ],
+     "air_speed_kt_placeholder_wind": 866.3703393017441,
+     "mean_alt_ft": 23413.120049604222,
+     "misfit_deg_rms": 1.2047162787812393
+    },
+    "30nmi": {
+     "ground_speed_kt": 905.4170985679727,
+     "ground_speed_1sigma_kt": [
+      830.2329577534928,
+      980.8652825079914
+     ],
+     "air_speed_kt_placeholder_wind": 785.5907865084662,
+     "mean_alt_ft": 21631.012902419705,
+     "misfit_deg_rms": 0.3517159233926518
+    }
+   }
+  },
+  "constant_velocity_bank_scaled": {
+   "best_range_nmi": 15.5,
+   "best_misfit_deg_rms": 0.35731109359023006,
+   "best_ground_speed_kt": 2068.046392419776,
+   "misfit_deg_rms_5_to_40nmi_min_max": [
+    0.35731109359023006,
+    0.38923361268363293
+   ],
+   "at": {
+    "8nmi": {
+     "ground_speed_kt": 4001.3655788719343,
+     "ground_speed_1sigma_kt": [
+      3641.0448869010074,
+      4361.768081697998
+     ],
+     "air_speed_kt_placeholder_wind": 4120.48565037352,
+     "mean_alt_ft": 20174.54824747749,
+     "misfit_deg_rms": 0.36709114140206317
+    },
+    "30nmi": {
+     "ground_speed_kt": 232.45409528358817,
+     "ground_speed_1sigma_kt": [
+      147.98334650849097,
+      500.9065534480826
+     ],
+     "air_speed_kt_placeholder_wind": 178.90846131369048,
+     "mean_alt_ft": 19744.528255112673,
+     "misfit_deg_rms": 0.3724100902542902
+    }
+   }
+  },
+  "constant_velocity_interval": {
+   "best_range_nmi": 60.0,
+   "best_misfit_deg_rms": 0.3447470307403593,
+   "best_ground_speed_kt": 558.6810512288738,
+   "misfit_deg_rms_5_to_40nmi_min_max": [
+    0.34733737620949956,
+    1.5212321918035385
+   ],
+   "at": {
+    "8nmi": {
+     "ground_speed_kt": 745.1530180015321,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 864.2397748364293,
+     "mean_alt_ft": 22842.42363537844,
+     "misfit_deg_rms": 1.2079282954394381
+    },
+    "30nmi": {
+     "ground_speed_kt": 933.4634392024826,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 813.7251405491395,
+     "mean_alt_ft": 20332.13623634464,
+     "misfit_deg_rms": 0.3517750117487908
+    }
+   },
+   "one_sigma_range_nmi": [
+    55.5,
+    60.0
+   ],
+   "misfit_excess_deg_rms_5_to_40nmi_min_max": [
+    0.06120229595537259,
+    1.1165383367556774
+   ],
+   "delta_chi2_eff_5_to_40nmi_max": 22122.111615993148
+  }
+ },
+ "constant_altitude": [
+  {
+   "value": 13000.0,
+   "mean_range_nmi": 91.26,
+   "mean_speed_kt": 969.87,
+   "max_speed_kt": 2730.94,
+   "max_accel_g": 147.58
+  },
+  {
+   "value": 14000.0,
+   "mean_range_nmi": 75.81,
+   "mean_speed_kt": 798.8,
+   "max_speed_kt": 2276.66,
+   "max_accel_g": 122.73
+  },
+  {
+   "value": 15000.0,
+   "mean_range_nmi": 64.49,
+   "mean_speed_kt": 676.03,
+   "max_speed_kt": 1944.52,
+   "max_accel_g": 104.52
+  },
+  {
+   "value": 16000.0,
+   "mean_range_nmi": 55.11,
+   "mean_speed_kt": 576.19,
+   "max_speed_kt": 1669.91,
+   "max_accel_g": 89.44
+  },
+  {
+   "value": 17000.0,
+   "mean_range_nmi": 46.92,
+   "mean_speed_kt": 491.09,
+   "max_speed_kt": 1430.9,
+   "max_accel_g": 76.27
+  },
+  {
+   "value": 18000.0,
+   "mean_range_nmi": 39.56,
+   "mean_speed_kt": 417.15,
+   "max_speed_kt": 1216.97,
+   "max_accel_g": 64.43
+  },
+  {
+   "value": 19000.0,
+   "mean_range_nmi": 32.81,
+   "mean_speed_kt": 352.94,
+   "max_speed_kt": 1022.26,
+   "max_accel_g": 53.59
+  },
+  {
+   "value": 20000.0,
+   "mean_range_nmi": 26.55,
+   "mean_speed_kt": 298.67,
+   "max_speed_kt": 843.38,
+   "max_accel_g": 43.52
+  },
+  {
+   "value": 21000.0,
+   "mean_range_nmi": 20.68,
+   "mean_speed_kt": 256.38,
+   "max_speed_kt": 678.6,
+   "max_accel_g": 34.08
+  },
+  {
+   "value": 22000.0,
+   "mean_range_nmi": 15.14,
+   "mean_speed_kt": 229.54,
+   "max_speed_kt": 528.0,
+   "max_accel_g": 25.17
+  },
+  {
+   "value": 23000.0,
+   "mean_range_nmi": 9.88,
+   "mean_speed_kt": 220.62,
+   "max_speed_kt": 394.62,
+   "max_accel_g": 16.71
+  },
+  {
+   "value": 24000.0,
+   "mean_range_nmi": 4.86,
+   "mean_speed_kt": 227.93,
+   "max_speed_kt": 317.56,
+   "max_accel_g": 8.64
+  }
+ ],
+ "wind_drift_placeholder_wind": {
+  "best_range_nmi": 17.5,
+  "best_misfit_deg_rms": 0.5921984249600337
+ }
+}
