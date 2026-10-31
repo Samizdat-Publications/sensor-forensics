@@ -1,0 +1,71 @@
+{
+ "sitrec_way": {
+  "alt_ft_at_375": 13191.821134515996,
+  "alt_ft_at_1030": 13242.982379875812,
+  "ground_speed_kt": 62.97204995778094,
+  "ground_track_deg": 90.23911777407677,
+  "range_nmi_375_1030": [
+   4.397020408163265,
+   3.3239166666666664
+  ],
+  "alt_ft_per_frame_min_max": [
+   13188.016600173523,
+   13243.57088113184
+  ],
+  "air_speed_kt_vs_65kt_from_274": 4.662838117824311
+ },
+ "lab_way": {
+  "alt_ft_at_375": 13293.990821631385,
+  "alt_ft_at_1030": 13230.502131679816,
+  "ground_speed_kt": 72.11006499795522,
+  "ground_track_deg": 89.33154457772046,
+  "range_nmi_375_1030": [
+   4.4,
+   3.3
+  ],
+  "alt_ft_per_frame_min_max": [
+   12933.736344154073,
+   13559.72973862663
+  ],
+  "fit_ground_speed_kt": 71.92929534421036,
+  "fit_ground_track_deg": 94.77105829780784,
+  "alt_ft_mean_with_range": 13238.807488341563,
+  "tas_kt_mean": 368.58607350072856,
+  "first_range_frame": 368
+ },
+ "lab_way_refraction": {
+  "alt_ft_at_375": 13290.541676493982,
+  "alt_ft_at_1030": 13228.930209199909,
+  "ground_speed_kt": 72.11006499795522,
+  "ground_track_deg": 89.33154457772046,
+  "range_nmi_375_1030": [
+   4.4,
+   3.3
+  ],
+  "alt_ft_per_frame_min_max": [
+   12930.90035193514,
+   13556.435664533943
+  ],
+  "fit_ground_speed_kt": 71.92929534421036,
+  "fit_ground_track_deg": 94.77105829780784,
+  "alt_ft_mean_with_range": 13236.35752403511,
+  "tas_kt_mean": 368.58607350072856,
+  "first_range_frame": 368
+ },
+ "published": {
+  "sitrec_observed_alt_ft": [
+   13151,
+   13208
+  ],
+  "sitrec_observed_ground_speed_kt": 64,
+  "sitrec_observed_track_deg": 93,
+  "aaro_alt_ft": [
+   13219,
+   13150
+  ]
+ },
+ "tolerance": {
+  "alt_ft": 300,
+  "speed_kt": 5
+ }
+}
