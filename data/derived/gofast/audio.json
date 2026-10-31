@@ -1,0 +1,196 @@
+{
+ "case": "gofast",
+ "status": "inferred (machine transcription, not checked by a person)",
+ "source_audio": "data/audio/gofast.wav",
+ "model": "faster-whisper medium.en",
+ "created": "2026-10-31T00:45:28-04:00",
+ "language_prob": 1,
+ "segments": [
+  {
+   "start": 12.76,
+   "end": 29.98,
+   "text": "Oh my gosh dude, wow, that's a lot more than I thought it was going to be, that's a lot",
+   "avg_logprob": -1.273,
+   "no_speech_prob": 0.375,
+   "words": [
+    {
+     "w": "Oh",
+     "start": 12.76,
+     "end": 13.96,
+     "frame": 382,
+     "p": 0.123
+    },
+    {
+     "w": "my",
+     "start": 13.96,
+     "end": 14.44,
+     "frame": 418,
+     "p": 0.188
+    },
+    {
+     "w": "gosh",
+     "start": 14.44,
+     "end": 14.68,
+     "frame": 433,
+     "p": 0.628
+    },
+    {
+     "w": "dude,",
+     "start": 14.68,
+     "end": 25.76,
+     "frame": 440,
+     "p": 0.226
+    },
+    {
+     "w": "wow,",
+     "start": 28.74,
+     "end": 29.46,
+     "frame": 861,
+     "p": 0.769
+    },
+    {
+     "w": "that's",
+     "start": 29.68,
+     "end": 29.98,
+     "frame": 890,
+     "p": 0.275
+    },
+    {
+     "w": "a",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.076
+    },
+    {
+     "w": "lot",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.248
+    },
+    {
+     "w": "more",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.04
+    },
+    {
+     "w": "than",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.301
+    },
+    {
+     "w": "I",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.235
+    },
+    {
+     "w": "thought",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.397
+    },
+    {
+     "w": "it",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.543
+    },
+    {
+     "w": "was",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.449
+    },
+    {
+     "w": "going",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.221
+    },
+    {
+     "w": "to",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.994
+    },
+    {
+     "w": "be,",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.829
+    },
+    {
+     "w": "that's",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.353
+    },
+    {
+     "w": "a",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.146
+    },
+    {
+     "w": "lot",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.825
+    }
+   ]
+  },
+  {
+   "start": 29.98,
+   "end": 31.58,
+   "text": "Look at the pride!",
+   "avg_logprob": -0.894,
+   "no_speech_prob": 0.513,
+   "words": [
+    {
+     "w": "Look",
+     "start": 29.98,
+     "end": 30.88,
+     "frame": 899,
+     "p": 0.196
+    },
+    {
+     "w": "at",
+     "start": 30.88,
+     "end": 31.02,
+     "frame": 925,
+     "p": 0.976
+    },
+    {
+     "w": "the",
+     "start": 31.02,
+     "end": 31.14,
+     "frame": 930,
+     "p": 0.591
+    },
+    {
+     "w": "pride!",
+     "start": 31.14,
+     "end": 31.58,
+     "frame": 933,
+     "p": 0.338
+    }
+   ]
+  }
+ ]
+}

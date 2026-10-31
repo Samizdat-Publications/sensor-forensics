@@ -1,0 +1,517 @@
+{
+ "case": "gimbal",
+ "status": "inferred (machine transcription, not checked by a person)",
+ "source_audio": "data/audio/gimbal.wav",
+ "model": "faster-whisper medium.en",
+ "created": "2026-10-31T00:43:54-04:00",
+ "language_prob": 1,
+ "segments": [
+  {
+   "start": 5.14,
+   "end": 7.1,
+   "text": "There's a whole fleet of them, look on the ASA.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "There's",
+     "start": 5.14,
+     "end": 5.48,
+     "frame": 154,
+     "p": 0.398
+    },
+    {
+     "w": "a",
+     "start": 5.48,
+     "end": 5.58,
+     "frame": 164,
+     "p": 0.956
+    },
+    {
+     "w": "whole",
+     "start": 5.58,
+     "end": 5.7,
+     "frame": 167,
+     "p": 0.945
+    },
+    {
+     "w": "fleet",
+     "start": 5.7,
+     "end": 6.06,
+     "frame": 171,
+     "p": 0.984
+    },
+    {
+     "w": "of",
+     "start": 6.06,
+     "end": 6.18,
+     "frame": 182,
+     "p": 0.57
+    },
+    {
+     "w": "them,",
+     "start": 6.18,
+     "end": 6.32,
+     "frame": 185,
+     "p": 0.818
+    },
+    {
+     "w": "look",
+     "start": 6.36,
+     "end": 6.46,
+     "frame": 191,
+     "p": 0.958
+    },
+    {
+     "w": "on",
+     "start": 6.46,
+     "end": 6.6,
+     "frame": 194,
+     "p": 0.923
+    },
+    {
+     "w": "the",
+     "start": 6.6,
+     "end": 6.74,
+     "frame": 198,
+     "p": 0.977
+    },
+    {
+     "w": "ASA.",
+     "start": 6.74,
+     "end": 7.1,
+     "frame": 202,
+     "p": 0.661
+    }
+   ]
+  },
+  {
+   "start": 8.74,
+   "end": 9.42,
+   "text": "My gosh.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "My",
+     "start": 8.74,
+     "end": 9.08,
+     "frame": 262,
+     "p": 0.16
+    },
+    {
+     "w": "gosh.",
+     "start": 9.08,
+     "end": 9.42,
+     "frame": 272,
+     "p": 0.821
+    }
+   ]
+  },
+  {
+   "start": 11.7,
+   "end": 12.82,
+   "text": "They're all going against the wind.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "They're",
+     "start": 11.7,
+     "end": 11.78,
+     "frame": 351,
+     "p": 0.807
+    },
+    {
+     "w": "all",
+     "start": 11.78,
+     "end": 11.9,
+     "frame": 353,
+     "p": 0.923
+    },
+    {
+     "w": "going",
+     "start": 11.9,
+     "end": 12.08,
+     "frame": 357,
+     "p": 0.981
+    },
+    {
+     "w": "against",
+     "start": 12.08,
+     "end": 12.46,
+     "frame": 362,
+     "p": 0.968
+    },
+    {
+     "w": "the",
+     "start": 12.46,
+     "end": 12.68,
+     "frame": 373,
+     "p": 0.995
+    },
+    {
+     "w": "wind.",
+     "start": 12.68,
+     "end": 12.82,
+     "frame": 380,
+     "p": 0.99
+    }
+   ]
+  },
+  {
+   "start": 12.96,
+   "end": 14.58,
+   "text": "The wind's 120 knots to the west.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "The",
+     "start": 12.96,
+     "end": 12.96,
+     "frame": 388,
+     "p": 0.899
+    },
+    {
+     "w": "wind's",
+     "start": 12.96,
+     "end": 13.18,
+     "frame": 388,
+     "p": 0.799
+    },
+    {
+     "w": "120",
+     "start": 13.18,
+     "end": 13.8,
+     "frame": 395,
+     "p": 0.787
+    },
+    {
+     "w": "knots",
+     "start": 13.8,
+     "end": 14.14,
+     "frame": 414,
+     "p": 0.862
+    },
+    {
+     "w": "to",
+     "start": 14.14,
+     "end": 14.3,
+     "frame": 424,
+     "p": 0.484
+    },
+    {
+     "w": "the",
+     "start": 14.3,
+     "end": 14.52,
+     "frame": 429,
+     "p": 0.977
+    },
+    {
+     "w": "west.",
+     "start": 14.52,
+     "end": 14.58,
+     "frame": 435,
+     "p": 0.948
+    }
+   ]
+  },
+  {
+   "start": 15.32,
+   "end": 16.36,
+   "text": "Look at that thing dude.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "Look",
+     "start": 15.32,
+     "end": 15.42,
+     "frame": 459,
+     "p": 0.234
+    },
+    {
+     "w": "at",
+     "start": 15.42,
+     "end": 15.52,
+     "frame": 462,
+     "p": 0.989
+    },
+    {
+     "w": "that",
+     "start": 15.52,
+     "end": 15.62,
+     "frame": 465,
+     "p": 0.357
+    },
+    {
+     "w": "thing",
+     "start": 15.62,
+     "end": 15.84,
+     "frame": 468,
+     "p": 0.945
+    },
+    {
+     "w": "dude.",
+     "start": 15.84,
+     "end": 16.36,
+     "frame": 475,
+     "p": 0.469
+    }
+   ]
+  },
+  {
+   "start": 25.6,
+   "end": 27.08,
+   "text": "That's not an LNS though is it?",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "That's",
+     "start": 25.6,
+     "end": 25.94,
+     "frame": 767,
+     "p": 0.962
+    },
+    {
+     "w": "not",
+     "start": 25.94,
+     "end": 26.08,
+     "frame": 777,
+     "p": 0.985
+    },
+    {
+     "w": "an",
+     "start": 26.08,
+     "end": 26.22,
+     "frame": 782,
+     "p": 0.462
+    },
+    {
+     "w": "LNS",
+     "start": 26.22,
+     "end": 26.5,
+     "frame": 786,
+     "p": 0.83
+    },
+    {
+     "w": "though",
+     "start": 26.5,
+     "end": 26.72,
+     "frame": 794,
+     "p": 0.892
+    },
+    {
+     "w": "is",
+     "start": 26.72,
+     "end": 26.88,
+     "frame": 801,
+     "p": 0.758
+    },
+    {
+     "w": "it?",
+     "start": 26.88,
+     "end": 27.08,
+     "frame": 806,
+     "p": 0.995
+    }
+   ]
+  },
+  {
+   "start": 27.24,
+   "end": 27.6,
+   "text": "It's not.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "It's",
+     "start": 27.24,
+     "end": 27.4,
+     "frame": 816,
+     "p": 0.704
+    },
+    {
+     "w": "not.",
+     "start": 27.4,
+     "end": 27.6,
+     "frame": 821,
+     "p": 0.924
+    }
+   ]
+  },
+  {
+   "start": 27.74,
+   "end": 28.9,
+   "text": "That is an LNS dude.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "That",
+     "start": 27.74,
+     "end": 27.74,
+     "frame": 831,
+     "p": 0.238
+    },
+    {
+     "w": "is",
+     "start": 27.74,
+     "end": 27.96,
+     "frame": 831,
+     "p": 0.887
+    },
+    {
+     "w": "an",
+     "start": 27.96,
+     "end": 28.16,
+     "frame": 838,
+     "p": 0.888
+    },
+    {
+     "w": "LNS",
+     "start": 28.16,
+     "end": 28.52,
+     "frame": 844,
+     "p": 0.993
+    },
+    {
+     "w": "dude.",
+     "start": 28.52,
+     "end": 28.9,
+     "frame": 855,
+     "p": 0.77
+    }
+   ]
+  },
+  {
+   "start": 29.26,
+   "end": 29.84,
+   "text": "Well if there's a...",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "Well",
+     "start": 29.26,
+     "end": 29.4,
+     "frame": 877,
+     "p": 0.432
+    },
+    {
+     "w": "if",
+     "start": 29.4,
+     "end": 29.56,
+     "frame": 881,
+     "p": 0.727
+    },
+    {
+     "w": "there's",
+     "start": 29.56,
+     "end": 29.8,
+     "frame": 886,
+     "p": 0.954
+    },
+    {
+     "w": "a...",
+     "start": 29.8,
+     "end": 29.84,
+     "frame": 893,
+     "p": 0.487
+    }
+   ]
+  },
+  {
+   "start": 29.84,
+   "end": 29.98,
+   "text": "Look at that.",
+   "avg_logprob": -0.272,
+   "no_speech_prob": 0.402,
+   "words": [
+    {
+     "w": "Look",
+     "start": 29.84,
+     "end": 29.98,
+     "frame": 894,
+     "p": 0.056
+    },
+    {
+     "w": "at",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.851
+    },
+    {
+     "w": "that.",
+     "start": 29.98,
+     "end": 29.98,
+     "frame": 899,
+     "p": 0.701
+    }
+   ]
+  },
+  {
+   "start": 29.98,
+   "end": 30.5,
+   "text": "Look at that thing.",
+   "avg_logprob": -0.356,
+   "no_speech_prob": 0.455,
+   "words": [
+    {
+     "w": "Look",
+     "start": 29.98,
+     "end": 30.08,
+     "frame": 899,
+     "p": 0.005
+    },
+    {
+     "w": "at",
+     "start": 30.08,
+     "end": 30.24,
+     "frame": 901,
+     "p": 0.96
+    },
+    {
+     "w": "that",
+     "start": 30.24,
+     "end": 30.24,
+     "frame": 906,
+     "p": 0.788
+    },
+    {
+     "w": "thing.",
+     "start": 30.24,
+     "end": 30.5,
+     "frame": 906,
+     "p": 0.994
+    }
+   ]
+  },
+  {
+   "start": 31.66,
+   "end": 32.38,
+   "text": "It's rotating.",
+   "avg_logprob": -0.356,
+   "no_speech_prob": 0.455,
+   "words": [
+    {
+     "w": "It's",
+     "start": 31.66,
+     "end": 32.0,
+     "frame": 949,
+     "p": 0.939
+    },
+    {
+     "w": "rotating.",
+     "start": 32.0,
+     "end": 32.38,
+     "frame": 959,
+     "p": 0.869
+    }
+   ]
+  }
+ ]
+}
