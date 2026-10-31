@@ -1,0 +1,446 @@
+# GIMBAL (January 2015, F/A-18F, ATFLIR): public testimony constraints.
+# Generated and hand-checked for work item M3.3 on 10/31/2026. See README.md and SOURCES.md.
+# Claims with applies_to listing GOFAST describe the East Coast class of objects and also bear on GOFAST (there is almost no GOFAST-specific testimony; see gofast.yaml).
+# No transcripts are copied; each claim is a paraphrase plus at most one quote under 15 words.
+
+- id: G-T01
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Saw the radar situational-awareness (SA) page data at the debrief and heard the cockpit audio; he was not in the recording jet's cockpit as far as the sources say."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 38 (PDF p. 42), answer to Gaetz"
+  claim: "The ATFLIR recording shows a single object that rotates. On the audio the pilots refer to a fleet of objects that is not visible on the FLIR; Graves witnessed that fleet in the debrief as radar data on the SA page."
+  quote: "a fleet of objects that is not visible on the FLIR system"
+  quantity: "number of objects; sensor used"
+  value: "1 object on FLIR; a 'fleet' (no number in the hearing) on radar/SA"
+  uncertainty: "Qualitative in the hearing. Graves later gave 4 to 6 (P&vR) or 5 to 6 (The Debrief) objects."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Graves also says 'I have one particular case' of multiple craft in formation: the GIMBAL event."
+
+- id: G-T02
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Participant in the same unit and the debrief."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 21 (PDF p. 25), answer to Raskin"
+  claim: "Graves recognized the voices on the video when the New York Times published it in 2017; he had seen the video when it was taken and when it was debriefed."
+  quantity: "witness role; provenance of data seen"
+  value: "saw video and debrief data; not stated to be in the recording jet"
+  uncertainty: "Qualitative."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "This statement is why GIMBAL radar details count as relayed for the lab's purposes: Graves saw them on the debrief display, not through his own radar."
+
+- id: G-T03
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Saw the video at the debrief."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 24 (PDF p. 28), answer to Luna"
+  claim: "At the end of the video the object showed uncertainty or instability and seemed to rock a bit; that is the last he had seen. The data he would recommend analyzing is the radar data giving precise kinematics on the object and on the fleet of objects operating nearby."
+  quote: "It seemed to rock a bit"
+  quantity: "object behavior at end of clip; data availability"
+  value: "rocking at the end of the clip; radar kinematics exist but are not public"
+  uncertainty: "Qualitative."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "The released clip is 34 s. The statement implies he saw no longer version."
+
+- id: G-T04
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own radar and ATFLIR observations of East Coast objects, 2014 to 2015 (general; not specifically GIMBAL)."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 19 (PDF p. 23), answer to Burchett"
+  claim: "The objects in the working area showed 0.0 Mach (zero airspeed) over particular ground locations and stayed stationary in category-four hurricane winds, like a bobber in a river that is not carried downstream; the same objects would accelerate to supersonic speeds, 1.1 to 1.2 Mach."
+  quote: "completely stationary in category four hurricane winds"
+  quantity: "wind behavior; speed; ground speed vs air speed"
+  value: "stationary over the ground in winds above about 115 kt (Category 4 = 113 to 136 mph sustained); bursts to Mach 1.1 to 1.2"
+  uncertainty: "General statement about the whole East Coast class of contacts. Speeds are radar-derived and relayed by memory. Mismatch with GIMBAL's 120 kt wind is only suggestive."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T05]
+  notes: "A stationary ground speed in a strong wind is the opposite of balloon-like downwind drift, so it is directly relevant to the parallax and balloon hypotheses (D-010). It describes the class of objects, not a specific frame range."
+
+- id: G-T05
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Radar observations of the class of objects."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 25 (PDF p. 29), answer to Moskowitz"
+  claim: "The objects seen were spherical and were observed up to Mach 2, which is a very non-aerodynamic shape; he could not hear sonic booms from inside the jet."
+  quote: "observed up to Mach 2"
+  quantity: "speed; shape"
+  value: "up to Mach 2 (about 1,300 kt); spherical"
+  uncertainty: "General statement; the Mach 1.1 to 1.2 figure in another answer is the typical burst value."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T04, G-T22]
+  notes: "Seen visually as spheres, per the 'cube inside a clear sphere' sightings in the hearing."
+
+- id: G-T06
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Relaying squadron mates; Graves was in the ready room, not in the jet."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 10 (PDF p. 14), opening statement; printed p. 46 (PDF p. 50)"
+  claim: "In a different event (training mission in Warning Area W-72, 10 miles off Virginia Beach, not GIMBAL) two jets were split by a dark gray or black cube inside a clear sphere that came within 50 ft of the lead aircraft; estimated size 5 to 15 ft in diameter."
+  quantity: "size; shape (class of East Coast objects)"
+  value: "5 to 15 ft diameter; cube inside a sphere; passed within 50 ft"
+  uncertainty: "Second-hand, visual at very short range."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Different event and different year from GIMBAL. Included only because the lab's size criterion may use class-level object size; do not apply it to the GIMBAL frames without a stated reason."
+
+- id: G-T07
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "SA page and radar data at the debrief (not through the recording jet's ATFLIR)."
+  source:
+    title: "Devices of Unknown Origin Part II: Interlopers Over the Atlantic (Ryan Graves interview)"
+    outlet: "The Debrief (Tim McMillan)"
+    date: "06/24/2021"
+    url: "https://thedebrief.org/devices-of-unknown-origin-part-ii-interlopers-over-the-atlantic-ryan-graves/"
+  verification: "read through a page-reading tool (article text); quotes as returned by the tool, not re-checked against the live page"
+  location_in_source: "article section on Gimbal"
+  claim: "The public clip omits five or six other aircraft flying in an imperfect wedge formation; such formations are unusual outside airshows."
+  quantity: "number of objects; formation"
+  value: "5 to 6 other objects in a loose wedge"
+  uncertainty: "Peings and von Rennenkampff paraphrase this as 4 to 6 objects. Counting from memory of a radar display years later: plus or minus 1."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: ""
+
+- id: G-T08
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "SA page and datalink display."
+  source:
+    title: "Devices of Unknown Origin Part II: Interlopers Over the Atlantic (Ryan Graves interview)"
+    outlet: "The Debrief (Tim McMillan)"
+    date: "06/24/2021"
+    url: "https://thedebrief.org/devices-of-unknown-origin-part-ii-interlopers-over-the-atlantic-ryan-graves/"
+  verification: "read through a page-reading tool (article text); quotes as returned by the tool, not re-checked against the live page"
+  location_in_source: "article section on Gimbal"
+  claim: "The Gimbal object was about 40 miles from the carrier and was not in the datalink."
+  quantity: "range (from carrier); sensor used"
+  value: "about 40 mi from the carrier"
+  uncertainty: "Plus or minus 15 mi; from memory. Distance from the carrier, not from the recording jet."
+  applies_to: [GIMBAL]
+  conflicts_with: [G-T18]
+  notes: "PvR give the training area as about 300 miles off Jacksonville; both can be true (the carrier was 40 miles away from the engagement). (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: G-T09
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "SA page and radar data at the debrief."
+  source:
+    title: "Devices of Unknown Origin Part II: Interlopers Over the Atlantic (Ryan Graves interview)"
+    outlet: "The Debrief (Tim McMillan)"
+    date: "06/24/2021"
+    url: "https://thedebrief.org/devices-of-unknown-origin-part-ii-interlopers-over-the-atlantic-ryan-graves/"
+  verification: "read through a page-reading tool (article text); quotes as returned by the tool, not re-checked against the live page"
+  location_in_source: "article section on Gimbal"
+  claim: "The object was going like 120 knots, basically stationary (ground speed in the strong wind) at roughly 20,000 ft; he was unsure of the exact altitude."
+  quantity: "speed; altitude; relation to wind"
+  value: "about 120 kt (ground speed near zero in a 120 kt wind); about 20,000 ft"
+  uncertainty: "Altitude unsure (he says so): 15,000 to 25,000 ft. P&vR report the recording jet at about 25,000 ft."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "At 6 to 8 nmi and the on-screen elevation of about -2 degrees the geometry puts the object near 23,500 ft with the jet at about 25,000 ft (P&vR), so 20,000 ft is on the low side. The wording 'going like 120 knots, basically stationary' is ambiguous: it can mean airspeed of 120 kt (equal to the wind, so stationary over the ground). In the paper's reading it is the wind speed. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: G-T10
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "SA page at the debrief."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 3 (quoting The Debrief)"
+  claim: "The Gimbal object followed behind the wedge, suddenly stopped and let the wedge pass, then tilted up as seen in the clip, and kept following the other five or six in a racetrack pattern after his video cut out."
+  quote: "suddenly stopped and waited for the wedge formation to pass"
+  quantity: "radar track behavior; heading; timing"
+  value: "stop, then tilt up, then follow a racetrack pattern"
+  uncertainty: "Qualitative; the timing relative to frames in the clip is not given."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "The 'tilted up' is the rotation visible in the clip, in Graves's reading. It places the stop on the SA display just before the clip's rotation (testable against the frame at about 22 s)."
+
+- id: G-T11
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "SA page."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 3"
+  claim: "The fleet made a turn of about 180 degrees in direction of travel; the Gimbal object also reversed direction, but without a radius of turn (the fleet did turn with a radius)."
+  quantity: "heading change; radar track behavior"
+  value: "180 degree reversal; zero turn radius for the Gimbal object"
+  uncertainty: "Qualitative; relayed in the paper from interviews with Graves."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "The WSO's briefing (FOIA brief) also says the contact came from the east heading toward the ship and then headed back east."
+
+- id: G-T12
+  witness: "Unnamed weapon systems officer (WSO) who recorded GIMBAL (name withheld in the released documents) (relayed by Graves)"
+  firsthand: false
+  firsthand_detail: "Radar range read by the WSO; relayed to Congress and then by Graves."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 3 and abstract"
+  claim: "Aircrew involved in or familiar with the encounter have high confidence that the Gimbal object was within 10 nautical miles of the F/A-18F that recorded the video, from direct observation of radar data."
+  quantity: "range"
+  value: "less than 10 nmi"
+  uncertainty: "The incident report's range is redacted in the available releases. Upper bound of an estimate; treat 'high confidence' as the paper's phrase, not a measurement."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Peings and von Rennenkampff cite Graves's public and personal communications for the 10 nmi figure."
+
+- id: G-T13
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) (refining the WSO estimate)"
+  firsthand: false
+  firsthand_detail: "Relaying the WSO's radar range."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 3 (footnote 5: X post 03/2022, https://twitter.com/uncertainvector/status/1508144005871153155)"
+  claim: "Graves confirmed the WSO's within-10 nmi estimate and refined it to 6 to 8 nautical miles."
+  quantity: "range"
+  value: "6 to 8 nmi"
+  uncertainty: "Plus or minus 2 nmi on the quoted band. The X post itself was not opened."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "This single range figure drives the paper's 'vertical U-turn' result. The lab should treat 6 to 8 nmi as a constraint with a stated uncertainty, not a measurement."
+
+- id: G-T14
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Relaying the engagement geometry."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 11"
+  claim: "The recording F/A-18F came closer to the object during the intercept (range decreased during the clip)."
+  quantity: "range change"
+  value: "decreasing range (the paper uses about -13 percent)"
+  uncertainty: "Direction only; the 13 percent comes from the paper's size measurement, not from Graves."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: ""
+
+- id: G-T15
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Knowledge of the event."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 6"
+  claim: "GIMBAL was filmed after sunset (an evening training flight)."
+  quantity: "time of day"
+  value: "after sunset (night)"
+  uncertainty: "Qualitative; compare with the FOIA brief ('night flights')."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Date is disputed: DoD says 01/21/2015, video metadata says 01/25/2015 02:29 UTC (01/24 21:29 EST), and an unclassified DoD email dates it 01/25."
+
+- id: G-T16
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own jet's sensors for the class of objects (2014 to 2015)."
+  source:
+    title: "Devices of Unknown Origin Part II: Interlopers Over the Atlantic (Ryan Graves interview)"
+    outlet: "The Debrief (Tim McMillan)"
+    date: "06/24/2021"
+    url: "https://thedebrief.org/devices-of-unknown-origin-part-ii-interlopers-over-the-atlantic-ryan-graves/"
+  verification: "read through a page-reading tool (article text); quotes as returned by the tool, not re-checked against the live page"
+  location_in_source: "article section on East Coast objects"
+  claim: "After the radar upgrade the returns were first thought to be software bugs, but pilots then locked them as solid returns and slaved the FLIR to them, which showed an IR source; visual sightings were rare. The target aspect indicator jumped around and 'wasn't smooth like an aircraft'."
+  quantity: "radar track behavior; sensor used"
+  value: "APG-79 lock, ATFLIR slaved, IR source seen; erratic target aspect"
+  uncertainty: "General statement; not specific to GIMBAL frames."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: []
+  notes: "Mick West and others explain erratic aspect as radar glint on a distant aircraft; this claim is the aircrew side of that argument. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: G-T17
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own jet's radar for the class of objects."
+  source:
+    title: "Devices of Unknown Origin Part II: Interlopers Over the Atlantic (Ryan Graves interview)"
+    outlet: "The Debrief (Tim McMillan)"
+    date: "06/24/2021"
+    url: "https://thedebrief.org/devices-of-unknown-origin-part-ii-interlopers-over-the-atlantic-ryan-graves/"
+  verification: "read through a page-reading tool (article text); quotes as returned by the tool, not re-checked against the live page"
+  location_in_source: "article section on East Coast objects"
+  claim: "Pilots encountered the objects roughly 10 to 300 miles off the coast, almost always over water; they seemed to loiter as long as they wanted; mostly slow or stationary, rarely slightly supersonic."
+  quantity: "range from coast; speed; loiter time"
+  value: "10 to 300 mi offshore; mostly slow or stationary; rarely about Mach 1"
+  uncertainty: "General; no case-level numbers."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: []
+  notes: ""
+
+- id: G-T18
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) and the WSO, as summarized by Peings and von Rennenkampff"
+  firsthand: false
+  firsthand_detail: "Summary."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "read directly: arXiv PDF text (Graves's words are quoted there from The Debrief)"
+  location_in_source: "P&vR p. 2"
+  claim: "The mission was a COMPTUEX air-to-air training evening about 300 miles off the coast of Jacksonville, Florida, with multiple VFA-11 F/A-18Fs returning one by one to the USS Theodore Roosevelt; one detected an air contact traveling west toward the carrier."
+  quantity: "location; heading of object"
+  value: "about 300 mi off Jacksonville; object heading west toward the ship"
+  uncertainty: "Location plus or minus 100 mi."
+  applies_to: [GIMBAL]
+  conflicts_with: [G-T08]
+  notes: ""
+
+- id: G-T19
+  witness: "Unnamed weapon systems officer (WSO) who recorded GIMBAL (name withheld in the released documents)"
+  firsthand: true
+  firsthand_detail: "Radar and ATFLIR, per his own briefing to Senate Armed Services Committee staff on 01/16/2019."
+  source:
+    title: "Navy OLA brief of the 01/16/2019 meeting of an F/A-18 aircrew member with SASC professional staff, released under FOIA case DON-NAVY-2022-001613 (scanned pages 5-6 of the release PDF; many lines redacted)"
+    outlet: "U.S. Navy Office of Legislative Affairs via The Black Vault"
+    date: "04/05/2022 (release letter date; brief itself dated 01/2019)"
+    url: "https://documents2.theblackvault.com/documents/navy/DON-NAVY-2022-001613.pdf"
+  verification: "read directly: scanned pages viewed as images (many lines redacted); OCR text unusable"
+  location_in_source: "release PDF p. 6 (scanned; the brief's first page is p. 5)"
+  claim: "Toward the end of a night flight during COMPTUEX, he and his pilot detected an air contact coming from the east and heading toward the ship; they first thought it a simulated adversary aircraft; with a stable trackfile they determined it was not a false hit and obtained a lock, then the pilot maneuvered to maintain it."
+  quantity: "radar track behavior; heading; time of day; track quality"
+  value: "contact from the east heading toward the ship; stable trackfile; night"
+  uncertainty: "Official staff summary of an oral briefing; range and sensor names are redacted ('The contact was at approximately [redacted]')."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Primary official record of the WSO's account. The brief says two Navy aviators were also present who 'offered no firsthand accounts' but were familiar with such events."
+
+- id: G-T20
+  witness: "GIMBAL cockpit crew (pilot and WSO, unnamed), speaking on the video's audio track"
+  firsthand: true
+  firsthand_detail: "Cockpit audio, contemporaneous."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "relayed: quoted in Peings and von Rennenkampff p. 6; the lab's own audio file data/audio/gimbal.wav was not transcribed by this worker; the original was not opened"
+  location_in_source: "video audio; described at P&vR p. 6 (Sec. III)"
+  claim: "The WSO says on the audio that the wind is 120 knots to the west (a westerly wind of 120 kt)."
+  quantity: "wind"
+  value: "120 kt from the west (270 degrees)"
+  uncertainty: "A spoken value, probably read from the jet's wind display; plus or minus 10 kt. The aircraft's altitude was about 25,000 ft."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "ERA5 for 01/24/2015 gives about 110 to 120 kt westerly near 25,000 ft per the paper. The lab should transcribe the audio itself."
+
+- id: G-T21
+  witness: "GIMBAL cockpit crew (pilot and WSO, unnamed), speaking on the video's audio track"
+  firsthand: true
+  firsthand_detail: "Cockpit audio and the SA display."
+  source:
+    title: "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP (Peings and von Rennenkampff), arXiv 2306.08773; its Sec. II relays Graves's statements and the WSO's congressional briefing"
+    outlet: "arXiv preprint (secondary for testimony; Graves's own words are quoted from The Debrief and a 03/2022 X post)"
+    date: "06/2023"
+    url: "https://arxiv.org/abs/2306.08773 (PDF read: https://arxiv.org/pdf/2306.08773)"
+  verification: "relayed: quoted in Peings and von Rennenkampff p. 3; the original was not opened"
+  location_in_source: "video audio; described at P&vR p. 3"
+  claim: "The crew remark on the audio that there is a fleet of objects accompanying the Gimbal object and moving against a 120 kt wind; on the SA display."
+  quantity: "number of objects; relation to wind"
+  value: "'fleet' of unspecified number, moving against the wind"
+  uncertainty: "Qualitative."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "The crew's SA display is not part of the released video."
+
+- id: G-T22
+  witness: "Lt. Ryan Graves and four other Navy pilots (names withheld), as summarized from the 05/26/2019 New York Times article"
+  firsthand: true
+  firsthand_detail: "Own radar and FLIR on East Coast training flights, 2014 to 2015."
+  source:
+    title: "Navy pilots report mid-air encounters with UFOs up and down East Coast (ABC7 summary of the 05/26/2019 New York Times article)"
+    outlet: "ABC7 New York"
+    date: "05/28/2019"
+    url: "https://abc7ny.com/post/navy-pilots-report-mid-air-encounters-with-ufos/5319988/"
+  verification: "relayed: quoted in ABC7's summary of the New York Times article; the NYT page could not be fetched (blocked); the original was not opened"
+  location_in_source: "ABC7 article text"
+  claim: "The pilots describe objects accelerating to hypersonic speed (a web-search summary of the Times article has Graves saying they skipped between sea level and 30,000 ft), making sudden stops and instantaneous turns, in multiple mid-air encounters on training missions along the East Coast; the crew filed a safety report about an unidentified object in the working space."
+  quantity: "speed; maneuver description"
+  value: "hypersonic (over Mach 5) acceleration; sea level to 30,000 ft (unconfirmed wording); instant stops and turns"
+  uncertainty: "Vague; the New York Times speed claim is stronger than the 1.1 to 1.2 Mach in the hearing. Low weight."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T05]
+  notes: "Hearing testimony (2023) gives a maximum of Mach 2."
+
+- id: G-T23
+  witness: "Lt. Danny Accoin (F/A-18F pilot, VFA-11, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Visual and sensors, East Coast, class of objects."
+  source:
+    title: "'Wow, What Is That?' Navy Pilots Report Unexplained Flying Objects"
+    outlet: "The New York Times"
+    date: "05/26/2019"
+    url: "https://www.nytimes.com/2019/05/26/us/politics/ufo-sightings-navy-pilots.html"
+  verification: "relayed: the NYT page was blocked; the quote came from a web-search summary of news coverage and is unconfirmed"
+  location_in_source: "article text (not located)"
+  claim: "Accoin described the objects as having no distinct wing, no distinct tail and no distinct exhaust plume."
+  quantity: "shape; IR signature"
+  value: "no wing, tail or plume visible"
+  uncertainty: "Unconfirmed quote; low weight."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: []
+  notes: "Treat as a lead to follow, not a constraint, until the article is read."

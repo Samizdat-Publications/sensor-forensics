@@ -1,0 +1,1385 @@
+# FLIR1 ("Tic Tac"), USS Nimitz group, 11/14/2004: public testimony constraints.
+# Generated and hand-checked for work item M3.3 on 10/31/2026. See README.md for the field list and SOURCES.md for the source list.
+# No transcripts are copied; each claim is a paraphrase plus at most one quote under 15 words.
+# Time of first sighting is not stated by the aircrew; the leaked CVW-11 log (unverified) says 1430 local.
+
+- id: T-T01
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying what the Princeton controller told the crew by radio; Fravor did not see the radar."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement"
+  claim: "The Princeton controller told the crew that the radar contacts had been observed for over two weeks, coming down from over 80,000 ft, descending rapidly to about 20,000 ft, hanging there for hours, then going straight back up."
+  quote: "coming down from over 80,000 feet"
+  quantity: "radar track behavior; altitude; duration"
+  value: "over 80,000 ft down to about 20,000 ft; hang for hours; observed over 2 weeks"
+  uncertainty: "Relayed radio recollection 19 years later. Altitude figures are the controller's, not measured by Fravor. Treat the hang altitude as 20,000 ft plus or minus 8,000 ft given the other accounts."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T41, T-T42, T-T58, T-T64, T-T71]
+  notes: "Day (the radar supervisor) says the intercepted contact was at 28,000 ft and that he did not himself see anything at 80,000 ft. The 80,000 ft figure is relayed in both accounts."
+
+- id: T-T02
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own aircraft altitude (cockpit instruments, remembered)."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement"
+  claim: "The two F/A-18Fs arrived at the location at about 20,000 ft, and the controller called 'merge plot'."
+  quote: "We arrived at the location at approximately 20,000 feet"
+  quantity: "altitude (own aircraft); radar track behavior (merge plot)"
+  value: "about 20,000 ft"
+  uncertainty: "Plus or minus 2,000 ft (memory, 19 years; same figure in 2018 and 2020 accounts)."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T42]
+  notes: "Merge plot means the radar blips of aircraft and contact were in the same resolution cell. Day says the intercepted contact was at 28,000 ft at that point, which would put it 8,000 ft above Fravor's own altitude."
+
+- id: T-T03
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual, from the cockpit."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement; repeated printed p. 41 (PDF p. 45), answer to Langworthy"
+  claim: "The weather was as close to perfect as one could ask for: clear skies, light winds, calm seas with no whitecaps, so the whitewater stood out against a large blue ocean."
+  quote: "Clear skies, light winds, calm seas, no whitecaps"
+  quantity: "wind; weather; sea state"
+  value: "clear sky; light winds; no whitecaps (so surface wind probably under about 10 kt); unlimited visibility"
+  uncertainty: "Qualitative. 'No whitecaps' bounds surface wind only; winds aloft are not constrained."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Useful for the weather ensemble check (ERA5 for 11/14/2004). Also in Lex Fridman 01:19:03 and 01:19:24."
+
+- id: T-T04
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Naked eye, from the cockpit, with the WSO and the second aircraft's crew."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement"
+  claim: "All four aircrew in the two jets looked down and saw a white Tic Tac shaped object with its long axis pointing north-south, moving very abruptly over the water."
+  quote: "like a ping pong ball"
+  quantity: "shape; heading (long axis); motion character; number of observers"
+  value: "elongated white capsule; long axis N-S; 4 aircrew saw it"
+  uncertainty: "Heading is a remembered long-axis orientation; plus or minus 30 degrees is a fair band."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T27, T-T46]
+  notes: "Said 'moving very abruptly over the water like a ping pong ball'. Dietrich says she had visual contact for only 8 to 10 seconds (see conflict)."
+
+- id: T-T05
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Naked eye."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement; printed p. 42 (PDF p. 46), 'No wings'"
+  claim: "No rotors, no rotor wash and no visible control surfaces such as wings."
+  quote: "no rotors, no rotor wash"
+  quantity: "shape; visible features"
+  value: "none visible"
+  uncertainty: "Absence reports from a distance of up to a half mile; fine features could be missed."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Fravor also said the F/A-18F was unarmed and he never felt threatened (printed p. 42)."
+
+- id: T-T06
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Naked eye."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement"
+  claim: "Fravor and his WSO descended in a circle (about 90 degrees, then another 270 degrees, nose low). Partway down the object shifted its long axis to align with his aircraft and began to climb toward him."
+  quote: "aligned it with my aircraft, and began to climb"
+  quantity: "relative motion; heading; maneuver geometry"
+  value: "descent through about 360 degrees of turn; object turned to face jet and climbed"
+  uncertainty: "Turn angles are rough memory ('about 90', 'another 270'); plus or minus 45 degrees each."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T48]
+  notes: "Fravor's hearing account has no barrel roll. Day says Fravor told him on the beach that the object 'barrel rolled' around him."
+
+- id: T-T07
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Cockpit altimeter (own aircraft, remembered); object altitude is an estimate."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17), Fravor opening statement"
+  claim: "At the closest point Fravor's jet was at about 15,000 ft and the object about 12,000 ft."
+  quote: "about 15,000 feet and a Tic Tac was about 12,000"
+  quantity: "altitude (jet and object)"
+  value: "jet about 15,000 ft; object about 12,000 ft (3,000 ft below the jet)"
+  uncertainty: "Object altitude plus or minus 3,000 ft (visual estimate over open ocean with no scale)."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T28, T-T29, T-T42, T-T66]
+  notes: "Lex Fridman 01:25:12 gives jet about 14,000 to 15,000 ft and a half-mile closest approach."
+
+- id: T-T08
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Naked eye."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17)"
+  claim: "As he pulled his nose onto the object, within about a half mile, it rapidly accelerated in front of the aircraft and disappeared. The wingman, about 8,000 ft above, lost it too."
+  quote: "within about a half mile of it"
+  quantity: "range (closest approach); acceleration; duration of disappearance"
+  value: "closest approach about 0.5 statute mile (about 800 m); vanished 'rapidly'; wingman about 8,000 ft above"
+  uncertainty: "Closest range plus or minus 0.25 mile. No numeric acceleration is given in the hearing."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T32, T-T69]
+  notes: "The CVW-11 log (unverified) puts closest point of approach at 4,000 to 5,000 ft (about 0.7 to 0.8 mile)."
+
+- id: T-T09
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Naked eye."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 13 (PDF p. 17)"
+  claim: "When the crew turned back immediately, the whitewater was gone as well. The object left no trace on the surface."
+  quantity: "surface disturbance; timing"
+  value: "whitewater disappeared at about the same time as the object"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "In answer to Burchett (printed p. 21) Fravor said no object was seen under the water, only the whitewater, and joked that the Tic Tac was communicating with it."
+
+- id: T-T10
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying a radio call from the Princeton controller."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed pp. 13-14 (PDF pp. 17-18)"
+  claim: "The controller told them the object was at their CAP point, roughly 60 miles away, in less than a minute."
+  quote: "roughly 60 miles away in less than a minute"
+  quantity: "radar track behavior; range jump; time"
+  value: "about 60 miles in under 60 s (implies over 3,600 mph, about Mach 5 or more)"
+  uncertainty: "Distance plus or minus 15 miles and time plus or minus 30 s are fair; the controller's call was relayed from memory. Day gives 40 miles and 'several seconds'."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T34, T-T35, T-T49, T-T65]
+  notes: "The CAP point is a station the F/A-18s were to hold at (Fravor 2018: about 40 miles south of the ship). 60 Minutes (2021) and Lex Fridman (01:28:48) repeat 60 miles."
+
+- id: T-T11
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the ships' and E-2's radar. His own jet's fire-control radar did not see it."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 41 (PDF p. 45), answer to Langworthy"
+  claim: "The Princeton, the Nimitz and an E-2 all tracked the object. The F/A-18Fs' own fire-control radars never picked it up."
+  quote: "Our fire control radars never picked it up."
+  quantity: "radar track behavior; sensor used"
+  value: "tracked by SPY-1 (Princeton), Nimitz radar, E-2 radar; not by APG-73 of the first two jets"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T50]
+  notes: "Day says the E-2 Hawkeye 'did not have any radar on these things, only we did'. The transcript is garbled at that line, so treat the E-2 point as an open conflict."
+
+- id: T-T12
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the second crew (Underwood's aircraft) after they landed."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 21 (PDF p. 25), answer to Burchett; the same account at printed pp. 41-42 (PDF pp. 45-46), answer to Langworthy"
+  claim: "The crew that launched after Fravor landed saw significant jamming of their APG-73 radar (range, velocity and aspect, then a split lock) and then switched to the passive targeting pod, which recorded the video."
+  quote: "experienced significant jamming to the APG-73 radar"
+  quantity: "radar track behavior; sensor used"
+  value: "radar lock lost or split; pod video taken with the pod passive"
+  uncertainty: "Relayed; the radar tape Fravor mentions has never been released."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T59]
+  notes: "Underwood's own reported account (Corbell interview, via forum posts) mentions jamming cues on his radar tape and that Princeton and E-2 lost the contact when he lost FLIR track."
+
+- id: T-T13
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying what Underwood saw on the FLIR (not Fravor's own sensor)."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 42 (PDF p. 46), answer to Langworthy"
+  claim: "In the pod video there is no infrared plume and no visible sign of propulsion; the object was 'just sitting in space at 20,000 feet'."
+  quote: "There is no IR plume coming out"
+  quantity: "IR signature; altitude of object in video"
+  value: "no exhaust plume visible in FLIR1; object at about 20,000 ft"
+  uncertainty: "Fravor was not in the video aircraft. The 20,000 ft figure is in conflict with the 28,000 ft radar altitude."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T42]
+  notes: "This is a testable statement about the FLIR1 imagery: look for a plume or hot exhaust core. Fravor in the same answer says Underwood went through EO and IR modes."
+
+- id: T-T14
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate, scaled against his own aircraft."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 41 (PDF p. 45), answer to Langworthy ('40-foot flying Tic Tac')"
+  claim: "Fravor affirmed that he saw a 40-foot Tic Tac shaped object ('a giant flying propane tank')."
+  quantity: "size (length)"
+  value: "about 40 ft (12 m)"
+  uncertainty: "Plus or minus 10 ft (estimate by eye over water, compared with an F/A-18F about 56 ft long). Other accounts range from 25 to 47 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T20, T-T28, T-T33, T-T66, T-T67]
+  notes: "The affirmation was to the Congressman's wording ('in your words, a 40-foot'). In 60 Minutes (2021) he said it was about the size of his F/A-18F."
+
+- id: T-T15
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual; the acceleration rate is inferred from what he saw."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 42 (PDF p. 46), answer to Langworthy"
+  claim: "The object went from zero to matching the jet's speed in no time at all; the fastest plane on Earth could not do it. It was abrupt and 'knew exactly what it was doing'."
+  quote: "went from zero to matching our speed in no time at all"
+  quantity: "acceleration; speed"
+  value: "from rest to roughly 300 kt (jet speed was about 300 kt per Lex 01:24:26) in 'no time'; no number given"
+  uncertainty: "No numeric value stated. Order of magnitude only."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Fravor gives numeric durations elsewhere: about 2 s (Fox 12/2017), under 1 s (Rogan #1361, 10/05/2019, via forum), under 0.5 s (Lex 01:26:32)."
+
+- id: T-T16
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the Princeton radar picture."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 19 (PDF p. 23), answer to Garcia"
+  claim: "Nothing in the inventory can stop in mid-air and reverse, or come down from space, hang out for three hours and go back up."
+  quote: "come down from space, hang out for 3 hours and go back up"
+  quantity: "radar track behavior; duration"
+  value: "hang about 3 hours (earlier in the same hearing: 'hanging out for hours')"
+  uncertainty: "Memory of a controller's briefing; hours-level only."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T44, T-T45]
+  notes: "Day describes the groups as moving south at about 100 kt over 2 or more hours, not hovering."
+
+- id: T-T17
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Describing the video recorded by the second crew."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 14 (PDF p. 18)"
+  claim: "The video recorded by the second crew is a 90-second video."
+  quote: "that 90-second video"
+  quantity: "video duration"
+  value: "about 90 s"
+  uncertainty: "Loose speech. The public FLIR1 clip is about 1 min 16 s per the Black Vault summary (check the lab's MANIFEST)."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T53, T-T63]
+  notes: "Four to ten minutes of recording is claimed by Weigelt and Voorhis (longer video exists)."
+
+- id: T-T18
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Participant."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 42 (PDF p. 46), final answer to Langworthy"
+  claim: "Six aircrew were involved in total: four saw the object with their own eyes in two jets, and two more were in the aircraft that took the video."
+  quote: "there is four sets of human eyeballs"
+  quantity: "number of observers; number of aircraft"
+  value: "4 visual observers in 2 jets; 2 in the video jet"
+  uncertainty: "Firm (a count)."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T52, T-T56]
+  notes: "Fravor treats the video crew as observers, but Underwood says he did not see the object with his own eyes."
+
+- id: T-T19
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Participant."
+  source:
+    title: "The story behind the \"Tic Tac\" UFO sighting by Navy pilots in 2004 (quotes the 60 Minutes interview)"
+    outlet: "CBS News"
+    date: "07/26/2023"
+    url: "https://www.cbsnews.com/news/tic-tac-ufo-sighting-uap-video-dave-fravor-alex-dietrich-navy-fighter-pilots-house-testimony/"
+  verification: "read directly: article text (the 60 Minutes video itself was not available as a transcript)"
+  location_in_source: "article text quoting the 60 Minutes interview (video timestamp not available)"
+  claim: "The four people in the two jets watched the object for roughly five minutes."
+  quote: "roughly about five minutes"
+  quantity: "duration of visual observation"
+  value: "about 5 min (300 s)"
+  uncertainty: "Fravor repeated 5 min in a 12/2017 video and to Dietrich by text (06/14/2021); 'up to five minutes' in 2017. Plus or minus 2 min."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T27]
+  notes: "Dietrich says her own visual contact was only 8 to 10 s. Both can be true if the five minutes spans Fravor's own descent."
+
+- id: T-T20
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "Navy pilots recall \"unsettling\" 2004 UAP sighting (written summary of the 60 Minutes segment, video runtime 06:45)"
+    outlet: "CBS News / 60 Minutes Overtime"
+    date: "05/16/2021"
+    url: "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+  verification: "read directly: article text (the 60 Minutes video itself was not available as a transcript)"
+  location_in_source: "article text (60 Minutes segment, video timestamp not available)"
+  claim: "The object was about the size of his F/A-18F, with no markings, wings or exhaust plumes; when he tried to cut it off it accelerated so fast it seemed to disappear."
+  quantity: "size; shape"
+  value: "about the size of an F/A-18F (about 56 ft long)"
+  uncertainty: "Plus or minus 15 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T14, T-T67]
+  notes: "Same account has Princeton reacquiring it about 60 miles away 'seconds later'."
+
+- id: T-T21
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual."
+  source:
+    title: "Navy pilots recall \"unsettling\" 2004 UAP sighting (written summary of the 60 Minutes segment, video runtime 06:45)"
+    outlet: "CBS News / 60 Minutes Overtime"
+    date: "05/16/2021"
+    url: "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+  verification: "read directly: article text (the 60 Minutes video itself was not available as a transcript)"
+  location_in_source: "article text"
+  claim: "The whitewater (roiling water) was about the size of a Boeing 737. In the Lex Fridman interview it formed a cross-like pattern and he explained it as breaking water over something about 15 to 20 ft below the surface; he saw no object in the water."
+  quantity: "size of surface disturbance"
+  value: "about 130 ft (737-800 length, about 40 m) across"
+  uncertainty: "Plus or minus 50 percent. Other estimates: 50 to 100 m (Kurth), about 100 yards (reporter)."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T70]
+  notes: "Lex Fridman 01:20:20 to 01:21:48 gives the 15 to 20 ft depth reasoning and the cross shape."
+
+- id: T-T22
+  witness: "Fravor and Dietrich (as reported by 60 Minutes)"
+  firsthand: true
+  firsthand_detail: "Position told by the aircrew; the radar detail is 60 Minutes narration."
+  source:
+    title: "Navy pilots recall \"unsettling\" 2004 UAP sighting (written summary of the 60 Minutes segment, video runtime 06:45)"
+    outlet: "CBS News / 60 Minutes Overtime"
+    date: "05/16/2021"
+    url: "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+  verification: "read directly: article text (the 60 Minutes video itself was not available as a transcript)"
+  location_in_source: "article text"
+  claim: "The encounter happened about 100 miles southwest of San Diego. The article, narrating, says Princeton operators logged 'multiple anomalous aerial vehicles' over the horizon, descending 80,000 ft in less than a second."
+  quantity: "location; descent rate (narration)"
+  value: "about 100 mi SW of San Diego; 80,000 ft in under 1 s (narration, not a witness quote)"
+  uncertainty: "Location plus or minus 20 miles. The descent figure is network narration, not a quoted witness."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T42, T-T58]
+  notes: "Descent in under a second from 80,000 ft is a speed of more than 50,000 ft/s, which exceeds orbital speeds in vertical direction. Compare with Day's own 0.78 s for 28,000 ft."
+
+- id: T-T23
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the Princeton's account of its own tracking."
+  source:
+    title: "Unidentified Anomalous Phenomena: Implications on National Security, Public Safety, and Government Transparency (hearing, Serial No. 118-53)"
+    outlet: "U.S. House Oversight Subcommittee on National Security, the Border, and Foreign Affairs; official GPO transcript"
+    date: "07/26/2023"
+    url: "https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/html/CHRG-118hhrg53022.htm (PDF: https://www.govinfo.gov/content/pkg/CHRG-118hhrg53022/pdf/CHRG-118hhrg53022.pdf)"
+  verification: "read directly: official GPO transcript text and PDF"
+  location_in_source: "printed p. 41 (PDF p. 45), answer to Langworthy"
+  claim: "The Princeton had been tracking the objects for two weeks, but no manned aircraft had been airborne during that time; this was the first day airborne aircraft could look."
+  quantity: "duration of radar tracking before 11/14/2004; first manned intercept"
+  value: "about 2 weeks"
+  uncertainty: "Plus or minus 4 days."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T41]
+  notes: "Day says the window ran from about 11/04 to 11/15 (about 10 days) and that the air wing was not yet on board for the first sightings."
+
+- id: T-T24
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit instruments, remembered."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "01:24:26"
+  claim: "He descended toward the object at about 300 kt."
+  quantity: "own speed"
+  value: "about 300 kt"
+  uncertainty: "Plus or minus 50 kt."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "(A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: T-T25
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "01:24:50"
+  claim: "During the descent the object turned toward the west, faced his aircraft and climbed, which made him feel it was aware of them."
+  quantity: "heading; relative motion"
+  value: "turn to a westerly heading while climbing"
+  uncertainty: "Heading roughly plus or minus 45 degrees."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Hearing: 'aligned it with my aircraft' (long axis)."
+
+- id: T-T26
+  witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual, from the high-cover aircraft."
+  source:
+    title: "Navy pilots recall \"unsettling\" 2004 UAP sighting (written summary of the 60 Minutes segment, video runtime 06:45)"
+    outlet: "CBS News / 60 Minutes Overtime"
+    date: "05/16/2021"
+    url: "https://www.cbsnews.com/news/navy-ufo-sighting-60-minutes-2021-05-16/"
+  verification: "read directly: article text (the 60 Minutes video itself was not available as a transcript)"
+  location_in_source: "article text (60 Minutes quote)"
+  claim: "From above, Dietrich saw the object moving with no predictable movement and no predictable trajectory; she circled above while Fravor descended. Neither jet was armed."
+  quote: "No predictable movement, no predictable trajectory"
+  quantity: "motion character; role of second aircraft"
+  value: "erratic; no number"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Metabunk posters argue her 2017-era account describes straight-line travel before Fravor engaged; that is an interpretation."
+
+- id: T-T27
+  witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual, from high cover."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts, post 251690 (quotes Dietrich's 06/14/2021 X post and Fravor's 12/2017 video)"
+    outlet: "Metabunk forum (secondary)"
+    date: "06/2021"
+    url: "https://www.metabunk.org/goto/post?id=251690"
+  verification: "relayed: quoted in Metabunk post 251690, quoting Dietrich's X post of 06/14/2021, https://twitter.com/DietrichVFA41/status/1404527229636382722; the original was not opened"
+  location_in_source: "X post 06/14/2021 (quoted at Metabunk post 251690)"
+  claim: "Dietrich says she had visual contact with the object for only about 8 to 10 seconds; before that she was watching the lead aircraft and the churning water."
+  quote: "I only had visual of Tic Tac for 8-10 sec"
+  quantity: "duration of visual contact"
+  value: "8 to 10 s"
+  uncertainty: "Her own estimate years later; firm in order of magnitude."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T04, T-T19]
+  notes: "The Metabunk compilation attributes an 8 to 10 s figure to the leaked 'Nimitz report' too (source unnamed in that report)."
+
+- id: T-T28
+  witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004) (as the unnamed 'Source', per the forum paraphrase)"
+  firsthand: false
+  firsthand_detail: "Leaked 2009-era report paraphrased in a forum; attribution of 'Source' to Dietrich is the forum's."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 summarizing the 'Nimitz report' hosted at thevault.tothestarsacademy.com; the original was not opened"
+  location_in_source: "thread summary table (original report page not opened)"
+  claim: "The report paraphrases the pilot's recollection as: object about 30 to 40 ft long, 1,000 to 3,000 ft altitude, moving 300 to 500 kt in a straight line, watched for 8 to 10 seconds."
+  quantity: "size; altitude; speed"
+  value: "30 to 40 ft; 1,000 to 3,000 ft; 300 to 500 kt straight line"
+  uncertainty: "Third-hand; document authenticity not confirmed. Low weight."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T07, T-T14, T-T68]
+  notes: "Compare CVW-11 log: 600 to 700 kt. The straight-line description conflicts with Fravor's 'abrupt' and 'erratic' motion."
+
+- id: T-T29
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 quoting Fravor's 09/17/2018 written statement at thenimitzencounters.com; the site page was not reachable for the statement; the original was not opened"
+  location_in_source: "thread table (Fravor statement dated 09/17/2018)"
+  claim: "In 2018 Fravor wrote that he climbed up to 20,000 ft and the object was maybe 3,000 ft below his aircraft, moving erratically; he descended about 60 degrees nose low."
+  quantity: "altitude difference; descent angle"
+  value: "object about 3,000 ft below the jet; dive about 60 degrees nose low"
+  uncertainty: "Plus or minus 1,500 ft on the offset."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T07, T-T30, T-T31]
+  notes: "Mick West's geometric estimate (about 28 degrees for 3,000 ft over a mile) disagrees with 60 degrees; that is an analysis, not testimony."
+
+- id: T-T30
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 quoting a Fox News interview (YouTube EDj9ZZQY2kA, 12/2017); the original was not opened"
+  location_in_source: "thread table; Fox interview, timestamp not given"
+  claim: "In a Fox News interview he put the object about 2,000 ft below him and said it accelerated away in about 2 seconds."
+  quantity: "altitude difference; acceleration time"
+  value: "object about 2,000 ft below; accelerated in about 2 s"
+  uncertainty: "Plus or minus 1,000 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T29, T-T31, T-T32]
+  notes: ""
+
+- id: T-T31
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "01:22:10"
+  claim: "At the start of the encounter the crew was about 20,000 ft above the object (the whitewater and the object near the sea surface)."
+  quantity: "altitude difference (initial)"
+  value: "about 20,000 ft above the object"
+  uncertainty: "The tool-returned wording is ambiguous; if exact it means the object was near sea level at first."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T29, T-T30]
+  notes: "Not a contradiction if the 2018 and Fox figures refer to a later phase of the descent, but they are given for the same moment in the forum compilation. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: T-T32
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "01:26:32"
+  claim: "The object accelerated and disappeared in less than half a second at about 12,000 ft; the wingman was about 8,000 ft above. Elsewhere (Rogan #1361, via forum) he says under one second and (Fox) about two seconds."
+  quantity: "acceleration time; vanish duration"
+  value: "under 0.5 s (Lex); under 1 s (Rogan); about 2 s (Fox)"
+  uncertainty: "Order of 0.5 to 2 s; human visual estimate of a sudden event."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T08, T-T30]
+  notes: "(A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: T-T33
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 quoting Fravor's 09/17/2018 statement; the original was not opened"
+  location_in_source: "thread table"
+  claim: "Fravor's 2018 statement compares the object to an F-18, about 47 ft."
+  quantity: "size (length)"
+  value: "about 47 ft"
+  uncertainty: "Plus or minus 10 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T14, T-T40, T-T67]
+  notes: ""
+
+- id: T-T34
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Assignment location, not an observation."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 quoting Fravor's 09/17/2018 statement; also the House written statement posted at ufologie.patrickgross.org; the original was not opened"
+  location_in_source: "thread table"
+  claim: "The CAP point was about 40 miles south of the ship; the object reappeared at the CAP point."
+  quantity: "distance (CAP point from ship)"
+  value: "about 40 miles"
+  uncertainty: "Plus or minus 10 miles."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T10]
+  notes: "Fravor's own statements are not consistent on whether the 60 miles is the distance from the encounter site to the CAP point."
+
+- id: T-T35
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the controller's timing."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 (forum summary of Fravor's recent estimate of 30 to 40 s); the original was not opened"
+  location_in_source: "thread text"
+  claim: "Fravor has recently estimated the object took 30 to 40 seconds to travel to his CAP point, versus 'less than a minute' in the hearing."
+  quantity: "time of CAP-point jump"
+  value: "30 to 40 s"
+  uncertainty: "Plus or minus 15 s."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T10, T-T49]
+  notes: "The distance divided by 30 to 40 s gives 5,400 to 7,200 mph for 60 miles."
+
+- id: T-T36
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts, post 251690 (quotes Dietrich's 06/14/2021 X post and Fravor's 12/2017 video)"
+    outlet: "Metabunk forum (secondary)"
+    date: "06/2021"
+    url: "https://www.metabunk.org/goto/post?id=251690"
+  verification: "relayed: quoted in Metabunk post 251690 quoting Fravor's 12/2017 video (YouTube EDj9ZZQY2kA, t=164 s); the original was not opened"
+  location_in_source: "video t=164 s"
+  claim: "Visibility was about fifty miles; an object of that size could be seen out to about ten miles; it disappeared in seconds."
+  quantity: "visibility; visual detection range"
+  value: "50 mi visibility; about 10 mi detection range for a 40-ft object"
+  uncertainty: "Rule of thumb, not a measurement."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Lex Fridman 01:19:24 to 01:19:42 repeats unrestricted visibility with land visible at about 50 miles. A 40-ft object subtends only about 0.04 degrees at 10 miles, so the 10-mile claim is optimistic."
+
+- id: T-T37
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Position awareness."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "01:18:53"
+  claim: "The carrier was probably about 60 miles away from the encounter site; ship control called ranges such as 40 or 50 miles during the intercept."
+  quantity: "distance to ship"
+  value: "about 60 mi (40 to 50 mi during the vector)"
+  uncertainty: "Plus or minus 15 miles."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Compare 'CAP point about 40 miles south of the ship'. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+
+- id: T-T38
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the Princeton radar picture."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "02:12:42 (as returned; the tool transcribed '8000 feet' for 80,000)"
+  claim: "The objects came straight down from above 80,000 ft and hung near 20,000 ft."
+  quantity: "radar track behavior; altitude"
+  value: "above 80,000 ft down to about 20,000 ft"
+  uncertainty: "Transcription garble noted by the tool; same claim as in the hearing."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T42]
+  notes: ""
+
+- id: T-T39
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the second crew."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "01:30:57 to 01:33:07"
+  claim: "Underwood's crew was determined to find the object; the video came from the targeting pod's forward-looking infrared; radar showed a 'little green square' until a track file was built; the radar reported jamming across modes."
+  quantity: "sensor used; radar track behavior"
+  value: "FLIR video from ATFLIR pod; radar jammed"
+  uncertainty: "Relayed."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Fravor calls the second pilot Chad."
+
+- id: T-T40
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor (transcript read at HappyScribe; timestamps are those printed there)"
+    outlet: "Lex Fridman Podcast"
+    date: "09/08/2020"
+    url: "https://lexfridman.com/david-fravor/ (transcript: https://podcasts.happyscribe.com/lex-fridman-podcast-artificial-intelligence-ai/122-david-fravor-ufos-aliens-fighter-jets-and-aerospace-engineering)"
+  verification: "read through a page-reading tool (HappyScribe transcript, about 830 KB); timestamps and short quotes as returned by the tool, not re-checked against the audio"
+  location_in_source: "02:32:02"
+  claim: "The object was about 40 ft, about Hornet size."
+  quantity: "size"
+  value: "about 40 ft"
+  uncertainty: "Plus or minus 10 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T33, T-T67]
+  notes: ""
+
+- id: T-T41
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own SPY-1 console."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "08:44 to 09:51"
+  claim: "He first noticed the contacts on or about 11/04/2004 on the evening watch around 2000 local; five contacts off Catalina Island at 28,000 ft moving about 100 kt."
+  quote: "They were at 28,000 feet"
+  quantity: "radar track behavior; altitude; speed; number; time"
+  value: "5 contacts; 28,000 ft; about 100 kt; 11/04/2004 about 2000L"
+  uncertainty: "Date plus or minus 2 days (he says he would check logbooks); altitude and speed are display readouts he recalls."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T01, T-T23]
+  notes: "Overall window: about 11/04 to 11/15/2004, 'about 10 days' (04:00, 07:04)."
+
+- id: T-T42
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own SPY-1 console with the Fravor intercept."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "13:31 and 29:40"
+  claim: "The contact Fravor intercepted was at 28,000 ft, the lead of its group; at merge plot it dropped from 28,000 ft to the surface in under a second (he learned the next day, 0.78 s), with no sonic boom."
+  quote: "down to the surface of the water in less than a second"
+  quantity: "radar track behavior; altitude; descent time"
+  value: "28,000 ft to sea surface in 0.78 s (about 36,000 ft/s, about 24,000 mph)"
+  uncertainty: "The 0.78 s is a precise figure he says he found out the next day; the time resolution of a radar track is a few seconds per sweep, so the true bound is 'under a few seconds'. Altitude plus or minus 2,000 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T01, T-T02, T-T07, T-T13, T-T22, T-T38, T-T58, T-T64]
+  notes: "Day himself says (04:00 onward) that the 80,000 ft figure came from the ballistic-missile-defense guys and was not on his own radar picture. A 0.78 s drop of 28,000 ft means an average vertical speed far above any aircraft."
+
+- id: T-T43
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: false
+  firsthand_detail: "Relayed by crew on other ships days later."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "00:38 and 06:13"
+  claim: "Ballistic-missile-defense radars tracked the objects coming down from outer space; the contacts went from 80,000 ft to 28,000 ft, but this was not on his own display and he learned it in the following days."
+  quote: "we go from 80,000 feet then suddenly dropped to 28,000 feet"
+  quantity: "radar track behavior; altitude"
+  value: "80,000 ft to 28,000 ft (relayed)"
+  uncertainty: "Relayed hearsay; he says it was above his clearance."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "This is the source of the '80,000 ft' number in the Day account. He did not see it himself."
+
+- id: T-T44
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own console: his focus was 30,000 ft and below."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "00:38; 46:25"
+  claim: "All contacts in a group were co-altitude at 28,000 ft and moved south at about 100 kt, keeping the same bearing and range from each other like snowflakes on a calm day."
+  quote: "All co-altitude though, at 28,000 feet"
+  quantity: "altitude; speed; formation"
+  value: "28,000 ft; about 100 kt south; fixed relative positions"
+  uncertainty: "Altitude plus or minus 2,000 ft; speed plus or minus 20 kt."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T16, T-T64]
+  notes: "'Always in groups ... almost like they were tied together' (15:08)."
+
+- id: T-T45
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own console."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "00:38 and 11:24 to 12:50"
+  claim: "The groups appeared about midway between Catalina and the coast, moved south at about 100 kt through the Southern California operating area between the ship and the mainland, and vanished above Guadalupe Island, a track of about 250 miles over a couple of hours."
+  quote: "going south at about 100 knots"
+  quantity: "radar track behavior; speed; heading; track length"
+  value: "100 kt; heading about 180 degrees; about 250 mi; about 2 h"
+  uncertainty: "Speed plus or minus 20 kt; he did the arithmetic in his head ('250 miles, a couple of hours easily')."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T16, T-T57]
+  notes: "Day also says the system gave the highest track quality for the entire time (13:06). 100 kt for 250 miles is about 2.5 h."
+
+- id: T-T46
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own console."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "04:19, 00:38"
+  claim: "Contacts always appeared in groups of 5 to 10, randomly; about 100 contacts in total over the 10 days, and he had already seen about 60 by the day of the Fravor intercept."
+  quote: "they appeared in groups of five to ten at a time"
+  quantity: "number of objects"
+  value: "5 to 10 per group; about 100 total; about 60 before 11/14"
+  uncertainty: "Counts are recalled; plus or minus 30 percent."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T04]
+  notes: "Fravor and Dietrich describe a single object at the site. Day says the only time a contact broke formation was when Fravor intercepted one (13:31)."
+
+- id: T-T47
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own console."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "15:30"
+  claim: "Objects in a group were spaced about five miles apart, in a fairly tight group that held the same relative positions."
+  quote: "probably five miles, if I had to guess"
+  quantity: "separation between objects"
+  value: "about 5 mi"
+  uncertainty: "He says he does not recall exactly; 2 to 10 mi."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T48
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying what Fravor told him after landing; he saw no barrel roll on his display."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "26:02 and 27:52"
+  claim: "Fravor told him that as soon as he intercepted it, the object barrel rolled around him and went straight down to the water; Day saw only the vertical drop on radar."
+  quote: "it barrel rolled around me and went straight down to the water"
+  quantity: "maneuver description"
+  value: "barrel roll then vertical dive"
+  uncertainty: "Second-hand through Day. Fravor's hearing statement has no barrel roll."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T06]
+  notes: "Also: Day heard 'we may have a downed aircraft' on the radio and launched search and rescue (27:04)."
+
+- id: T-T49
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own console (tracking the jump) and the radio."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "35:05, 52:25 to 52:57"
+  claim: "The object went from the surface to Fravor's CAP point, about 40 miles away, in several seconds, stayed there several seconds, then rejoined its group and went on south at 28,000 ft and 100 kt."
+  quote: "about 40 miles away, in just several seconds"
+  quantity: "radar track behavior; range jump; time"
+  value: "about 40 mi in several seconds (order 5 to 10 s: over 14,000 mph)"
+  uncertainty: "He gives no number of seconds; 'several' read as 3 to 15 s. Distance 40 mi plus or minus 10."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T10, T-T35, T-T65]
+  notes: "He also says Fravor was about five miles from the CAP point. Day returns to 28,000 ft and 100 kt afterwards, which is a strong, testable claim about track continuity."
+
+- id: T-T50
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Operational knowledge."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "20:54 (transcript garbled)"
+  claim: "The E-2 Hawkeye radar did not have these objects; only the Princeton did."
+  quantity: "sensor used"
+  value: "SPY-1 only"
+  uncertainty: "Garbled transcription; low confidence in the exact wording."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T11]
+  notes: ""
+
+- id: T-T51
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: false
+  firsthand_detail: "Controller side and relay."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "38:14 to 41:11"
+  claim: "The next launch (not an hour later) was Underwood with the forward-looking infrared; they vectored him onto the same group, now closer to the ship; there were two intercepts that day."
+  quote: "it wasn't an hour"
+  quantity: "timing; number of intercepts"
+  value: "second sortie within less than 1 h of the first (his statement); 2 intercepts"
+  uncertainty: "Day says the second intercept was the next sortie; the forum reading of 90 min (migflug) is unverified."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T52
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying Underwood's report to him."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "41:11 to 41:34"
+  claim: "The second intercept was almost a merge plot again, and Underwood could see the object with his eyes."
+  quote: "He could see it with his eyeballs."
+  quantity: "visual contact in the second sortie"
+  value: "visual contact claimed"
+  uncertainty: "Relayed, with the caveat 'according to his testimony'."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T18, T-T56]
+  notes: ""
+
+- id: T-T53
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: false
+  firsthand_detail: "Describing the video he says was emailed to him the next morning."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "41:57 to 43:49"
+  claim: "The video that reached him by email the next morning was a short snippet, about 10 seconds; the standard 'fight's on, tape's on' procedure means a longer video must exist."
+  quote: "10 seconds long or whatever"
+  quantity: "video duration"
+  value: "about 10 s (public clip is about 76 s)"
+  uncertainty: "Loose; contradicted by the clip's real length."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T17, T-T63]
+  notes: "Day has never seen a longer video."
+
+- id: T-T54
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own console."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "13:06 and 33:31 to 34:07"
+  claim: "The system graded the tracks at the highest track quality the whole time. Merge plot overlays the two symbols (unknown and friendly); they stay two separate tracks, and he watched the contact go to the surface while Fravor chased it."
+  quantity: "radar track behavior; track quality; separation of tracks"
+  value: "highest track quality; separate tracks maintained"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Day dismisses the glitch explanation because the contacts behaved like normal tracks in symbology."
+
+- id: T-T55
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own records."
+  source:
+    title: "Kevin Day and Mick West (interview, Otter.ai transcript, 56 pp.)"
+    outlet: "Mick West interview of Kevin Day, transcript posted as a Metabunk attachment (video: YouTube tv9iKw_Q9xQ per Metabunk)"
+    date: "02/15/2021"
+    url: "https://metabunk.org/attachments/kevin-day-and-mick-west-pdf.43527"
+  verification: "read directly: full transcript PDF (Otter.ai) downloaded and read"
+  location_in_source: "07:04; 54:13"
+  claim: "The window of activity was about 11/04/2004 to 11/15/2004; the Fravor intercept was on 11/14/2004; he published a fictionalized short story about it in 02/2009 as contemporaneous evidence."
+  quantity: "dates"
+  value: "11/04 to 11/15/2004; main event 11/14/2004"
+  uncertainty: "He says logbooks (FOIA) should be checked."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T71]
+  notes: "The leaked 2009 summary is reported as covering 11/10 to 11/16/2004."
+
+- id: T-T56
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "ATFLIR operator."
+  source:
+    title: "Navy Pilot Who Filmed UFO Describes Moment It Stopped Behaving Within The Normal Laws of Physics (summarizes Underwood's New York magazine interview)"
+    outlet: "Gizmodo (Jennings Brown)"
+    date: "12/19/2019"
+    url: "https://gizmodo.com/navy-pilot-who-filmed-ufo-describes-moment-it-stopped-b-1840532119"
+  verification: "read through a page-reading tool (Gizmodo article summarizing the New York magazine interview, which was not opened)"
+  location_in_source: "article text"
+  claim: "He did not see the object with his own eyes because he was concentrating on tracking and recording it; there was no heat plume or sign of propulsion; behavior was erratic (altitude, airspeed and aspect)."
+  quantity: "visual contact; IR signature"
+  value: "no visual by Underwood; no plume"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T18, T-T52]
+  notes: ""
+
+- id: T-T57
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "ATFLIR video and radar."
+  source:
+    title: "Navy Pilot Who Filmed UFO Describes Moment It Stopped Behaving Within The Normal Laws of Physics (summarizes Underwood's New York magazine interview)"
+    outlet: "Gizmodo (Jennings Brown)"
+    date: "12/19/2019"
+    url: "https://gizmodo.com/navy-pilot-who-filmed-ufo-describes-moment-it-stopped-b-1840532119"
+  verification: "read through a page-reading tool (Gizmodo article summary)"
+  location_in_source: "article text"
+  claim: "Gizmodo reports Underwood describing the object as about 40 ft long traveling about 138 mph (about 120 kt)."
+  quantity: "size; speed"
+  value: "about 40 ft; about 138 mph (120 kt)"
+  uncertainty: "The speed is probably Gizmodo's unit conversion of a 120 kt estimate; the original wording was not seen. Low weight."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T45, T-T68]
+  notes: "Consistent with Day's 100 kt group speed and inconsistent with the 600 to 700 kt in the CVW-11 log."
+
+- id: T-T58
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: false
+  firsthand_detail: "Describing the radar behavior he was told or saw on the ship's data."
+  source:
+    title: "Navy Pilot Who Filmed UFO Describes Moment It Stopped Behaving Within The Normal Laws of Physics (summarizes Underwood's New York magazine interview)"
+    outlet: "Gizmodo (Jennings Brown)"
+    date: "12/19/2019"
+    url: "https://gizmodo.com/navy-pilot-who-filmed-ufo-describes-moment-it-stopped-b-1840532119"
+  verification: "read through a page-reading tool (Gizmodo article summary)"
+  location_in_source: "article text"
+  claim: "He says the object dropped from roughly 50,000 ft to about 100 ft in seconds, which he considered impossible for a physical aircraft."
+  quantity: "radar track behavior; altitude; time"
+  value: "50,000 ft to 100 ft in seconds"
+  uncertainty: "Relayed; a Popular Mechanics piece attributes a similar quote to Voorhis, so the attribution is uncertain."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T01, T-T22, T-T42]
+  notes: "A third altitude figure, besides 80,000 and 28,000 ft."
+
+- id: T-T59
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "His own radar and the radio."
+  source:
+    title: "Jeremy Corbell interview of Chad Underwood, as quoted and summarized in Metabunk thread '2004 USS Nimitz Tic Tac UFO FLIR footage (FLIR1)' posts 724-760 (video: YouTube dKbYwwwePTQ, t=923 s)"
+    outlet: "Metabunk forum (secondary; the video itself was not opened)"
+    date: "2021 (post dates not shown in the page text)"
+    url: "https://www.metabunk.org/goto/post?id=254745"
+  verification: "relayed: quoted in Metabunk posts 724-760 (paraphrases, plus one direct quote at video t=923 s: 'moved with a velocity that I've not seen'); the original was not opened"
+  location_in_source: "Corbell interview video; direct quote at about 15:23 (t=923 s); loss of contact around 13:40"
+  claim: "The object shot off to the left, he banked aggressively to reacquire, his radar could not reacquire it, and Princeton and the E-2 also reported negative contact; he reported jamming cues on his radar tape."
+  quote: "moved with a velocity that I've not seen"
+  quantity: "radar track behavior; heading of departure"
+  value: "departed to the left; radar and ship lost contact simultaneously with FLIR lock"
+  uncertainty: "Forum paraphrases; verify against the video."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T12]
+  notes: "Forum post 731 cites an estimated 15 nmi range for the object in this video (unverified)."
+
+- id: T-T60
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "ATFLIR range estimate."
+  source:
+    title: "Jeremy Corbell interview of Chad Underwood, as quoted and summarized in Metabunk thread '2004 USS Nimitz Tic Tac UFO FLIR footage (FLIR1)' posts 724-760 (video: YouTube dKbYwwwePTQ, t=923 s)"
+    outlet: "Metabunk forum (secondary; the video itself was not opened)"
+    date: "2021 (post dates not shown in the page text)"
+    url: "https://www.metabunk.org/goto/post?id=254745"
+  verification: "relayed: quoted in Metabunk post 731, which cites an Underwood estimate; no primary quote; the original was not opened"
+  location_in_source: "forum post 731 (no video timestamp)"
+  claim: "Range to the object in the FLIR1 video was about 15 nautical miles (forum citation)."
+  quantity: "range to object"
+  value: "about 15 nmi"
+  uncertainty: "Very weak: a forum poster's citation with no primary quote. Do not weight until located in the video."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "No range is shown on screen in FLIR1."
+
+- id: T-T61
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "SPY-1B radar maintenance console."
+  source:
+    title: "TFTRH #36 - Gary Voorhis: Tic-Tac UFO Witness (episode summary and forum posts about it)"
+    outlet: "Metabunk forum / Mick West podcast (secondary; no transcript on the page)"
+    date: "2021 (not verified)"
+    url: "https://www.metabunk.org/threads/tftrh-36-gary-voorhis-tic-tac-ufo-witness.11080/latest"
+  verification: "relayed: quoted in Metabunk thread 11080 (podcast episode summary, forum paraphrases; no transcript); the original was not opened"
+  location_in_source: "episode summary"
+  claim: "He first saw the contacts as slow-moving radar targets on the SPY-1B, thought them clutter or false targets, and saw lights in the same direction; a couple of days later planes were sent to investigate."
+  quantity: "radar track behavior; speed"
+  value: "slow-moving (no number)"
+  uncertainty: "No quantities on the page."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Forum paraphrases: object appeared white in TV mode in the original video; Voorhis saw points of light through binoculars at night; after lock broke the sensor operator zoomed out and slewed to reacquire."
+
+- id: T-T62
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "Participant."
+  source:
+    title: "Five USS Princeton officers add to details on 2004 'Tic Tac' UFO event (summarizes Popular Mechanics interviews)"
+    outlet: "KLAS 8 News Now"
+    date: "11/12/2019"
+    url: "https://digital-release.8newsnow.com/uncategorized/five-uss-princeton-officers-add-to-details-on-2004-tic-tac-ufo-event"
+  verification: "read through a page-reading tool (article text)"
+  location_in_source: "article text"
+  claim: "Voorhis fine-tuned the radar after strange tracks appeared days before the sighting and says he was ordered to surrender data recordings afterward."
+  quantity: "timing of first tracks; data availability"
+  value: "strange tracks 'days before' 11/14/2004; recordings surrendered"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Relevant to why no radar data is public."
+
+- id: T-T63
+  witness: "Ryan Weigelt (Leading Petty Officer, SH-60B power plant specialist, Princeton group)"
+  firsthand: false
+  firsthand_detail: "Reported by the article; basis for his knowledge not stated."
+  source:
+    title: "Five USS Princeton officers add to details on 2004 'Tic Tac' UFO event (summarizes Popular Mechanics interviews)"
+    outlet: "KLAS 8 News Now"
+    date: "11/12/2019"
+    url: "https://digital-release.8newsnow.com/uncategorized/five-uss-princeton-officers-add-to-details-on-2004-tic-tac-ufo-event"
+  verification: "read through a page-reading tool (article text)"
+  location_in_source: "article text"
+  claim: "He says 8 to 10 minutes of video captured the encounter, much longer than the public clip."
+  quantity: "video duration"
+  value: "8 to 10 min"
+  uncertainty: "Low; basis unknown."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T17, T-T53]
+  notes: "Public clip about 76 s."
+
+- id: T-T64
+  witness: "Unnamed FAST EAGLE 110 pilot (as written in a CVW-11 event summary log of unverified authenticity)"
+  firsthand: false
+  firsthand_detail: "Log text; first posted on Above Top Secret in 2007."
+  source:
+    title: "U.S. Department Of Defense Video Shows Unknown Object Intercepted By U.S. Navy Super Hornet And We Have No Idea What It Was (excerpts a CVW-11 event summary log first posted on Above Top Secret in 2007; authenticity unverified)"
+    outlet: "The Aviationist (David Cenciotti)"
+    date: "12/17/2017"
+    url: "https://theaviationist.com/2017/12/17/u-s-department-of-defense-video-shows-unknown-object-intercepted-by-u-s-navy-super-hornet-and-we-have-no-idea-what-it-was/"
+  verification: "relayed: quoted in The Aviationist article quoting the log, 12/17/2017; the log itself was not opened; the original was not opened"
+  location_in_source: "article excerpt"
+  claim: "Princeton reported the contact moving about 100 kt at 25,000 ft; the Fast Eagles were vectored at 1410L about 40 nm out on a bearing of about 160 degrees."
+  quantity: "radar track behavior; altitude; speed; time; range; bearing"
+  value: "100 kt; 25,000 ft; 1410L; 40 nm; 160 degrees"
+  uncertainty: "Document authenticity unverified. Values agree roughly with Day's 100 kt and 28,000 ft."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T01, T-T42, T-T44, T-T70]
+  notes: "The CVW-11 log says 1410L vectored and 1430L object sighting; 'late morning' (Kurth) and 'around noon' (Metabunk poster) disagree with a 1430 local sighting."
+
+- id: T-T65
+  witness: "Unnamed FAST EAGLE 110 pilot (CVW-11 log, unverified)"
+  firsthand: false
+  firsthand_detail: "Log."
+  source:
+    title: "U.S. Department Of Defense Video Shows Unknown Object Intercepted By U.S. Navy Super Hornet And We Have No Idea What It Was (excerpts a CVW-11 event summary log first posted on Above Top Secret in 2007; authenticity unverified)"
+    outlet: "The Aviationist (David Cenciotti)"
+    date: "12/17/2017"
+    url: "https://theaviationist.com/2017/12/17/u-s-department-of-defense-video-shows-unknown-object-intercepted-by-u-s-navy-super-hornet-and-we-have-no-idea-what-it-was/"
+  verification: "relayed: quoted in The Aviationist article; the original was not opened"
+  location_in_source: "article excerpt"
+  claim: "The target was vectored at about 40 nm; no number is given for a later CAP-point jump."
+  quantity: "range"
+  value: "40 nm"
+  uncertainty: "Unverified log."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T10, T-T49]
+  notes: ""
+
+- id: T-T66
+  witness: "Unnamed FAST EAGLE 110 pilot (CVW-11 log, unverified)"
+  firsthand: true
+  firsthand_detail: "Visual (pilot of Fast Eagle 110 per the log)."
+  source:
+    title: "U.S. Department Of Defense Video Shows Unknown Object Intercepted By U.S. Navy Super Hornet And We Have No Idea What It Was (excerpts a CVW-11 event summary log first posted on Above Top Secret in 2007; authenticity unverified)"
+    outlet: "The Aviationist (David Cenciotti)"
+    date: "12/17/2017"
+    url: "https://theaviationist.com/2017/12/17/u-s-department-of-defense-video-shows-unknown-object-intercepted-by-u-s-navy-super-hornet-and-we-have-no-idea-what-it-was/"
+  verification: "relayed: quoted in The Aviationist article; the original was not opened"
+  location_in_source: "article excerpt"
+  claim: "At 1430L the crew saw a large disturbance in the water with steam, smoke and churning; while descending from 24,000 ft the pilot saw a white capsule-shaped, wingless object 25 to 30 ft long about 5 nm west of a large disturbance in the water; the object was at about 4,000 ft on a course of about 300 degrees and passed under the jet at 16,000 ft."
+  quantity: "size; altitude; heading; range from the whitewater"
+  value: "25 to 30 ft; object at 4,000 ft; jet at 16,000 ft; heading 300; 5 nm from the whitewater"
+  uncertainty: "Unverified log."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T07, T-T14]
+  notes: "Compare the hearing: object about 12,000 ft when the jet was at about 15,000 ft."
+
+- id: T-T67
+  witness: "Unnamed FAST EAGLE 110 pilot (CVW-11 log, unverified)"
+  firsthand: true
+  firsthand_detail: "Visual."
+  source:
+    title: "U.S. Department Of Defense Video Shows Unknown Object Intercepted By U.S. Navy Super Hornet And We Have No Idea What It Was (excerpts a CVW-11 event summary log first posted on Above Top Secret in 2007; authenticity unverified)"
+    outlet: "The Aviationist (David Cenciotti)"
+    date: "12/17/2017"
+    url: "https://theaviationist.com/2017/12/17/u-s-department-of-defense-video-shows-unknown-object-intercepted-by-u-s-navy-super-hornet-and-we-have-no-idea-what-it-was/"
+  verification: "relayed: quoted in The Aviationist article; the original was not opened"
+  location_in_source: "article excerpt"
+  claim: "Object length 25 to 30 ft, white, no markings or glass."
+  quantity: "size"
+  value: "25 to 30 ft"
+  uncertainty: "Unverified log."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T14, T-T20, T-T33, T-T40]
+  notes: ""
+
+- id: T-T68
+  witness: "Unnamed FAST EAGLE 110 pilot (CVW-11 log, unverified)"
+  firsthand: true
+  firsthand_detail: "Visual estimate."
+  source:
+    title: "U.S. Department Of Defense Video Shows Unknown Object Intercepted By U.S. Navy Super Hornet And We Have No Idea What It Was (excerpts a CVW-11 event summary log first posted on Above Top Secret in 2007; authenticity unverified)"
+    outlet: "The Aviationist (David Cenciotti)"
+    date: "12/17/2017"
+    url: "https://theaviationist.com/2017/12/17/u-s-department-of-defense-video-shows-unknown-object-intercepted-by-u-s-navy-super-hornet-and-we-have-no-idea-what-it-was/"
+  verification: "relayed: quoted in The Aviationist article; the original was not opened"
+  location_in_source: "article excerpt"
+  claim: "The pilot estimated 600 to 700 kt and says the object climbed and turned inside his turn radius, then was lost in haze at about 14,000 ft heading due east."
+  quantity: "speed; heading; last altitude"
+  value: "600 to 700 kt; last seen 14,000 ft heading 090"
+  uncertainty: "Unverified log; visual speed estimates over water are poor."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T28, T-T57]
+  notes: ""
+
+- id: T-T69
+  witness: "Unnamed FAST EAGLE 110 pilot (CVW-11 log, unverified)"
+  firsthand: true
+  firsthand_detail: "Visual."
+  source:
+    title: "U.S. Department Of Defense Video Shows Unknown Object Intercepted By U.S. Navy Super Hornet And We Have No Idea What It Was (excerpts a CVW-11 event summary log first posted on Above Top Secret in 2007; authenticity unverified)"
+    outlet: "The Aviationist (David Cenciotti)"
+    date: "12/17/2017"
+    url: "https://theaviationist.com/2017/12/17/u-s-department-of-defense-video-shows-unknown-object-intercepted-by-u-s-navy-super-hornet-and-we-have-no-idea-what-it-was/"
+  verification: "relayed: quoted in The Aviationist article; the original was not opened"
+  location_in_source: "article excerpt"
+  claim: "The closest point of approach was about 4,000 to 5,000 ft and neither aircraft got a radar lock or a positive identification."
+  quantity: "range (closest approach)"
+  value: "4,000 to 5,000 ft (about 0.8 mile)"
+  uncertainty: "Unverified log."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T08]
+  notes: ""
+
+- id: T-T70
+  witness: "Maj. Douglas 'Cheeks' Kurth (VMFA-232, as named in the forum compilation)"
+  firsthand: true
+  firsthand_detail: "Visual, from a single-seat F/A-18 that overflew the spot later."
+  source:
+    title: "Fravor's Hypersonic UFO observation. Parallax Illusion? Comparing Accounts (forum thread compiling quotes from several original sources)"
+    outlet: "Metabunk forum (secondary compilation; originals named in notes)"
+    date: "2021 (thread; individual posts undated in the page text)"
+    url: "https://www.metabunk.org/threads/fravors-hypersonic-ufo-observation-parallax-illusion-comparing-accounts.10941/"
+  verification: "relayed: quoted in Metabunk thread 10941 citing a SOFREP 'X-Files Edition' piece (the SOFREP page returned HTTP 403 to the fetch tool); the original was not opened"
+  location_in_source: "thread table"
+  claim: "The whitewater was about 50 to 100 m across; the sighting was in the late morning."
+  quantity: "size of surface disturbance; time of day"
+  value: "50 to 100 m diameter; late morning"
+  uncertainty: "Forum relay of a magazine piece; rank and details not verified."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T21, T-T64]
+  notes: ""
+
+- id: T-T71
+  witness: "Leaked 2009 report (as summarized by KLAS and The Black Vault)"
+  firsthand: false
+  firsthand_detail: "Document summary by reporters."
+  source:
+    title: "I-Team Exclusive: Confidential report analyzes Tic Tac UFO incidents (reporter's summary of the leaked 2009 report)"
+    outlet: "KLAS 8 News Now (George Knapp)"
+    date: "05/18/2018 (inferred from the linked PDF URL; page shows no date)"
+    url: "https://www.8newsnow.com/news/i-team-exclusive-confidential-report-analyzes-tic-tac-ufo-incidents/amp/"
+  verification: "read through a page-reading tool (article text); the report itself was not obtained"
+  location_in_source: "article text"
+  claim: "The leaked report describes a 45-foot Tic Tac object, tracks over about two weeks in late 2004 (11/10 to 11/16 in the Black Vault summary), seven F/A-18 pilots and ship radar operators interviewed, an underwater object about 100 yards across, and objects falling from about 60,000 ft to near sea level in seconds (Black Vault summary)."
+  quantity: "size; dates; altitude; whitewater size"
+  value: "45 ft; 11/10 to 11/16/2004; 60,000 ft to sea level in seconds; about 100 yd underwater object"
+  uncertainty: "Reporter summaries of an undated document of unknown authorship (Pentagon source said authenticity could not be confirmed)."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T01, T-T55]
+  notes: "Black Vault summary page: https://www.theblackvault.com/casefiles/the-vault-files-the-tic-tac-incident-november-14-2004/"

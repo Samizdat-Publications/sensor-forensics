@@ -1,0 +1,62 @@
+# GOFAST (January 2015, F/A-18F, ATFLIR, range on screen): public testimony constraints.
+# Generated and hand-checked for work item M3.3 on 10/31/2026. See README.md and SOURCES.md.
+# There is almost no GOFAST-specific aircrew testimony in public sources. The East Coast class-of-objects claims that also bear on GOFAST are in gimbal.yaml
+# (applies_to includes GOFAST): G-T04, G-T05, G-T16, G-T17, G-T22, G-T23.
+# No transcripts are copied; each claim is a paraphrase plus at most one quote under 15 words.
+
+- id: F-T01
+  witness: "AARO case record (official; the reporting source is not named)"
+  firsthand: false
+  firsthand_detail: "Official case card summarizing the original report; the original observers are not named."
+  source:
+    title: "AARO Case Resolution: \"Go Fast\" (with Appendix A)"
+    outlet: "U.S. DoD All-domain Anomaly Resolution Office"
+    date: "02/06/2025"
+    url: "https://www.aaro.mil/Portals/136/PDFs/case_resolution_reports/AARO_GoFast_Case_Resolution_Card_Methodology_Final.pdf (copy read: https://www.theblackvault.com/documentarchive/wp-content/uploads/2025/02/AARO_GoFast_Case_Resolution_Card_Methodology_Final.pdf)"
+  verification: "read directly in an earlier work item (docs/prior-work/aaro-gofast.md, p. 1 and p. 4); not re-opened here"
+  location_in_source: "PDF p. 1 (cover card) and p. 4"
+  claim: "The case card lists the reported object height as near the ocean's surface."
+  quantity: "object altitude (as reported)"
+  value: "near sea level (reported)"
+  uncertainty: "A reported impression, which AARO's own analysis (about 13,000 ft) overturns; keep it as the witness-perceived value only."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "The 'skimming the ocean' impression comes from the pod's steep depression angles with no range. The AARO value is an analysis result, not testimony."
+
+- id: F-T02
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) (as quoted from an NBC News segment)"
+  firsthand: false
+  firsthand_detail: "Relaying the timing of two videos; was not the crew of either recording."
+  source:
+    title: "\"GO FAST\" Footage from Tom DeLonge's To The Stars Academy. Bird? Balloon? (forum thread, page 13, posts 301-518 quoting Graves, Lemoine and Lehto)"
+    outlet: "Metabunk forum (secondary; the quoted videos were not opened)"
+    date: "11/21/2024 to 11/23/2024 (post dates)"
+    url: "https://www.metabunk.org/threads/go-fast-footage-from-tom-delonges-to-the-stars-academy-bird-balloon.9569/page-13"
+  verification: "relayed: Metabunk post 485 (11/22/2024) quoting the NBC News segment at about 2:57 to 3:09; the segment was not opened"
+  location_in_source: "forum post 485; NBC News segment at about 02:57 to 03:09"
+  claim: "Graves said the GoFast video was captured within minutes of the Gimbal video, with many more objects operating in the area."
+  quantity: "timing relative to GIMBAL; number of objects"
+  value: "within minutes of GIMBAL; 'many more objects'"
+  uncertainty: "Relayed through a forum post; the forum itself disputes the 'many more objects' part. Low weight."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "If true, GOFAST and GIMBAL share a date, so the wind and ERA5 date question (01/21, 01/24 or 01/25/2015) must be resolved together. The DoD lists GOFAST as 01/21/2015; the GIMBAL metadata suggests 01/25 UTC."
+
+- id: F-T03
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) (and two other speakers named in the thread)"
+  firsthand: false
+  firsthand_detail: "Description of the sensor mode, second-hand through a forum summary."
+  source:
+    title: "\"GO FAST\" Footage from Tom DeLonge's To The Stars Academy. Bird? Balloon? (forum thread, page 13, posts 301-518 quoting Graves, Lemoine and Lehto)"
+    outlet: "Metabunk forum (secondary; the quoted videos were not opened)"
+    date: "11/21/2024 to 11/23/2024 (post dates)"
+    url: "https://www.metabunk.org/threads/go-fast-footage-from-tom-delonges-to-the-stars-academy-bird-balloon.9569/page-13"
+  verification: "relayed: Metabunk post 488 summarizing; no direct Graves quote appears on the page"
+  location_in_source: "forum posts 481, 488 and 301 to 318 (video timestamps not given)"
+  claim: "Graves, Lehto and Lemoine are said to have described the on-screen range as ATFLIR passive ranging rather than radar; another poster recalls the range coming from a laser, another recalls 'trig'."
+  quantity: "sensor used for the RNG readout"
+  value: "passive (computed) ranging, not radar"
+  uncertainty: "Very weak: three paraphrases by forum posters who disagree. The lab should read the RNG field's behavior directly from the frames instead."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "The AARO appendix reads the RNG value as a tracker range. This claim matters because passive range from a flat-Earth angle model is itself a model output."
