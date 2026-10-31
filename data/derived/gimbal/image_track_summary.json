@@ -1,0 +1,451 @@
+{
+  "case": "gimbal",
+  "n_frames": 1031,
+  "method": "extract/image_cues.py (see module docstring)",
+  "bank": {
+    "valid_frames": 1031,
+    "resid_px_median": 0.60641,
+    "sigma_deg_median": 0.03719,
+    "lr_diff_deg_median_abs": 0.0592,
+    "range_deg": [
+      -39.53821,
+      -22.58816
+    ]
+  },
+  "sitrec_bank": {
+    "mapping": "ours = -(Sitrec CSV bank); ours = horizon-bar line angle, CCW positive with y up",
+    "n": 1031,
+    "mean_diff_deg": -0.7515,
+    "mean_abs_diff_deg": 0.75152,
+    "max_abs_diff_deg": 1.53563,
+    "rms_diff_deg": 0.82315,
+    "corr": 0.99983,
+    "fit_ours_eq_slope_x_sitrec_plus_icpt": [
+      1.08469,
+      1.88918
+    ],
+    "rms_after_linear_fit_deg": 0.07656,
+    "tan_ratio_ours_over_sitrec": 1.03278,
+    "rms_after_tan_ratio_deg": 0.28893,
+    "max_abs_after_tan_ratio_deg": 0.67493
+  },
+  "obj": {
+    "found_frames": 1031,
+    "snr_median": 7.51575,
+    "sign_pass1_disagree_frames": 190,
+    "angle_raw_range_deg": [
+      -52.09044,
+      73.67468
+    ],
+    "angle_unwrapped_median9_range_deg": [
+      -51.12761,
+      69.87759
+    ],
+    "angle_frame_to_frame_median_abs_deg": 0.65251,
+    "angle_first_last_deg": [
+      -47.93344,
+      64.41776
+    ],
+    "lo_hi_angle_diff_median_abs_deg": 0.18875
+  },
+  "sitrec_glare": {
+    "offset_deg_ours_minus_sitrec": -0.64666,
+    "n": 1031,
+    "mean_abs_after_offset_deg": 0.98803,
+    "rms_after_offset_deg": 1.51094,
+    "p95_abs_after_offset_deg": 2.09083,
+    "max_abs_after_offset_deg": 25.445,
+    "sitrec_range_deg": [
+      -51.51917,
+      87.7885
+    ]
+  },
+  "polarity_segments": [
+    [
+      0,
+      371,
+      "WHT"
+    ],
+    [
+      372,
+      1030,
+      "BLK"
+    ]
+  ],
+  "obj_at_frames": {
+    "0": {
+      "polarity": "WHT",
+      "obj_sign": 1,
+      "obj_snr": 11.79803,
+      "obj_lo_area_px": 203,
+      "obj_hi_area_px": 154,
+      "obj_hi_angle_deg": -47.93344,
+      "obj_hi_major_px": 20.94847,
+      "obj_hi_minor_px": 9.86399,
+      "obj_hi_integ": 18169.0,
+      "obj_hi_symadj_px": 0
+    },
+    "300": {
+      "polarity": "WHT",
+      "obj_sign": 1,
+      "obj_snr": 19.29501,
+      "obj_lo_area_px": 214,
+      "obj_hi_area_px": 163,
+      "obj_hi_angle_deg": -49.35158,
+      "obj_hi_major_px": 21.97597,
+      "obj_hi_minor_px": 9.65803,
+      "obj_hi_integ": 19607.0,
+      "obj_hi_symadj_px": 0
+    },
+    "500": {
+      "polarity": "BLK",
+      "obj_sign": -1,
+      "obj_snr": 7.86906,
+      "obj_lo_area_px": 235,
+      "obj_hi_area_px": 220,
+      "obj_hi_angle_deg": -50.45501,
+      "obj_hi_major_px": 24.87537,
+      "obj_hi_minor_px": 11.58197,
+      "obj_hi_integ": 14340.0,
+      "obj_hi_symadj_px": 0
+    },
+    "700": {
+      "polarity": "BLK",
+      "obj_sign": -1,
+      "obj_snr": 6.84126,
+      "obj_lo_area_px": 232,
+      "obj_hi_area_px": 227,
+      "obj_hi_angle_deg": -50.77317,
+      "obj_hi_major_px": 25.77579,
+      "obj_hi_minor_px": 11.72849,
+      "obj_hi_integ": 15104.0,
+      "obj_hi_symadj_px": 0
+    },
+    "900": {
+      "polarity": "BLK",
+      "obj_sign": -1,
+      "obj_snr": 5.87771,
+      "obj_lo_area_px": 210,
+      "obj_hi_area_px": 210,
+      "obj_hi_angle_deg": 16.54737,
+      "obj_hi_major_px": 22.62759,
+      "obj_hi_minor_px": 12.355,
+      "obj_hi_integ": 12239.0,
+      "obj_hi_symadj_px": 0
+    },
+    "1030": {
+      "polarity": "BLK",
+      "obj_sign": -1,
+      "obj_snr": 4.57155,
+      "obj_lo_area_px": 197,
+      "obj_hi_area_px": 197,
+      "obj_hi_angle_deg": 64.41776,
+      "obj_hi_major_px": 23.09383,
+      "obj_hi_minor_px": 11.34767,
+      "obj_hi_integ": 11645.0,
+      "obj_hi_symadj_px": 0
+    }
+  },
+  "bg_motion_px_per_frame": {
+    "first100": {
+      "dx": 6.04627,
+      "dy": 1.97502,
+      "speed": 6.36273,
+      "ncc_median": 0.78368,
+      "ncc0_median": 0.34898,
+      "ecc_median": 0.79253
+    },
+    "last100": {
+      "dx": 1.01909,
+      "dy": 0.61141,
+      "speed": 1.30587,
+      "ncc_median": 0.7731,
+      "ncc0_median": 0.63329,
+      "ecc_median": 0.81589
+    }
+  },
+  "bg_rot_dpf": {
+    "median": -0.02094,
+    "mad_sigma": 0.02165,
+    "valid_frames": 934
+  },
+  "cloud_motion_px_per_frame": {
+    "first100": {
+      "dx": 5.85807,
+      "dy": 1.82301,
+      "speed": 6.13826,
+      "ncc_median": 0.91301,
+      "ncc0_median": 0.485,
+      "ecc_median": 0.91386
+    },
+    "last100": {
+      "dx": 1.01111,
+      "dy": 0.61513,
+      "speed": 1.36094,
+      "ncc_median": 0.9306,
+      "ncc0_median": 0.74681,
+      "ecc_median": 0.93374
+    }
+  },
+  "cloud_rot_dpf": {
+    "median": -0.02654,
+    "mad_sigma": 0.04591,
+    "valid_frames": 1023
+  },
+  "cv2_phaseCorrelate_diagnostic": {
+    "median_speed_pc": 0.02482,
+    "median_speed_ncc_ecc": 4.34472,
+    "note": "phaseCorrelate locks onto a zero-shift peak on these copies; not used as motion"
+  },
+  "orientation_steps": [
+    {
+      "center_frame": 700,
+      "window": [
+        685,
+        715
+      ],
+      "obj_angle_change_deg": -0.30994,
+      "bank_change_deg": -0.08712,
+      "bg_rot_deg": -0.29031,
+      "bg_rot_pairs": [
+        -0.1218,
+        -0.0238,
+        -0.0653,
+        -0.0535,
+        -0.0259
+      ],
+      "bg_rot_sigma_deg": 0.08904,
+      "bg_span": [
+        685,
+        715
+      ],
+      "bg_ecc_min": 0.80728,
+      "bg_ncc_margin_min": 0.28755,
+      "cloud_rot_deg": -1.12776,
+      "cloud_rot_pairs": [
+        -0.1841,
+        -0.0946,
+        -0.0154,
+        -0.1039,
+        -0.0968,
+        -0.1791,
+        -0.2491,
+        -0.2049
+      ],
+      "cloud_rot_sigma_deg": 0.21469,
+      "cloud_span": [
+        685,
+        715
+      ],
+      "cloud_ecc_min": 0.93242,
+      "cloud_ncc_margin_min": 0.05239
+    },
+    {
+      "center_frame": 728,
+      "window": [
+        713,
+        743
+      ],
+      "obj_angle_change_deg": 9.27712,
+      "bank_change_deg": -0.20639,
+      "bg_rot_deg": -0.12386,
+      "bg_rot_pairs": [
+        -0.606,
+        0.8252,
+        -0.0596,
+        -0.0978,
+        -0.1857
+      ],
+      "bg_rot_sigma_deg": 1.1687,
+      "bg_span": [
+        713,
+        743
+      ],
+      "bg_ecc_min": 0.81642,
+      "bg_ncc_margin_min": 0.25256,
+      "cloud_rot_deg": -0.73353,
+      "cloud_rot_pairs": [
+        -0.5445,
+        -0.4189,
+        0.7946,
+        -0.1005,
+        -0.1717,
+        -0.0747,
+        -0.1899,
+        -0.0279
+      ],
+      "cloud_rot_sigma_deg": 1.13045,
+      "cloud_span": [
+        713,
+        743
+      ],
+      "cloud_ecc_min": 0.92709,
+      "cloud_ncc_margin_min": 0.03099
+    },
+    {
+      "center_frame": 824,
+      "window": [
+        809,
+        839
+      ],
+      "obj_angle_change_deg": 14.89156,
+      "bank_change_deg": -0.08495,
+      "bg_rot_deg": 0.53864,
+      "bg_rot_pairs": [
+        null,
+        0.3504,
+        null,
+        0.128,
+        0.0602
+      ],
+      "bg_rot_sigma_deg": 0.2629,
+      "bg_span": [
+        809,
+        839
+      ],
+      "bg_ecc_min": 0.84486,
+      "bg_ncc_margin_min": 0.11021,
+      "cloud_rot_deg": 0.31325,
+      "cloud_rot_pairs": [
+        -0.8265,
+        -0.1727,
+        0.7037,
+        0.5141,
+        0.0262,
+        0.0513,
+        -0.0487,
+        0.0659
+      ],
+      "cloud_rot_sigma_deg": 1.29628,
+      "cloud_span": [
+        809,
+        839
+      ],
+      "cloud_ecc_min": 0.93832,
+      "cloud_ncc_margin_min": 0.00511
+    },
+    {
+      "center_frame": 877,
+      "window": [
+        862,
+        892
+      ],
+      "obj_angle_change_deg": 29.65429,
+      "bank_change_deg": 1.09827,
+      "bg_rot_deg": 0.50278,
+      "bg_rot_pairs": [
+        -1.2204,
+        null,
+        0.5566,
+        0.3591,
+        0.8074
+      ],
+      "bg_rot_sigma_deg": 1.83189,
+      "bg_span": [
+        862,
+        892
+      ],
+      "bg_ecc_min": 0.8303,
+      "bg_ncc_margin_min": 0.06782,
+      "cloud_rot_deg": 1.725,
+      "cloud_rot_pairs": [
+        -1.1843,
+        0.4629,
+        0.9125,
+        0.3972,
+        0.3405,
+        0.6038,
+        0.1923
+      ],
+      "cloud_rot_sigma_deg": 1.77478,
+      "cloud_span": [
+        862,
+        892
+      ],
+      "cloud_ecc_min": 0.93639,
+      "cloud_ncc_margin_min": 0.00368
+    },
+    {
+      "center_frame": 908,
+      "window": [
+        893,
+        923
+      ],
+      "obj_angle_change_deg": 23.96087,
+      "bank_change_deg": 6.26926,
+      "bg_rot_deg": null,
+      "bg_rot_pairs": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "bg_rot_sigma_deg": null,
+      "bg_span": [
+        893,
+        923
+      ],
+      "bg_ecc_min": 0.82452,
+      "bg_ncc_margin_min": 0.07529,
+      "cloud_rot_deg": 6.33156,
+      "cloud_rot_pairs": [
+        0.7486,
+        0.8167,
+        1.1098,
+        0.8775,
+        0.8964,
+        0.7905,
+        0.8664,
+        0.2257
+      ],
+      "cloud_rot_sigma_deg": 0.71543,
+      "cloud_span": [
+        893,
+        923
+      ],
+      "cloud_ecc_min": 0.93731,
+      "cloud_ncc_margin_min": 0.00586
+    },
+    {
+      "center_frame": 974,
+      "window": [
+        959,
+        989
+      ],
+      "obj_angle_change_deg": 30.59413,
+      "bank_change_deg": -0.27337,
+      "bg_rot_deg": 1.66997,
+      "bg_rot_pairs": [
+        0.3036,
+        0.0391,
+        null,
+        0.8499,
+        0.4773
+      ],
+      "bg_rot_sigma_deg": 0.67995,
+      "bg_span": [
+        959,
+        989
+      ],
+      "bg_ecc_min": 0.80502,
+      "bg_ncc_margin_min": 0.00786,
+      "cloud_rot_deg": 0.18531,
+      "cloud_rot_pairs": [
+        -0.0526,
+        -0.0318,
+        -0.6743,
+        -0.3015,
+        0.8993,
+        0.3461
+      ],
+      "cloud_rot_sigma_deg": 1.32908,
+      "cloud_span": [
+        959,
+        989
+      ],
+      "cloud_ecc_min": 0.92889,
+      "cloud_ncc_margin_min": 0.0133
+    }
+  ]
+}
