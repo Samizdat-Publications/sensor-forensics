@@ -26,13 +26,22 @@ def run(cmd: list[str]) -> tuple[int, str]:
 def main() -> int:
     ok = True
 
-    code, out = run([sys.executable, "-m", "pytest", "-rs", "-q"])
-    tail = out.strip().splitlines()[-1] if out.strip() else "(no output)"
-    print(f"pytest: {tail}")
-    if code != 0:
+    # Read counts from a JUnit report rather than the console: pyproject's addopts already
+    # passes -q, and stacked -q flags suppress the summary line a regex would need.
+    import xml.etree.ElementTree as ET
+
+    report = ROOT / "artifacts" / "tmp" / "gate-junit.xml"
+    report.parent.mkdir(parents=True, exist_ok=True)
+    code, out = run([sys.executable, "-m", "pytest", "-rs", f"--junitxml={report}"])
+    suite = ET.parse(report).getroot()
+    suite = suite if suite.tag == "testsuite" else suite.find("testsuite")
+    counts = {k: int(suite.get(k, 0)) for k in ("tests", "failures", "errors", "skipped")}
+    print(f"pytest: {counts['tests']} tests, {counts['failures']} failures, "
+          f"{counts['errors']} errors, {counts['skipped']} skipped")
+    if code != 0 or counts["failures"] or counts["errors"]:
         ok = False
         print(out[-4000:])
-    if re.search(r"\bskipped\b", tail):
+    if counts["skipped"]:
         ok = False
         print("GATE FAIL: skipped tests count as failures.")
 

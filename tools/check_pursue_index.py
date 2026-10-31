@@ -20,7 +20,19 @@ def main() -> int:
     print("duplicate clip_id:", list(dups["clip_id"]) or "none")
     shared = df[df.duplicated("dvids_id", keep=False)]
     print("shared dvids_id:", list(shared["clip_id"]) or "none")
-    return 1 if len(dups) else 0
+    bad = len(dups)
+    triage_path = ROOT / "data" / "pursue" / "triage.csv"
+    if triage_path.exists():
+        tr = pd.read_csv(triage_path, dtype=str)
+        counts = tr["clip_id"].value_counts()
+        missing = sorted(set(df["clip_id"]) - set(tr["clip_id"]))
+        extra = sorted(set(tr["clip_id"]) - set(df["clip_id"]))
+        twice = sorted(counts[counts > 1].index)
+        print(f"triage rows: {len(tr)}; missing {missing or 'none'}; not in index {extra or 'none'}; "
+              f"duplicated {twice or 'none'}")
+        print("tiers:", dict(Counter(tr["tier"])))
+        bad += len(missing) + len(extra) + len(twice)
+    return 1 if bad else 0
 
 
 if __name__ == "__main__":

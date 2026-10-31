@@ -1,15 +1,19 @@
 {
   "project": "sensor-forensics",
   "title": "Sensor Forensics",
-  "updated": "2026-10-30T23:36:04-04:00",
-  "milestone": "M0",
-  "milestone_title": "Data audit",
+  "updated": "2026-10-31T03:04:10-04:00",
+  "milestone": "M1",
+  "milestone_title": "Symbology extraction",
   "progress": {
-    "done": 22,
+    "done": 27,
     "total": 58
   },
-  "last_checkpoint": null,
-  "headline": "M0 nearly done (PURSUE triage waits on slow downloads); M1 reading of GIMBAL and GOFAST done; M2 sensor model reproduces Sitrec exactly.",
+  "last_checkpoint": {
+    "id": "CP-01",
+    "title": "Data audit",
+    "file": "checkpoints/CP-01.md"
+  },
+  "headline": "CP-01 passed. Paused at the 65% weekly quota cap with CP-02 open (second blind sample and an intermittent test to fix).",
   "needs_stewart": [
     {
       "id": "Q-004",
@@ -34,6 +38,7 @@
   "blocker": null,
   "highlights": [
     "artifacts/cp01/gimbal_fields.png",
-    "artifacts/cp01/gofast_fields.png"
+    "artifacts/cp01/gimbal_horizon_object.png",
+    "artifacts/cp02/blind/adjudication.png"
   ]
 }

@@ -14,7 +14,7 @@ Audited 10/30/2026 from the NAVAIR 2020 copy (Wayback capture of the NAVAIR FOIA
 | Duration | 34.515 s |
 | Provenance | Wayback copy of `navair.navy.mil/foia/.../3 - GOFAST.wmv` (NAVAIR itself refuses scripted requests) |
 
-Evidence image: `artifacts/cp01/gofast_fields.png` (every field cropped from 8 frames evenly spaced from f0 to f1030, 3x). Layout used: `extract/layouts/gofast.yaml`.
+Evidence images: `artifacts/cp01/gofast_fields.png` (every text field cropped from 8 frames evenly spaced from f0 to f1030, 3x) and `artifacts/cp01/gofast_horizon_object.png` (horizon bars, reticle, object and ocean background at 6 frames). Layout used: `extract/layouts/gofast.yaml`.
 
 ## Readable on screen, frame by frame
 
@@ -24,8 +24,8 @@ Values below were read by eye from the evidence image. M1 reads every frame.
 |---|---|---|---|---|
 | Pod azimuth | `35° L` | 1 deg | 35 L to 58 L | Left of the nose throughout |
 | Pod elevation | `-22°` | 1 deg | -22 to -36 | Looking down at the sea |
-| Range | `4.3 RNG` | 0.1 nmi | blank until about f368, then 4.3 to 3.3 | Appears with the laser symbology (`LTD/R`) |
-| Closure rate | `210 Vc` | 10 kt (to be confirmed) | blank until about f368, then 210 to 150 | Not used by Sitrec's keyframe tables (to confirm at M2) |
+| Range | `4.3 RNG` | 0.1 nmi | blank until f368, then 4.4 to 3.3 (M1 reading) | Appears with the laser symbology (`LTD/R`) |
+| Closure rate | `210 Vc` | 10 kt | blank until f368, then 220 to 150 (M1 reading) | Not among the inputs of Sitrec's GOFAST sitch (`docs/prior-work/sitrec.md`, GOFAST inputs table) or AARO's analysis (`docs/prior-work/aaro-gofast.md`, inputs) |
 | Jet altitude | `25000 B` | 10 ft | 25000 to 25010 | `B` likely barometric |
 | Indicated airspeed | `252` | 1 kt | 252 to 259 | Under `ADV-W4 OK` |
 | Mach | `M 0.61` | 0.01 | 0.61 to 0.62 | |
@@ -56,7 +56,7 @@ Other symbols seen, not used for geometry: `NAR`, `OPR`, `RTCL`, `TACT`, `L+S`, 
 
 ## Internal consistency check already available
 
-Range falls from 4.4 nmi (about f350) to 3.3 nmi (f1022): 1.1 nmi in about 22.4 s, an average closing speed of about 177 kt. The on-screen closure rate falls from 210 to 150 kt over the same span (average about 180). The two independent readouts agree. M2 uses this as a test.
+Range falls from 4.4 nmi (about f350) to 3.3 nmi (f1022): 1.1 nmi in about 22.4 s, an average closing speed of about 177 kt. The on-screen closure rate falls from 220 to 150 kt over the same span (average about 180). The two independent readouts agree. M2 uses this as a test.
 
 ## Verdict
 

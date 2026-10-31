@@ -92,11 +92,11 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 - [x] 2. **[W] then [bg]** `tools/fetch_videos.py`:
    - Downloads the NAVAIR GIMBAL.wmv, GOFAST.wmv and FLIR.mp4, the 2007 F4.MPG from the Wayback Machine, and the TTSA 2017 copies for comparison.
    - Records SHA-256, ffprobe data (codec, fps, frame count, duration), source URL and access date in `data/videos/MANIFEST.json`, which is committed.
-- [~] 3. **[W] then [bg]** PURSUE:
+- [x] 3. **[W] then [bg]** PURSUE:
    - `tools/pursue_index.py` scrapes the official war.gov/UFO listing (ID, release, agency, date, location, title, URL) into `data/pursue/index.csv`.
    - Then it downloads the six zips one at a time with resume, hashes each zip and each clip, extracts the clips, runs ffprobe on each, and deletes the zips once the hashes are recorded.
    - `tools/contact_sheet.py` makes a 16-frame sheet per clip plus 3 full-resolution frames.
-- [~] 4. **[W] x up to 5 in parallel** PURSUE triage, about 27 clips per worker:
+- [x] 4. **[W] x up to 5 in parallel** PURSUE triage, about 27 clips per worker:
    - Each clip gets a row in `data/pursue/triage.csv`: which symbology fields are visible, redaction state, sensor family guess, scene references (horizon, ship, coastline, clouds, objects of known size), tier and reason.
    - Tiers:
      - **Full:** per-frame line of sight is possible.
@@ -115,10 +115,10 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - logicbear's cloud-motion notebooks;
    - AARO's GOFAST analysis.
 - [x] 7. **[me]** `docs/prior-work/DISAGREEMENTS.md` lists every point where the analyses differ, with the cause of each: range, whether the object "stops", rotation as glare versus attitude, wind, elevation precision, angle reference frame, jet turn rate, the size change, the "fleet" radar claim, and the four-input limit.
-- [~] 8. **[bg]** faster-whisper on the GPU transcribes the GIMBAL and GOFAST audio. Output goes to `data/derived/<video>/audio.json` with word confidences, labeled inferred.
-- [ ] 9. **[me]** A plain verdict per video. Then **[V]**, then CP-01.
+- [x] 8. **[bg]** faster-whisper on the GPU transcribes the GIMBAL and GOFAST audio. Output goes to `data/derived/<video>/audio.json` with word confidences, labeled inferred.
+- [x] 9. **[me]** A plain verdict per video. Then **[V]**, then CP-01.
 
-**CP-01 acceptance:** the audit tables; the PURSUE triage list; the disagreement list; a plain verdict on how far each video can be reconstructed.
+**CP-01: PASSED 10/31/2026, see checkpoints/CP-01.md.** CP-01 acceptance: the audit tables; the PURSUE triage list; the disagreement list; a plain verdict on how far each video can be reconstructed.
 
 **How I prove it:**
 - Every "readable" row cites frame numbers and a crop image. The verifier opens a sample of the crops.
@@ -158,8 +158,8 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - Corrections override other values when the tables are merged.
    - Test: a Playwright round trip.
 - [x] 6. **[me]** Cross-check against the Sitrec CSVs, field by field. Every disagreement gets reviewed in the correction tool.
-- [~] 7. **[bg]** Full extraction runs for GIMBAL, GOFAST and FLIR1.
-- [ ] 8. **[V] blind check:**
+- [x] 7. **[bg]** Full extraction runs for GIMBAL, GOFAST and FLIR1.
+- [~] 8. **[V] blind check:**
    - `tools/sample_frames.py --seed 2026 --n 100` picks 100 frames per video for GIMBAL and GOFAST (200 total).
    - Review sheets show raw crops only, never the extracted values.
    - The verifier types its own readings into a CSV.

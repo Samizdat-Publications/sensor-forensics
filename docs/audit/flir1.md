@@ -15,7 +15,7 @@ Audited 10/30/2026 from two copies.
 
 Side-by-side crops of the same moment (f300) in both copies: `artifacts/cp01/flir1_copies_crops_f300.png`. The two are about equally legible. The 2007 copy is squeezed vertically (240 lines) and no sharper, so the official copy is canonical; the 2007 copy is kept as a cross-check for any digit that is unreadable in the official one. Frame alignment between the copies is done in M1.
 
-Evidence image: `artifacts/cp01/flir1_fields.png` (every field from 8 frames, f0 to f2287, 3x). Layout: `extract/layouts/flir1.yaml`. Glyphs are only 5 to 6 px tall, so per-frame reading needs temporal smoothing and hand-checked templates.
+Evidence images: `artifacts/cp01/flir1_fields.png` (every text field from 8 frames, f0 to f2287, 3x) and `artifacts/cp01/flir1_horizon_object.png` (horizon bars and target at 7 frames). Layout: `extract/layouts/flir1.yaml`. Glyphs are only 5 to 6 px tall, so per-frame reading needs temporal smoothing and hand-checked templates.
 
 ## Readable on screen, frame by frame
 
@@ -27,7 +27,7 @@ Evidence image: `artifacts/cp01/flir1_fields.png` (every field from 8 frames, f0
 | Field of view mode | `NAR` (with a brief MFOV/WFOV per Sitrec) | | | Low at this size |
 | Sensor | `IR` / `TV` | | IR, TV for a stretch, IR again | Medium |
 | Jet altitude | `19990 B` | 10 ft | about 19,990 to 20,000 | Medium |
-| Indicated airspeed | `253` | 1 kt | about 250 to 253 | Low to medium |
+| Indicated airspeed | `253` | 1 kt | about 240 to 253 (strip shows 251, 252, 249, 248, 243, 245, 249, 253) | Low to medium |
 | Mach | `M 0.5x` | 0.01 | second digit hard to read | Low |
 | Clock | `4135` | 1 s | about 41:35 to 42:5x | Low to medium |
 | Polarity | `WHT` | | | Low |
