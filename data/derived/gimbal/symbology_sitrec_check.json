@@ -1,0 +1,14 @@
+{
+ "case": "gimbal",
+ "offset_convention": "sitrec_frame = our_frame + offset",
+ "fields": {
+  "azimuth": {
+   "source": "GimbalData.csv '4 azimuth'",
+   "best_offset": -1,
+   "frames_compared": 1030,
+   "agreement": 0.9728,
+   "disagreements": 28,
+   "max_abs_difference": 1.0
+  }
+ }
+}

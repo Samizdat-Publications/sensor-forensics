@@ -2,15 +2,19 @@
 # Same ATFLIR symbology layout as GOFAST; first pass from frame 500 (M0 audit); refined in M1.
 video: gimbal
 size: [640, 480]
+# M1.3: per-field character cells in frame coordinates (x = cell centers, y = glyph top and bottom rows),
+# measured from clean frames (gimbal f100, gofast f600; pitch about 9.3 px, altitude thousands drawn larger).
+# roles: d digit, D digit or blank, dL large digit, s minus or blank, dot, deg, LR, A letter or blank.
+# word: box read as a whole word (sensor, polarity).
 fields:
-  azimuth:   {box: [296, 42, 356, 60],  kind: text, format: "NN° L|R"}
-  elevation: {box: [132, 218, 182, 236], kind: text, format: "-N°"}
-  altitude:  {box: [420, 420, 482, 440], kind: text, format: "NNNNN B (ft)"}
-  airspeed:  {box: [168, 410, 204, 426], kind: text, format: "NNN (kt, indicated)"}
-  mach:      {box: [158, 425, 218, 439], kind: text, format: "M N.NN"}
-  clock:     {box: [296, 436, 350, 454], kind: text, format: "MMSS + letter"}
-  zoom:      {box: [156, 44, 214, 62],  kind: text, format: "Z N.N"}
-  sensor:    {box: [300, 26, 334, 42],  kind: text, format: "IR|TV"}
-  polarity:  {box: [160, 440, 200, 455], kind: text, format: "BLK|WHT"}
+  azimuth:   {box: [296, 42, 356, 60],  kind: text, format: "NN° L|R", cells: {y: [45, 57], x: [308, 317, 326.5, 344.5], roles: [D, d, deg, LR]}}
+  elevation: {box: [132, 218, 182, 236], kind: text, format: "-N°", cells: {y: [221, 233], x: [142.5, 151, 160.5, 170], roles: [s, D, d, deg]}}
+  altitude:  {box: [420, 420, 482, 440], kind: text, format: "NNNNN B (ft)", cells: {y: [423, 434], x: [427.5, 439.5, 451.5, 461, 470.5], roles: [dL, dL, d, d, d], big_y: [421, 435]}}
+  airspeed:  {box: [168, 410, 204, 426], kind: text, format: "NNN (kt, indicated)", cells: {y: [414, 425], x: [175, 184.5, 194], roles: [d, d, d]}}
+  mach:      {box: [158, 425, 218, 439], kind: text, format: "M N.NN", cells: {y: [428, 439], x: [184.5, 193.5, 203, 212], roles: [d, dot, d, d]}}
+  clock:     {box: [296, 436, 350, 454], kind: text, format: "MMSS + letter", cells: {y: [440, 451], x: [304, 313, 322, 331.5, 341], roles: [d, d, d, d, A]}}
+  zoom:      {box: [156, 44, 214, 62],  kind: text, format: "Z N.N", cells: {y: [47, 59], x: [185, 194, 203.5], roles: [d, dot, d]}}
+  sensor:    {box: [300, 26, 334, 42],  kind: text, format: "IR|TV", word: [308, 27, 331, 44]}
+  polarity:  {box: [160, 440, 200, 455], kind: text, format: "BLK|WHT", word: [162, 438, 198, 454]}
   horizon:   {box: [226, 120, 412, 250], kind: graphic, format: "artificial horizon bars (bank)"}
   object:    {box: [280, 200, 360, 280], kind: graphic, format: "target glare in track brackets"}

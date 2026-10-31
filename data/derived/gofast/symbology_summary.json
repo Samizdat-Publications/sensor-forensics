@@ -1,0 +1,974 @@
+{
+ "case": "gofast",
+ "n_frames": 1031,
+ "low_conf_threshold": 0.3,
+ "low_conf_threshold_note": "Confidence = best minus second-best NCC score (min over the value's characters), divided by the largest margin that template pair can give (1 - their correlation), so 1 means the cell matches its template as well as the template itself and 0 means midway between two glyphs. Blank cells: ink ratio distance from the blank threshold, at most 0.5. Threshold 0.30: over both videos, raw reads that disagree with both neighbors and the +-4 frame majority occur at 39% (conf < .05), 17% (.05-.1), 9% (.1-.2), 4% (.2-.3), 0.6% (.3-.5) and 0.005% (>= .5).",
+ "update_note": "update_gap_frames: frames between successive value changes (a value-change cadence, set by how fast the quantity moves). change_frame_phase: residues mod 6 of the frames where a clean (non-repaired) change happens; a dominant residue means the display refreshes that field on a fixed frame grid.",
+ "fields": {
+  "azimuth": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 18,
+   "low_confidence_frac": 0.0175,
+   "repaired_temporal": 0,
+   "first_value": "35L",
+   "last_value": "58L",
+   "n_changes": 23,
+   "update_gap_frames": {
+    "min": 18,
+    "median": 42.0,
+    "max": 96
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     23
+    ],
+    "dominant_residue": 5,
+    "dominant_fraction": 1.0
+   },
+   "changes": [
+    {
+     "frame": 11,
+     "from": "35L",
+     "to": "36L"
+    },
+    {
+     "frame": 83,
+     "from": "36L",
+     "to": "37L"
+    },
+    {
+     "frame": 131,
+     "from": "37L",
+     "to": "38L"
+    },
+    {
+     "frame": 149,
+     "from": "38L",
+     "to": "39L"
+    },
+    {
+     "frame": 239,
+     "from": "39L",
+     "to": "40L"
+    },
+    {
+     "frame": 257,
+     "from": "40L",
+     "to": "41L"
+    },
+    {
+     "frame": 299,
+     "from": "41L",
+     "to": "42L"
+    },
+    {
+     "frame": 353,
+     "from": "42L",
+     "to": "43L"
+    },
+    {
+     "frame": 383,
+     "from": "43L",
+     "to": "44L"
+    },
+    {
+     "frame": 407,
+     "from": "44L",
+     "to": "45L"
+    },
+    {
+     "frame": 437,
+     "from": "45L",
+     "to": "46L"
+    },
+    {
+     "frame": 461,
+     "from": "46L",
+     "to": "47L"
+    },
+    {
+     "frame": 491,
+     "from": "47L",
+     "to": "48L"
+    },
+    {
+     "frame": 539,
+     "from": "48L",
+     "to": "49L"
+    },
+    {
+     "frame": 635,
+     "from": "49L",
+     "to": "50L"
+    },
+    {
+     "frame": 695,
+     "from": "50L",
+     "to": "51L"
+    },
+    {
+     "frame": 737,
+     "from": "51L",
+     "to": "52L"
+    },
+    {
+     "frame": 785,
+     "from": "52L",
+     "to": "53L"
+    },
+    {
+     "frame": 827,
+     "from": "53L",
+     "to": "54L"
+    },
+    {
+     "frame": 875,
+     "from": "54L",
+     "to": "55L"
+    },
+    {
+     "frame": 911,
+     "from": "55L",
+     "to": "56L"
+    },
+    {
+     "frame": 947,
+     "from": "56L",
+     "to": "57L"
+    },
+    {
+     "frame": 983,
+     "from": "57L",
+     "to": "58L"
+    }
+   ]
+  },
+  "elevation": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 30,
+   "low_confidence_frac": 0.0291,
+   "repaired_temporal": 0,
+   "first_value": "-22",
+   "last_value": "-36",
+   "n_changes": 14,
+   "update_gap_frames": {
+    "min": 60,
+    "median": 72.0,
+    "max": 114
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     13
+    ],
+    "dominant_residue": 5,
+    "dominant_fraction": 0.929
+   },
+   "changes": [
+    {
+     "frame": 59,
+     "from": "-22",
+     "to": "-23"
+    },
+    {
+     "frame": 137,
+     "from": "-23",
+     "to": "-24"
+    },
+    {
+     "frame": 251,
+     "from": "-24",
+     "to": "-25"
+    },
+    {
+     "frame": 329,
+     "from": "-25",
+     "to": "-26"
+    },
+    {
+     "frame": 407,
+     "from": "-26",
+     "to": "-27"
+    },
+    {
+     "frame": 485,
+     "from": "-27",
+     "to": "-28"
+    },
+    {
+     "frame": 563,
+     "from": "-28",
+     "to": "-29"
+    },
+    {
+     "frame": 635,
+     "from": "-29",
+     "to": "-30"
+    },
+    {
+     "frame": 701,
+     "from": "-30",
+     "to": "-31"
+    },
+    {
+     "frame": 773,
+     "from": "-31",
+     "to": "-32"
+    },
+    {
+     "frame": 839,
+     "from": "-32",
+     "to": "-33"
+    },
+    {
+     "frame": 899,
+     "from": "-33",
+     "to": "-34"
+    },
+    {
+     "frame": 965,
+     "from": "-34",
+     "to": "-35"
+    },
+    {
+     "frame": 1030,
+     "from": "-35",
+     "to": "-36"
+    }
+   ]
+  },
+  "range": {
+   "frames": 1031,
+   "blank": 368,
+   "low_confidence": 8,
+   "low_confidence_frac": 0.0121,
+   "repaired_temporal": 0,
+   "first_value": "blank",
+   "last_value": "3.3",
+   "n_changes": 12,
+   "update_gap_frames": {
+    "min": 53,
+    "median": 61.5,
+    "max": 72
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     1,
+     1,
+     6,
+     0,
+     0,
+     3
+    ],
+    "dominant_residue": 2,
+    "dominant_fraction": 0.545
+   },
+   "changes": [
+    {
+     "frame": 368,
+     "from": "blank",
+     "to": "4.4"
+    },
+    {
+     "frame": 398,
+     "from": "4.4",
+     "to": "4.3"
+    },
+    {
+     "frame": 451,
+     "from": "4.3",
+     "to": "4.2"
+    },
+    {
+     "frame": 512,
+     "from": "4.2",
+     "to": "4.1"
+    },
+    {
+     "frame": 569,
+     "from": "4.1",
+     "to": "4.0"
+    },
+    {
+     "frame": 626,
+     "from": "4.0",
+     "to": "3.9"
+    },
+    {
+     "frame": 684,
+     "from": "3.9",
+     "to": "3.8"
+    },
+    {
+     "frame": 746,
+     "from": "3.8",
+     "to": "3.7"
+    },
+    {
+     "frame": 809,
+     "from": "3.7",
+     "to": "3.6"
+    },
+    {
+     "frame": 881,
+     "from": "3.6",
+     "to": "3.5"
+    },
+    {
+     "frame": 950,
+     "from": "3.5",
+     "to": "3.4"
+    },
+    {
+     "frame": 1022,
+     "from": "3.4",
+     "to": "3.3"
+    }
+   ]
+  },
+  "closure": {
+   "frames": 1031,
+   "blank": 368,
+   "low_confidence": 3,
+   "low_confidence_frac": 0.0045,
+   "repaired_temporal": 1,
+   "first_value": "blank",
+   "last_value": "150",
+   "n_changes": 8,
+   "update_gap_frames": {
+    "min": 62,
+    "median": 97.0,
+    "max": 122
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     0,
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "dominant_residue": 2,
+    "dominant_fraction": 0.333
+   },
+   "changes": [
+    {
+     "frame": 368,
+     "from": "blank",
+     "to": "220"
+    },
+    {
+     "frame": 380,
+     "from": "220",
+     "to": "210"
+    },
+    {
+     "frame": 446,
+     "from": "210",
+     "to": "200"
+    },
+    {
+     "frame": 508,
+     "from": "200",
+     "to": "190"
+    },
+    {
+     "frame": 629,
+     "from": "190",
+     "to": "180"
+    },
+    {
+     "frame": 751,
+     "from": "180",
+     "to": "170"
+    },
+    {
+     "frame": 858,
+     "from": "170",
+     "to": "160"
+    },
+    {
+     "frame": 945,
+     "from": "160",
+     "to": "150"
+    }
+   ]
+  },
+  "altitude": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 17,
+   "low_confidence_frac": 0.0165,
+   "repaired_temporal": 0,
+   "first_value": "25000",
+   "last_value": "25010",
+   "n_changes": 17,
+   "update_gap_frames": {
+    "min": 5,
+    "median": 7.0,
+    "max": 49
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     0,
+     0,
+     0,
+     0,
+     5,
+     12
+    ],
+    "dominant_residue": 5,
+    "dominant_fraction": 0.706
+   },
+   "changes": [
+    {
+     "frame": 635,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 653,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 659,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 670,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 677,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 683,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 689,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 694,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 701,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 730,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 737,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 743,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 767,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 772,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 779,
+     "from": "25000",
+     "to": "25010"
+    },
+    {
+     "frame": 790,
+     "from": "25010",
+     "to": "25000"
+    },
+    {
+     "frame": 839,
+     "from": "25000",
+     "to": "25010"
+    }
+   ]
+  },
+  "airspeed": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 6,
+   "low_confidence_frac": 0.0058,
+   "repaired_temporal": 4,
+   "first_value": "252",
+   "last_value": "259",
+   "n_changes": 15,
+   "update_gap_frames": {
+    "min": 5,
+    "median": 39.0,
+    "max": 306
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     0,
+     0,
+     0,
+     0,
+     6,
+     5
+    ],
+    "dominant_residue": 4,
+    "dominant_fraction": 0.545
+   },
+   "changes": [
+    {
+     "frame": 5,
+     "from": "252",
+     "to": "251"
+    },
+    {
+     "frame": 10,
+     "from": "251",
+     "to": "252"
+    },
+    {
+     "frame": 184,
+     "from": "252",
+     "to": "253"
+    },
+    {
+     "frame": 202,
+     "from": "253",
+     "to": "252"
+    },
+    {
+     "frame": 208,
+     "from": "252",
+     "to": "253"
+    },
+    {
+     "frame": 394,
+     "from": "253",
+     "to": "254"
+    },
+    {
+     "frame": 400,
+     "from": "254",
+     "to": "253"
+    },
+    {
+     "frame": 412,
+     "from": "253",
+     "to": "254"
+    },
+    {
+     "frame": 718,
+     "from": "254",
+     "to": "255"
+    },
+    {
+     "frame": 743,
+     "from": "255",
+     "to": "254"
+    },
+    {
+     "frame": 760,
+     "from": "254",
+     "to": "255"
+    },
+    {
+     "frame": 857,
+     "from": "255",
+     "to": "256"
+    },
+    {
+     "frame": 911,
+     "from": "256",
+     "to": "257"
+    },
+    {
+     "frame": 964,
+     "from": "257",
+     "to": "258"
+    },
+    {
+     "frame": 1025,
+     "from": "258",
+     "to": "259"
+    }
+   ]
+  },
+  "mach": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 3,
+   "low_confidence_frac": 0.0029,
+   "repaired_temporal": 0,
+   "first_value": "0.61",
+   "last_value": "0.62",
+   "n_changes": 3,
+   "update_gap_frames": {
+    "min": 6,
+    "median": 18.0,
+    "max": 30
+   },
+   "change_frame_phase": null,
+   "changes": [
+    {
+     "frame": 761,
+     "from": "0.61",
+     "to": "0.62"
+    },
+    {
+     "frame": 767,
+     "from": "0.62",
+     "to": "0.61"
+    },
+    {
+     "frame": 797,
+     "from": "0.61",
+     "to": "0.62"
+    }
+   ]
+  },
+  "clock": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 23,
+   "low_confidence_frac": 0.0223,
+   "repaired_temporal": 6,
+   "first_value": "4220A",
+   "last_value": "4254A",
+   "n_changes": 36,
+   "update_gap_frames": {
+    "min": 9,
+    "median": 30.0,
+    "max": 31
+   },
+   "change_frame_phase": {
+    "modulus": 6,
+    "counts_by_residue": [
+     0,
+     1,
+     1,
+     0,
+     8,
+     20
+    ],
+    "dominant_residue": 5,
+    "dominant_fraction": 0.667
+   },
+   "changes": [
+    {
+     "frame": 23,
+     "from": "4220A",
+     "to": "4221A"
+    },
+    {
+     "frame": 53,
+     "from": "4221A",
+     "to": "4222A"
+    },
+    {
+     "frame": 83,
+     "from": "4222A",
+     "to": "4223A"
+    },
+    {
+     "frame": 112,
+     "from": "4223A",
+     "to": "4224A"
+    },
+    {
+     "frame": 142,
+     "from": "4224A",
+     "to": "4225A"
+    },
+    {
+     "frame": 173,
+     "from": "4225A",
+     "to": "4226A"
+    },
+    {
+     "frame": 194,
+     "from": "4226A",
+     "to": "4226"
+    },
+    {
+     "frame": 203,
+     "from": "4226",
+     "to": "4227"
+    },
+    {
+     "frame": 232,
+     "from": "4227",
+     "to": "4228"
+    },
+    {
+     "frame": 253,
+     "from": "4228",
+     "to": "4228A"
+    },
+    {
+     "frame": 262,
+     "from": "4228A",
+     "to": "4229A"
+    },
+    {
+     "frame": 292,
+     "from": "4229A",
+     "to": "4230A"
+    },
+    {
+     "frame": 323,
+     "from": "4230A",
+     "to": "4231A"
+    },
+    {
+     "frame": 353,
+     "from": "4231A",
+     "to": "4232A"
+    },
+    {
+     "frame": 383,
+     "from": "4232A",
+     "to": "4233A"
+    },
+    {
+     "frame": 412,
+     "from": "4233A",
+     "to": "4234A"
+    },
+    {
+     "frame": 442,
+     "from": "4234A",
+     "to": "4235A"
+    },
+    {
+     "frame": 473,
+     "from": "4235A",
+     "to": "4236A"
+    },
+    {
+     "frame": 503,
+     "from": "4236A",
+     "to": "4237A"
+    },
+    {
+     "frame": 532,
+     "from": "4237A",
+     "to": "4238A"
+    },
+    {
+     "frame": 563,
+     "from": "4238A",
+     "to": "4239A"
+    },
+    {
+     "frame": 592,
+     "from": "4239A",
+     "to": "4240A"
+    },
+    {
+     "frame": 623,
+     "from": "4240A",
+     "to": "4241A"
+    },
+    {
+     "frame": 653,
+     "from": "4241A",
+     "to": "4242A"
+    },
+    {
+     "frame": 683,
+     "from": "4242A",
+     "to": "4243A"
+    },
+    {
+     "frame": 712,
+     "from": "4243A",
+     "to": "4244A"
+    },
+    {
+     "frame": 742,
+     "from": "4244A",
+     "to": "4245A"
+    },
+    {
+     "frame": 773,
+     "from": "4245A",
+     "to": "4246A"
+    },
+    {
+     "frame": 803,
+     "from": "4246A",
+     "to": "4247A"
+    },
+    {
+     "frame": 832,
+     "from": "4247A",
+     "to": "4248A"
+    },
+    {
+     "frame": 863,
+     "from": "4248A",
+     "to": "4249A"
+    },
+    {
+     "frame": 892,
+     "from": "4249A",
+     "to": "4250A"
+    },
+    {
+     "frame": 923,
+     "from": "4250A",
+     "to": "4251A"
+    },
+    {
+     "frame": 953,
+     "from": "4251A",
+     "to": "4252A"
+    },
+    {
+     "frame": 983,
+     "from": "4252A",
+     "to": "4253A"
+    },
+    {
+     "frame": 1012,
+     "from": "4253A",
+     "to": "4254A"
+    }
+   ]
+  },
+  "zoom": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 0,
+   "low_confidence_frac": 0.0,
+   "repaired_temporal": 0,
+   "first_value": "1.0",
+   "last_value": "1.0",
+   "n_changes": 0,
+   "update_gap_frames": null,
+   "change_frame_phase": null,
+   "changes": []
+  },
+  "sensor": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 0,
+   "low_confidence_frac": 0.0,
+   "repaired_temporal": 0,
+   "first_value": "IR",
+   "last_value": "IR",
+   "n_changes": 0,
+   "update_gap_frames": null,
+   "change_frame_phase": null,
+   "changes": []
+  },
+  "polarity": {
+   "frames": 1031,
+   "blank": 0,
+   "low_confidence": 2,
+   "low_confidence_frac": 0.0019,
+   "repaired_temporal": 0,
+   "first_value": "BLK",
+   "last_value": "BLK",
+   "n_changes": 2,
+   "update_gap_frames": {
+    "min": 146,
+    "median": 146.0,
+    "max": 146
+   },
+   "change_frame_phase": null,
+   "changes": [
+    {
+     "frame": 638,
+     "from": "BLK",
+     "to": "WHT"
+    },
+    {
+     "frame": 784,
+     "from": "WHT",
+     "to": "BLK"
+    }
+   ]
+  }
+ },
+ "ocr_second_vote": {
+  "n_low_conf_values_checked": 110,
+  "n_agree": 81,
+  "agree_by_field": {
+   "airspeed": [
+    3,
+    6
+   ],
+   "altitude": [
+    12,
+    17
+   ],
+   "azimuth": [
+    18,
+    18
+   ],
+   "clock": [
+    8,
+    23
+   ],
+   "closure": [
+    1,
+    3
+   ],
+   "elevation": [
+    30,
+    30
+   ],
+   "mach": [
+    2,
+    3
+   ],
+   "polarity": [
+    0,
+    2
+   ],
+   "range": [
+    7,
+    8
+   ]
+  },
+  "note": "rapidocr (recognition only) on the top-hat, 3x upscaled text span, only for values below the threshold; a vote, never used to overwrite (symbology_ocr.csv)."
+ }
+}

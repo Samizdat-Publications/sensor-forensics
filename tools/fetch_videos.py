@@ -178,6 +178,7 @@ def main() -> int:
                 print(f"{key}: {label}: {msg}")
                 if ok:
                     record(m, key, spec, dest, label, url, attempts)
+                    m.get("failed", {}).pop(key, None)
                     break
             else:
                 m.setdefault("failed", {})[key] = attempts

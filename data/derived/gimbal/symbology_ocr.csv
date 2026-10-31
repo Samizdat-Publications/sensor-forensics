@@ -1,0 +1,90 @@
+frame,field,template_value,template_conf,ocr_text,ocr_value,agree
+20,azimuth,54L,0.2113,53°L,53L,0
+38,azimuth,52L,0.1371,52°L,52L,1
+62,azimuth,52L,0.1102,57° L,57L,0
+86,azimuth,51L,0.0456,5° L,5L,0
+104,azimuth,49L,0.2500,59°L,59L,0
+128,azimuth,49L,0.2430,49°L,49L,1
+152,azimuth,47L,0.2500,4°L,4L,0
+170,azimuth,46L,0.2500,4°L,4L,0
+236,azimuth,44L,0.1732,特° L,,0
+254,azimuth,42L,0.1134,42°L,42L,1
+272,azimuth,42L,0.1309,4f° L,4L,0
+296,azimuth,40L,0.0064,4特°し,4,0
+308,azimuth,39L,0.2500,9°L,9L,0
+326,azimuth,39L,0.2243,39°L,39L,1
+344,azimuth,37L,0.2500,3°L,3L,0
+362,azimuth,36L,0.2500,F° L,,0
+398,azimuth,35L,0.0670,B,,0
+416,azimuth,34L,0.2405,3eL,3L,0
+434,azimuth,32L,0.0495,33°L,33L,0
+452,azimuth,32L,0.2277,37° L,37L,0
+470,azimuth,30L,0.2500,30° L,30L,1
+488,azimuth,29L,0.1456,38°L,38L,0
+489,azimuth,29L,0.2912,29°L,29L,1
+490,azimuth,29L,0.1800,29°L,29L,1
+491,azimuth,29L,0.0686,29°L,29L,1
+492,azimuth,29L,0.0686,29°L,29L,1
+493,azimuth,29L,0.2025,29°L,29L,1
+494,azimuth,29L,0.2061,29°L,29L,1
+495,azimuth,29L,0.2576,29°L,29L,1
+497,azimuth,29L,0.2503,29°,29,0
+498,azimuth,29L,0.1423,29°L,29L,1
+499,azimuth,29L,0.1772,29°L,29L,1
+502,azimuth,29L,0.2439,29°L,29L,1
+503,azimuth,29L,0.1771,29°L,29L,1
+506,azimuth,29L,0.1009,29°L,29L,1
+510,azimuth,28L,0.2016,28FL,28L,1
+511,azimuth,28L,0.1260,28°L,28L,1
+516,azimuth,28L,0.1510,28°,28,0
+517,azimuth,28L,0.2152,28°L,28L,1
+520,azimuth,28L,0.2340,28°L,28L,1
+523,azimuth,28L,0.1393,29°L,29L,0
+524,azimuth,27L,0.0697,29°L,29L,0
+542,azimuth,26L,0.1895,2F°L,2L,0
+572,azimuth,25L,0.1645,25°L,25L,1
+584,azimuth,24L,0.2111,23° L,23L,0
+602,azimuth,22L,0.1473,22°L,22L,1
+614,azimuth,22L,0.2160,2° L,2L,0
+632,azimuth,20L,0.0138,2º €,2,0
+644,azimuth,19L,0.1479,19º L,19L,1
+645,azimuth,19L,0.2957,19° L,19L,1
+649,azimuth,19L,0.1781,19°L,19L,1
+650,azimuth,19L,0.2818,19°L,19L,1
+653,azimuth,19L,0.2837,19°L,19L,1
+655,azimuth,19L,0.2959,19ºL,19L,1
+656,azimuth,19L,0.2119,19°L,19L,1
+657,azimuth,19L,0.2775,19°L,19L,1
+662,azimuth,19L,0.2751,19°L,19L,1
+668,azimuth,18L,0.0828,18° L,18L,1
+669,azimuth,18L,0.0389,18°L,18L,1
+674,azimuth,17L,0.2095,el,,0
+692,azimuth,16L,0.0670,18º L,18L,0
+716,azimuth,15L,0.2525,SiL,,0
+734,azimuth,14L,0.2414,é• t,,0
+746,azimuth,13L,0.0070,13°L,13L,1
+758,azimuth,12L,0.2353,I7° L,7L,0
+776,azimuth,11L,0.0376,IºL,,0
+788,azimuth,9L,0.1651,18°L,18L,0
+790,azimuth,9L,0.2603,9°L,9L,1
+793,azimuth,9L,0.1999,9°L,9L,1
+799,azimuth,9L,0.2585,9°L,9L,1
+800,azimuth,9L,0.2413,9°L,9L,1
+801,azimuth,8L,0.1206,9°L,9L,0
+802,azimuth,8L,0.2586,8ºL,8L,1
+806,azimuth,8L,0.1861,8°L,8L,1
+807,azimuth,8L,0.1648,9°L,9L,0
+812,azimuth,7L,0.2467,rfL,,0
+824,azimuth,6L,0.2500,3°L,3L,0
+848,azimuth,5L,0.1448,E:L,,0
+860,azimuth,4L,0.1227,:L,,0
+872,azimuth,2L,0.0881,2 L,2L,1
+884,azimuth,2L,0.2271,Fº L,,0
+902,azimuth,0L,0.0502,L,,0
+920,azimuth,0L,0.1088,P E,,0
+938,azimuth,2R,0.0121,7°R,7R,0
+956,azimuth,3R,0.1820,B° R,,0
+974,azimuth,3R,0.1119,B° R,,0
+992,azimuth,4R,0.2743,FR,,0
+1028,azimuth,6R,0.1813,N R,,0
+372,polarity,BLK,0.1163,B,B,0

@@ -1,0 +1,495 @@
+{
+ "note": "Glyph templates (white top-hat, scaled to 0..255). Built by k-means clustering of character cells over the whole video, clusters labeled by eye from montages in artifacts/tmp/m13/. See extract/symbology.py.",
+ "templates": [
+  {
+   "file": "t_L_0032_1_00.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0032_1_01.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0032_1_02.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0032_1_03.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0032_1_04.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0032_1_05.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0032_1_06.png",
+   "size": "L",
+   "label": "2"
+  },
+  {
+   "file": "t_L_0035_1_00.png",
+   "size": "L",
+   "label": "5"
+  },
+  {
+   "file": "t_L_0035_1_01.png",
+   "size": "L",
+   "label": "5"
+  },
+  {
+   "file": "t_L_0035_1_02.png",
+   "size": "L",
+   "label": "5"
+  },
+  {
+   "file": "t_L_0035_1_03.png",
+   "size": "L",
+   "label": "5"
+  },
+  {
+   "file": "t_L_0035_1_04.png",
+   "size": "L",
+   "label": "5"
+  },
+  {
+   "file": "t_polarity_BLK_00.png",
+   "size": "polarity",
+   "label": "BLK"
+  },
+  {
+   "file": "t_polarity_BLK_01.png",
+   "size": "polarity",
+   "label": "BLK"
+  },
+  {
+   "file": "t_polarity_WHT_00.png",
+   "size": "polarity",
+   "label": "WHT"
+  },
+  {
+   "file": "t_polarity_WHT_01.png",
+   "size": "polarity",
+   "label": "WHT"
+  },
+  {
+   "file": "t_s_002d_1_00.png",
+   "size": "s",
+   "label": "-"
+  },
+  {
+   "file": "t_s_002e_1_00.png",
+   "size": "s",
+   "label": "."
+  },
+  {
+   "file": "t_s_002e_1_01.png",
+   "size": "s",
+   "label": "."
+  },
+  {
+   "file": "t_s_002e_1_02.png",
+   "size": "s",
+   "label": "."
+  },
+  {
+   "file": "t_s_0030_1_00.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_01.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_02.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_03.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_04.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_05.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_06.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_07.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_08.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_09.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0030_1_10.png",
+   "size": "s",
+   "label": "0"
+  },
+  {
+   "file": "t_s_0031_1_00.png",
+   "size": "s",
+   "label": "1"
+  },
+  {
+   "file": "t_s_0031_1_01.png",
+   "size": "s",
+   "label": "1"
+  },
+  {
+   "file": "t_s_0031_1_02.png",
+   "size": "s",
+   "label": "1"
+  },
+  {
+   "file": "t_s_0031_1_03.png",
+   "size": "s",
+   "label": "1"
+  },
+  {
+   "file": "t_s_0031_1_04.png",
+   "size": "s",
+   "label": "1"
+  },
+  {
+   "file": "t_s_0031_1_05.png",
+   "size": "s",
+   "label": "1"
+  },
+  {
+   "file": "t_s_0032_1_00.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_01.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_02.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_03.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_04.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_05.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_06.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0032_1_07.png",
+   "size": "s",
+   "label": "2"
+  },
+  {
+   "file": "t_s_0033_1_00.png",
+   "size": "s",
+   "label": "3"
+  },
+  {
+   "file": "t_s_0033_1_01.png",
+   "size": "s",
+   "label": "3"
+  },
+  {
+   "file": "t_s_0033_1_02.png",
+   "size": "s",
+   "label": "3"
+  },
+  {
+   "file": "t_s_0033_1_03.png",
+   "size": "s",
+   "label": "3"
+  },
+  {
+   "file": "t_s_0033_1_04.png",
+   "size": "s",
+   "label": "3"
+  },
+  {
+   "file": "t_s_0034_1_00.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_01.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_02.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_03.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_04.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_05.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_06.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0034_1_07.png",
+   "size": "s",
+   "label": "4"
+  },
+  {
+   "file": "t_s_0035_1_00.png",
+   "size": "s",
+   "label": "5"
+  },
+  {
+   "file": "t_s_0035_1_01.png",
+   "size": "s",
+   "label": "5"
+  },
+  {
+   "file": "t_s_0035_1_02.png",
+   "size": "s",
+   "label": "5"
+  },
+  {
+   "file": "t_s_0035_1_03.png",
+   "size": "s",
+   "label": "5"
+  },
+  {
+   "file": "t_s_0035_1_04.png",
+   "size": "s",
+   "label": "5"
+  },
+  {
+   "file": "t_s_0035_1_05.png",
+   "size": "s",
+   "label": "5"
+  },
+  {
+   "file": "t_s_0036_1_00.png",
+   "size": "s",
+   "label": "6"
+  },
+  {
+   "file": "t_s_0036_1_01.png",
+   "size": "s",
+   "label": "6"
+  },
+  {
+   "file": "t_s_0037_1_00.png",
+   "size": "s",
+   "label": "7"
+  },
+  {
+   "file": "t_s_0037_1_01.png",
+   "size": "s",
+   "label": "7"
+  },
+  {
+   "file": "t_s_0037_1_02.png",
+   "size": "s",
+   "label": "7"
+  },
+  {
+   "file": "t_s_0038_1_00.png",
+   "size": "s",
+   "label": "8"
+  },
+  {
+   "file": "t_s_0038_1_01.png",
+   "size": "s",
+   "label": "8"
+  },
+  {
+   "file": "t_s_0038_1_02.png",
+   "size": "s",
+   "label": "8"
+  },
+  {
+   "file": "t_s_0038_1_03.png",
+   "size": "s",
+   "label": "8"
+  },
+  {
+   "file": "t_s_0039_1_00.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_01.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_02.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_03.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_04.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_05.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_06.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0039_1_07.png",
+   "size": "s",
+   "label": "9"
+  },
+  {
+   "file": "t_s_0041_1_00.png",
+   "size": "s",
+   "label": "A"
+  },
+  {
+   "file": "t_s_0041_1_01.png",
+   "size": "s",
+   "label": "A"
+  },
+  {
+   "file": "t_s_004c_1_00.png",
+   "size": "s",
+   "label": "L"
+  },
+  {
+   "file": "t_s_004c_1_01.png",
+   "size": "s",
+   "label": "L"
+  },
+  {
+   "file": "t_s_004c_1_02.png",
+   "size": "s",
+   "label": "L"
+  },
+  {
+   "file": "t_s_0052_1_00.png",
+   "size": "s",
+   "label": "R"
+  },
+  {
+   "file": "t_s_00b0_1_00.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_s_00b0_1_01.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_s_00b0_1_02.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_s_00b0_1_03.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_s_00b0_1_04.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_s_00b0_1_05.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_s_00b0_1_06.png",
+   "size": "s",
+   "label": "°"
+  },
+  {
+   "file": "t_sensor_IR_00.png",
+   "size": "sensor",
+   "label": "IR"
+  },
+  {
+   "file": "t_sensor_IR_01.png",
+   "size": "sensor",
+   "label": "IR"
+  },
+  {
+   "file": "t_sensor_IR_02.png",
+   "size": "sensor",
+   "label": "IR"
+  },
+  {
+   "file": "t_sensor_IR_03.png",
+   "size": "sensor",
+   "label": "IR"
+  }
+ ]
+}

@@ -1,0 +1,330 @@
+{
+ "case": "gofast",
+ "offset_convention": "sitrec_frame = our_frame + offset",
+ "fields": {
+  "azimuth": {
+   "source": "Go Fast AZ.csv keyframes",
+   "best_offset": 1,
+   "frames_compared": 1031,
+   "agreement": 0.9903,
+   "disagreements": 10,
+   "max_abs_difference": 1.0,
+   "keyframe_timing": [
+    {
+     "value": -36.0,
+     "sitrec_frame": 12,
+     "our_change_frame": 11,
+     "diff": 1
+    },
+    {
+     "value": -37.0,
+     "sitrec_frame": 84,
+     "our_change_frame": 83,
+     "diff": 1
+    },
+    {
+     "value": -38.0,
+     "sitrec_frame": 132,
+     "our_change_frame": 131,
+     "diff": 1
+    },
+    {
+     "value": -39.0,
+     "sitrec_frame": 150,
+     "our_change_frame": 149,
+     "diff": 1
+    },
+    {
+     "value": -40.0,
+     "sitrec_frame": 240,
+     "our_change_frame": 239,
+     "diff": 1
+    },
+    {
+     "value": -41.0,
+     "sitrec_frame": 258,
+     "our_change_frame": 257,
+     "diff": 1
+    },
+    {
+     "value": -42.0,
+     "sitrec_frame": 300,
+     "our_change_frame": 299,
+     "diff": 1
+    },
+    {
+     "value": -43.0,
+     "sitrec_frame": 354,
+     "our_change_frame": 353,
+     "diff": 1
+    },
+    {
+     "value": -44.0,
+     "sitrec_frame": 384,
+     "our_change_frame": 383,
+     "diff": 1
+    },
+    {
+     "value": -45.0,
+     "sitrec_frame": 408,
+     "our_change_frame": 407,
+     "diff": 1
+    },
+    {
+     "value": -46.0,
+     "sitrec_frame": 438,
+     "our_change_frame": 437,
+     "diff": 1
+    },
+    {
+     "value": -47.0,
+     "sitrec_frame": 462,
+     "our_change_frame": 461,
+     "diff": 1
+    },
+    {
+     "value": -48.0,
+     "sitrec_frame": 492,
+     "our_change_frame": 491,
+     "diff": 1
+    },
+    {
+     "value": -49.0,
+     "sitrec_frame": 539,
+     "our_change_frame": 539,
+     "diff": 0
+    },
+    {
+     "value": -50.0,
+     "sitrec_frame": 635,
+     "our_change_frame": 635,
+     "diff": 0
+    },
+    {
+     "value": -51.0,
+     "sitrec_frame": 695,
+     "our_change_frame": 695,
+     "diff": 0
+    },
+    {
+     "value": -52.0,
+     "sitrec_frame": 737,
+     "our_change_frame": 737,
+     "diff": 0
+    },
+    {
+     "value": -53.0,
+     "sitrec_frame": 785,
+     "our_change_frame": 785,
+     "diff": 0
+    },
+    {
+     "value": -54.0,
+     "sitrec_frame": 827,
+     "our_change_frame": 827,
+     "diff": 0
+    },
+    {
+     "value": -55.0,
+     "sitrec_frame": 875,
+     "our_change_frame": 875,
+     "diff": 0
+    },
+    {
+     "value": -56.0,
+     "sitrec_frame": 911,
+     "our_change_frame": 911,
+     "diff": 0
+    },
+    {
+     "value": -57.0,
+     "sitrec_frame": 947,
+     "our_change_frame": 947,
+     "diff": 0
+    },
+    {
+     "value": -58.0,
+     "sitrec_frame": 983,
+     "our_change_frame": 983,
+     "diff": 0
+    }
+   ]
+  },
+  "elevation": {
+   "source": "Go Fast El.csv keyframes",
+   "best_offset": 0,
+   "frames_compared": 1031,
+   "agreement": 0.9942,
+   "disagreements": 6,
+   "max_abs_difference": 1.0,
+   "keyframe_timing": [
+    {
+     "value": -23.0,
+     "sitrec_frame": 60,
+     "our_change_frame": 59,
+     "diff": 1
+    },
+    {
+     "value": -24.0,
+     "sitrec_frame": 138,
+     "our_change_frame": 137,
+     "diff": 1
+    },
+    {
+     "value": -25.0,
+     "sitrec_frame": 252,
+     "our_change_frame": 251,
+     "diff": 1
+    },
+    {
+     "value": -26.0,
+     "sitrec_frame": 330,
+     "our_change_frame": 329,
+     "diff": 1
+    },
+    {
+     "value": -27.0,
+     "sitrec_frame": 408,
+     "our_change_frame": 407,
+     "diff": 1
+    },
+    {
+     "value": -28.0,
+     "sitrec_frame": 486,
+     "our_change_frame": 485,
+     "diff": 1
+    },
+    {
+     "value": -29.0,
+     "sitrec_frame": 563,
+     "our_change_frame": 563,
+     "diff": 0
+    },
+    {
+     "value": -30.0,
+     "sitrec_frame": 635,
+     "our_change_frame": 635,
+     "diff": 0
+    },
+    {
+     "value": -31.0,
+     "sitrec_frame": 701,
+     "our_change_frame": 701,
+     "diff": 0
+    },
+    {
+     "value": -32.0,
+     "sitrec_frame": 773,
+     "our_change_frame": 773,
+     "diff": 0
+    },
+    {
+     "value": -33.0,
+     "sitrec_frame": 839,
+     "our_change_frame": 839,
+     "diff": 0
+    },
+    {
+     "value": -34.0,
+     "sitrec_frame": 899,
+     "our_change_frame": 899,
+     "diff": 0
+    },
+    {
+     "value": -35.0,
+     "sitrec_frame": 965,
+     "our_change_frame": 965,
+     "diff": 0
+    },
+    {
+     "value": -36.0,
+     "sitrec_frame": 1030,
+     "our_change_frame": 1030,
+     "diff": 0
+    }
+   ]
+  },
+  "range": {
+   "source": "Go Fast RNG.csv keyframes",
+   "best_offset": 0,
+   "frames_compared": 663,
+   "agreement": 0.9925,
+   "disagreements": 5,
+   "max_abs_difference": 0.1,
+   "keyframe_timing": [
+    {
+     "value": 4.4,
+     "sitrec_frame": 350,
+     "our_change_frame": 368,
+     "diff": -18
+    },
+    {
+     "value": 4.3,
+     "sitrec_frame": 399,
+     "our_change_frame": 398,
+     "diff": 1
+    },
+    {
+     "value": 4.2,
+     "sitrec_frame": 452,
+     "our_change_frame": 451,
+     "diff": 1
+    },
+    {
+     "value": 4.1,
+     "sitrec_frame": 512,
+     "our_change_frame": 512,
+     "diff": 0
+    },
+    {
+     "value": 4.0,
+     "sitrec_frame": 569,
+     "our_change_frame": 569,
+     "diff": 0
+    },
+    {
+     "value": 3.9,
+     "sitrec_frame": 626,
+     "our_change_frame": 626,
+     "diff": 0
+    },
+    {
+     "value": 3.8,
+     "sitrec_frame": 685,
+     "our_change_frame": 684,
+     "diff": 1
+    },
+    {
+     "value": 3.7,
+     "sitrec_frame": 748,
+     "our_change_frame": 746,
+     "diff": 2
+    },
+    {
+     "value": 3.6,
+     "sitrec_frame": 809,
+     "our_change_frame": 809,
+     "diff": 0
+    },
+    {
+     "value": 3.5,
+     "sitrec_frame": 881,
+     "our_change_frame": 881,
+     "diff": 0
+    },
+    {
+     "value": 3.4,
+     "sitrec_frame": 950,
+     "our_change_frame": 950,
+     "diff": 0
+    },
+    {
+     "value": 3.3,
+     "sitrec_frame": 1022,
+     "our_change_frame": 1022,
+     "diff": 0
+    }
+   ]
+  }
+ }
+}

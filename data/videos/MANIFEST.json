@@ -129,22 +129,64 @@
           "result": "ok"
         }
       ]
-    }
-  },
-  "failed": {
-    "gimbal_navy2020": [
-      {
-        "when": "2026-10-30T20:35:31-04:00",
-        "source": "NAVAIR FOIA 2020 release",
-        "url": "https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
-        "result": "curl exit 22: curl: (22) The requested URL returned error: 403"
+    },
+    "gimbal_navy2020": {
+      "video": "GIMBAL",
+      "file": "GIMBAL_navy2020.wmv",
+      "official_copy": true,
+      "provenance": "Wayback copy of the NAVAIR file",
+      "source_url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+      "retrieved": "2026-10-30T20:59:09-04:00",
+      "sha256": "78a347be1bd12e28b26ca435d7bd30f4c746e20b34586d3ff1bd074a62e386cd",
+      "bytes": 13517612,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "wmv1",
+            "width": 640,
+            "height": 480,
+            "r_frame_rate": "30000/1001",
+            "avg_frame_rate": "30000/1001",
+            "duration": "34.467000",
+            "nb_read_frames": "1031"
+          }
+        ],
+        "format": {
+          "format_name": "asf",
+          "duration": "34.533000",
+          "size": "13517612"
+        }
       },
-      {
-        "when": "2026-10-30T20:38:14-04:00",
-        "source": "Wayback copy of the NAVAIR file",
-        "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
-        "result": "curl exit 56: curl: (56) Recv failure: Connection was reset"
-      }
-    ]
+      "attempts": [
+        {
+          "when": "2026-10-30T20:58:39-04:00",
+          "source": "NAVAIR FOIA 2020 release",
+          "url": "https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+          "result": "curl exit 22: curl: (22) The requested URL returned error: 403"
+        },
+        {
+          "when": "2026-10-30T20:59:09-04:00",
+          "source": "Wayback copy of the NAVAIR file",
+          "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+          "result": "ok"
+        }
+      ],
+      "earlier_failed_attempts": [
+        {
+          "when": "2026-10-30T20:35:31-04:00",
+          "source": "NAVAIR FOIA 2020 release",
+          "url": "https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+          "result": "curl exit 22: curl: (22) The requested URL returned error: 403"
+        },
+        {
+          "when": "2026-10-30T20:38:14-04:00",
+          "source": "Wayback copy of the NAVAIR file",
+          "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/2%20-%20GIMBAL.wmv",
+          "result": "curl exit 56: curl: (56) Recv failure: Connection was reset"
+        }
+      ]
+    }
   }
 }
