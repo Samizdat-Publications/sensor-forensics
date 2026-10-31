@@ -23,3 +23,4 @@ app/data/frames/
 .pytest_cache/
 artifacts/tmp/
 artifacts/tmp_*
+data/audio/

@@ -59,14 +59,14 @@ Tags used below: **[me]** orchestrator (high effort); **[W]** worker subagent (S
 
 ## Setup S0 (first execution step after approval)
 
-- [ ] 1. **Folder:** stay in `C:\Users\stewa\Documents\Claude\Sensor forensics\`, not the kickoff's `...\sensor-forensics`. Claude Code keys session history by exact path, and the global rule forbids moving or renaming folders. The repo name stays `sensor-forensics`. This is logged as Q-004.
-- [ ] 2. **Unpack the package:**
+- [x] 1. **Folder:** stay in `C:\Users\stewa\Documents\Claude\Sensor forensics\`, not the kickoff's `...\sensor-forensics`. Claude Code keys session history by exact path, and the global rule forbids moving or renaming folders. The repo name stays `sensor-forensics`. This is logged as Q-004.
+- [x] 2. **Unpack the package:**
    - Copy the package files into the project root.
    - Merge `claude-setup\settings.json` and `agents\` into the existing `.claude\`. Leave the healthcare plugin's `.claude\data\` untouched and gitignored.
    - Move the zip and the handoff `.md` into `handoff\`.
-- [ ] 3. **Settings:** add deny rules for `git add -A` and `git add .`.
-- [ ] 4. **.gitignore:** add `*.wmv *.mpg *.zip *.mkv *.webm`, `data/pursue/raw/`, `app/data/frames/`, `.claude/data/` and `.claude/settings.local.json`.
-- [ ] 5. **Write the docs:**
+- [x] 3. **Settings:** add deny rules for `git add -A` and `git add .`.
+- [x] 4. **.gitignore:** add `*.wmv *.mpg *.zip *.mkv *.webm`, `data/pursue/raw/`, `app/data/frames/`, `.claude/data/` and `.claude/settings.local.json`.
+- [x] 5. **Write the docs:**
    - `_PLAN.md` gets this plan.
    - DECISIONS.md gets entries for:
      - D-005: the citation and count corrections.
@@ -74,25 +74,25 @@ Tags used below: **[me]** orchestrator (high effort); **[W]** worker subagent (S
      - D-007: a `schemas/` and `docs/` layout addition.
      - D-008: the folder choice.
    - Correct the citations in CLAUDE.md.
-- [ ] 6. **Git and GitHub:**
+- [x] 6. **Git and GitHub:**
    - `git init -b main`, with explicit `git add <paths>`.
    - `gh repo create Samizdat-Publications/sensor-forensics --private --source . --remote origin --push` (authorized by D-004).
-- [ ] 7. **Python environment:**
+- [x] 7. **Python environment:**
    - `uv venv --python 3.12`, plus `pyproject.toml` and `uv.lock`.
    - Packages: numpy, scipy, pandas, opencv-python-headless, scikit-image, matplotlib, pytest, pyyaml, jsonschema, xarray, zarr, gcsfs, rapidocr, faster-whisper, playwright, yt-dlp.
    - No system-wide installs (Tesseract is skipped; rapidocr is the second OCR vote).
-- [ ] 8. **Gate script:** `tools/gate.py` runs pytest plus the node parity tests. Any skipped test counts as a fail.
-- [ ] 9. **Status files:** update `.tower/status.json` and NEXT-SESSION.md.
+- [x] 8. **Gate script:** `tools/gate.py` runs pytest plus the node parity tests. Any skipped test counts as a fail.
+- [x] 9. **Status files:** update `.tower/status.json` and NEXT-SESSION.md.
 
 Every deliverable path is printed and checked to start with `C:\Users\stewa\Documents\` before saving.
 
 ## M0 Data audit (ends at CP-01)
 
-- [ ] 1. **[me]** Setup S0 above.
-- [ ] 2. **[W] then [bg]** `tools/fetch_videos.py`:
+- [x] 1. **[me]** Setup S0 above.
+- [x] 2. **[W] then [bg]** `tools/fetch_videos.py`:
    - Downloads the NAVAIR GIMBAL.wmv, GOFAST.wmv and FLIR.mp4, the 2007 F4.MPG from the Wayback Machine, and the TTSA 2017 copies for comparison.
    - Records SHA-256, ffprobe data (codec, fps, frame count, duration), source URL and access date in `data/videos/MANIFEST.json`, which is committed.
-- [ ] 3. **[W] then [bg]** PURSUE:
+- [~] 3. **[W] then [bg]** PURSUE:
    - `tools/pursue_index.py` scrapes the official war.gov/UFO listing (ID, release, agency, date, location, title, URL) into `data/pursue/index.csv`.
    - Then it downloads the six zips one at a time with resume, hashes each zip and each clip, extracts the clips, runs ffprobe on each, and deletes the zips once the hashes are recorded.
    - `tools/contact_sheet.py` makes a 16-frame sheet per clip plus 3 full-resolution frames.
@@ -103,19 +103,19 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
      - **Bounded:** a field-of-view scale or a known reference exists, so the clip gets range-size-speed curves only.
      - **Not viable.**
    - Unclear clips go to me.
-- [ ] 5. **[me]** Frame-level audit of GIMBAL, GOFAST and FLIR1. I view sample frames myself and write `docs/audit/<video>.md`, covering for each field:
+- [~] 5. **[me]** Frame-level audit of GIMBAL, GOFAST and FLIR1. I view sample frames myself and write `docs/audit/<video>.md`, covering for each field:
    - location, quantization, update cadence and first/last frame;
    - duplicate or dropped frame check;
    - copy-to-copy alignment and which copy is canonical;
    - readable, inferred and unknown tables with crop images in `artifacts/cp01/`.
-- [ ] 6. **[W]** Prior-work summaries with page or line citations in `docs/prior-work/`:
+- [~] 6. **[W]** Prior-work summaries with page or line citations in `docs/prior-work/`:
    - Sitrec v1: method per sitch, conventions and pinned commit;
    - Peings and von Rennenkampff 2023;
    - Haqq-Misra and Kopparapu 2026;
    - logicbear's cloud-motion notebooks;
    - AARO's GOFAST analysis.
 - [ ] 7. **[me]** `docs/prior-work/DISAGREEMENTS.md` lists every point where the analyses differ, with the cause of each: range, whether the object "stops", rotation as glare versus attitude, wind, elevation precision, angle reference frame, jet turn rate, the size change, the "fleet" radar claim, and the four-input limit.
-- [ ] 8. **[bg]** faster-whisper on the GPU transcribes the GIMBAL and GOFAST audio. Output goes to `data/derived/<video>/audio.json` with word confidences, labeled inferred.
+- [~] 8. **[bg]** faster-whisper on the GPU transcribes the GIMBAL and GOFAST audio. Output goes to `data/derived/<video>/audio.json` with word confidences, labeled inferred.
 - [ ] 9. **[me]** A plain verdict per video. Then **[V]**, then CP-01.
 
 **CP-01 acceptance:** the audit tables; the PURSUE triage list; the disagreement list; a plain verdict on how far each video can be reconstructed.

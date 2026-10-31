@@ -1,24 +1,39 @@
 {
   "project": "sensor-forensics",
   "title": "Sensor Forensics",
-  "updated": "2026-10-30T19:57:41-04:00",
+  "updated": "2026-10-30T21:04:10-04:00",
   "milestone": "M0",
   "milestone_title": "Data audit",
   "progress": {
-    "done": 0,
+    "done": 11,
     "total": 58
   },
   "last_checkpoint": null,
-  "headline": "Plan approved; setting up the repo and starting the M0 data audit.",
+  "headline": "M0 data audit: GIMBAL, GOFAST and FLIR1 audited; PURSUE index built (134 clips); PURSUE downloads running on a slow link.",
   "needs_stewart": [
     {
       "id": "Q-004",
       "text": "OK to keep the project in the Sensor forensics folder?",
       "default": "Stay in Sensor forensics",
       "needed_by": "Any time"
+    },
+    {
+      "id": "Q-005",
+      "text": "Freeze the PURSUE scope at the start of M5?",
+      "default": "Freeze at M5 start",
+      "needed_by": "CP-06"
+    },
+    {
+      "id": "Q-006",
+      "text": "OK to define the case file format here as schema v0.1?",
+      "default": "v0.1 in this repo",
+      "needed_by": "CP-07"
     }
   ],
   "blocked": false,
   "blocker": null,
-  "highlights": []
+  "highlights": [
+    "artifacts/cp01/gimbal_fields.png",
+    "artifacts/cp01/gofast_fields.png"
+  ]
 }

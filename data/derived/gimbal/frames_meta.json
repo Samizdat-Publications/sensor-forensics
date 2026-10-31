@@ -1,0 +1,11 @@
+{
+  "case": "gimbal",
+  "source_video": "data\\videos\\GIMBAL_navy2020.wmv",
+  "source_sha256": "78a347be1bd12e28b26ca435d7bd30f4c746e20b34586d3ff1bd074a62e386cd",
+  "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "fps_nominal": 29.97002997002997,
+  "n_frames": 1031,
+  "n_pts": 1031,
+  "n_exact_duplicates": 0,
+  "frame_set_sha256": "21e391aa798f6850544d1f5accde8a14e52e3fa70982ed6b2f3d73ac4cda8668"
+}
