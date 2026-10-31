@@ -96,25 +96,25 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - `tools/pursue_index.py` scrapes the official war.gov/UFO listing (ID, release, agency, date, location, title, URL) into `data/pursue/index.csv`.
    - Then it downloads the six zips one at a time with resume, hashes each zip and each clip, extracts the clips, runs ffprobe on each, and deletes the zips once the hashes are recorded.
    - `tools/contact_sheet.py` makes a 16-frame sheet per clip plus 3 full-resolution frames.
-- [ ] 4. **[W] x up to 5 in parallel** PURSUE triage, about 27 clips per worker:
+- [~] 4. **[W] x up to 5 in parallel** PURSUE triage, about 27 clips per worker:
    - Each clip gets a row in `data/pursue/triage.csv`: which symbology fields are visible, redaction state, sensor family guess, scene references (horizon, ship, coastline, clouds, objects of known size), tier and reason.
    - Tiers:
      - **Full:** per-frame line of sight is possible.
      - **Bounded:** a field-of-view scale or a known reference exists, so the clip gets range-size-speed curves only.
      - **Not viable.**
    - Unclear clips go to me.
-- [~] 5. **[me]** Frame-level audit of GIMBAL, GOFAST and FLIR1. I view sample frames myself and write `docs/audit/<video>.md`, covering for each field:
+- [x] 5. **[me]** Frame-level audit of GIMBAL, GOFAST and FLIR1. I view sample frames myself and write `docs/audit/<video>.md`, covering for each field:
    - location, quantization, update cadence and first/last frame;
    - duplicate or dropped frame check;
    - copy-to-copy alignment and which copy is canonical;
    - readable, inferred and unknown tables with crop images in `artifacts/cp01/`.
-- [~] 6. **[W]** Prior-work summaries with page or line citations in `docs/prior-work/`:
+- [x] 6. **[W]** Prior-work summaries with page or line citations in `docs/prior-work/`:
    - Sitrec v1: method per sitch, conventions and pinned commit;
    - Peings and von Rennenkampff 2023;
    - Haqq-Misra and Kopparapu 2026;
    - logicbear's cloud-motion notebooks;
    - AARO's GOFAST analysis.
-- [ ] 7. **[me]** `docs/prior-work/DISAGREEMENTS.md` lists every point where the analyses differ, with the cause of each: range, whether the object "stops", rotation as glare versus attitude, wind, elevation precision, angle reference frame, jet turn rate, the size change, the "fleet" radar claim, and the four-input limit.
+- [x] 7. **[me]** `docs/prior-work/DISAGREEMENTS.md` lists every point where the analyses differ, with the cause of each: range, whether the object "stops", rotation as glare versus attitude, wind, elevation precision, angle reference frame, jet turn rate, the size change, the "fleet" radar claim, and the four-input limit.
 - [~] 8. **[bg]** faster-whisper on the GPU transcribes the GIMBAL and GOFAST audio. Output goes to `data/derived/<video>/audio.json` with word confidences, labeled inferred.
 - [ ] 9. **[me]** A plain verdict per video. Then **[V]**, then CP-01.
 
@@ -134,31 +134,31 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 
 ## M1 Symbology extraction (ends at CP-02)
 
-- [ ] 1. **[W]** `extract/frames.py`:
+- [x] 1. **[W]** `extract/frames.py`:
    - ffmpeg to PNG for every frame, with the ffmpeg version recorded;
    - duplicate-frame detection;
    - a frame-to-time map;
    - a frame-set hash.
    - Test: frame counts match ffprobe.
-- [ ] 2. **[me]** Field layouts as data files in `extract/layouts/atflir_*.yaml`: ROI per field, glyph cell geometry, value grammar and update cadence.
-- [ ] 3. **[me spec, W build]** Glyph matcher:
+- [x] 2. **[me]** Field layouts as data files in `extract/layouts/atflir_*.yaml`: ROI per field, glyph cell geometry, value grammar and update cadence.
+- [x] 3. **[me spec, W build]** Glyph matcher:
    - I hand-label about 30 frames per video in `data/labels/`, plus synthetic glyph renders.
    - Each character is matched by normalized cross-correlation, and its confidence is the margin between the best and second-best match.
    - rapidocr gives a second vote.
    - A temporal filter catches impossible jumps.
    - Output is `data/derived/<video>/symbology.csv` (frame, field, value, confidence, method).
    - Test: at least 99% accuracy on held-out labeled frames.
-- [ ] 4. **[W]** Image cues, written to `image_track.csv`:
+- [x] 4. **[W]** Image cues, written to `image_track.csv`:
    - horizon line angle (bank);
    - object centroid, size, orientation (second moments) and brightness;
    - background motion from phase correlation on masked tiles (clouds for GIMBAL, ocean for GOFAST).
    - Tests: synthetic rotated-line and moving-texture fixtures.
-- [ ] 5. **[W]** Correction tool in `extract/correct/`: a static page plus a small Python standard-library server.
+- [x] 5. **[W]** Correction tool in `extract/correct/`: a static page plus a small Python standard-library server.
    - It shows each crop with its value and saves edits to `corrections.json`, recording the source as manual and the time.
    - Corrections override other values when the tables are merged.
    - Test: a Playwright round trip.
-- [ ] 6. **[me]** Cross-check against the Sitrec CSVs, field by field. Every disagreement gets reviewed in the correction tool.
-- [ ] 7. **[bg]** Full extraction runs for GIMBAL, GOFAST and FLIR1.
+- [x] 6. **[me]** Cross-check against the Sitrec CSVs, field by field. Every disagreement gets reviewed in the correction tool.
+- [~] 7. **[bg]** Full extraction runs for GIMBAL, GOFAST and FLIR1.
 - [ ] 8. **[V] blind check:**
    - `tools/sample_frames.py --seed 2026 --n 100` picks 100 frames per video for GIMBAL and GOFAST (200 total).
    - Review sheets show raw crops only, never the extracted values.
@@ -175,21 +175,21 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 
 ## M2 Geometry solver (ends at CP-03)
 
-- [ ] 1. **[me]** `solve/frames.py`:
+- [x] 1. **[me]** `solve/frames.py`:
    - spherical Earth (ECEF and local ENU frames) with a standard-refraction toggle;
    - SI units inside the code, feet, knots and mph on display.
    - Curvature matters: about 800 ft of drop at 30 nmi.
 - [ ] 2. **[bg + W]** `solve/weather.py`:
    - an ARCO-ERA5 slice (wind and temperature by pressure level) for each case's window, plus IGRA soundings as a measured check;
    - a wind profile file per case, with its source.
-- [ ] 3. **[me]** `solve/jet.py`:
+- [x] 3. **[me]** `solve/jet.py`:
    - TAS from IAS or Mach plus temperature;
    - turn rate from bank, assuming a coordinated turn;
    - heading integrated from an unknown starting heading;
    - ground track from wind;
    - pitch from angle of attack (4 deg plus or minus 2 deg);
    - an uncertainty ensemble.
-- [ ] 4. **[me]** `solve/sensor_atflir.py`:
+- [~] 4. **[me]** `solve/sensor_atflir.py`:
    - two conventions for azimuth and elevation (body frame, or relative to the local horizon), both kept and reported;
    - pod roll and pitch gimbal kinematics and derotation;
    - FOV by zoom from `data/sensors/atflir.yaml`, with citations;

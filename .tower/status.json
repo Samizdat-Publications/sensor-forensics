@@ -1,15 +1,15 @@
 {
   "project": "sensor-forensics",
   "title": "Sensor Forensics",
-  "updated": "2026-10-30T21:04:10-04:00",
+  "updated": "2026-10-30T23:36:04-04:00",
   "milestone": "M0",
   "milestone_title": "Data audit",
   "progress": {
-    "done": 11,
+    "done": 22,
     "total": 58
   },
   "last_checkpoint": null,
-  "headline": "M0 data audit: GIMBAL, GOFAST and FLIR1 audited; PURSUE index built (134 clips); PURSUE downloads running on a slow link.",
+  "headline": "M0 nearly done (PURSUE triage waits on slow downloads); M1 reading of GIMBAL and GOFAST done; M2 sensor model reproduces Sitrec exactly.",
   "needs_stewart": [
     {
       "id": "Q-004",
