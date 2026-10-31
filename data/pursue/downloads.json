@@ -1,0 +1,398 @@
+{
+  "releases": {
+    "R05": {
+      "url": "https://d34w7g4gy10iej.cloudfront.net/release_05/uap_videos_080726.zip",
+      "zip_bytes": 537674725,
+      "zip_sha256": "63fc945b853b85b47e2e4262febd87c4ae52374a34e0ba5f01eceb003f80eb8c",
+      "retrieved": "2026-10-30T23:02:26-04:00",
+      "status": "extracted",
+      "n_clips": 16,
+      "clips": [
+        {
+          "member": "DOD_111887376.mp4",
+          "file": "R05/DOD_111887376.mp4",
+          "sha256": "7839c97afcfa195447734a9b9a7e1f44cacf98f4ec7b7c52037461ad54143eae",
+          "bytes": 33427558,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "28.633333",
+                "nb_frames": "859"
+              }
+            ],
+            "format": {
+              "duration": "28.633333",
+              "size": "33427558"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887380.mp4",
+          "file": "R05/DOD_111887380.mp4",
+          "sha256": "e811290294e0454ea46e9949a41c7b852d40a5358e1c95d2c104ea26f9c1569c",
+          "bytes": 89410590,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1280,
+                "height": 720,
+                "r_frame_rate": "10/1",
+                "duration": "152.800000",
+                "nb_frames": "1528"
+              }
+            ],
+            "format": {
+              "duration": "152.800000",
+              "size": "89410590"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887384.mp4",
+          "file": "R05/DOD_111887384.mp4",
+          "sha256": "e067e118b1028e91404030df0370353ae2d8b04556d32a661bc2a91062839ca7",
+          "bytes": 84195488,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1280,
+                "height": 720,
+                "r_frame_rate": "10/1",
+                "duration": "149.000000",
+                "nb_frames": "1490"
+              }
+            ],
+            "format": {
+              "duration": "149.000000",
+              "size": "84195488"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887390.mp4",
+          "file": "R05/DOD_111887390.mp4",
+          "sha256": "df74c4259c07ed16d07ca52b5e74336f59073ad86f935a76ac68b6acbe6728da",
+          "bytes": 52517114,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1276,
+                "height": 720,
+                "r_frame_rate": "30/1",
+                "duration": "99.766667",
+                "nb_frames": "2993"
+              }
+            ],
+            "format": {
+              "duration": "99.766667",
+              "size": "52517114"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887401.mp4",
+          "file": "R05/DOD_111887401.mp4",
+          "sha256": "2182e7f3baa527cab0f11e70bce2d8cca78fa352e4136977ba2c26196bf35b2e",
+          "bytes": 20916447,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "16.666667",
+                "nb_frames": "500"
+              }
+            ],
+            "format": {
+              "duration": "16.666667",
+              "size": "20916447"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887407.mp4",
+          "file": "R05/DOD_111887407.mp4",
+          "sha256": "2e092911f97f11ee3f59ff20d1a6085e8cad60aaabeefe916cf39be22e16d608",
+          "bytes": 24280625,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "30.200000",
+                "nb_frames": "906"
+              }
+            ],
+            "format": {
+              "duration": "30.200000",
+              "size": "24280625"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887413.mp4",
+          "file": "R05/DOD_111887413.mp4",
+          "sha256": "44cbcd0a5f922771b02391306377e9aec97e3091b780781e47ced8074aa66d8f",
+          "bytes": 12249790,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1280,
+                "height": 720,
+                "r_frame_rate": "30000/1001",
+                "duration": "33.166467",
+                "nb_frames": "994"
+              }
+            ],
+            "format": {
+              "duration": "33.166467",
+              "size": "12249790"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887419.mp4",
+          "file": "R05/DOD_111887419.mp4",
+          "sha256": "fa2df73e27efdd8fed2807856b03659b67574ea156ef8f538cea831db8faec0e",
+          "bytes": 11176881,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "11.700000",
+                "nb_frames": "351"
+              }
+            ],
+            "format": {
+              "duration": "11.700000",
+              "size": "11176881"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887421.mp4",
+          "file": "R05/DOD_111887421.mp4",
+          "sha256": "e8a0e2cefafbb1c4b343e778962a4ee09814fc5cb79da2724186e2ab85ab08d6",
+          "bytes": 2132163,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "2.800000",
+                "nb_frames": "84"
+              }
+            ],
+            "format": {
+              "duration": "2.800000",
+              "size": "2132163"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887426.mp4",
+          "file": "R05/DOD_111887426.mp4",
+          "sha256": "c4258089bf48feb62c718ea19d37bf457538dfcf643f8307f5287d99c38c7d92",
+          "bytes": 55170181,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1028,
+                "r_frame_rate": "30/1",
+                "duration": "51.500000",
+                "nb_frames": "1545"
+              }
+            ],
+            "format": {
+              "duration": "51.500000",
+              "size": "55170181"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887427.mp4",
+          "file": "R05/DOD_111887427.mp4",
+          "sha256": "a55d92ef1536f51398bfab7a7a64272d3a06cd71ca4766e1ea7ecca016686542",
+          "bytes": 10304701,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "13.266667",
+                "nb_frames": "398"
+              }
+            ],
+            "format": {
+              "duration": "13.266667",
+              "size": "10304701"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887430.mp4",
+          "file": "R05/DOD_111887430.mp4",
+          "sha256": "56f0a2691dc2f2c9a23139b7aab119dc4f9f213db9c2f6d05f7cda727b904d54",
+          "bytes": 1230965,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 768,
+                "height": 576,
+                "r_frame_rate": "10/1",
+                "duration": "10.000000",
+                "nb_frames": "100"
+              }
+            ],
+            "format": {
+              "duration": "10.000000",
+              "size": "1230965"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887439.mp4",
+          "file": "R05/DOD_111887439.mp4",
+          "sha256": "2f857e92329ac23ec7e2c2ef68fc5a79c949ca708c0713c2cbf6ec76fdcb798a",
+          "bytes": 23882996,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "34.400000",
+                "nb_frames": "1032"
+              }
+            ],
+            "format": {
+              "duration": "34.400000",
+              "size": "23882996"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887446.mp4",
+          "file": "R05/DOD_111887446.mp4",
+          "sha256": "1ee2092f1a6bc3a2331d2277eb2f5f0ed8b9630d3081d756bc7ab72ba0d806cf",
+          "bytes": 16649610,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "26.333333",
+                "nb_frames": "790"
+              }
+            ],
+            "format": {
+              "duration": "26.333333",
+              "size": "16649610"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887456.mp4",
+          "file": "R05/DOD_111887456.mp4",
+          "sha256": "b52dae7c82282743a278b225eae0cb18de94a2bdb5d6f6b3f6da971d3d893176",
+          "bytes": 44368966,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1280,
+                "height": 720,
+                "r_frame_rate": "30000/1001",
+                "duration": "64.064000",
+                "nb_frames": "1920"
+              }
+            ],
+            "format": {
+              "duration": "64.064000",
+              "size": "44368966"
+            }
+          }
+        },
+        {
+          "member": "DOD_111887460.mp4",
+          "file": "R05/DOD_111887460.mp4",
+          "sha256": "fdfa90936a8b9c15b58937babd3ac5c1136e4839f6a67f9dda8ee645d8db9fd3",
+          "bytes": 64214893,
+          "ffprobe": {
+            "programs": [],
+            "stream_groups": [],
+            "streams": [
+              {
+                "codec_name": "h264",
+                "width": 1920,
+                "height": 1080,
+                "r_frame_rate": "30/1",
+                "duration": "53.666667",
+                "nb_frames": "1610"
+              }
+            ],
+            "format": {
+              "duration": "53.666667",
+              "size": "64214893"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
