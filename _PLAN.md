@@ -230,11 +230,11 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - **Criteria:** line of sight (quantization-aware), angular rate, apparent size, rotation, brightness trend (relative only, since there is no radiometric calibration), background-motion consistency, and testimony.
    - Each criterion is a log-likelihood using the uncertainties measured in M1, scaled by an effective sample size (frames are autocorrelated).
    - A BIC penalty for free parameters, applied the same way to every hypothesis.
-   - Weights live in `solve/scoring.yaml`. Testimony defaults to 0.25 (Q-002), and all weights are adjustable live in the app.
+   - Weights live in `solve/scoring.yaml`. Testimony defaults to 1.0, high (D-011), and all weights are adjustable live in the app; results always show a physics-only total beside the testimony-weighted total.
 - [ ] 2. **[me spec, W+ build]** Physical models in `solve/models/` (point target, wind drifter, flapping bird, close small object, distant aircraft with exhaust glare, fast object at the reported range, sensor artifacts):
    - Glare rotation is locked to pod derotation. Size is independent of range for glare and scales as 1/range for real objects.
    - Hypotheses are YAML data in `solve/hypotheses/`, with parameter priors and cited sources.
-- [ ] 3. **[W]** `data/testimony/*.yaml`: each claim with its source, quote location and uncertainty band. These are constraints, never ground truth.
+- [ ] 3. **[W]** Testimony (D-010, D-011): collect the public interviews and testimony of the aircrew and radar operators (Fravor, Dietrich, Underwood, Graves, Day, Voorhis and others: podcasts, documentaries, the 07/26/2023 House hearing), extract each factual claim with its source, timestamp or page, a short quote (under 15 words) and an uncertainty band into `data/testimony/*.yaml`. Constraints, weighted high by default (D-011), always shown separately from the physics scores.
 - [ ] 4. **[me] + [bg]** Model-recovery test:
    - Synthetic observations are generated from each hypothesis, with M1's real quantization and noise, and run through the full scorer.
    - The result is a confusion matrix showing which hypotheses this data can tell apart even in principle.
@@ -291,7 +291,7 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 
 ## M5 PURSUE cases (ends at CP-06)
 
-- [ ] 1. **[me]** Freeze the PURSUE index at the start of M5. It includes any release published after 10/30/2026 (Q-005).
+- [x] 1. **[me]** PURSUE scope frozen 10/31/2026 (D-013): 134 clips triaged; M5 works only on PR044, PR052, PR059, PR078, PR089, PR111, PR113, PR149.
 - [ ] 2. **[me]** One layout and sensor data file per sensor family. Where a sensor's FOV is unpublished, FOV becomes a parameter in the curves.
 - [ ] 3. **[W] x up to 5 in parallel**, one per Full-tier clip: run the same extract, solve and score pipeline and write a case folder. I review each one.
 - [ ] 4. **[W]** Bounded-tier clips get range-size-speed degeneracy curves from the same range-explorer code (the Haqq-Misra and Kopparapu style). For PR113, the depression-angle assumption is tested against the horizon.

@@ -52,8 +52,8 @@ def norm(field: str, v: object) -> str:
     return s
 
 
-def score(case: str) -> dict:
-    d = ROOT / "artifacts" / "cp02" / "blind" / case
+def score(case: str, tag: str = "blind") -> dict:
+    d = ROOT / "artifacts" / "cp02" / tag / case
     ver = pd.read_csv(d / "verifier.csv", dtype=str)
     ours = pd.read_csv(ROOT / "data" / "derived" / case / "symbology_final.csv", dtype=str)
     ours["frame"] = ours["frame"].astype(int)
@@ -83,8 +83,12 @@ def score(case: str) -> dict:
 
 
 def main() -> int:
-    for case in sys.argv[1:]:
-        r = score(case)
+    args = sys.argv[1:]
+    tag = "blind"
+    if args and args[0].startswith("--tag="):
+        tag = args.pop(0).split("=", 1)[1]
+    for case in args:
+        r = score(case, tag)
         print(f"{case}: overall {r['overall']['errors']}/{r['overall']['n']} = {r['overall']['error_rate']}"
               f" (unreadable to a person: {r['unreadable_to_person']})")
         for f, v in r["fields"].items():
