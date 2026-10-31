@@ -257,9 +257,13 @@ def test_browser_types_correction_and_presses_enter(fake):
                 page.goto(s.base + "/")
                 page.wait_for_function("document.getElementById('progress').textContent.startsWith('Item 1 of 3')")
                 assert page.input_value("#value") == "53L"        # first low-confidence item: frame 1 azimuth
-                assert page.evaluate("document.getElementById('img').naturalWidth") > 0
+                # The crop loads asynchronously and focus lands after render: wait for both
+                # instead of asserting immediately (this race made the test intermittent).
+                page.wait_for_function("(() => { const i = document.getElementById('img'); return i.complete && i.naturalWidth > 0; })()")
+                page.wait_for_function("document.activeElement && document.activeElement.id === 'value'")
                 # typing replaces the selected value, Enter saves and advances
                 page.keyboard.type("55L")
+                page.wait_for_function("document.getElementById('value').value === '55L'")
                 page.keyboard.press("Enter")
                 page.wait_for_function("document.getElementById('progress').textContent.startsWith('Item 2 of 3')")
                 data = json.loads((derived / "corrections.json").read_text(encoding="utf-8"))
