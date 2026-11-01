@@ -1,19 +1,23 @@
 # NEXT-SESSION.md
 
-Last updated: 10/31/2026 (paused at Stewart's 65% weekly quota cap, right after CP-01)
+Last updated: 11/01/2026 (overnight pause requested by Stewart: the jump-sim project needs the CPU)
 
 ## Where we are
 
-- Plan approved (D-009), in _PLAN.md. Repo `Samizdat-Publications/sensor-forensics` (private); folder `C:\Users\stewa\Documents\Claude\Sensor forensics\` (D-008). Venv `.venv` (Python 3.12). `tools/gate.py` passes (81 tests, skip detection via JUnit).
-- **CP-01 passed** (`checkpoints/CP-01.md`, tag cp-01). Audits in `docs/audit/`, disagreements and findings in `docs/prior-work/`, PURSUE index/triage/file map in `data/pursue/`.
-- **M1 nearly done, CP-02 open.** Per-frame readings: `data/derived/{gimbal,gofast}/symbology_final.csv` (the solver reads only this), transition flags `transitions.csv`, image cues `image_track.csv` (bank, object, background motion). Correction tool: `.\.venv\Scripts\python.exe -m extract.correct.server gimbal`.
-- **Blind check result** (`artifacts/cp02/blind/ADJUDICATION.md`): raw 8/1800 disagreements; adjudicated 1 clear reader error, 2 verifier misreads, 5 interlaced transition frames. The verifier (`artifacts/review/CP-01-02-review.md`) judged the 1 percent per-field target missed for GIMBAL azimuth (3/100) and GOFAST clock (2/100) and said the "none wrong" claim rested on a detector checked on the same frames. That claim is withdrawn; treat the strict rates as the logged result.
-- **M2 started:** `solve/frames.py`, `solve/atmosphere.py`, `solve/jet.py`, `solve/sensor_atflir.py` (exact port of Sitrec's pod geometry; golden test reproduces Sitrec's frame-435 horizon to 1e-9).
-- Frames are in `data/frames/` and videos in `data/videos/` (both gitignored; regenerate with `tools/fetch_videos.py` and `python -m extract.frames`). PURSUE clips in `data/pursue/raw/` (gitignored, about 15 GB).
+- Checkpoints passed and tagged: cp-01 (data audit), cp-02 (symbology, fresh blind sample), cp-03 (geometry and reproductions, with documented differences and the field-of-view condition). Reviews in `artifacts/review/`.
+- Owner rulings D-010 to D-014 (testimony high weight with a physics-only total beside it; PURSUE frozen to 8 clips; schema v0.1 here); lab decisions D-015 (25 percent floor on recalled numbers; H-WIT range free) and D-016 (size criterion only for resolved objects; rounding convention shared).
+- M3 under way: single scoring path (`solve/score.py`), hypotheses as data (`solve/hypotheses/`), testimony likelihoods (`solve/testimony.py`, 160 claims in `data/testimony/`), weather (`solve/weather.py`, ERA5 1 deg plus IGRA), FLIR1 readouts done (range line is a constant 99.9 placeholder from frame 973).
+- GOFAST scored (`docs/results/gofast.md`). GIMBAL scored but PROVISIONAL (`docs/results/gimbal.md` banner): brightness criterion audit, equal range priors, ERA5 turn rate, point-spread width.
+- A review worker was resolving those four items and running the model-recovery test at below-normal priority when Stewart paused for the night. Check `docs/results/REVIEW-M3.md`, `docs/results/recovery.md`, and `git status` for its output; if it is missing or partial, rerun those items (low priority if anything else is running).
 
 ## Do next (in order)
 
-1. CP-02 must-fix: (a) draw a fresh blind sample on a new seed (`tools/sample_frames.py --seed 7 --n 100 gimbal gofast`, use a different seed per video) and have a fresh verifier transcribe it; score with `tools/score_blind.py`; log the raw and strict rates honestly; mark GIMBAL azimuth and GOFAST clock low-confidence at changes if they still miss 1 percent. (b) Investigate `tests/test_correct.py` intermittent failures (verifier saw 3 of 8 failing). (c) Write `checkpoints/CP-02.md` including the Sitrec agreement numbers (`data/derived/<case>/symbology_sitrec_check.json`), run the independent check, tag cp-02.
-2. M1 leftovers: FLIR1 symbology reading (small glyphs; use the 2007 copy as a cross-check).
-3. M2: weather (ARCO-ERA5 anonymous Zarr, IGRA soundings), line-of-sight fit with interval readouts, pixel-aspect question, trajectory families, reproductions (tolerances are stated in _PLAN.md).
-4. Check `mcp__ccd_session_mgmt__get_usage` between items; Stewart sets the quota cap per run.
+1. Finish and commit the M3 review items and recovery test (see above).
+2. FLIR1 scoring through the same path (`solve/cases/flir1.yaml`), testimony included.
+3. Discriminators per video (`docs/results/<case>.md`), equal-treatment review, CP-04 with an independent check.
+4. Then M4 app, M5 (8 frozen PURSUE clips), M6 exports and schema v0.1.
+
+## House rules for this run
+
+- Check `mcp__ccd_session_mgmt__get_usage` between items; Stewart sets the quota cap per run.
+- When Stewart runs another heavy project, run at BelowNormal priority with one thread, or pause.
