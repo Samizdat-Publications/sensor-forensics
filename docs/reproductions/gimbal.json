@@ -1,0 +1,1217 @@
+{
+ "work_item": "M2.7 GIMBAL",
+ "frame_numbering": "A and B: Sitrec 0-based frames; runs named *lab* use the lab's frames (lab = Sitrec + 1)",
+ "tolerances": {
+  "A": {
+   "position_nmi": 0.2,
+   "min_frame": 60,
+   "speed_frac": 0.15
+  },
+  "A7": {
+   "speed_frac": 0.15,
+   "range_nmi": 1.5
+  },
+  "B": "constant-air-speed path exists (<5% no-intersection frames), range within 30-34 nmi, level within 500 ft"
+ },
+ "published": {
+  "A": {
+   "start_range_nmi": 8.0,
+   "end_range_nmi": 6.8,
+   "air_speed_start_kt": 400.0,
+   "air_speed_min_kt_below": 50.0,
+   "air_speed_min_frame": 900,
+   "ground_speed_start_kt": 300.0,
+   "ground_speed_min_frame": 720,
+   "ground_speed_end_kt_above": 120.0,
+   "alt_change_ft": 250.0,
+   "jet_end_no_wind_nmi": [
+    -1.65,
+    2.87
+   ],
+   "jet_end_wind_nmi": [
+    -1.0,
+    1.9
+   ]
+  },
+  "A7": {
+   "alt_ft": 18700.0,
+   "range_nmi": 30.0,
+   "air_speed_start_kt": 300.0,
+   "air_speed_end_kt": 450.0
+  }
+ },
+ "inputs": {
+  "A": {
+   "az": "Sitrec raw integer azimuth, 50-frame centered moving average, no cloud-motion correction",
+   "tas": "displayed IAS 238-242 mapped linearly onto 363-369 kt",
+   "bank": "Sitrec GimbalData.csv bank_angle (stand-in for P&vR's own every-10-frame extraction)"
+  },
+  "B": {
+   "turn": "From Bank and Speed (Sitrec's default Match Clouds is not ported)"
+  },
+  "lab": {
+   "az_fit": {
+    "n_intervals": 62,
+    "n_centers": 60,
+    "n_constraints": 155,
+    "lambda": 20681.38791502618,
+    "max_constraint_violation_deg": 0.4999999999990794,
+    "rms_vs_centers_deg": 0.05084769855229615,
+    "cadence_frames": 6,
+    "phase": 3,
+    "latency_frames": 3.0
+   },
+   "tas": "Mach x ISA speed of sound",
+   "bank": "image_track.csv horizon bars",
+   "frames": "lab numbering"
+  }
+ },
+ "A_repro": {
+  "inputs": "A_pvr_repro",
+  "wind_rel_deg": -35.0,
+  "wind_kt": 120.0,
+  "object_heading_rel_deg": -20.0,
+  "start_range_nmi": 8.0,
+  "end_range_nmi": 6.6399505036615905,
+  "min_range_nmi": 6.6399505036615905,
+  "all_intersections_in_front": true,
+  "air_speed_start_kt": 372.580494407932,
+  "air_speed_end_kt": 345.39564774042765,
+  "air_speed_min_kt": 13.819733077092652,
+  "air_speed_min_frame": 880,
+  "ground_speed_start_kt": 258.5342461501677,
+  "ground_speed_end_kt": 461.69273473138713,
+  "ground_speed_min_kt": 31.949812288461775,
+  "ground_speed_min_frame": 830,
+  "air_velocity_reversal_frame": 880,
+  "raw_ground_speed_min_frame": 750,
+  "alt_start_ft": 23359.962098744727,
+  "alt_end_ft": 23666.010544393357,
+  "alt_change_ft": 306.0484456486286,
+  "alt_change_flat_earth_ft": 323.5899132334072,
+  "jet_end_air_nmi": [
+   -1.6250455945917226,
+   2.8991934923273512
+  ],
+  "jet_end_ground_nmi": [
+   -0.9686192285455237,
+   1.9617194860854992
+  ],
+  "jet_heading_change_deg": -62.035733182637834,
+  "tas_kt_mean": 367.1377303588749,
+  "speed_smoothing": "Savitzky-Golay order 2, 21 samples of 10 frames"
+ },
+ "A_check": {
+  "start_range_nmi": {
+   "lab": 8.0,
+   "published": 8.0,
+   "pass": true
+  },
+  "end_range_nmi": {
+   "lab": 6.6399505036615905,
+   "published": 6.8,
+   "pass": true
+  },
+  "jet_end_no_wind_err_nmi": {
+   "lab": 0.038405498871226365,
+   "published": 0.0,
+   "pass": true
+  },
+  "jet_end_wind_err_nmi": {
+   "lab": 0.06923906252785497,
+   "published": 0.0,
+   "pass": true
+  },
+  "air_speed_start_kt": {
+   "lab": 372.580494407932,
+   "published": 400.0,
+   "pass": true
+  },
+  "ground_speed_start_kt": {
+   "lab": 258.5342461501677,
+   "published": 300.0,
+   "pass": true
+  },
+  "ground_speed_end_kt_over_120": {
+   "lab": 461.69273473138713,
+   "published": 120.0,
+   "pass": true
+  },
+  "ground_speed_min_frame": {
+   "lab": 830,
+   "published": 720,
+   "pass": false
+  },
+  "air_speed_under_50_frame": {
+   "lab": 880,
+   "published": 900,
+   "pass": true
+  },
+  "alt_change_ft_info_only": {
+   "lab": 306.0484456486286,
+   "published": 250.0,
+   "pass": null
+  },
+  "all_pass": false
+ },
+ "A_lab": {
+  "inputs": "C_lab",
+  "wind_rel_deg": -35.0,
+  "wind_kt": 120.0,
+  "object_heading_rel_deg": -20.0,
+  "start_range_nmi": 7.999999999999999,
+  "end_range_nmi": 5.991913721890804,
+  "min_range_nmi": 5.991913721890804,
+  "all_intersections_in_front": true,
+  "air_speed_start_kt": 427.7111838150994,
+  "air_speed_end_kt": 222.5396680989172,
+  "air_speed_min_kt": 11.818825072357978,
+  "air_speed_min_frame": 810,
+  "ground_speed_start_kt": 313.31596247788997,
+  "ground_speed_end_kt": 339.2166896542292,
+  "ground_speed_min_kt": 31.058338578929003,
+  "ground_speed_min_frame": 400,
+  "air_velocity_reversal_frame": 810,
+  "raw_ground_speed_min_frame": 370,
+  "alt_start_ft": 23359.962098744727,
+  "alt_end_ft": 23761.027281345516,
+  "alt_change_ft": 401.06518260078633,
+  "alt_change_flat_earth_ft": 425.82146724777067,
+  "jet_end_air_nmi": [
+   -1.6441504113722847,
+   2.6939747100109996
+  ],
+  "jet_end_ground_nmi": [
+   -0.9870676189600424,
+   1.7555632297629098
+  ],
+  "jet_heading_change_deg": -66.93835077726222,
+  "tas_kt_mean": 351.39419733752914,
+  "speed_smoothing": "Savitzky-Golay order 2, 21 samples of 10 frames"
+ },
+ "A7_repro": {
+  "inputs": "A_pvr_repro",
+  "geometry": "air",
+  "earth": "flat",
+  "alt_ft": 18700.0,
+  "range_start_end_nmi": [
+   29.70950157552031,
+   30.470978109264614
+  ],
+  "air_speed_start_kt": 318.34232304836473,
+  "air_speed_end_kt": 531.5459223564809,
+  "air_speed_at_frame_700_kt": 472.89470466548346,
+  "air_speed_min_max_kt": [
+   304.2743600806338,
+   704.7465931984821
+  ],
+  "air_heading_span_deg": 91.7464386817029,
+  "straightness_top_view": {
+   "max_dev_nmi": 0.6284103719518985,
+   "rms_dev_nmi": 0.10927176904123312,
+   "length_nmi": 3.6912915098004295,
+   "line_heading_deg": 139.90555122072487
+  }
+ },
+ "A7_check": {
+  "range_near_30_nmi": {
+   "lab": [
+    29.70950157552031,
+    30.470978109264614
+   ],
+   "published": 30.0,
+   "pass": true
+  },
+  "air_speed_start_kt": {
+   "lab": 318.34232304836473,
+   "published": 300.0,
+   "pass": true
+  },
+  "air_speed_end_kt": {
+   "lab": 531.5459223564809,
+   "published": 450.0,
+   "pass": false
+  },
+  "all_pass": false
+ },
+ "A7_lab": {
+  "inputs": "C_lab",
+  "geometry": "air",
+  "earth": "flat",
+  "alt_ft": 18700.0,
+  "range_start_end_nmi": [
+   29.709501575520306,
+   29.70950157552031
+  ],
+  "air_speed_start_kt": 251.5506786457511,
+  "air_speed_end_kt": 636.0167217165704,
+  "air_speed_at_frame_700_kt": 365.61352550244504,
+  "air_speed_min_max_kt": [
+   216.2387437475369,
+   679.3859545301991
+  ],
+  "air_heading_span_deg": 73.08141604034952,
+  "straightness_top_view": {
+   "max_dev_nmi": 0.31917568461182017,
+   "rms_dev_nmi": 0.09941372505021176,
+   "length_nmi": 3.3531164488388017,
+   "line_heading_deg": 92.56483878784262
+  }
+ },
+ "A7_clouds": {
+  "inputs": "A_pvr_repro",
+  "geometry": "air",
+  "earth": "flat",
+  "alt_ft": 18700.0,
+  "range_start_end_nmi": [
+   29.70950157552031,
+   30.470978109264614
+  ],
+  "air_speed_start_kt": 319.4009322681211,
+  "air_speed_end_kt": 460.55867495617446,
+  "air_speed_at_frame_700_kt": 437.4138908069941,
+  "air_speed_min_max_kt": [
+   308.34899308445847,
+   527.4906895403353
+  ],
+  "air_heading_span_deg": 38.339681280915556,
+  "straightness_top_view": {
+   "max_dev_nmi": 0.22699120738341955,
+   "rms_dev_nmi": 0.029170620109535746,
+   "length_nmi": 3.7841078841684066,
+   "line_heading_deg": 119.30883217774297
+  }
+ },
+ "B_repro_bank": {
+  "inputs": "B_sitrec_style",
+  "heading0": 315.0,
+  "jet_wind": [
+   270.0,
+   120.0
+  ],
+  "target_wind": [
+   274.0,
+   65.0
+  ],
+  "turn_rate_source": "bank",
+  "start_range_nmi": 32.0,
+  "end_range_nmi": 32.171187113791035,
+  "range_min_max_nmi": [
+   31.984497107813496,
+   32.486708911454656
+  ],
+  "alt_start_ft": 19082.79434134915,
+  "alt_end_ft": 19141.17638904447,
+  "alt_min_max_ft": [
+   19059.983626719357,
+   19141.17638904447
+  ],
+  "vertical_speed_fpm_min_max": [
+   -267.5178253255036,
+   680.6773090379071
+  ],
+  "n_no_intersection_frames": 145,
+  "first_no_intersection_run_frame": 1,
+  "ground_heading_start_end_deg": [
+   215.00523063019844,
+   169.69899019609076
+  ],
+  "ground_heading_span_deg": 113.8377147433574,
+  "air_heading_start_end_deg": [
+   224.35191143296447,
+   176.73612189859787
+  ],
+  "air_heading_span_deg": 104.69115254826121,
+  "ground_speed_kt_min_max": [
+   195.06454328807706,
+   526.2997866547332
+  ],
+  "straightness_top_view": {
+   "max_dev_nmi": 0.5023249767109208,
+   "rms_dev_nmi": 0.11217897666233849,
+   "length_nmi": 2.3466030465488292,
+   "line_heading_deg": 53.608916474578365
+  },
+  "straightness_top_view_good_frames": {
+   "max_dev_nmi": 0.20800797659975498,
+   "rms_dev_nmi": 0.06850371120984412,
+   "length_nmi": 2.166230125028974,
+   "line_heading_deg": 57.36856254066397
+  },
+  "jet_heading_change_deg": -64.92155702158578,
+  "jet_end_ground_nmi": [
+   -1.9138734549005092,
+   0.8063839216035283
+  ],
+  "tas_kt_mean": 351.0,
+  "smoothing_frames_for_heading_speed": 100
+ },
+ "B_check_bank": {
+  "path_exists_bad_frames_under_5pct": {
+   "lab": 145,
+   "criterion": 51.550000000000004,
+   "pass": false
+  },
+  "range_within_30_34_nmi": {
+   "lab": [
+    31.984497107813496,
+    32.486708911454656
+   ],
+   "criterion": [
+    30,
+    34
+   ],
+   "pass": true
+  },
+  "level_within_500_ft": {
+   "lab": 81.19276232511402,
+   "criterion": 500,
+   "pass": true
+  },
+  "all_pass": false
+ },
+ "B_clouds_port": {
+  "inputs": "B_sitrec_style",
+  "heading0": 315.0,
+  "jet_wind": [
+   270.0,
+   120.0
+  ],
+  "target_wind": [
+   274.0,
+   65.0
+  ],
+  "turn_rate_source": "override",
+  "start_range_nmi": 32.0,
+  "end_range_nmi": 32.8403152533918,
+  "range_min_max_nmi": [
+   32.0,
+   32.842088672712194
+  ],
+  "alt_start_ft": 19082.79434134915,
+  "alt_end_ft": 19038.69013697718,
+  "alt_min_max_ft": [
+   19030.363743301612,
+   19082.79434134915
+  ],
+  "vertical_speed_fpm_min_max": [
+   -269.60540626440894,
+   54.88335480125768
+  ],
+  "n_no_intersection_frames": 1,
+  "first_no_intersection_run_frame": null,
+  "ground_heading_start_end_deg": [
+   235.11387599392356,
+   242.52644785975502
+  ],
+  "ground_heading_span_deg": 10.357600967474951,
+  "air_heading_start_end_deg": [
+   242.0133946983195,
+   248.29100083984844
+  ],
+  "air_heading_span_deg": 8.697709316741708,
+  "ground_speed_kt_min_max": [
+   280.73298575587546,
+   286.6252771979519
+  ],
+  "straightness_top_view": {
+   "max_dev_nmi": 0.04572518636657224,
+   "rms_dev_nmi": 0.011964615046519548,
+   "length_nmi": 2.698159891277861,
+   "line_heading_deg": 62.56273148041849
+  },
+  "straightness_top_view_good_frames": {
+   "max_dev_nmi": 0.04570349520683284,
+   "rms_dev_nmi": 0.01196530907940946,
+   "length_nmi": 2.6981607246380332,
+   "line_heading_deg": 62.56134959404909
+  },
+  "jet_heading_change_deg": -63.674196841145886,
+  "jet_end_ground_nmi": [
+   -1.913275287482497,
+   0.8178217033311308
+  ],
+  "tas_kt_mean": 351.0,
+  "smoothing_frames_for_heading_speed": 100
+ },
+ "B_check_clouds": {
+  "path_exists_bad_frames_under_5pct": {
+   "lab": 1,
+   "criterion": 51.550000000000004,
+   "pass": true
+  },
+  "range_within_30_34_nmi": {
+   "lab": [
+    32.0,
+    32.842088672712194
+   ],
+   "criterion": [
+    30,
+    34
+   ],
+   "pass": true
+  },
+  "level_within_500_ft": {
+   "lab": 52.43059804753648,
+   "criterion": 500,
+   "pass": true
+  },
+  "all_pass": true
+ },
+ "B_lab_clouds": {
+  "inputs": "C_lab",
+  "heading0": 315.0,
+  "jet_wind": [
+   270.0,
+   120.0
+  ],
+  "target_wind": [
+   274.0,
+   65.0
+  ],
+  "turn_rate_source": "override",
+  "start_range_nmi": 32.0,
+  "end_range_nmi": 32.83680720659505,
+  "range_min_max_nmi": [
+   32.0,
+   32.83680720659505
+  ],
+  "alt_start_ft": 19116.718560598394,
+  "alt_end_ft": 18987.092165538572,
+  "alt_min_max_ft": [
+   18987.092165538572,
+   19116.718560598394
+  ],
+  "vertical_speed_fpm_min_max": [
+   -425.1361950814926,
+   -100.61747590030632
+  ],
+  "n_no_intersection_frames": 0,
+  "first_no_intersection_run_frame": null,
+  "ground_heading_start_end_deg": [
+   236.08005668802977,
+   241.7812032024382
+  ],
+  "ground_heading_span_deg": 8.723529307405698,
+  "air_heading_start_end_deg": [
+   242.82831874568592,
+   247.63176148225608
+  ],
+  "air_heading_span_deg": 7.326618903712102,
+  "ground_speed_kt_min_max": [
+   281.7539400879026,
+   286.3164991229752
+  ],
+  "straightness_top_view": {
+   "max_dev_nmi": 0.04093619331020676,
+   "rms_dev_nmi": 0.012648195124891655,
+   "length_nmi": 2.7032712100502754,
+   "line_heading_deg": 61.98497981725116
+  },
+  "straightness_top_view_good_frames": {
+   "max_dev_nmi": 0.04093619331020676,
+   "rms_dev_nmi": 0.012648195124891655,
+   "length_nmi": 2.7032712100502754,
+   "line_heading_deg": 61.98497981725116
+  },
+  "jet_heading_change_deg": -64.35469125134821,
+  "jet_end_ground_nmi": [
+   -1.9240851052260752,
+   0.7913729837570593
+  ],
+  "tas_kt_mean": 351.39419733752914,
+  "smoothing_frames_for_heading_speed": 100
+ },
+ "B_lab_bank": {
+  "inputs": "C_lab",
+  "heading0": 315.0,
+  "jet_wind": [
+   270.0,
+   120.0
+  ],
+  "target_wind": [
+   274.0,
+   65.0
+  ],
+  "turn_rate_source": "bank",
+  "start_range_nmi": 32.0,
+  "end_range_nmi": 31.797689699058527,
+  "range_min_max_nmi": [
+   31.797689699058527,
+   32.358036537361755
+  ],
+  "alt_start_ft": 19116.718560598394,
+  "alt_end_ft": 19148.24299164131,
+  "alt_min_max_ft": [
+   19061.105430240466,
+   19148.24299164131
+  ],
+  "vertical_speed_fpm_min_max": [
+   -381.13857801626875,
+   606.5517325682382
+  ],
+  "n_no_intersection_frames": 286,
+  "first_no_intersection_run_frame": 362,
+  "ground_heading_start_end_deg": [
+   258.8834287399289,
+   165.11145012771678
+  ],
+  "ground_heading_span_deg": 93.77197861221208,
+  "air_heading_start_end_deg": [
+   262.2866672785683,
+   171.67666638781657
+  ],
+  "air_heading_span_deg": 91.02579191944872,
+  "ground_speed_kt_min_max": [
+   222.29385577329901,
+   650.7908679363082
+  ],
+  "straightness_top_view": {
+   "max_dev_nmi": 0.3816014870634544,
+   "rms_dev_nmi": 0.1315361960769891,
+   "length_nmi": 2.7591699276148316,
+   "line_heading_deg": 23.732761176940272
+  },
+  "straightness_top_view_good_frames": {
+   "max_dev_nmi": 0.21057958872043445,
+   "rms_dev_nmi": 0.09497362725277585,
+   "length_nmi": 2.0292006731676624,
+   "line_heading_deg": 29.424471958296323
+  },
+  "jet_heading_change_deg": -67.02507412877122,
+  "jet_end_ground_nmi": [
+   -1.9190885648218854,
+   0.7539979384854502
+  ],
+  "tas_kt_mean": 351.39419733752914,
+  "smoothing_frames_for_heading_speed": 100
+ },
+ "turn_rate_bank_vs_clouds_deg_s_every_100_frames": {
+  "frames": [
+   0,
+   100,
+   200,
+   300,
+   400,
+   500,
+   600,
+   700,
+   800,
+   900,
+   1000
+  ],
+  "bank_sitrec_351": [
+   -1.291,
+   -1.54,
+   -1.546,
+   -1.812,
+   -1.856,
+   -1.864,
+   -2.164,
+   -2.132,
+   -2.389,
+   -2.188,
+   -1.82
+  ],
+  "clouds_port": [
+   -0.715,
+   -1.56,
+   -1.514,
+   -1.878,
+   -1.804,
+   -1.774,
+   -2.11,
+   -2.189,
+   -2.471,
+   -1.832,
+   -1.618
+  ],
+  "heading_change_bank_deg": -64.91334180464119,
+  "heading_change_clouds_deg": -63.66099962484931
+ },
+ "lab_azimuth_fit": {
+  "n_intervals": 62,
+  "n_centers": 60,
+  "n_constraints": 155,
+  "lambda": 20681.38791502618,
+  "max_constraint_violation_deg": 0.4999999999990794,
+  "rms_vs_centers_deg": 0.05084769855229615,
+  "cadence_frames": 6,
+  "phase": 3,
+  "latency_frames": 3.0
+ },
+ "attribution_A": {
+  "repro": {
+   "end_range_nmi": 6.6399505036615905,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 372.580494407932,
+   "ground_speed_start_kt": 258.5342461501677,
+   "ground_speed_end_kt": 461.69273473138713,
+   "alt_change_ft": 306.0484456486286,
+   "all_intersections_in_front": true
+  },
+  "tas_const_365": {
+   "end_range_nmi": 6.577673869280584,
+   "ground_speed_min_frame": 820,
+   "air_velocity_reversal_frame": 870,
+   "air_speed_start_kt": 384.8009976651408,
+   "ground_speed_start_kt": 270.6686436415579,
+   "ground_speed_end_kt": 457.1350744468278,
+   "alt_change_ft": 318.19908059290134,
+   "all_intersections_in_front": true
+  },
+  "tas_351_sitrec": {
+   "end_range_nmi": 6.153616790511401,
+   "ground_speed_min_frame": 660,
+   "air_velocity_reversal_frame": 840,
+   "air_speed_start_kt": 315.56327490111033,
+   "ground_speed_start_kt": 202.05179364409133,
+   "ground_speed_end_kt": 456.5284797545079,
+   "alt_change_ft": 401.1175114040573,
+   "all_intersections_in_front": true
+  },
+  "tas_lab_mach_isa": {
+   "end_range_nmi": 6.162431935544544,
+   "ground_speed_min_frame": 790,
+   "air_velocity_reversal_frame": 850,
+   "air_speed_start_kt": 305.94203571315677,
+   "ground_speed_start_kt": 192.55119604272573,
+   "ground_speed_end_kt": 472.39327657323787,
+   "alt_change_ft": 399.3906074397882,
+   "all_intersections_in_front": true
+  },
+  "tas_lab_mach_minus25C": {
+   "end_range_nmi": 6.36873930139674,
+   "ground_speed_min_frame": 810,
+   "air_velocity_reversal_frame": 860,
+   "air_speed_start_kt": 340.72665148370464,
+   "ground_speed_start_kt": 226.94693739290426,
+   "ground_speed_end_kt": 473.5700864664309,
+   "alt_change_ft": 359.01370519109736,
+   "all_intersections_in_front": true
+  },
+  "turn_formula_exact_g": {
+   "end_range_nmi": 6.62603237114133,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 371.21546692843106,
+   "ground_speed_start_kt": 257.1793609170721,
+   "ground_speed_end_kt": 461.7636205371528,
+   "alt_change_ft": 308.7633837893204,
+   "all_intersections_in_front": true
+  },
+  "turn_sitrec_g_351": {
+   "end_range_nmi": 6.1291714104061095,
+   "ground_speed_min_frame": 730,
+   "air_velocity_reversal_frame": 850,
+   "air_speed_start_kt": 335.1955147285025,
+   "ground_speed_start_kt": 221.47027893170602,
+   "ground_speed_end_kt": 457.88076996177534,
+   "alt_change_ft": 405.9071251370863,
+   "all_intersections_in_front": true
+  },
+  "turn_from_clouds_sitrec": {
+   "end_range_nmi": 6.332591400310293,
+   "ground_speed_min_frame": 690,
+   "air_velocity_reversal_frame": 870,
+   "air_speed_start_kt": 384.29452038255414,
+   "ground_speed_start_kt": 270.16506533353237,
+   "ground_speed_end_kt": 295.41676091781545,
+   "alt_change_ft": 366.08287604437686,
+   "all_intersections_in_front": true
+  },
+  "bank_lab": {
+   "end_range_nmi": 6.284687122161471,
+   "ground_speed_min_frame": 790,
+   "air_velocity_reversal_frame": 850,
+   "air_speed_start_kt": 356.72227083948286,
+   "ground_speed_start_kt": 242.80057367813697,
+   "ground_speed_end_kt": 446.3262260371379,
+   "alt_change_ft": 375.4547006038709,
+   "all_intersections_in_front": true
+  },
+  "az_trailing_ma50": {
+   "end_range_nmi": 6.580224188323005,
+   "ground_speed_min_frame": 860,
+   "air_velocity_reversal_frame": 940,
+   "air_speed_start_kt": 66.17107541977452,
+   "ground_speed_start_kt": 58.85609436134642,
+   "ground_speed_end_kt": 341.89942175706653,
+   "alt_change_ft": 317.7013601331661,
+   "all_intersections_in_front": true
+  },
+  "az_sitrec_gaussian": {
+   "end_range_nmi": 6.716092144016418,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 385.3440967902578,
+   "ground_speed_start_kt": 271.20774662365375,
+   "ground_speed_end_kt": 355.53346236542865,
+   "alt_change_ft": 291.20193246820463,
+   "all_intersections_in_front": true
+  },
+  "az_lab_interval_spline": {
+   "end_range_nmi": 6.8354080837929345,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 510.83514945667366,
+   "ground_speed_start_kt": 396.1073649649233,
+   "ground_speed_end_kt": 318.2700471733143,
+   "alt_change_ft": 267.95760983249215,
+   "all_intersections_in_front": true
+  },
+  "az_plus_1deg_ramp": {
+   "end_range_nmi": 6.8039821590978375,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 890,
+   "air_speed_start_kt": 398.84030667378704,
+   "ground_speed_start_kt": 284.61705063021765,
+   "ground_speed_end_kt": 465.59498660427437,
+   "alt_change_ft": 274.07736147771004,
+   "all_intersections_in_front": true
+  },
+  "el_const_-2.0": {
+   "end_range_nmi": 6.64015032198042,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 372.58586941265435,
+   "ground_speed_start_kt": 258.53424615016536,
+   "ground_speed_end_kt": 461.69273473138577,
+   "alt_change_ft": 270.81930793252263,
+   "all_intersections_in_front": true
+  },
+  "el_const_-2.5": {
+   "end_range_nmi": 6.6398382833116445,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 372.64609493349406,
+   "ground_speed_start_kt": 258.58625907717385,
+   "ground_speed_end_kt": 461.5914466097904,
+   "alt_change_ft": 342.9588975917714,
+   "all_intersections_in_front": true
+  },
+  "el_const_-1.5": {
+   "end_range_nmi": 6.6403928954762055,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 372.5391457246594,
+   "ground_speed_start_kt": 258.4937876490655,
+   "ground_speed_end_kt": 461.7715224516486,
+   "alt_change_ft": 198.70373804801756,
+   "all_intersections_in_front": true
+  },
+  "fps_29.97": {
+   "end_range_nmi": 6.62645288437874,
+   "ground_speed_min_frame": 830,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 371.500255262214,
+   "ground_speed_start_kt": 257.4620202874269,
+   "ground_speed_end_kt": 461.4614498893399,
+   "alt_change_ft": 308.6813514425206,
+   "all_intersections_in_front": true
+  },
+  "wind_sitrec_heading315_from270": {
+   "end_range_nmi": 7.429322913046865,
+   "ground_speed_min_frame": 840,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 512.5552046314052,
+   "ground_speed_start_kt": 397.80273496615627,
+   "ground_speed_end_kt": 627.102423842066,
+   "alt_change_ft": 152.62844001268112,
+   "all_intersections_in_front": true
+  },
+  "wind_literal_to_west_heading315": {
+   "end_range_nmi": 7.429322913046865,
+   "ground_speed_min_frame": 910,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 512.5552046314052,
+   "ground_speed_start_kt": 629.1776857829694,
+   "ground_speed_end_kt": 395.73130726809444,
+   "alt_change_ft": 152.62844001268112,
+   "all_intersections_in_front": true
+  },
+  "speed_smoothing_11": {
+   "end_range_nmi": 6.6399505036615905,
+   "ground_speed_min_frame": 850,
+   "air_velocity_reversal_frame": 870,
+   "air_speed_start_kt": 236.10845650995955,
+   "ground_speed_start_kt": 124.14156379985751,
+   "ground_speed_end_kt": 688.5139873664106,
+   "alt_change_ft": 306.0484456486286,
+   "all_intersections_in_front": true
+  },
+  "speed_smoothing_31": {
+   "end_range_nmi": 6.6399505036615905,
+   "ground_speed_min_frame": 810,
+   "air_velocity_reversal_frame": 880,
+   "air_speed_start_kt": 339.00269491869926,
+   "ground_speed_start_kt": 225.24003808022738,
+   "ground_speed_end_kt": 482.73237508499,
+   "alt_change_ft": 306.0484456486286,
+   "all_intersections_in_front": true
+  },
+  "ALL_LAB": {
+   "end_range_nmi": 5.991913721890804,
+   "ground_speed_min_frame": 400,
+   "air_velocity_reversal_frame": 810,
+   "air_speed_start_kt": 427.7111838150994,
+   "ground_speed_start_kt": 313.31596247788997,
+   "ground_speed_end_kt": 339.2166896542292,
+   "alt_change_ft": 401.06518260078633,
+   "all_intersections_in_front": true
+  },
+  "ALL_LAB_el_-2.5": {
+   "end_range_nmi": 5.991582499448723,
+   "ground_speed_min_frame": 400,
+   "air_velocity_reversal_frame": 810,
+   "air_speed_start_kt": 427.7547474386538,
+   "ground_speed_start_kt": 313.34277763611357,
+   "ground_speed_end_kt": 339.15668080211464,
+   "alt_change_ft": 507.56034368265347,
+   "all_intersections_in_front": true
+  },
+  "ALL_LAB_el_-1.5": {
+   "end_range_nmi": 5.992171208522099,
+   "ground_speed_min_frame": 400,
+   "air_velocity_reversal_frame": 810,
+   "air_speed_start_kt": 427.677548345833,
+   "ground_speed_start_kt": 313.2951041414549,
+   "ground_speed_end_kt": 339.26336800775385,
+   "alt_change_ft": 294.58741743601564,
+   "all_intersections_in_front": true
+  },
+  "ALL_LAB_tas_minus25C": {
+   "end_range_nmi": 6.188969797326156,
+   "ground_speed_min_frame": 630,
+   "air_velocity_reversal_frame": 830,
+   "air_speed_start_kt": 463.1997880114572,
+   "ground_speed_start_kt": 348.64026287496324,
+   "ground_speed_end_kt": 333.44495412941524,
+   "alt_change_ft": 361.3936709603075,
+   "all_intersections_in_front": true
+  },
+  "ALL_LAB_literal_wind": {
+   "end_range_nmi": 6.354460256160479,
+   "ground_speed_min_frame": 850,
+   "air_velocity_reversal_frame": 810,
+   "air_speed_start_kt": 587.4643869323721,
+   "ground_speed_start_kt": 703.9624904181146,
+   "ground_speed_end_kt": 183.2129646624909,
+   "alt_change_ft": 328.12984694795205,
+   "all_intersections_in_front": true
+  }
+ },
+ "attribution_B": {
+  "repro_bank": {
+   "end_range_nmi": 32.171187113791035,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19141.17638904447,
+   "n_no_intersection_frames": 145,
+   "air_heading_span_deg": 104.69115254826121,
+   "ground_speed_kt_min_max": [
+    195.06454328807706,
+    526.2997866547332
+   ],
+   "jet_heading_change_deg": -64.92155702158578,
+   "max_dev_from_line_nmi": 0.20800797659975498
+  },
+  "turn_from_clouds_sitrec_default": {
+   "end_range_nmi": 32.8403152533918,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19038.69013697718,
+   "n_no_intersection_frames": 1,
+   "air_heading_span_deg": 8.697709316741708,
+   "ground_speed_kt_min_max": [
+    280.73298575587546,
+    286.6252771979519
+   ],
+   "jet_heading_change_deg": -63.674196841145886,
+   "max_dev_from_line_nmi": 0.04570349520683284
+  },
+  "tas_365": {
+   "end_range_nmi": 32.021647830606796,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19164.18835237192,
+   "n_no_intersection_frames": 151,
+   "air_heading_span_deg": 119.1236132776713,
+   "ground_speed_kt_min_max": [
+    62.91209767405089,
+    396.8841268551346
+   ],
+   "jet_heading_change_deg": -62.431415108429036,
+   "max_dev_from_line_nmi": 0.233047498558219
+  },
+  "tas_lab_mach_isa": {
+   "end_range_nmi": 32.12347490647664,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19148.51433343897,
+   "n_no_intersection_frames": 152,
+   "air_heading_span_deg": 103.84994963659966,
+   "ground_speed_kt_min_max": [
+    184.37938788818843,
+    544.6649628118711
+   ],
+   "jet_heading_change_deg": -64.79370860164317,
+   "max_dev_from_line_nmi": 0.21251481928954494
+  },
+  "bank_lab": {
+   "end_range_nmi": 31.67209715583782,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19218.13304642682,
+   "n_no_intersection_frames": 258,
+   "air_heading_span_deg": 95.91866445451907,
+   "ground_speed_kt_min_max": [
+    210.25707857357833,
+    637.2371878471026
+   ],
+   "jet_heading_change_deg": -66.96095826024992,
+   "max_dev_from_line_nmi": 0.20486255770673914
+  },
+  "az_lab_interval_spline": {
+   "end_range_nmi": 32.24712845867783,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19129.50519768135,
+   "n_no_intersection_frames": 141,
+   "air_heading_span_deg": 101.2126593107258,
+   "ground_speed_kt_min_max": [
+    215.69188991128945,
+    485.2183766915902
+   ],
+   "jet_heading_change_deg": -64.92155702158578,
+   "max_dev_from_line_nmi": 0.19814125789716963
+  },
+  "az_lab_with_clouds_turn": {
+   "end_range_nmi": 32.83837512704029,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19038.98615283119,
+   "n_no_intersection_frames": 1,
+   "air_heading_span_deg": 7.230978891213141,
+   "ground_speed_kt_min_max": [
+    276.51283472034993,
+    286.1225303661913
+   ],
+   "jet_heading_change_deg": -64.28035905606788,
+   "max_dev_from_line_nmi": 0.037494331697325405
+  },
+  "el_const_-2.0": {
+   "end_range_nmi": 32.17158648774774,
+   "alt_start_ft": 19116.718560598394,
+   "alt_end_ft": 19090.038150322216,
+   "n_no_intersection_frames": 145,
+   "air_heading_span_deg": 104.69305451792488,
+   "ground_speed_kt_min_max": [
+    195.06810509121556,
+    526.3004840351557
+   ],
+   "jet_heading_change_deg": -64.92155702158578,
+   "max_dev_from_line_nmi": 0.2080045434049536
+  },
+  "el_const_-2.5": {
+   "end_range_nmi": 32.17216738404758,
+   "alt_start_ft": 17420.71503258171,
+   "alt_end_ft": 17384.816941229525,
+   "n_no_intersection_frames": 145,
+   "air_heading_span_deg": 104.68034274404428,
+   "ground_speed_kt_min_max": [
+    195.11334283482978,
+    526.1532005498732
+   ],
+   "jet_heading_change_deg": -64.92155702158578,
+   "max_dev_from_line_nmi": 0.20802008672809624
+  },
+  "el_const_-1.5": {
+   "end_range_nmi": 32.171134502512146,
+   "alt_start_ft": 20813.101473590723,
+   "alt_end_ft": 20795.565251135107,
+   "n_no_intersection_frames": 145,
+   "air_heading_span_deg": 104.70294041038332,
+   "ground_speed_kt_min_max": [
+    195.03288552549787,
+    526.4150756146927
+   ],
+   "jet_heading_change_deg": -64.92155702158578,
+   "max_dev_from_line_nmi": 0.20799244078889315
+  },
+  "wind_literal_to_west": {
+   "end_range_nmi": 30.995667445015684,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19323.135555536654,
+   "n_no_intersection_frames": 143,
+   "air_heading_span_deg": 116.34944365375046,
+   "ground_speed_kt_min_max": [
+    279.79501640208446,
+    461.0592026262208
+   ],
+   "jet_heading_change_deg": -64.92155702158578,
+   "max_dev_from_line_nmi": 0.1993945143008678
+  },
+  "clouds_wind_literal_to_west": {
+   "end_range_nmi": 31.81144512821341,
+   "alt_start_ft": 19082.79434134915,
+   "alt_end_ft": 19196.60222862378,
+   "n_no_intersection_frames": 1,
+   "air_heading_span_deg": 9.76274365858157,
+   "ground_speed_kt_min_max": [
+    396.9634454719309,
+    401.4163189319813
+   ],
+   "jet_heading_change_deg": -63.674196841145886,
+   "max_dev_from_line_nmi": 0.053678250064307015
+  },
+  "ALL_LAB_bank_turn": {
+   "end_range_nmi": 31.797689699058527,
+   "alt_start_ft": 19116.718560598394,
+   "alt_end_ft": 19148.24299164131,
+   "n_no_intersection_frames": 286,
+   "air_heading_span_deg": 91.02579191944872,
+   "ground_speed_kt_min_max": [
+    222.29385577329901,
+    650.7908679363082
+   ],
+   "jet_heading_change_deg": -67.02507412877122,
+   "max_dev_from_line_nmi": 0.21057958872043445
+  },
+  "ALL_LAB_clouds_turn": {
+   "end_range_nmi": 32.83680720659505,
+   "alt_start_ft": 19116.718560598394,
+   "alt_end_ft": 18987.092165538572,
+   "n_no_intersection_frames": 0,
+   "air_heading_span_deg": 7.326618903712102,
+   "ground_speed_kt_min_max": [
+    281.7539400879026,
+    286.3164991229752
+   ],
+   "jet_heading_change_deg": -64.35469125134821,
+   "max_dev_from_line_nmi": 0.04093619331020676
+  },
+  "ALL_LAB_clouds_turn_el_-2.5": {
+   "end_range_nmi": 32.837148310804594,
+   "alt_start_ft": 17420.71503258171,
+   "alt_end_ft": 17246.654463389255,
+   "n_no_intersection_frames": 0,
+   "air_heading_span_deg": 7.308298924381177,
+   "ground_speed_kt_min_max": [
+    281.7507781540644,
+    286.2747877670216
+   ],
+   "jet_heading_change_deg": -64.35469125134821,
+   "max_dev_from_line_nmi": 0.040836589305587596
+  },
+  "ALL_LAB_clouds_turn_el_-1.5": {
+   "end_range_nmi": 32.83654182815321,
+   "alt_start_ft": 20813.101473590723,
+   "alt_end_ft": 20727.871654816754,
+   "n_no_intersection_frames": 0,
+   "air_heading_span_deg": 7.340870020072941,
+   "ground_speed_kt_min_max": [
+    281.75639913053914,
+    286.3489241965081
+   ],
+   "jet_heading_change_deg": -64.35469125134821,
+   "max_dev_from_line_nmi": 0.041013679679869956
+  },
+  "ALL_LAB_clouds_turn_literal_wind": {
+   "end_range_nmi": 31.811480405033144,
+   "alt_start_ft": 19116.718560598394,
+   "alt_end_ft": 19146.091801455375,
+   "n_no_intersection_frames": 0,
+   "air_heading_span_deg": 8.391664163411036,
+   "ground_speed_kt_min_max": [
+    397.8781485138213,
+    401.3164178628447
+   ],
+   "jet_heading_change_deg": -64.35469125134821,
+   "max_dev_from_line_nmi": 0.04906766390016499
+  }
+ },
+ "attribution_A7": {
+  "repro_pvr_air_flat": {
+   "range_start_end_nmi": [
+    29.70950157552031,
+    30.470978109264614
+   ],
+   "air_speed_start_kt": 318.34232304836473,
+   "air_speed_at_frame_700_kt": 472.89470466548346,
+   "air_speed_end_kt": 531.5459223564809
+  },
+  "sphere_earth": {
+   "range_start_end_nmi": [
+    34.71927839911477,
+    35.99360464795241
+   ],
+   "air_speed_start_kt": 368.05217723854827,
+   "air_speed_at_frame_700_kt": 529.8532416581751,
+   "air_speed_end_kt": 606.1780128269378
+  },
+  "sitrec_geometry_ground_flat": {
+   "range_start_end_nmi": [
+    29.5617532984069,
+    29.93355026072246
+   ],
+   "air_speed_start_kt": 223.88500114493334,
+   "air_speed_at_frame_700_kt": 324.1671362584123,
+   "air_speed_end_kt": 517.8904793075733
+  },
+  "turn_from_clouds": {
+   "range_start_end_nmi": [
+    29.70950157552031,
+    30.470978109264614
+   ],
+   "air_speed_start_kt": 319.4009322681211,
+   "air_speed_at_frame_700_kt": 437.4138908069941,
+   "air_speed_end_kt": 460.55867495617446
+  },
+  "tas_lab_mach_isa": {
+   "range_start_end_nmi": [
+    29.70950157552031,
+    30.470978109264614
+   ],
+   "air_speed_start_kt": 320.6233955522321,
+   "air_speed_at_frame_700_kt": 424.6507455991637,
+   "air_speed_end_kt": 627.7586032095401
+  },
+  "bank_lab": {
+   "range_start_end_nmi": [
+    29.70950157552031,
+    30.470978109264614
+   ],
+   "air_speed_start_kt": 316.58144625061925,
+   "air_speed_at_frame_700_kt": 437.6685085339461,
+   "air_speed_end_kt": 603.6027688907129
+  },
+  "az_lab_interval_spline": {
+   "range_start_end_nmi": [
+    29.70950157552031,
+    30.47097810926461
+   ],
+   "air_speed_start_kt": 324.5730528847949,
+   "air_speed_at_frame_700_kt": 480.648685763443,
+   "air_speed_end_kt": 501.8941194135505
+  },
+  "ALL_LAB_air_flat": {
+   "range_start_end_nmi": [
+    29.709501575520306,
+    29.70950157552031
+   ],
+   "air_speed_start_kt": 251.5506786457511,
+   "air_speed_at_frame_700_kt": 365.61352550244504,
+   "air_speed_end_kt": 636.0167217165704
+  },
+  "ALL_LAB_air_sphere": {
+   "range_start_end_nmi": [
+    34.71927839911477,
+    34.71927839911477
+   ],
+   "air_speed_start_kt": 282.09795812514665,
+   "air_speed_at_frame_700_kt": 380.5726517791872,
+   "air_speed_end_kt": 711.460336044473
+  }
+ },
+ "plots": [
+  "gimbal_topview.png",
+  "gimbal_range.png",
+  "gimbal_speed.png",
+  "gimbal_altitude.png"
+ ]
+}
