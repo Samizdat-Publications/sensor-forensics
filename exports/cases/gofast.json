@@ -1,0 +1,1581 @@
+{
+ "schema_version": "0.1",
+ "case_id": "gofast",
+ "kind": "video_case",
+ "title": "GOFAST (F/A-18F, ATFLIR, January 2015)",
+ "summary": "Forensic reconstruction of GOFAST (F/A-18F, ATFLIR, January 2015): the jet path, line of sight and field of view per frame, scored against each candidate explanation with identical geometry and weights.",
+ "event": {
+  "date": "2015-01",
+  "date_uncertainty": "Month is public; the exact day and time of day are not pinned down by the lab. Weather was taken at 2015-01-25T02:30 UTC as the analysis time.",
+  "place": "Atlantic Ocean off the US East Coast",
+  "latitude_deg": null,
+  "longitude_deg": null,
+  "position_uncertainty_m": null,
+  "position_note": "No position is shown on screen; the lab holds no coordinates for this clip."
+ },
+ "platform": {
+  "name": "F/A-18F Super Hornet",
+  "aircraft_or_ship": "F/A-18F Super Hornet",
+  "note": "Jet heading is not on screen and is fitted; altitude comes from the display where legible."
+ },
+ "sensor": {
+  "name": "AN/ASQ-228 ATFLIR",
+  "band": "infrared",
+  "field_of_view_deg": 0.7,
+  "field_of_view_note": "Fixed value assumed for the whole clip (see analysis.variants).",
+  "picture_width_px": 426.0,
+  "pixel_aspect": 1.036,
+  "frame_rate_hz": 29.97002997002997,
+  "duration_s": 34.40103333333333
+ },
+ "sources": [
+  {
+   "id": "gofast_navy2020",
+   "role": "video",
+   "title": "GOFAST (GOFAST_navy2020.wmv)",
+   "file": "GOFAST_navy2020.wmv",
+   "url": "https://web.archive.org/web/2020id_/https://www.navair.navy.mil/foia/sites/g/files/jejdrs566/files/2020-04/3%20-%20GOFAST.wmv",
+   "sha256": "c858b22d8370a26d58ec77ba35e95b9ba6f56fa7632258ca8f2bbf2621bcf5a8",
+   "bytes": 13509612,
+   "official_copy": true,
+   "provenance": "Wayback copy of the NAVAIR file",
+   "retrieved": "2026-10-30T20:39:29-04:00",
+   "media": {
+    "codec_name": "wmv1",
+    "width": 640,
+    "height": 480,
+    "r_frame_rate": "30000/1001",
+    "duration": "34.458000"
+   }
+  },
+  {
+   "id": "testimony_gofast",
+   "role": "testimony",
+   "title": "Public testimony claims for gofast",
+   "file": "data/testimony/gofast.yaml",
+   "url": null,
+   "sha256": "0f0292fcbb63f03d0e5179f2cb98a40e5c94dfdc4d3e266441a362b43e89619c",
+   "bytes": 15553,
+   "official_copy": false,
+   "provenance": "Hand-extracted paraphrases with per-claim source URLs; see data/testimony/SOURCES.md."
+  },
+  {
+   "id": "weather_era5",
+   "role": "weather",
+   "title": "ERA5 reanalysis wind and temperature",
+   "file": null,
+   "url": "https://cloud.google.com/storage/docs/public-datasets/era5",
+   "sha256": null,
+   "provenance": "ERA5 gofast at 2015-01-25T02:30 UTC (box centre)"
+  }
+ ],
+ "observables": [
+  {
+   "name": "azimuth",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 42 frames (median)",
+   "first_value": "35L",
+   "last_value": "58L",
+   "confidence_summary": "18 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0175
+  },
+  {
+   "name": "elevation",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 72 frames (median)",
+   "first_value": "-22",
+   "last_value": "-36",
+   "confidence_summary": "30 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0291
+  },
+  {
+   "name": "range",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 61.5 frames (median)",
+   "first_value": "blank",
+   "last_value": "3.3",
+   "confidence_summary": "8 of 1031 frames below the 0.3 template-match confidence threshold; 368 blank",
+   "low_confidence_fraction": 0.0121
+  },
+  {
+   "name": "closure",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 97 frames (median)",
+   "first_value": "blank",
+   "last_value": "150",
+   "confidence_summary": "3 of 1031 frames below the 0.3 template-match confidence threshold; 368 blank",
+   "low_confidence_fraction": 0.0045
+  },
+  {
+   "name": "altitude",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 7 frames (median)",
+   "first_value": "25000",
+   "last_value": "25010",
+   "confidence_summary": "17 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0165
+  },
+  {
+   "name": "airspeed",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 39 frames (median)",
+   "first_value": "252",
+   "last_value": "259",
+   "confidence_summary": "6 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0058
+  },
+  {
+   "name": "mach",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 18 frames (median)",
+   "first_value": "0.61",
+   "last_value": "0.62",
+   "confidence_summary": "3 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0029
+  },
+  {
+   "name": "clock",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 30 frames (median)",
+   "first_value": "4220A",
+   "last_value": "4254A",
+   "confidence_summary": "23 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0223
+  },
+  {
+   "name": "zoom",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": null,
+   "first_value": "1.0",
+   "last_value": "1.0",
+   "confidence_summary": "0 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0
+  },
+  {
+   "name": "sensor",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": null,
+   "first_value": "IR",
+   "last_value": "IR",
+   "confidence_summary": "0 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0
+  },
+  {
+   "name": "polarity",
+   "kind": "read_from_screen",
+   "frames": 1031,
+   "resolution": "Field updates about every 146 frames (median)",
+   "first_value": "BLK",
+   "last_value": "BLK",
+   "confidence_summary": "2 of 1031 frames below the 0.3 template-match confidence threshold; 0 blank",
+   "low_confidence_fraction": 0.0019
+  },
+  {
+   "name": "image_track",
+   "kind": "measured_from_image",
+   "confidence_summary": "Per-frame blob position, size and brightness; see image_track_summary.json.",
+   "summary": {
+    "case": "gofast",
+    "n_frames": 1031,
+    "method": "extract/image_cues.py (see module docstring)",
+    "bank": {
+     "valid_frames": 1031,
+     "resid_px_median": 0.49699,
+     "sigma_deg_median": 0.03385,
+     "lr_diff_deg_median_abs": 0.07165,
+     "range_deg": [
+      -21.98612,
+      2.64301
+     ]
+    },
+    "sitrec_bank": {
+     "mapping": "ours = -(Sitrec CSV bank); ours = horizon-bar line angle, CCW positive with y up",
+     "n": 1030,
+     "mean_diff_deg": -0.37154,
+     "mean_abs_diff_deg": 0.4734,
+     "max_abs_diff_deg": 1.51221,
+     "rms_diff_deg": 0.58724,
+     "corr": 0.99991,
+     "fit_ours_eq_slope_x_sitrec_plus_icpt": [
+      1.06841,
+      0.08027
+     ],
+     "rms_after_linear_fit_deg": 0.09215,
+     "tan_ratio_ours_over_sitrec": 1.06481,
+     "rms_after_tan_ratio_deg": 0.10931,
+     "max_abs_after_tan_ratio_deg": 0.50874
+    },
+    "obj": {
+     "found_frames": 771,
+     "snr_median": 9.791,
+     "sign_pass1_disagree_frames": 165,
+     "angle_raw_range_deg": [
+      -89.69419,
+      90.0
+     ],
+     "angle_unwrapped_median9_range_deg": [
+      -193.84373,
+      181.84296
+     ],
+     "angle_frame_to_frame_median_abs_deg": 4.65541,
+     "angle_first_last_deg": [
+      15.8261,
+      -7.79766
+     ],
+     "lo_hi_angle_diff_median_abs_deg": 3.02487
+    },
+    "polarity_segments": [
+     [
+      0,
+      637,
+      "BLK"
+     ],
+     [
+      638,
+      783,
+      "WHT"
+     ],
+     [
+      784,
+      1030,
+      "BLK"
+     ]
+    ],
+    "obj_at_frames": {
+     "0": {
+      "polarity": "BLK",
+      "obj_sign": 1,
+      "obj_snr": 17.19603,
+      "obj_lo_area_px": 14,
+      "obj_hi_area_px": 9,
+      "obj_hi_angle_deg": 15.8261,
+      "obj_hi_major_px": 4.76416,
+      "obj_hi_minor_px": 3.34355,
+      "obj_hi_integ": 615.0,
+      "obj_hi_symadj_px": 13
+     },
+     "300": {
+      "polarity": "BLK",
+      "obj_sign": 1,
+      "obj_snr": 8.98512,
+      "obj_lo_area_px": 25,
+      "obj_hi_area_px": 25,
+      "obj_hi_angle_deg": -0.52725,
+      "obj_hi_major_px": 14.50349,
+      "obj_hi_minor_px": 2.3038,
+      "obj_hi_integ": 2530.0,
+      "obj_hi_symadj_px": 10
+     },
+     "500": {
+      "polarity": "BLK",
+      "obj_sign": 1,
+      "obj_snr": 13.73136,
+      "obj_lo_area_px": 24,
+      "obj_hi_area_px": 15,
+      "obj_hi_angle_deg": -9.38379,
+      "obj_hi_major_px": 5.34179,
+      "obj_hi_minor_px": 3.90309,
+      "obj_hi_integ": 1271.0,
+      "obj_hi_symadj_px": 11
+     },
+     "700": {
+      "polarity": "WHT",
+      "obj_sign": -1,
+      "obj_snr": 8.58267,
+      "obj_lo_area_px": 26,
+      "obj_hi_area_px": 18,
+      "obj_hi_angle_deg": -10.8119,
+      "obj_hi_major_px": 5.8093,
+      "obj_hi_minor_px": 4.10121,
+      "obj_hi_integ": 824.0,
+      "obj_hi_symadj_px": 15
+     },
+     "900": {
+      "polarity": "BLK",
+      "obj_sign": 1,
+      "obj_snr": 10.61956,
+      "obj_lo_area_px": 23,
+      "obj_hi_area_px": 14,
+      "obj_hi_angle_deg": -9.33475,
+      "obj_hi_major_px": 5.57035,
+      "obj_hi_minor_px": 3.35108,
+      "obj_hi_integ": 1366.0,
+      "obj_hi_symadj_px": 12
+     },
+     "1030": {
+      "polarity": "BLK",
+      "obj_sign": 1,
+      "obj_snr": 19.35515,
+      "obj_lo_area_px": 26,
+      "obj_hi_area_px": 20,
+      "obj_hi_angle_deg": -7.79766,
+      "obj_hi_major_px": 6.4358,
+      "obj_hi_minor_px": 4.10452,
+      "obj_hi_integ": 1837.0,
+      "obj_hi_symadj_px": 15
+     }
+    },
+    "bg_motion_px_per_frame": {
+     "first100": {
+      "dx": 4.05709,
+      "dy": -2.74401,
+      "speed": 5.55127,
+      "ncc_median": 0.68853,
+      "ncc0_median": -0.04784,
+      "ecc_median": 0.80046
+     },
+     "last100": {
+      "dx": 15.64022,
+      "dy": -8.91142,
+      "speed": 18.00192,
+      "ncc_median": 0.6865,
+      "ncc0_median": 0.12768,
+      "ecc_median": 0.712
+     }
+    },
+    "bg_rot_dpf": {
+     "median": 0.01305,
+     "mad_sigma": 0.02309,
+     "valid_frames": 1001
+    },
+    "cv2_phaseCorrelate_diagnostic": {
+     "median_speed_pc": 0.30372,
+     "median_speed_ncc_ecc": 13.4621,
+     "note": "phaseCorrelate locks onto a zero-shift peak on these copies; not used as motion"
+    },
+    "orientation_steps": [
+     {
+      "center_frame": 280,
+      "window": [
+       265,
+       295
+      ],
+      "obj_angle_change_deg": -181.92132,
+      "bank_change_deg": 0.04377,
+      "bg_rot_deg": 0.39319,
+      "bg_rot_pairs": [
+       -0.1991,
+       -0.0241,
+       -0.0165,
+       -0.0202,
+       -0.0096,
+       0.1964,
+       null,
+       0.263,
+       0.2034
+      ],
+      "bg_rot_sigma_deg": 0.44175,
+      "bg_span": [
+       265,
+       295
+      ],
+      "bg_ecc_min": 0.33288,
+      "bg_ncc_margin_min": 0.06228
+     },
+     {
+      "center_frame": 383,
+      "window": [
+       368,
+       398
+      ],
+      "obj_angle_change_deg": -180.09564,
+      "bank_change_deg": 1.27984,
+      "bg_rot_deg": 1.38044,
+      "bg_rot_pairs": [
+       0.1047,
+       0.0237,
+       0.0617,
+       0.0657,
+       0.0832,
+       0.0496,
+       0.0117,
+       0.056,
+       0.0684,
+       0.0591,
+       0.0793,
+       0.0274,
+       0.0649,
+       0.0652,
+       0.5597
+      ],
+      "bg_rot_sigma_deg": 0.50945,
+      "bg_span": [
+       368,
+       398
+      ],
+      "bg_ecc_min": 0.7556,
+      "bg_ncc_margin_min": 0.56154
+     },
+     {
+      "center_frame": 496,
+      "window": [
+       481,
+       511
+      ],
+      "obj_angle_change_deg": -7.62301,
+      "bank_change_deg": -5.35413,
+      "bg_rot_deg": -2.93018,
+      "bg_rot_pairs": [
+       0.0211,
+       0.0638,
+       0.0045,
+       -0.4955,
+       -0.7374,
+       -0.0486,
+       -0.0345,
+       -0.0004,
+       -0.0063,
+       0.0192,
+       -0.023,
+       -0.0558,
+       -0.6466,
+       -0.8034,
+       -0.1871
+      ],
+      "bg_rot_sigma_deg": 1.19263,
+      "bg_span": [
+       481,
+       511
+      ],
+      "bg_ecc_min": 0.73776,
+      "bg_ncc_margin_min": 0.67239
+     },
+     {
+      "center_frame": 544,
+      "window": [
+       529,
+       559
+      ],
+      "obj_angle_change_deg": -6.07424,
+      "bank_change_deg": -3.92949,
+      "bg_rot_deg": -1.47723,
+      "bg_rot_pairs": [
+       0.0053,
+       -0.0743,
+       -0.0179,
+       -0.0484,
+       -0.6696,
+       -0.6701,
+       -0.0648,
+       -0.0904,
+       0.0287,
+       0.0726,
+       -0.0466,
+       -0.021,
+       0.0327,
+       0.0706,
+       0.0158
+      ],
+      "bg_rot_sigma_deg": 0.91854,
+      "bg_span": [
+       529,
+       559
+      ],
+      "bg_ecc_min": 0.74389,
+      "bg_ncc_margin_min": 0.66404
+     },
+     {
+      "center_frame": 953,
+      "window": [
+       938,
+       968
+      ],
+      "obj_angle_change_deg": 178.87259,
+      "bank_change_deg": -0.21199,
+      "bg_rot_deg": 0.48737,
+      "bg_rot_pairs": [
+       0.0176,
+       0.0532,
+       0.0723,
+       0.0593,
+       0.0419,
+       0.0129,
+       0.0563,
+       0.073,
+       0.0248,
+       0.0497,
+       0.0255,
+       -0.032,
+       0.0109,
+       -0.0073,
+       0.0293
+      ],
+      "bg_rot_sigma_deg": 0.11457,
+      "bg_span": [
+       938,
+       968
+      ],
+      "bg_ecc_min": 0.68689,
+      "bg_ncc_margin_min": 0.46156
+     }
+    ]
+   }
+  }
+ ],
+ "environment": {
+  "weather_source": "ERA5 gofast at 2015-01-25T02:30 UTC (box centre)",
+  "wind_uncertainty_mps": 2.5722222222222224,
+  "note": "Wind at the object's altitude carries this uncertainty for every hypothesis."
+ },
+ "analysis": {
+  "method": "Maximum-likelihood multi-start fit per hypothesis; BIC-style complexity penalty; same code and weights for all.",
+  "frame_window": [
+   368,
+   1030
+  ],
+  "reference_frame": 701,
+  "primary_variant": "",
+  "variants": [
+   {
+    "id": "",
+    "description": "Single analysis"
+   }
+  ],
+  "effective_sample_size": 1070.2458455159913,
+  "log_likelihood_note": "Natural log; higher is better; a difference of 2.3 is a likelihood ratio of 10.",
+  "flags": [
+   "D-016: apparent-size criterion reported with weight 0 (blob major axis 6.4 px is under 3 x the point-spread width 5.5 px); resolution not established."
+  ],
+  "post_hoc_exclusions": [
+   {
+    "id": "D-016",
+    "description": "D-016: apparent-size criterion reported with weight 0 (blob major axis 6.4 px is under 3 x the point-spread width 5.5 px); resolution not established.",
+    "decided_blind": false
+   }
+  ],
+  "totals_without_post_hoc_exclusions_available": false
+ },
+ "hypotheses": [
+  {
+   "id": "H-AC",
+   "label": "Distant aircraft (engine exhaust seen as glare)",
+   "variant": "",
+   "model": "glare_target",
+   "in_design_set": false,
+   "valid": true,
+   "priors_summary": "An ordinary aircraft (airliner or military jet) at cruise altitude and speed, whose hot engine exhaust saturates the infrared sensor. The blob is a glare: its size follows its brightness rather than the range, and its orientation follows the pod's derotation. Priors: range_ref_nmi loguniform [0.5, 60.0]; airspeed_kt uniform [250.0, 520.0]; heading_deg uniform [0.0, 360.0]; vz_fpm normal [-4000.0, 4000.0].",
+   "free_parameters": 6,
+   "best_fit_parameters": {
+    "jet_heading_deg": 30.56448976175922,
+    "anchor_daz_deg": -0.5,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -20.0,
+    "wind_err_n_kt": -20.0,
+    "range_ref_nmi": 3.2484488023258775,
+    "airspeed_kt": 250.0,
+    "heading_deg": 60.47913751773436,
+    "vz_fpm": -9.132386811548258
+   },
+   "best_fit_parameters_physics_only": {
+    "jet_heading_deg": 30.563911170313244,
+    "anchor_daz_deg": -0.5,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -20.0,
+    "wind_err_n_kt": -20.0,
+    "range_ref_nmi": 3.248445251272762,
+    "airspeed_kt": 250.0,
+    "heading_deg": 60.4799053298811,
+    "vz_fpm": -9.08222576514845
+   },
+   "parameters_at_bound": [
+    "anchor_daz_deg",
+    "anchor_del_deg",
+    "wind_err_e_kt",
+    "wind_err_n_kt",
+    "airspeed_kt"
+   ],
+   "criteria_log_likelihood": {
+    "line_of_sight_az": -10229.466702667023,
+    "line_of_sight_el": -961.4155088036521,
+    "range": -3636.1132758502044,
+    "closure": -1474.4754751051098,
+    "background_motion": -3604.968802817743,
+    "size_trend": 130.2310015489275,
+    "brightness_trend": -143.48788237536223,
+    "prior": -21.374222854646877,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -16.651145717468893
+   },
+   "criteria_log_likelihood_physics_only": {
+    "line_of_sight_az": -10229.521638969612,
+    "line_of_sight_el": -961.6142182845606,
+    "range": -3636.157035982404,
+    "closure": -1474.5281102680751,
+    "background_motion": -3604.6762286468047,
+    "size_trend": 130.2310015489275,
+    "brightness_trend": -143.48811316551195,
+    "prior": -21.31661307177259,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -16.651165305093542
+   },
+   "total_testimony_weighted": -20108.879947180896,
+   "total_physics_only": -20092.228889378428,
+   "rank_testimony_weighted": 5,
+   "rank_physics_only": 5,
+   "derived": {
+    "range_nmi_mean": 3.244571214547926,
+    "altitude_ft_mean": 14999.156983849716,
+    "altitude_ft_min": 14997.475960040147,
+    "altitude_ft_max": 15000.838007655097,
+    "air_speed_kt": 250.00001626481162,
+    "ground_speed_kt": 284.3891119558074,
+    "min_ground_speed_kt": 284.3891119558074,
+    "ground_track_deg": 66.23978108116239,
+    "vertical_speed_fpm": -29.92948422476267,
+    "stop_reverse": false,
+    "motion_vs_wind_deg": 40.900244660722294,
+    "against_wind": false,
+    "wind_at_object_kt": 43.597124027171226,
+    "implied_size_upper_m": 1.098852238411999,
+    "reversal_radius_ft": 1000000.0,
+    "stops_and_reverses": false,
+    "motion_vs_wind": "with",
+    "range_trend": "decreasing"
+   },
+   "derived_si": {
+    "range_m_mean": 6008.945889342759,
+    "altitude_m_mean": 4571.743048677394,
+    "altitude_m_min": 4571.230672620237,
+    "altitude_m_max": 4572.255424733274,
+    "air_speed_mps": 128.6111194784531,
+    "ground_speed_mps": 146.30239870615426,
+    "min_ground_speed_mps": 146.30239870615426,
+    "vertical_speed_mps": -0.15204177986179437,
+    "wind_at_object_mps": 22.428298249533643,
+    "reversal_radius_m": 304800.0
+   },
+   "checks": [
+    {
+     "quantity": "implied_size_upper_m",
+     "value": 1.098852238411999,
+     "min": 0.0,
+     "max": 1000.0,
+     "pass": true,
+     "source": "A glare's size says nothing about the airframe; not checked."
+    }
+   ],
+   "testimony_status": "solve/testimony.py: 2 claim terms scored",
+   "n_eval": 31444,
+   "criteria_weights": {
+    "line_of_sight": 1.0,
+    "range": 1.0,
+    "closure": 1.0,
+    "background_motion": 1.0,
+    "size_trend": 0.0,
+    "rotation": 1.0,
+    "brightness_trend": 1.0,
+    "testimony": 1.0
+   }
+  },
+  {
+   "id": "H-ART",
+   "label": "Sensor artifact (glare in the pod optics) on a target of any type",
+   "variant": "",
+   "model": "glare_target",
+   "in_design_set": false,
+   "valid": true,
+   "priors_summary": "What the camera shows is a glare in the pod's own optics; its orientation is set by the pod's derotation and its size by its brightness. Behind the glare is a real target of any type, at any range and speed, whose path the line of sight follows. Priors: range_ref_nmi loguniform [0.5, 60.0]; airspeed_kt uniform [0.0, 600.0]; heading_deg uniform [0.0, 360.0]; vz_fpm normal [-4000.0, 4000.0].",
+   "free_parameters": 6,
+   "best_fit_parameters": {
+    "jet_heading_deg": 252.56634274249225,
+    "anchor_daz_deg": -0.030542249837607782,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -0.01240597124082754,
+    "wind_err_n_kt": 0.007139652093464122,
+    "range_ref_nmi": 3.8286754571846515,
+    "airspeed_kt": 9.607250067288044,
+    "heading_deg": 186.0332198365793,
+    "vz_fpm": 110.50600808480613
+   },
+   "best_fit_parameters_physics_only": {
+    "jet_heading_deg": 252.58518458254082,
+    "anchor_daz_deg": -0.030500641547539897,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -0.003068514078943707,
+    "wind_err_n_kt": -0.014777494297096183,
+    "range_ref_nmi": 3.8284034314586,
+    "airspeed_kt": 9.574838609998386,
+    "heading_deg": 186.24269760581683,
+    "vz_fpm": 110.92954953778735
+   },
+   "parameters_at_bound": [
+    "anchor_del_deg"
+   ],
+   "criteria_log_likelihood": {
+    "line_of_sight_az": -10.41028499748208,
+    "line_of_sight_el": -4.967322939780718,
+    "range": -29.36166582499902,
+    "closure": -292.95546479120924,
+    "background_motion": -534.4630757861111,
+    "size_trend": 130.2310015489275,
+    "brightness_trend": -141.28451739323268,
+    "prior": -0.0061098865665084965,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -13.677002608567845
+   },
+   "criteria_log_likelihood_physics_only": {
+    "line_of_sight_az": -10.415315865394598,
+    "line_of_sight_el": -4.969022938101201,
+    "range": -29.35171563455814,
+    "closure": -292.9598873998102,
+    "background_motion": -534.4611499041599,
+    "size_trend": 130.2310015489275,
+    "brightness_trend": -141.28462896223417,
+    "prior": -0.006157238282655277,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -13.678280142681134
+   },
+   "total_testimony_weighted": -1048.0523752176366,
+   "total_physics_only": -1034.3748089322285,
+   "rank_testimony_weighted": 2,
+   "rank_physics_only": 2,
+   "derived": {
+    "range_nmi_mean": 3.8453297431481186,
+    "altitude_ft_mean": 13212.376352002948,
+    "altitude_ft_min": 13192.03520413388,
+    "altitude_ft_max": 13232.717499872693,
+    "air_speed_kt": 9.66902313508954,
+    "ground_speed_kt": 53.701211046231386,
+    "min_ground_speed_kt": 53.70121104623138,
+    "ground_track_deg": 92.57502469196318,
+    "vertical_speed_fpm": 114.43125774235955,
+    "stop_reverse": false,
+    "motion_vs_wind_deg": 103.47723519784851,
+    "against_wind": true,
+    "wind_at_object_kt": 55.12132333886971,
+    "implied_size_upper_m": 1.2949510780675852,
+    "reversal_radius_ft": 1000000.0,
+    "stops_and_reverses": false,
+    "motion_vs_wind": "with",
+    "range_trend": "decreasing"
+   },
+   "derived_si": {
+    "range_m_mean": 7121.550684310316,
+    "altitude_m_mean": 4027.1323120904985,
+    "altitude_m_min": 4020.9323302200064,
+    "altitude_m_max": 4033.332293961197,
+    "air_speed_mps": 4.97417523505162,
+    "ground_speed_mps": 27.626289682672372,
+    "min_ground_speed_mps": 27.62628968267237,
+    "vertical_speed_mps": 0.5813107893311865,
+    "wind_at_object_mps": 28.35685856210742,
+    "reversal_radius_m": 304800.0
+   },
+   "checks": [
+    {
+     "quantity": "implied_size_upper_m",
+     "value": 1.2949510780675852,
+     "min": 0.0,
+     "max": 1000.0,
+     "pass": true,
+     "source": "A glare's size says nothing about the target; not checked."
+    }
+   ],
+   "testimony_status": "solve/testimony.py: 2 claim terms scored",
+   "n_eval": 27754,
+   "criteria_weights": {
+    "line_of_sight": 1.0,
+    "range": 1.0,
+    "closure": 1.0,
+    "background_motion": 1.0,
+    "size_trend": 0.0,
+    "rotation": 1.0,
+    "brightness_trend": 1.0,
+    "testimony": 1.0
+   }
+  },
+  {
+   "id": "H-BAL",
+   "label": "Balloon drifting with the wind",
+   "variant": "",
+   "model": "wind_drifter",
+   "in_design_set": true,
+   "valid": true,
+   "priors_summary": "A balloon (party, research or other) carried by the wind at its altitude. It has no speed through the air of its own; it may rise or sink slowly. Its apparent speed in the video is parallax: the jet's own motion against a nearly still object. Priors: range_ref_nmi loguniform [0.5, 60.0]; vz_fpm normal [-2000.0, 2000.0].",
+   "free_parameters": 4,
+   "best_fit_parameters": {
+    "jet_heading_deg": 257.6695546811708,
+    "anchor_daz_deg": -0.032974763379213456,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -1.7402025172156215,
+    "wind_err_n_kt": -5.65712943729163,
+    "range_ref_nmi": 3.8287297664637254,
+    "vz_fpm": 78.4077206816828
+   },
+   "best_fit_parameters_physics_only": {
+    "jet_heading_deg": 257.67529049063626,
+    "anchor_daz_deg": -0.03291435898886336,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -1.7588775941888244,
+    "wind_err_n_kt": -5.651905446086973,
+    "range_ref_nmi": 3.8284598215556813,
+    "vz_fpm": 78.94359565080185
+   },
+   "parameters_at_bound": [
+    "anchor_del_deg"
+   ],
+   "criteria_log_likelihood": {
+    "line_of_sight_az": -11.057616442800526,
+    "line_of_sight_el": -5.098308875620403,
+    "range": -29.371764407376745,
+    "closure": -292.3832436552199,
+    "background_motion": -534.6530777458652,
+    "size_trend": 98.52299750965915,
+    "brightness_trend": -141.27861494919384,
+    "prior": -0.7129239067488956,
+    "complexity_penalty": -13.951287326458292,
+    "testimony": -13.67679877324791
+   },
+   "criteria_log_likelihood_physics_only": {
+    "line_of_sight_az": -11.062547596321496,
+    "line_of_sight_el": -5.099953089810136,
+    "range": -29.36102055619799,
+    "closure": -292.3880368241906,
+    "background_motion": -534.6514608015943,
+    "size_trend": 98.52267854566222,
+    "brightness_trend": -141.2787384693423,
+    "prior": -0.7132178938454957,
+    "complexity_penalty": -13.951287326458292,
+    "testimony": -13.678066330916808
+   },
+   "total_testimony_weighted": -1042.1836360825316,
+   "total_physics_only": -1028.5062625577607,
+   "rank_testimony_weighted": 1,
+   "rank_physics_only": 1,
+   "derived": {
+    "range_nmi_mean": 3.845526241529404,
+    "altitude_ft_mean": 13212.244842690978,
+    "altitude_ft_min": 13197.812115745448,
+    "altitude_ft_max": 13226.677569636482,
+    "air_speed_kt": 0.774255073340505,
+    "ground_speed_kt": 52.94892629932619,
+    "min_ground_speed_kt": 52.9489262993262,
+    "ground_track_deg": 88.40171534923809,
+    "vertical_speed_fpm": 83.22055543576357,
+    "stop_reverse": false,
+    "motion_vs_wind_deg": null,
+    "against_wind": null,
+    "wind_at_object_kt": 52.9489262993262,
+    "implied_size_upper_m": 1.2949696711867116,
+    "reversal_radius_ft": 1000000.0,
+    "stops_and_reverses": false,
+    "motion_vs_wind": "with",
+    "range_trend": "decreasing"
+   },
+   "derived_si": {
+    "range_m_mean": 7121.914599312457,
+    "altitude_m_mean": 4027.0922280522104,
+    "altitude_m_min": 4022.693132879213,
+    "altitude_m_max": 4031.4913232251997,
+    "air_speed_mps": 0.39831122106294875,
+    "ground_speed_mps": 27.2392809739867,
+    "min_ground_speed_mps": 27.239280973986705,
+    "vertical_speed_mps": 0.422760421613679,
+    "wind_at_object_mps": 27.239280973986705,
+    "reversal_radius_m": 304800.0
+   },
+   "checks": [
+    {
+     "quantity": "implied_size_upper_m",
+     "value": 1.2949696711867116,
+     "min": 0.2,
+     "max": 3.0,
+     "pass": true,
+     "source": "S3: party and small weather balloons are 0.3 to 2 m across; the blob length is an upper bound (it includes the optics' blur)."
+    }
+   ],
+   "rank_physics_only_design_set": 1,
+   "rank_testimony_weighted_design_set": 1,
+   "testimony_status": "solve/testimony.py: 2 claim terms scored",
+   "n_eval": 11612,
+   "criteria_weights": {
+    "line_of_sight": 1.0,
+    "range": 1.0,
+    "closure": 1.0,
+    "background_motion": 1.0,
+    "size_trend": 0.0,
+    "rotation": 1.0,
+    "brightness_trend": 1.0,
+    "testimony": 1.0
+   }
+  },
+  {
+   "id": "H-CLOSE",
+   "label": "Close small object",
+   "variant": "",
+   "model": "close_object",
+   "in_design_set": false,
+   "valid": true,
+   "priors_summary": "A small object (bird, small drone, balloon or debris) within 2 nmi of the jet, much closer than it looks. Small size and nearness trade off: a close small object and a distant large one subtend the same angle. Priors: range_ref_nmi loguniform [0.05, 2.0]; airspeed_kt uniform [0.0, 80.0]; heading_deg uniform [0.0, 360.0]; vz_fpm normal [-2000.0, 2000.0].",
+   "free_parameters": 6,
+   "best_fit_parameters": {
+    "jet_heading_deg": 242.18404582888934,
+    "anchor_daz_deg": 0.5,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -20.0,
+    "wind_err_n_kt": -20.0,
+    "range_ref_nmi": 2.0,
+    "airspeed_kt": 80.0,
+    "heading_deg": 251.8100153299538,
+    "vz_fpm": 2000.0
+   },
+   "best_fit_parameters_physics_only": {
+    "jet_heading_deg": 242.18412691454546,
+    "anchor_daz_deg": 0.5,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": -20.0,
+    "wind_err_n_kt": -20.0,
+    "range_ref_nmi": 2.0,
+    "airspeed_kt": 80.0,
+    "heading_deg": 251.81013013254292,
+    "vz_fpm": 2000.0
+   },
+   "parameters_at_bound": [
+    "anchor_daz_deg",
+    "anchor_del_deg",
+    "wind_err_e_kt",
+    "wind_err_n_kt",
+    "range_ref_nmi",
+    "airspeed_kt",
+    "vz_fpm"
+   ],
+   "criteria_log_likelihood": {
+    "line_of_sight_az": -7040.582923997958,
+    "line_of_sight_el": -1996.793795805664,
+    "range": -36262.24726801746,
+    "closure": -596.3314129102167,
+    "background_motion": -2708.809123640197,
+    "size_trend": 92.37258266854076,
+    "brightness_trend": -149.3305761543414,
+    "prior": -24.0,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -24.732402862013554
+   },
+   "criteria_log_likelihood_physics_only": {
+    "line_of_sight_az": -7040.583719265621,
+    "line_of_sight_el": -1996.7926610222867,
+    "range": -36262.247250681314,
+    "closure": -596.3317656403656,
+    "background_motion": -2708.809128554441,
+    "size_trend": 92.3725836448994,
+    "brightness_trend": -149.33057436516899,
+    "prior": -24.0,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -24.732402862141267
+   },
+   "total_testimony_weighted": -48823.75443437754,
+   "total_physics_only": -48799.02203051888,
+   "rank_testimony_weighted": 6,
+   "rank_physics_only": 6,
+   "derived": {
+    "range_nmi_mean": 2.0163413120418743,
+    "altitude_ft_mean": 18842.67236497526,
+    "altitude_ft_min": 18474.52680941786,
+    "altitude_ft_max": 19210.817920532336,
+    "air_speed_kt": 82.4017061231005,
+    "ground_speed_kt": 30.028293733046738,
+    "min_ground_speed_kt": 30.02829373304674,
+    "ground_track_deg": 217.12550383256348,
+    "vertical_speed_fpm": 1997.1240344345085,
+    "stop_reverse": false,
+    "motion_vs_wind_deg": 162.83101736021226,
+    "against_wind": true,
+    "wind_at_object_kt": 57.88735575285679,
+    "implied_size_upper_m": 0.6767938335700614,
+    "reversal_radius_ft": 1000000.0,
+    "stops_and_reverses": false,
+    "motion_vs_wind": "against",
+    "range_trend": "decreasing"
+   },
+   "derived_si": {
+    "range_m_mean": 3734.2641099015514,
+    "altitude_m_mean": 5743.24653684446,
+    "altitude_m_min": 5631.035771510565,
+    "altitude_m_max": 5855.457302178256,
+    "air_speed_mps": 42.391099927772814,
+    "ground_speed_mps": 15.447888887111823,
+    "min_ground_speed_mps": 15.447888887111825,
+    "vertical_speed_mps": 10.145390094927304,
+    "wind_at_object_mps": 29.77982857063633,
+    "reversal_radius_m": 304800.0
+   },
+   "checks": [
+    {
+     "quantity": "implied_size_upper_m",
+     "value": 0.6767938335700614,
+     "min": 0.1,
+     "max": 2.0,
+     "pass": true,
+     "source": "Design table: size 0.1 to 2 m. Reported as a check (the normalized size trend cannot see absolute size); the blob length is an upper bound."
+    }
+   ],
+   "testimony_status": "solve/testimony.py: 2 claim terms scored",
+   "n_eval": 3914,
+   "criteria_weights": {
+    "line_of_sight": 1.0,
+    "range": 1.0,
+    "closure": 1.0,
+    "background_motion": 1.0,
+    "size_trend": 0.0,
+    "rotation": 1.0,
+    "brightness_trend": 1.0,
+    "testimony": 1.0
+   }
+  },
+  {
+   "id": "H-SLOW",
+   "label": "Slow object (bird or small drone)",
+   "variant": "",
+   "model": "slow_mover",
+   "in_design_set": true,
+   "valid": true,
+   "priors_summary": "A slow flier, such as a bird or a small drone, at whatever range the data imply. It moves through the air at up to 60 kt in any direction and is carried by the wind; its apparent speed in the video is mostly parallax from the jet's motion. Priors: range_ref_nmi loguniform [0.5, 60.0]; airspeed_kt uniform [0.0, 60.0]; heading_deg uniform [0.0, 360.0]; vz_fpm normal [-2000.0, 2000.0].",
+   "free_parameters": 6,
+   "best_fit_parameters": {
+    "jet_heading_deg": 252.58437082273542,
+    "anchor_daz_deg": -0.03047485335210115,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": 0.007675725900654129,
+    "wind_err_n_kt": 0.006990558839177652,
+    "range_ref_nmi": 3.8287249510000363,
+    "airspeed_kt": 9.578610436280234,
+    "heading_deg": 186.1780409175758,
+    "vz_fpm": 106.65608088831505
+   },
+   "best_fit_parameters_physics_only": {
+    "jet_heading_deg": 252.60165565596714,
+    "anchor_daz_deg": -0.030286740500005904,
+    "anchor_del_deg": 0.5,
+    "wind_err_e_kt": 0.002719864339262301,
+    "wind_err_n_kt": -0.0005304789966054102,
+    "range_ref_nmi": 3.8284487677822794,
+    "airspeed_kt": 9.558683399895745,
+    "heading_deg": 186.31562925988015,
+    "vz_fpm": 106.9024814761483
+   },
+   "parameters_at_bound": [
+    "anchor_del_deg"
+   ],
+   "criteria_log_likelihood": {
+    "line_of_sight_az": -10.40198827969047,
+    "line_of_sight_el": -4.982505635013515,
+    "range": -29.36255569778003,
+    "closure": -292.9442176969902,
+    "background_motion": -534.4679503835382,
+    "size_trend": 98.5223813375375,
+    "brightness_trend": -141.28434064485444,
+    "prior": -0.022753194874529325,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -13.676776253418224
+   },
+   "criteria_log_likelihood_physics_only": {
+    "line_of_sight_az": -10.401357766295627,
+    "line_of_sight_el": -4.985639332568337,
+    "range": -29.352282250444862,
+    "closure": -292.9521270444314,
+    "background_motion": -534.4669493940172,
+    "size_trend": 98.52204738666613,
+    "brightness_trend": -141.28448813102654,
+    "prior": -0.022856434672916256,
+    "complexity_penalty": -20.92693098968744,
+    "testimony": -13.678073587575314
+   },
+   "total_testimony_weighted": -1048.070018775847,
+   "total_physics_only": -1034.3926313431443,
+   "rank_testimony_weighted": 3,
+   "rank_physics_only": 3,
+   "derived": {
+    "range_nmi_mean": 3.8453819958998228,
+    "altitude_ft_mean": 13212.22825029345,
+    "altitude_ft_min": 13192.595769214295,
+    "altitude_ft_max": 13231.8607313721,
+    "air_speed_kt": 9.636337900795244,
+    "ground_speed_kt": 53.698284471427336,
+    "min_ground_speed_kt": 53.69828447142733,
+    "ground_track_deg": 92.54241599845543,
+    "vertical_speed_fpm": 110.58668197636035,
+    "stop_reverse": false,
+    "motion_vs_wind_deg": 103.61902481277988,
+    "against_wind": true,
+    "wind_at_object_kt": 55.14061216885243,
+    "implied_size_upper_m": 1.2949677827029555,
+    "reversal_radius_ft": 1000000.0,
+    "stops_and_reverses": false,
+    "motion_vs_wind": "with",
+    "range_trend": "decreasing"
+   },
+   "derived_si": {
+    "range_m_mean": 7121.647456406472,
+    "altitude_m_mean": 4027.087170689444,
+    "altitude_m_min": 4021.103190456517,
+    "altitude_m_max": 4033.0711509222165,
+    "air_speed_mps": 4.9573604978535535,
+    "ground_speed_mps": 27.624784122523177,
+    "min_ground_speed_mps": 27.624784122523174,
+    "vertical_speed_mps": 0.5617803444399107,
+    "wind_at_object_mps": 28.36678159353186,
+    "reversal_radius_m": 304800.0
+   },
+   "checks": [
+    {
+     "quantity": "implied_size_upper_m",
+     "value": 1.2949677827029555,
+     "min": 0.1,
+     "max": 3.0,
+     "pass": true,
+     "source": "S1, S2: birds 0.1 to 2 m wingspan, small drones 0.2 to 0.6 m; the blob length is an upper bound."
+    }
+   ],
+   "rank_physics_only_design_set": 2,
+   "rank_testimony_weighted_design_set": 2,
+   "testimony_status": "solve/testimony.py: 2 claim terms scored",
+   "n_eval": 27134,
+   "criteria_weights": {
+    "line_of_sight": 1.0,
+    "range": 1.0,
+    "closure": 1.0,
+    "background_motion": 1.0,
+    "size_trend": 0.0,
+    "rotation": 1.0,
+    "brightness_trend": 1.0,
+    "testimony": 1.0
+   }
+  },
+  {
+   "id": "H-WIT",
+   "label": "Object on a free path (no physical model)",
+   "variant": "",
+   "model": "spline_path",
+   "in_design_set": false,
+   "valid": true,
+   "priors_summary": "An object with no physical model at all: a smooth path with no speed limit, at any range from 0.5 to 60 nmi. It shows what the geometry alone requires, and what the aircrew's statements (scored as testimony, the same way for every hypothesis) then add. Its flexibility is charged by the complexity penalty like any other free parameter. Priors: range_ref_nmi loguniform [0.5, 60.0].",
+   "free_parameters": 16,
+   "best_fit_parameters": {
+    "jet_heading_deg": 230.51485667956732,
+    "anchor_daz_deg": 0.081891485345303,
+    "anchor_del_deg": 0.41679986834042426,
+    "wind_err_e_kt": 4.546756210152068,
+    "wind_err_n_kt": 8.971671947917265,
+    "range_ref_nmi": 3.825174449085242,
+    "knot_e_0": 647.9052908995764,
+    "knot_n_0": 4116.074198154172,
+    "knot_u_0": 1711.3978318681366,
+    "knot_e_1": 850.2471457653846,
+    "knot_n_1": 4073.297854679102,
+    "knot_u_1": 1687.2223086523954,
+    "knot_e_2": 1081.9187616499476,
+    "knot_n_2": 4003.4397223547385,
+    "knot_u_2": 1695.0765852402947,
+    "knot_e_3": 1336.9489856058171,
+    "knot_n_3": 3924.7620759323436,
+    "knot_u_3": 1714.6303347712383
+   },
+   "best_fit_parameters_physics_only": {
+    "jet_heading_deg": 230.00462035007044,
+    "anchor_daz_deg": 0.08907377707596598,
+    "anchor_del_deg": 0.4160972574282783,
+    "wind_err_e_kt": 4.083348481019328,
+    "wind_err_n_kt": 8.42577681433022,
+    "range_ref_nmi": 3.8254067584107836,
+    "knot_e_0": 824.6254642799977,
+    "knot_n_0": 4062.1029085048976,
+    "knot_u_0": 1684.2709497566102,
+    "knot_e_1": 1031.2087531535763,
+    "knot_n_1": 4014.9065888878868,
+    "knot_u_1": 1666.1255032348708,
+    "knot_e_2": 1263.098586652919,
+    "knot_n_2": 3945.024867574073,
+    "knot_u_2": 1672.81768931638,
+    "knot_e_3": 1519.9374708270625,
+    "knot_n_3": 3865.1265571671793,
+    "knot_u_3": 1692.329053588186
+   },
+   "parameters_at_bound": [],
+   "criteria_log_likelihood": {
+    "line_of_sight_az": -5.685900625629881,
+    "line_of_sight_el": -5.2742180664509055,
+    "range": -29.27090607355809,
+    "closure": -291.87120895263837,
+    "background_motion": -534.264195485815,
+    "size_trend": 98.52714598327475,
+    "brightness_trend": -141.24362582894037,
+    "prior": -2.0232777915120397,
+    "complexity_penalty": -55.80514930583317,
+    "testimony": -13.687950911257403
+   },
+   "criteria_log_likelihood_physics_only": {
+    "line_of_sight_az": -5.968269584389694,
+    "line_of_sight_el": -5.012402952101254,
+    "range": -29.28947515667026,
+    "closure": -291.8818873917519,
+    "background_motion": -534.3070653855316,
+    "size_trend": 98.5278652219566,
+    "brightness_trend": -141.24030718087536,
+    "prior": -1.7533489948469514,
+    "complexity_penalty": -55.80514930583317,
+    "testimony": -13.679664585716228
+   },
+   "total_testimony_weighted": -1079.1264330416352,
+   "total_physics_only": -1065.257905952,
+   "rank_testimony_weighted": 4,
+   "rank_physics_only": 4,
+   "derived": {
+    "range_nmi_mean": 3.8427996956252963,
+    "altitude_ft_mean": 13223.875371346941,
+    "altitude_ft_min": 13188.981607484844,
+    "altitude_ft_max": 13281.703796943531,
+    "air_speed_kt": 25.810318376365252,
+    "ground_speed_kt": 62.9865489296197,
+    "min_ground_speed_kt": 52.63756500135228,
+    "ground_track_deg": 105.51531422557203,
+    "vertical_speed_fpm": 27.85423008357566,
+    "stop_reverse": false,
+    "motion_vs_wind_deg": 83.57503213511175,
+    "against_wind": false,
+    "wind_at_object_kt": 55.17781938178681,
+    "implied_size_upper_m": 1.293765335277276,
+    "reversal_radius_ft": 2881.0207172224045,
+    "stops_and_reverses": false,
+    "motion_vs_wind": "with",
+    "range_trend": "decreasing"
+   },
+   "derived_si": {
+    "range_m_mean": 7116.865036298049,
+    "altitude_m_mean": 4030.637213186548,
+    "altitude_m_min": 4020.001593961381,
+    "altitude_m_max": 4048.2633173083887,
+    "air_speed_mps": 13.277974898063459,
+    "ground_speed_mps": 32.40308017157103,
+    "min_ground_speed_mps": 27.07910288402901,
+    "vertical_speed_mps": 0.14149948882456437,
+    "wind_at_object_mps": 28.38592263751922,
+    "reversal_radius_m": 878.1351146093889
+   },
+   "checks": [
+    {
+     "quantity": "implied_size_upper_m",
+     "value": 1.293765335277276,
+     "min": 0.0,
+     "max": 1000.0,
+     "pass": true,
+     "source": "No physical model, so no size expectation; sizes claimed by witnesses are scored by the testimony criterion."
+    }
+   ],
+   "testimony_status": "solve/testimony.py: 2 claim terms scored",
+   "n_eval": 43326,
+   "criteria_weights": {
+    "line_of_sight": 1.0,
+    "range": 1.0,
+    "closure": 1.0,
+    "background_motion": 1.0,
+    "size_trend": 0.0,
+    "rotation": 1.0,
+    "brightness_trend": 1.0,
+    "testimony": 1.0
+   }
+  }
+ ],
+ "range_curves": {
+  "available": true,
+  "note": "Angles-only curves: for each assumed constant range, the speed, altitude and fit that the line-of-sight angles imply. Range is not measured in this clip's angles; read the curve, not one number. Per-hypothesis curves over range are not in the current outputs.",
+  "link": "data/derived/gofast/results.json",
+  "angles_only": [
+   {
+    "range_m": 1852.0,
+    "range_display_nmi": 1.0,
+    "valid": true,
+    "air_speed_mps": 138.42575105554968,
+    "ground_speed_mps": 101.06908519279222,
+    "altitude_m": 6683.066097148098,
+    "vertical_speed_mps": 3.2375010469121075,
+    "line_of_sight_log_likelihood": -596.0283924599731
+   },
+   {
+    "range_m": 3704.0,
+    "range_display_nmi": 2.0,
+    "valid": true,
+    "air_speed_mps": 94.42393028171423,
+    "ground_speed_mps": 53.22520882591242,
+    "altitude_m": 5743.617309954547,
+    "vertical_speed_mps": 4.557528881563849,
+    "line_of_sight_log_likelihood": -67.65199399012643
+   },
+   {
+    "range_m": 5556.0,
+    "range_display_nmi": 3.0,
+    "valid": true,
+    "air_speed_mps": 46.234569239189845,
+    "ground_speed_mps": 28.356688428339165,
+    "altitude_m": 4804.594952120082,
+    "vertical_speed_mps": 5.469605315626423,
+    "line_of_sight_log_likelihood": -21.648479470688994
+   },
+   {
+    "range_m": 6482.0,
+    "range_display_nmi": 3.5,
+    "valid": true,
+    "air_speed_mps": 20.9136482243008,
+    "ground_speed_mps": 24.325551138625602,
+    "altitude_m": 4335.305966402701,
+    "vertical_speed_mps": 4.855024222260632,
+    "line_of_sight_log_likelihood": -15.455257590882887
+   },
+   {
+    "range_m": 7408.0,
+    "range_display_nmi": 4.0,
+    "valid": true,
+    "air_speed_mps": 10.198438770736628,
+    "ground_speed_mps": 36.356803382497276,
+    "altitude_m": 3866.127422559005,
+    "vertical_speed_mps": 4.087093546250167,
+    "line_of_sight_log_likelihood": -12.560385165959536
+   },
+   {
+    "range_m": 8334.0,
+    "range_display_nmi": 4.5,
+    "valid": true,
+    "air_speed_mps": 30.859181009998576,
+    "ground_speed_mps": 54.843955649127565,
+    "altitude_m": 3397.0510862683345,
+    "vertical_speed_mps": 3.288930867672174,
+    "line_of_sight_log_likelihood": -11.198208093155277
+   },
+   {
+    "range_m": 9260.0,
+    "range_display_nmi": 5.0,
+    "valid": true,
+    "air_speed_mps": 53.34152510533876,
+    "ground_speed_mps": 75.09221263668476,
+    "altitude_m": 2928.0744501292625,
+    "vertical_speed_mps": 2.498403357584693,
+    "line_of_sight_log_likelihood": -10.60023639656756
+   },
+   {
+    "range_m": 11112.0,
+    "range_display_nmi": 6.0,
+    "valid": true,
+    "air_speed_mps": 101.14076325067722,
+    "ground_speed_mps": 117.12820059434772,
+    "altitude_m": 1986.4905150322772,
+    "vertical_speed_mps": 0.8021032257799623,
+    "line_of_sight_log_likelihood": -10.259649649172356
+   },
+   {
+    "range_m": 14816.0,
+    "range_display_nmi": 8.0,
+    "valid": true,
+    "air_speed_mps": 205.15482778787742,
+    "ground_speed_mps": 206.26405251345378,
+    "altitude_m": 72.70081303760601,
+    "vertical_speed_mps": -5.663752288378363,
+    "line_of_sight_log_likelihood": -26.189079136454684
+   },
+   {
+    "range_m": 22224.0,
+    "range_display_nmi": 12.0,
+    "valid": false,
+    "air_speed_mps": null,
+    "ground_speed_mps": null,
+    "altitude_m": null,
+    "vertical_speed_mps": null,
+    "line_of_sight_log_likelihood": null
+   },
+   {
+    "range_m": 37040.0,
+    "range_display_nmi": 20.0,
+    "valid": false,
+    "air_speed_mps": null,
+    "ground_speed_mps": null,
+    "altitude_m": null,
+    "vertical_speed_mps": null,
+    "line_of_sight_log_likelihood": null
+   }
+  ],
+  "per_hypothesis": {}
+ },
+ "discriminators": [
+  {
+   "variant": "",
+   "pair": [
+    "H-AC",
+    "H-ART"
+   ],
+   "separable_from_current_data": false,
+   "measurement": "Air speed (object ground velocity minus an independent wind measurement at its altitude)",
+   "unit": "kt",
+   "quantity_key": "air_speed_kt",
+   "time_s": null,
+   "required_precision": 109.67997821152937,
+   "typical_precision": 5.0,
+   "feasibility": 21.935995642305876,
+   "works_both_ways": true,
+   "data_exists": "Partly: ERA5 (5 kt) is used already; a radiosonde or aircraft wind report near 13,000 ft and 02:30 UTC would be the independent check.",
+   "why": [
+    "recovery: not separated"
+   ]
+  },
+  {
+   "variant": "",
+   "pair": [
+    "H-ART",
+    "H-BAL"
+   ],
+   "separable_from_current_data": false,
+   "measurement": "Air speed (object ground velocity minus an independent wind measurement at its altitude)",
+   "unit": "kt",
+   "quantity_key": "air_speed_kt",
+   "time_s": null,
+   "required_precision": 3.244304255938318,
+   "typical_precision": 5.0,
+   "feasibility": 0.6488608511876637,
+   "works_both_ways": false,
+   "data_exists": "Partly: ERA5 (5 kt) is used already; a radiosonde or aircraft wind report near 13,000 ft and 02:30 UTC would be the independent check.",
+   "why": [
+    "recovery: not separated",
+    "top by a total"
+   ]
+  },
+  {
+   "variant": "",
+   "pair": [
+    "H-ART",
+    "H-CLOSE"
+   ],
+   "separable_from_current_data": false,
+   "measurement": "Bearing from a second aircraft 2 nmi abeam",
+   "unit": "deg",
+   "quantity_key": "second_bearing_deg@mid",
+   "time_s": 23.390033333333335,
+   "required_precision": 8.352872888571536,
+   "typical_precision": 0.3,
+   "feasibility": 27.84290962857179,
+   "works_both_ways": true,
+   "data_exists": "Only if a wingman's pod or radar tracked the same object; nothing released.",
+   "why": [
+    "recovery: not separated"
+   ]
+  },
+  {
+   "variant": "",
+   "pair": [
+    "H-ART",
+    "H-SLOW"
+   ],
+   "separable_from_current_data": false,
+   "measurement": "Air speed (object ground velocity minus an independent wind measurement at its altitude)",
+   "unit": "kt",
+   "quantity_key": "air_speed_kt",
+   "time_s": null,
+   "required_precision": null,
+   "typical_precision": 5.0,
+   "feasibility": 0.0,
+   "works_both_ways": false,
+   "data_exists": "Partly: ERA5 (5 kt) is used already; a radiosonde or aircraft wind report near 13,000 ft and 02:30 UTC would be the independent check.",
+   "why": [
+    "recovery: not separated",
+    "top by a total"
+   ]
+  },
+  {
+   "variant": "",
+   "pair": [
+    "H-BAL",
+    "H-SLOW"
+   ],
+   "separable_from_current_data": false,
+   "measurement": "Air speed (object ground velocity minus an independent wind measurement at its altitude)",
+   "unit": "kt",
+   "quantity_key": "air_speed_kt",
+   "time_s": null,
+   "required_precision": 3.2347258989087906,
+   "typical_precision": 5.0,
+   "feasibility": 0.6469451797817581,
+   "works_both_ways": false,
+   "data_exists": "Partly: ERA5 (5 kt) is used already; a radiosonde or aircraft wind report near 13,000 ft and 02:30 UTC would be the independent check.",
+   "why": [
+    "recovery: not separated",
+    "top by a total"
+   ]
+  },
+  {
+   "variant": "",
+   "pair": [
+    "H-BAL",
+    "H-WIT"
+   ],
+   "separable_from_current_data": false,
+   "measurement": "Air speed (object ground velocity minus an independent wind measurement at its altitude)",
+   "unit": "kt",
+   "quantity_key": "air_speed_kt",
+   "time_s": null,
+   "required_precision": 3.9143574078695877,
+   "typical_precision": 5.0,
+   "feasibility": 0.7828714815739175,
+   "works_both_ways": true,
+   "data_exists": "Partly: ERA5 (5 kt) is used already; a radiosonde or aircraft wind report near 13,000 ft and 02:30 UTC would be the independent check.",
+   "why": [
+    "recovery: not separated"
+   ]
+  }
+ ],
+ "testimony": {
+  "claims_total": 11,
+  "claims_scorable": 2,
+  "scored_terms": 2,
+  "witnesses": [
+   "AARO case record (official; the reporting source is not named)",
+   "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)",
+   "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)",
+   "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) (and two other speakers named in the thread)",
+   "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) (as quoted from an NBC News segment)"
+  ],
+  "link": "data/testimony/gofast.yaml",
+  "claims_summary": "11 claims from 5 witnesses or records; 2 constrain a quantity the models predict (2 scored terms). Each is a paraphrase with a source; testimony is applied identically to every hypothesis.",
+  "witness_consistency": {
+   "agree": 4,
+   "partial": 2,
+   "disagree": 1,
+   "total": 7,
+   "note": "Memory of on-screen numbers against the record; reported separately and never changes a score."
+  }
+ },
+ "verdict": {
+  "text": "On the video alone (physics-only), Balloon drifting with the wind scores highest, ahead of the next explanation by 5.9 log units, but this is not called decisive: the lead depends on data-quality rules applied after results were seen, and totals without them are not yet reported.",
+  "conditions": [
+   "Range is not measured in this clip; conclusions hold over the stated range support (0.5 to 60 nmi), not at one range.",
+   "Scores are log-likelihoods under the lab's noise model; a gap of 2.3 is a likelihood ratio of 10.",
+   "Every hypothesis is fitted by the same code against the same observables with the same noise model and weights; hypotheses differ only in their physical model and priors.",
+   "D-016: apparent-size criterion reported with weight 0 (blob major axis 6.4 px is under 3 x the point-spread width 5.5 px); resolution not established.",
+   "Some data-quality rules (zero weight for saturated or unresolved size and brightness) were not decided blind; totals without them are not yet in these outputs."
+  ],
+  "decisive": false,
+  "leader_physics_only": "H-BAL",
+  "margin_log_likelihood": 5.868546374467769
+ },
+ "provenance": {
+  "repo": "https://github.com/Samizdat-Publications/sensor-forensics",
+  "commit": "59b402ec6c7905befb0ba2ca9e79b4cb0765c311",
+  "working_tree_clean": false,
+  "lab_version": "0.1.0",
+  "generated": "2026-11-01T22:00:23Z",
+  "generator": "tools/export_cases.py",
+  "inputs": [
+   "data/derived/gofast/results.json",
+   "data/derived/gofast/scores.csv",
+   "data/derived/gofast/discriminators.json",
+   "data/videos/MANIFEST.json",
+   "data/testimony/gofast.yaml"
+  ]
+ },
+ "notes": "See docs/results/gofast.md for the full write-up. Environment source: ERA5 gofast at 2015-01-25T02:30 UTC (box centre)."
+}

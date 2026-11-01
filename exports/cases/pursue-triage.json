@@ -1,0 +1,1405 @@
+{
+ "schema_version": "0.1",
+ "case_id": "pursue-triage",
+ "kind": "triage_summary",
+ "title": "PURSUE sensor videos: viability triage (134 clips)",
+ "summary": "Which of the 2026 PURSUE releases carry enough on-screen data to reconstruct anything, and how much.",
+ "event": {
+  "date": null,
+  "date_uncertainty": "Many events across Releases 01 to 06; dates are per clip.",
+  "place": null,
+  "position_note": "Per clip, mostly not stated."
+ },
+ "sources": [
+  {
+   "id": "pursue_triage_csv",
+   "role": "data",
+   "title": "Hand-built clip-by-clip triage table",
+   "file": "data/pursue/triage.csv",
+   "url": null,
+   "sha256": "62f3ee2247918c6991a6c38d5b385a27acfccb373357efe62fc199484b41f28f",
+   "bytes": 68734,
+   "official_copy": false,
+   "provenance": "Built by the lab from the released videos; see data/pursue/ for the index checks."
+  }
+ ],
+ "triage": {
+  "clips_total": 134,
+  "by_tier": {
+   "Not viable": 117,
+   "Bounded": 17
+  },
+  "by_release": {
+   "R01": 27,
+   "R04": 19,
+   "R02": 51,
+   "R05": 16,
+   "R06": 15,
+   "R03": 6
+  },
+  "clips": [
+   {
+    "clip_id": "DOW-UAP-PR019",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Every text field is blacked out and the only scale is a crosshair with corner brackets of unstated angular size; the view is overhead terrain with no known-size or known-distance reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 5.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR021",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields are blacked out, brackets have no stated angular size, and the two contrast areas DVIDS describes are not discernible in the sampled frames over uniform terrain.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 10.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR022",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Heavy blacked-out overlays, an unlabeled green line and error ellipse, and no readable angle, altitude or range; the vehicle-like object on the ground is not the object of interest.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1920x1080",
+    "duration_s": 14.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR023",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields are blacked out and the brackets have no stated angular size; the contrast area DVIDS says leaves the top right at about 6 s is not discernible in the sampled frames.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 10.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR024",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Thin crosshair with no tick marks over featureless sky; the image is a rotated, cropped square inside a black frame, and no angle, range or altitude readout is shown.",
+    "sensor_guess": "IR",
+    "resolution": "800x600",
+    "duration_s": 18.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR026",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields are blacked out and the only candidate is a point-like white speck in cloud or haze with no scale or reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 43.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR027",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields are blacked out; the coast and harbor scene is on screen only before the object appears, and afterward the object is a point-like speck over featureless water with uncalibrated brackets.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 297.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR028",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Split-screen SWIR and EO view with all text blacked out; the object is a small point-like speck in cloud with uncalibrated brackets and no reference object.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1920x1080",
+    "duration_s": 66.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR029",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Sea-surface view with a square track box and corner brackets that carry no stated size or angle, and a tiny object with no known-size reference.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1920x1080",
+    "duration_s": 21.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR030",
+    "release": "R04",
+    "tier": "Bounded",
+    "reason": "A green tick-marked crosshair is in focus for the whole 10 s and a dark object with a red-orange core crosses the frame at about 6 to 7 s, so an angular scale can be set once the tick spacing is known.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 10.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR031",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields blacked out; the overhead compound view has no readable scale and the multi-colored object that DVIDS says crosses the top edge in the first second is only a faint pink smear.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 5.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR032",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields blacked out; the object that DVIDS places near the top center at 2 to 4 s is not discernible, and brackets have no stated angular size.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 6.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR033",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields blacked out; a saturated red blob appears over a building roof for about 2 s but its nature is unclear and no angular scale or known-size object is established.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 5.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR034",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text fields blacked out and the track-box size readout appears covered by a black box; over open water the object is not discernible at sample density and no scale is available.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 177.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR035",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Low-resolution file with text blacked out; the object is a white speck in sky and cloud, then lost over land, and the coast has no known size or distance.",
+    "sensor_guess": "IR",
+    "resolution": "800x444",
+    "duration_s": 24.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR036",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Every numeric field is blacked out; the green tick ladders have no stated spacing, and a small boat seen at about 4 s leaves before the object (a point-like speck over open sea) is tracked.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 137.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR037",
+    "release": "R01",
+    "tier": "Bounded",
+    "reason": "A small crewed boat sits in the frame for the full clip beside a faint point-like object that crosses the frame at about 6.5 to 8 s, so the boat can serve as an approximate size and range scale for the object.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 9.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR038",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; a star-shaped bright object is tracked against a featureless background with no scale, reference or readable angle.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 106.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR039",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; the faint contrast area DVIDS describes at 3 to 5 s is not discernible in the sampled frames, though an oblique coastal industrial site is in view.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 5.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR040",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; the only object cue is a reporter-added white circle labeled U/I SMALL THERMAL SIGNATURE around a barely visible speck in haze, with no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 63.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR041",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; the object is a point-like white speck over sea haze with uncalibrated brackets.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 94.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR042",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; a point-like speck over haze and water is tracked with no scale or known-size reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 293.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR043",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; a faint contrast patch crosses for about 2 s over distant terrain with a hazy horizon, and nothing gives a known size or distance.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 11.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR044",
+    "release": "R01",
+    "tier": "Bounded",
+    "reason": "A track box carries an unredacted metric size label (for example 23M, 11M, 10M) that scales with the box, and a large tanker in the first 30 s offers a second known-size reference; this gives a size scale for range-size-speed curves.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 312.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR045",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "The display is covered by large black boxes; a long crosshair with a red ring and a pink ellipse carry no readable angle, and the object is a small blob in cloud.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 58.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR046",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "A football-shaped object with projections is clearly visible and centered, but the brackets have no stated angular size and nothing else gives a scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 9.9,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR047",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "The display is mostly blacked out; three small contrast areas hold a fixed arrangement near center, with a crosshair and red ring of unstated size and no other reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 119.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR048",
+    "release": "R01",
+    "tier": "Bounded",
+    "reason": "From about 40 s the view contains an offshore wind-turbine array of regular known-size structures, with small bright specks tracked near them, so turbine height and spacing can set a scale and range bound for the specks.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 99.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR049",
+    "release": "R01",
+    "tier": "Not viable",
+    "reason": "Text blacked out; the scene is nearly black with two small bright points and faint streaks, with uncalibrated brackets and no reference object.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 109.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR050",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Only a crosshair, small corner ticks and unlabelled blue markers remain, and the sea surface gives no scale; the objects are streaks of unknown size.",
+    "sensor_guess": "IR",
+    "resolution": "640x360",
+    "duration_s": 9.9,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR051",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Display fields are blacked out; only the north arrow, crosshair and corner ticks remain, with no scale reference around the single bright object.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 302.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR052",
+    "release": "R02",
+    "tier": "Bounded",
+    "reason": "A track gate with a metre-valued label (92M, later 29M) sits over the objects; if that is the gate width in metres it gives a direct size scale, and five objects are clean against the sea. No az, el, altitude or range fields.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 495.5,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR053",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Display fields are blacked out and no discrete object is discernible in sampled frames; the scene is a nadir view of houses and cars.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 21.9,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR054",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Zoomed close-ups of a bright object with only an intermittent large crosshair; no angular scale, no scene reference of known size.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 237.2,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR055",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Dark round contrast against a cloud deck; the original segment has a plain crosshair with all fields covered, and clouds give no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 47.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR056",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Blue crosshair, corner ticks and a north arrow over open sea; no angular scale or known-size reference.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 212.1,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR057a",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Orange crosshair, ticks and north arrow with all fields covered; the contrast area is faint and the scene is clouds then sea with no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 71.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR057b",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Same file as PR057a: crosshair, ticks and north arrow only, faint contrast area, no scale reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 71.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR058",
+    "release": "R02",
+    "tier": "Bounded",
+    "reason": "Offshore wind turbines appear in the same frames as the object (about 385-470 s, a bright dot beside a tower at 425 s), giving a size reference once the turbine model is known; numeric fields are covered.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 648.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR059",
+    "release": "R02",
+    "tier": "Bounded",
+    "reason": "A tracker label in metres next to the tracked object falls from 36M to 2M as the sensor zooms in; if it is the gate width in metres it is a direct size scale. Numeric fields are covered.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 291.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR060",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Mountain or desert terrain from above with fields covered; only a crosshair, ticks and north arrow remain, and any object is a few pixels with no scale.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1280x720",
+    "duration_s": 290.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR061",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Mountain or desert terrain from above with fields covered; only a crosshair, ticks and north arrow remain, and any object is a few pixels with no scale.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1280x720",
+    "duration_s": 286.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR062",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Mountain or desert terrain from above with fields covered; only a crosshair, ticks and north arrow remain, and any object is a few pixels with no scale.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1280x720",
+    "duration_s": 289.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR063",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Mountain or desert terrain from above with fields covered; only a crosshair, ticks and north arrow remain, and any object is a few pixels with no scale.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1280x720",
+    "duration_s": 289.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR064",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Short urban clip where the contrast event (00:14-00:15) is not discernible and fields are covered; no angular scale.",
+    "sensor_guess": "IR",
+    "resolution": "640x360",
+    "duration_s": 17.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR065",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Hazy colour sky with no symbology and no discernible object in sampled frames.",
+    "sensor_guess": "TV/EO",
+    "resolution": "640x360",
+    "duration_s": 39.6,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR066",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Cloud scene with a crosshair and ticks, fields covered; no angular scale. The first contrast area looks like a small aircraft silhouette.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 48.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR067",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "A surfaced submarine and wakes are visible, but no UAP is discernible in sampled frames and fields are covered.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 290.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR068",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Square-format display with a large ring crosshair and arcs, every field covered; unstated angular scale and a featureless gray background.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 63.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR069",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Targeting-style reticle with a track box over clouds then sea; text fields covered and the angular value is unstated.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 29.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR070",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Small bright object under a crosshair and track box on a featureless background; no scale or reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 30.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR071",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Crosshair and track box on a featureless gray field with all fields covered; no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 46.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR072",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Night phone video of a luminous phenomenon with light beams; no symbology and the horizon is not usable without camera pose.",
+    "sensor_guess": "other",
+    "resolution": "1920x1080",
+    "duration_s": 17.3,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR073",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Portrait-format display, heavily blacked out, with a crosshair and box; no scale reference.",
+    "sensor_guess": "IR",
+    "resolution": "608x1080",
+    "duration_s": 88.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR074",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Cyan crosshair, ticks and north arrow over sea and cloud; fields covered and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 285.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR075",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Crosshair and ticks with fields covered over clouds and sea; no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 23.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR076",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Orange crosshair and ticks with fields covered; the contrast area (01:52-02:55) is small and the farmland and buildings give no usable scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 297.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR077",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Blue crosshair and ticks over a textured gray field with fields covered; two tiny contrast areas and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 298.9,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR078",
+    "release": "R02",
+    "tier": "Bounded",
+    "reason": "A tracker gate with a metre-valued label (19M) appears around the object at about 140-200 s and a label next to the crosshair near 233 s; if it is the gate width in metres it is a size scale. Fields are covered.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 298.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR079",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Cyan crosshair and ticks on a flat gray field with fields covered; two small contrast areas and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 240.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR080",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Eight brief contrast crossings (about 1 s each per DVIDS) are not resolved in the sampled frames; fields are covered and no scale is tied to the objects.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 294.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR081",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Village scene with no reticle in the sampled frames and the one contrast event (00:58-01:03) not discernible; fields covered.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 299.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR082",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Faint crosshair and ticks over haze and terrain with fields covered; no scale tied to the contrast patch (00:28-00:29).",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 297.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR083",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "A dark round object is visible against terrain and sky at about 77-111 s, but only a crosshair and north arrow remain with no scale reference.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 274.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR084",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Cloud-covered town seen through a small window; one short contrast crossing (00:25-00:27) is not discernible and only a compass N remains.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 253.8,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR085",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Cyan crosshair and ticks on a flat gray field with fields covered; a few tiny bright dots and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 284.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR086",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "A bright spot over open sea with a plain crosshair and a small arrow icon in the upper left; fields are covered and the horizon appears only once.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 34.0,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR087",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Three short contrast events (1:23, 2:53, 4:22) over open sea; an offshore platform is in the clip but not in the frames with the objects.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 294.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR088",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Blue crosshair and ticks over a gray field with fields covered; contrast events are tiny and unscaled.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 298.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR089",
+    "release": "R02",
+    "tier": "Bounded",
+    "reason": "A tracker gate labelled 19M (and a second gate label at about 233 s) appears around the object; if that is the gate width in metres it gives a size scale. Fields are covered.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 298.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR090",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Farmland from above with a small crosshair and ticks, fields covered; a bright blob near the centre is tracked but no angular scale or range is given.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 298.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR091",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Ships and an oil platform appear at times, but the tracked contrast (about 03:08-03:48) appears to be a small vessel with a wake; fields covered and no scale for an unexplained object.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 288.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR092",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Crosshair and ticks over sea ripples with fields covered; the object is tiny and unscaled.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 292.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR093",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Crosshair and ticks over a dark gradient field with fields covered; tiny contrast areas and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 30.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR094",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Orange crosshair and ticks over sea and sky with fields covered; the object is a faint point and the ship at the start is not near it.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1280x720",
+    "duration_s": 299.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR095",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Crosshair and ticks over sea with fields covered; two bright streaks at about 45-100 s with no scale reference.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 288.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR096",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Hazy farmland with faint crosshair and ticks, fields covered; two tiny dark specks with no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 79.1,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR097",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Cyan crosshair and ticks with fields covered; bright specks over a hazy field and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 299.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR098",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "Crosshair and ticks with a large blacked-out panel over sea; a loose group of bright points in 17.6 min, no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 1056.3,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR099",
+    "release": "R02",
+    "tier": "Not viable",
+    "reason": "A harbour with warships is seen at the start, but the objects are small dark spots over open sea at 150-265 s with no scale reference in frame.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 291.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR100",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Steep view of open sea with only reticle brackets and a north marker; every readout is blacked out and there is no known-size object or scale.",
+    "sensor_guess": "IR",
+    "resolution": "1652x928",
+    "duration_s": 285.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR101",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Sky and cloud view with reticle brackets and a north marker only; readouts are blacked out and cloud shapes give no known size or distance.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 104.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR102",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Brackets and north marker only over sea texture then sky; readouts blacked out, no scale or known-size reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 36.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR103",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Auto-track box and reticle brackets over banded cloud; readouts are blacked out and there is no scale or known-size reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 77.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR104",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Reticle brackets and a north marker over a flat background; readouts are blacked out and the six-pointed dark shape gives no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 15.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR105",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Cloud-only imagery (including a cloud-top deck seen from above) with brackets and a north marker; readouts blacked out and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 299.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR106",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Only 5 s long; an uncalibrated tick crosshair with side bars and no angle, range or altitude readout, over a featureless background with a tiny object near the top.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 5.0,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR107",
+    "release": "R04",
+    "tier": "Bounded",
+    "reason": "A legible elevation readout (about -3 deg stepping to -9 deg, then -11 deg) and a bank-style horizon bracket are visible, but there is no azimuth, altitude or range; with the sea surface this gives a line of sight angle only.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 23.6,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR108",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Pillar-boxed display with an uncalibrated tick crosshair and side bars; no readout is legible and no discrete object is visible in the sampled frames.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 94.8,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR109",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Banded cloud scene with an uncalibrated tick crosshair and side bars and no readout; the object is a tiny dot.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 21.1,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR110",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Same display layout as PR106 with an uncalibrated tick crosshair and side bars, no readout, and a featureless background; the object is only a few pixels until it is inside the tracking box.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 22.5,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR111",
+    "release": "R04",
+    "tier": "Bounded",
+    "reason": "Elevation readout (-5 deg stepping to -24 deg) and a short underlined label of the form 70M, 60M, 55M, 48M and 260M beside the track box, plus a bank-style horizon bracket; no azimuth or own altitude.",
+    "sensor_guess": "IR",
+    "resolution": "640x480",
+    "duration_s": 60.3,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR112",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Thin crosshair and north marker only, all readouts blacked out; the shoreline in the first seconds is unlocated and gives no known size.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 20.9,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR113",
+    "release": "R04",
+    "tier": "Bounded",
+    "reason": "A burned-in ladder of horizontal rungs labelled 5 to 40 (numbers at both ends) is visible for most of the clip and gives marked angles, so a rough scale exists; no azimuth, altitude or range, and no horizon.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 176.4,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "DOW-UAP-PR114",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Cropped display with a crosshair, a tracking box and two unlabelled diagonal bars; the readout strip along the bottom is entirely blacked out and nothing gives a scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 39.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR115",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "Only a crosshair and north arrow over sea and cloud, with all readouts blacked out and no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 8.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR116",
+    "release": "R04",
+    "tier": "Not viable",
+    "reason": "A dark object in a tracking gate (two vertical bars) over a featureless background; the gate is not a calibrated scale and nothing else gives size or range.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 32.1,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR117",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Tick-marked reticle is visible but the angular spacing of the ticks is not stated on screen, and no discrete object is discernible against the textured background.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 16.7,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR118",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Tick-marked reticle with uncalibrated spacing; no discrete object discernible in the sampled frames. Official report D101 describes cold orbs about 4 ft across, but that is a claim, not a measurement.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 30.2,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR119",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Only 2.8 s long; shows ring and triangle markers near the reticle that look like display symbols rather than isolated targets, and tick spacing is uncalibrated.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 2.8,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR120",
+    "release": "R05",
+    "tier": "Bounded",
+    "reason": "Tick-marked reticle in view for the whole clip with a small target visible and the sensor zooming, so size-range-speed curves can be drawn if the tick spacing is calibrated; report D101 gives a claimed 4 ft object size.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 13.3,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR121",
+    "release": "R05",
+    "tier": "Bounded",
+    "reason": "Tick-marked reticle with a pair of dark dots tracked across 34 s and zoom changes, giving a field-of-view scale for range-size-speed curves once tick spacing is calibrated.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 34.4,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR122",
+    "release": "R05",
+    "tier": "Bounded",
+    "reason": "Tick-marked reticle with dot pairs visible over 26 s of pan and zoom, giving a field-of-view scale for range-size-speed curves once tick spacing is calibrated.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 26.3,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR123",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Only an unlabeled crosshair; no angle, range or altitude readout, and the horizon and sea texture give no known size or distance.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 64.1,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR124",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Only an unlabeled crosshair; horizon and sea clutter are visible but no altitude, range or FOV is given, so no scale can be set.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 53.7,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR125",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Unlabeled crosshair over a featureless background; no readout, scale or scene reference.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 28.6,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR126",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Low-light hand-held video of point lights with no symbology and no recognizable scene.",
+    "sensor_guess": "other",
+    "resolution": "1280x720",
+    "duration_s": 152.8,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR127",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Low-light hand-held video of point lights with no symbology and no recognizable scene.",
+    "sensor_guess": "other",
+    "resolution": "1280x720",
+    "duration_s": 149.0,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "DOW-UAP-PR133",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Readouts are blacked out and the scene is haze followed by rugged terrain with no known-size object or scale.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 298.4,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR134",
+    "release": "R05",
+    "tier": "Bounded",
+    "reason": "All text readouts are blacked out, so no line of sight, but the sensor looks at a dense town with roads, a canal and buildings of roughly standard size, plus a tracked contrast, allowing rough range-size curves.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1276x720",
+    "duration_s": 99.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR135",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Readouts are blacked out; the opening shows a lattice tower on a small islet, but the lights appear later against open sea with no scene reference.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 60.0,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR136",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Text readouts are blacked out and the scene is steep rugged terrain with no known-size object or known distance; the sensor pans and zooms.",
+    "sensor_guess": "IR",
+    "resolution": "1280x720",
+    "duration_s": 33.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR140",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Readouts and the track area are blacked out; rocky terrain and flat desert have no known-size object or scale.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1472x828",
+    "duration_s": 107.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR141",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Split IR and EO display with readouts blacked out; terrain and desert give no known size or scale.",
+    "sensor_guess": "IR+TV",
+    "resolution": "1472x828",
+    "duration_s": 156.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR142",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Text readouts are blacked out and the view is nearly static; the contrast that DVIDS says crosses at 5 to 8 s is not discernible in the sampled frames, and the FOV and ship size are unknown.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 11.7,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR143",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "A dark spiky point at the centre of a textured grey background with brackets and a north marker only; readouts are blacked out.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 19.2,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR144",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Brackets and north marker over sea and cloud; readouts are blacked out and there is no scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 27.9,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR148",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "A small vessel with a wake is visible only in the first 13 s; later the target is a dark dot over sea texture, and the vessel class and zoom are unknown, so no reliable scale exists.",
+    "sensor_guess": "IR",
+    "resolution": "1908x1028",
+    "duration_s": 59.8,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR149",
+    "release": "R05",
+    "tier": "Bounded",
+    "reason": "Text readouts are blacked out, but a cargo ship of identifiable class appears in the first seconds as a known-size reference while the sensor pans, allowing a scale for range-size-speed curves.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1028",
+    "duration_s": 51.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR150",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Blue brackets and a focus box over cloud and sky with readouts blacked out; no scale.",
+    "sensor_guess": "IR",
+    "resolution": "908x512",
+    "duration_s": 57.6,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR151",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Sea texture and cloud with brackets and a north marker; readouts and the frame edges are blacked out and nothing gives a scale.",
+    "sensor_guess": "IR",
+    "resolution": "1920x1080",
+    "duration_s": 49.9,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR152",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Cumulus-cloud imagery with a focus box and brackets; readouts blacked out and no scale or known size.",
+    "sensor_guess": "IR",
+    "resolution": "1188x668",
+    "duration_s": 98.5,
+    "symbology_redacted": "full"
+   },
+   {
+    "clip_id": "DOW-UAP-PR159",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Historical film with no symbology and no scene reference; in the sampled frames there is only underexposed blue sky with dust specks.",
+    "sensor_guess": "film",
+    "resolution": "1920x1080",
+    "duration_s": 70.1,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR001",
+    "release": "R03",
+    "tier": "Not viable",
+    "reason": "Visible-light handheld phone video of a few tiny lights against a black frame, with no symbology, no background to register against and no known-size or measured distance.",
+    "sensor_guess": "TV/EO",
+    "resolution": "1920x1080",
+    "duration_s": 162.8,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR002",
+    "release": "R03",
+    "tier": "Not viable",
+    "reason": "Visible-light handheld phone video of two red lights against a black frame, with no symbology and no background reference; the 2,500 ft figure is the witness's estimate.",
+    "sensor_guess": "TV/EO",
+    "resolution": "1920x1080",
+    "duration_s": 162.8,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR003",
+    "release": "R03",
+    "tier": "Not viable",
+    "reason": "Portrait phone video of a single bright light against a dark treeline and sky; the only distance is the witness's 2,700 ft estimate and the lens, zoom and crop are not stated.",
+    "sensor_guess": "TV/EO",
+    "resolution": "1920x1080",
+    "duration_s": 265.3,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR004",
+    "release": "R03",
+    "tier": "Not viable",
+    "reason": "Portrait phone video of two red orbs among tree branches with a handheld, shaky camera; distances (25 ft altitude, 1 m diameter) are witness claims and the phone field of view is not stated.",
+    "sensor_guess": "TV/EO",
+    "resolution": "1920x1080",
+    "duration_s": 49.4,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR005",
+    "release": "R03",
+    "tier": "Not viable",
+    "reason": "Officially described as an artistic digital recreation of a witness account, not sensor footage, so there is no measurement to reconstruct.",
+    "sensor_guess": "other",
+    "resolution": "1920x1080",
+    "duration_s": 53.8,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR006",
+    "release": "R03",
+    "tier": "Not viable",
+    "reason": "Officially described as an artistic digital recreation of a witness account, not sensor footage, so there is no measurement to reconstruct.",
+    "sensor_guess": "other",
+    "resolution": "1920x1080",
+    "duration_s": 21.3,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "FBI-UAP-PR007",
+    "release": "R05",
+    "tier": "Not viable",
+    "reason": "Hand-held thermal view of sky and a cloud edge with no symbology, no scale and no known-size or known-distance reference.",
+    "sensor_guess": "handheld thermal",
+    "resolution": "768x576",
+    "duration_s": 10.0,
+    "symbology_redacted": "none"
+   },
+   {
+    "clip_id": "LLE-UAP-PR001",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Night phone video with point lights in the sky; no symbology, and the lower half is blurred by the release, leaving no recognizable scene reference.",
+    "sensor_guess": "other",
+    "resolution": "608x1080",
+    "duration_s": 80.0,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "LLE-UAP-PR002",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "15-minute night phone video of a single point light over a blurred foreground with wires; no symbology or known-size reference.",
+    "sensor_guess": "other",
+    "resolution": "608x1080",
+    "duration_s": 900.2,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "LLE-UAP-PR003",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Night phone video of one light moving behind overhead wires; no symbology or scene reference of known size.",
+    "sensor_guess": "other",
+    "resolution": "608x1080",
+    "duration_s": 27.8,
+    "symbology_redacted": "partial"
+   },
+   {
+    "clip_id": "LLE-UAP-PR004",
+    "release": "R06",
+    "tier": "Not viable",
+    "reason": "Night phone video of one or two faint point lights in a dark sky; no symbology or scene reference.",
+    "sensor_guess": "other",
+    "resolution": "608x1080",
+    "duration_s": 102.5,
+    "symbology_redacted": "none"
+   }
+  ]
+ },
+ "verdict": {
+  "text": "Of 134 PURSUE sensor videos triaged, 17 support at most a bounded reconstruction and 117 are not viable (most on-screen data is redacted and there is no known scale). No clip in this triage is claimed to identify its object.",
+  "decisive": false,
+  "conditions": [
+   "Tiers are about what the data could support, not about what the objects are.",
+   "Triage is by sampled frames and the released symbology; a re-check at frame level can change a tier."
+  ],
+  "leader_physics_only": null,
+  "margin_log_likelihood": null
+ },
+ "provenance": {
+  "repo": "https://github.com/Samizdat-Publications/sensor-forensics",
+  "commit": "59b402ec6c7905befb0ba2ca9e79b4cb0765c311",
+  "working_tree_clean": false,
+  "lab_version": "0.1.0",
+  "generated": "2026-11-01T22:00:23Z",
+  "generator": "tools/export_cases.py",
+  "inputs": [
+   "data/pursue/triage.csv"
+  ]
+ },
+ "notes": "Frozen clips that are fully scored export as their own clip_case files."
+}

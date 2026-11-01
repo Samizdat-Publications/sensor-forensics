@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ufo-case-file/0.1/schema.json",
+  "title": "UFO Case File",
+  "description": "One case file per recording or per summary of a set of recordings. Version 0.1, defined by the Sensor Forensics Lab (D-014). All numeric values are SI unless a field says otherwise; display_unit fields name the unit people see on screen.",
+  "type": "object",
+  "required": ["schema_version", "case_id", "kind", "title", "event", "sources", "verdict", "provenance"],
+  "additionalProperties": true,
+  "$defs": {
+    "quantity": {
+      "description": "A number with its unit and, where known, its uncertainty.",
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": ["number", "null"]},
+        "unit": {"type": "string", "description": "SI unit symbol, or a stated non-SI unit such as deg."},
+        "uncertainty": {"type": ["number", "null"], "description": "One standard uncertainty in the same unit, if known."},
+        "display_value": {"type": ["number", "string", "null"]},
+        "display_unit": {"type": ["string", "null"]},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "role"],
+      "properties": {
+        "id": {"type": "string"},
+        "role": {"enum": ["video", "image", "document", "data", "testimony", "weather", "other"]},
+        "title": {"type": "string"},
+        "file": {"type": ["string", "null"]},
+        "url": {"type": ["string", "null"]},
+        "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {"type": ["integer", "null"], "minimum": 0},
+        "official_copy": {"type": ["boolean", "null"]},
+        "provenance": {"type": "string", "description": "Where this copy came from, in plain words."},
+        "retrieved": {"type": ["string", "null"]},
+        "media": {"type": "object", "description": "Optional technical facts such as codec, size, frame rate.", "additionalProperties": true}
+      },
+      "additionalProperties": true
+    },
+    "observable": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string"},
+        "kind": {"enum": ["read_from_screen", "measured_from_image", "inferred", "external"]},
+        "unit": {"type": ["string", "null"]},
+        "frames": {"type": ["integer", "null"], "minimum": 0},
+        "resolution": {"type": ["string", "null"], "description": "Smallest step the field shows, in plain words."},
+        "first_value": {"type": ["string", "number", "null"]},
+        "last_value": {"type": ["string", "number", "null"]},
+        "confidence_summary": {"type": "string"},
+        "low_confidence_fraction": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": true
+    },
+    "hypothesis": {
+      "type": "object",
+      "required": ["id", "label"],
+      "properties": {
+        "id": {"type": "string"},
+        "label": {"type": "string"},
+        "variant": {"type": "string", "description": "Which analysis variant this fit belongs to (for example a field-of-view assumption). Empty string if there is only one."},
+        "model": {"type": ["string", "null"]},
+        "in_design_set": {"type": ["boolean", "null"]},
+        "valid": {"type": ["boolean", "null"]},
+        "priors_summary": {"type": "string"},
+        "free_parameters": {"type": ["integer", "null"], "minimum": 0},
+        "best_fit_parameters": {"type": "object", "additionalProperties": true, "description": "Testimony-weighted fit; each key names its unit."},
+        "best_fit_parameters_physics_only": {"type": "object", "additionalProperties": true},
+        "parameters_at_bound": {"type": "array", "items": {"type": "string"}},
+        "criteria_log_likelihood": {"type": "object", "additionalProperties": {"type": ["number", "null"]}, "description": "Per-criterion log-likelihood (natural log). Higher is better."},
+        "criteria_log_likelihood_physics_only": {"type": "object", "additionalProperties": {"type": ["number", "null"]}},
+        "criteria_weights": {"type": "object", "additionalProperties": {"type": ["number", "null"]}},
+        "total_testimony_weighted": {"type": ["number", "null"]},
+        "total_physics_only": {"type": ["number", "null"]},
+        "total_testimony_weighted_without_post_hoc_exclusions": {"type": ["number", "null"]},
+        "total_physics_only_without_post_hoc_exclusions": {"type": ["number", "null"]},
+        "rank_testimony_weighted": {"type": ["integer", "null"], "minimum": 1},
+        "rank_physics_only": {"type": ["integer", "null"], "minimum": 1},
+        "derived": {"type": "object", "additionalProperties": true, "description": "Quantities implied by the best fit (range, altitude, speed). Keys name their unit."},
+        "checks": {"type": "array", "items": {"type": "object", "additionalProperties": true}}
+      },
+      "additionalProperties": true
+    },
+    "range_curve_point": {
+      "type": "object",
+      "required": ["range_m"],
+      "properties": {
+        "range_m": {"type": "number", "exclusiveMinimum": 0},
+        "range_display_nmi": {"type": "number"},
+        "valid": {"type": ["boolean", "null"]},
+        "air_speed_mps": {"type": ["number", "null"]},
+        "ground_speed_mps": {"type": ["number", "null"]},
+        "altitude_m": {"type": ["number", "null"]},
+        "vertical_speed_mps": {"type": ["number", "null"]},
+        "line_of_sight_log_likelihood": {"type": ["number", "null"]}
+      },
+      "additionalProperties": true
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "case_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+    "kind": {"enum": ["video_case", "triage_summary", "clip_case"], "description": "video_case: a fully scored recording. clip_case: one frozen clip. triage_summary: a roll-up of many clips."},
+    "title": {"type": "string"},
+    "summary": {"type": "string", "description": "Two or three plain sentences."},
+    "event": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": {"type": ["string", "null"], "description": "ISO 8601 date or datetime, or null if unknown."},
+        "date_uncertainty": {"type": "string", "description": "Plain words, for example 'day known, time of day approximate'."},
+        "place": {"type": ["string", "null"]},
+        "latitude_deg": {"type": ["number", "null"], "minimum": -90, "maximum": 90},
+        "longitude_deg": {"type": ["number", "null"], "minimum": -180, "maximum": 180},
+        "position_uncertainty_m": {"type": ["number", "null"], "minimum": 0},
+        "position_note": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "platform": {
+      "type": "object",
+      "properties": {
+        "name": {"type": ["string", "null"]},
+        "aircraft_or_ship": {"type": ["string", "null"]},
+        "altitude_m": {"$ref": "#/$defs/quantity"},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "sensor": {
+      "type": "object",
+      "properties": {
+        "name": {"type": ["string", "null"]},
+        "band": {"type": ["string", "null"], "description": "For example infrared, visible, radar."},
+        "field_of_view_deg": {"type": ["number", "null"], "description": "Full angle, degrees. Field of view can change per frame; see field_of_view_note."},
+        "field_of_view_note": {"type": "string"},
+        "picture_width_px": {"type": ["number", "null"]},
+        "pixel_aspect": {"type": ["number", "null"]},
+        "frame_rate_hz": {"type": ["number", "null"]},
+        "duration_s": {"type": ["number", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}, "minItems": 1},
+    "observables": {"type": "array", "items": {"$ref": "#/$defs/observable"}},
+    "environment": {
+      "type": "object",
+      "properties": {
+        "weather_source": {"type": ["string", "null"]},
+        "wind_uncertainty_mps": {"type": ["number", "null"], "minimum": 0},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "analysis": {
+      "type": "object",
+      "description": "How the hypotheses were scored.",
+      "properties": {
+        "method": {"type": "string"},
+        "frame_window": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        "reference_frame": {"type": ["integer", "null"]},
+        "primary_variant": {"type": "string"},
+        "variants": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "string"}, "description": {"type": "string"}}, "required": ["id"], "additionalProperties": true}},
+        "effective_sample_size": {"type": ["number", "null"]},
+        "log_likelihood_note": {"type": "string", "description": "Natural log; a difference of 2.3 is a likelihood ratio of 10."},
+        "flags": {"type": "array", "items": {"type": "string"}},
+        "post_hoc_exclusions": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "string"}, "description": {"type": "string"}, "decided_blind": {"type": "boolean"}}, "required": ["id", "description"], "additionalProperties": true}},
+        "totals_without_post_hoc_exclusions_available": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "hypotheses": {"type": "array", "items": {"$ref": "#/$defs/hypothesis"}},
+    "range_curves": {
+      "type": "object",
+      "description": "What the data allow as a function of unknown range.",
+      "properties": {
+        "available": {"type": "boolean"},
+        "note": {"type": "string"},
+        "link": {"type": ["string", "null"], "description": "Path or URL of the full curve data."},
+        "angles_only": {"type": "array", "items": {"$ref": "#/$defs/range_curve_point"}, "description": "Constant-range solutions using line-of-sight angles only."},
+        "per_hypothesis": {"type": "object", "additionalProperties": {"type": "array", "items": {"$ref": "#/$defs/range_curve_point"}}}
+      },
+      "additionalProperties": true
+    },
+    "discriminators": {
+      "type": "array",
+      "description": "For pairs of hypotheses the data cannot separate: the one extra measurement that could.",
+      "items": {
+        "type": "object",
+        "required": ["pair"],
+        "properties": {
+          "variant": {"type": "string"},
+          "pair": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+          "separable_from_current_data": {"type": ["boolean", "null"]},
+          "measurement": {"type": ["string", "null"]},
+          "unit": {"type": ["string", "null"]},
+          "required_precision": {"type": ["number", "null"], "description": "One-sigma precision, in the measurement's unit, giving a likelihood ratio of 10."},
+          "typical_precision": {"type": ["number", "null"]},
+          "feasibility": {"type": ["number", "null"], "description": "Required precision divided by typical precision; 1 or more means an existing instrument class could do it."},
+          "works_both_ways": {"type": ["boolean", "null"]},
+          "data_exists": {"type": ["string", "null"], "description": "Plain words: is such data released, recorded, or obtainable."}
+        },
+        "additionalProperties": true
+      }
+    },
+    "testimony": {
+      "type": "object",
+      "properties": {
+        "claims_total": {"type": "integer", "minimum": 0},
+        "claims_scorable": {"type": "integer", "minimum": 0},
+        "scored_terms": {"type": "integer", "minimum": 0},
+        "witnesses": {"type": "array", "items": {"type": "string"}},
+        "claims_summary": {"type": "string"},
+        "witness_consistency": {"type": "object", "properties": {"agree": {"type": "integer"}, "partial": {"type": "integer"}, "disagree": {"type": "integer"}, "total": {"type": "integer"}, "note": {"type": "string"}}, "additionalProperties": true},
+        "link": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "triage": {
+      "type": "object",
+      "description": "Only for triage_summary: how many clips the data can support.",
+      "properties": {
+        "clips_total": {"type": "integer", "minimum": 0},
+        "by_tier": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "by_release": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "clips": {"type": "array", "items": {"type": "object", "required": ["clip_id", "tier"], "properties": {"clip_id": {"type": "string"}, "release": {"type": ["string", "null"]}, "tier": {"type": "string"}, "reason": {"type": "string"}}, "additionalProperties": true}}
+      },
+      "additionalProperties": true
+    },
+    "verdict": {
+      "type": "object",
+      "required": ["text", "conditions", "decisive"],
+      "properties": {
+        "text": {"type": "string", "description": "What the data say, in plain words."},
+        "conditions": {"type": "array", "items": {"type": "string"}, "description": "What must hold for the text to stand."},
+        "decisive": {"type": "boolean", "description": "True only if the data separate the leading explanation from every other by a likelihood ratio of 10 or more."},
+        "leader_physics_only": {"type": ["string", "null"]},
+        "margin_log_likelihood": {"type": ["number", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["repo", "commit", "lab_version", "generated"],
+      "properties": {
+        "repo": {"type": "string"},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+        "working_tree_clean": {"type": ["boolean", "null"]},
+        "lab_version": {"type": "string"},
+        "generated": {"type": "string", "description": "ISO 8601 date-time (UTC)."},
+        "generator": {"type": "string"},
+        "inputs": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "notes": {"type": "string", "description": "Free-form notes."}
+  }
+}
