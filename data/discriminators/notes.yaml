@@ -1,0 +1,132 @@
+measurements:
+  range_nmi:
+    label: Radar range
+    unit: nmi
+    typical_sigma: 0.1
+    source: GOFAST's range field steps in 0.1 nmi; a fighter radar track is at least that good (assumed).
+    exists:
+      gimbal: 'Probably recorded, not released: the aircrew say the radar (SA) page was taped with the FLIR and recommend analyzing it (data/testimony/gimbal.yaml).'
+      gofast: Already on screen (RNG field); every top hypothesis fits it, so it cannot separate them.
+  closure_kt:
+    label: Closure rate (radar Vc or range rate)
+    unit: kt
+    typical_sigma: 5.0
+    source: GOFAST's Vc field steps in 1 kt but scatters by about 10 kt against the lab's fits; 5 kt assumed for a radar track.
+    exists:
+      gimbal: Same radar track as the range; not released.
+      gofast: Already on screen (Vc field); every top hypothesis fits it.
+  altitude_ft:
+    label: Object altitude
+    unit: ft
+    typical_sigma: 500.0
+    source: Radar elevation of about 0.2 deg at 20 nmi is about 400 ft (assumed).
+    exists:
+      gimbal: From the radar track (range and elevation); not released.
+      gofast: 'Not independent: the on-screen range and elevation already fix it near 13,200 ft for every model.'
+  air_speed_kt:
+    label: Air speed (object ground velocity minus an independent wind measurement at its altitude)
+    unit: kt
+    typical_sigma: 5.0
+    source: ERA5 wind uncertainty used throughout the lab is 5 kt; a radiosonde or an aircraft's measured wind at that altitude is similar.
+    exists:
+      gimbal: 'Partly: ERA5 (5 kt) is used already; a sounding near the time and place (a ship or coastal radiosonde) would be the independent check.'
+      gofast: 'Partly: ERA5 (5 kt) is used already; a radiosonde or aircraft wind report near 13,000 ft and 02:30 UTC would be the independent check.'
+  second_bearing_deg:
+    label: Bearing from a second aircraft 2 nmi abeam
+    unit: deg
+    typical_sigma: 0.3
+    source: A whole-degree pod readout has an error of about 0.3 deg (uniform over 1 deg); recorded pod data are finer.
+    exists:
+      gimbal: 'Plausibly: the aircrew describe a flight of jets and radar contacts; other pods or radars may have tracked it. Nothing released.'
+      gofast: Only if a wingman's pod or radar tracked the same object; nothing released.
+  intensity_ratio_end_over_start:
+    label: IR intensity ratio, last frame over first, with known gain and no saturation
+    unit: (ratio)
+    typical_sigma: 0.1
+    source: Assumed 10 percent for a calibrated, unsaturated relative measurement.
+    exists:
+      gimbal: Needs the raw pod recording with gain and level settings; the released video is saturated.
+      gofast: Needs the raw pod recording with gain and level settings.
+method: 'Nothing on this page is a verdict. It asks a narrower question: for two explanations the released video cannot tell apart, what one extra measurement, taken when and how precisely, would make one of them at least 10 times more likely than the other (a likelihood ratio of 10, 2.3 log units)?
+
+
+  **How the numbers are made.**
+
+
+  - Each hypothesis starts at its physics-only best fit (`results.json`; testimony is left out so the prediction comes from the video alone). Its prediction for a quantity is a band, not a point: every parameter set whose physics-only total is within 1.92 log units of its best (the usual 95 percent band for one quantity) is allowed. The band search profiles over range (the main thing the video cannot fix) and then pushes each quantity up and down until the fit gets worse than that. Bands that reach a prior bound are marked; the true band could be wider there.
+
+  - A measurement with error sigma separates two bands by a factor of 10 for whichever hypothesis is true when sigma is at most the gap between the bands divided by 2.15 (the square root of 2 ln 10), even if each hypothesis slides to its band edge nearest the other. This is the worst case, so the precisions here are conservative.
+
+  - When the bands overlap (for example one hypothesis is a special case of the other, like a balloon inside "a slow flier with any air speed from 0 to 60 kt"), no precision works both ways. The table then says which way it can work: a measurement can rule out the narrower hypothesis if the wider one is true and its best value lies outside the narrower band, never the reverse.
+
+  - "Feasibility" is the precision needed divided by a typical precision for that kind of data (radar range 0.1 nmi, closure 5 kt, altitude 500 ft, wind 5 kt, a second pod''s bearing 0.3 deg, a calibrated intensity ratio 10 percent; sources in `data/discriminators/notes.yaml`). At least 1 means an existing class of instrument could do it. The table''s chosen measurement for each pair is the one that works both ways with the best feasibility, else the best one-way measurement.
+
+  - The second sensor is assumed to be a second aircraft 2 nmi abeam of the recording jet (to the right of its sight line) at the clip''s middle frame; the bearing difference between hypotheses scales with that spacing.
+
+  - Pairs: every pair among the top three hypotheses by either total, plus every pair the model-recovery test (`recovery.md`) could not separate.'
+cases:
+  gimbal:
+    title: GIMBAL
+    variant_titles:
+      fov035: 0.35 deg field of view
+      fov070: 0.7 deg field of view
+    settle: '### What would settle GIMBAL
+
+
+      **The radar track.** One number does most of the work: the object''s radar range near the end of the clip (34 s). Fitted to the video alone, every physical model puts the object far away. At 0.35 deg the lowest end-of-clip range any of them allows is 15 nmi (balloon 15 to 30 nmi, slow flier 20 to 36, distant jet 17 to 57, glare on a target 17 to 61). The aircrew say the radar had it within 10 nmi (claim G-T12) and Graves 6 to 8 nmi (G-T13). A radar range of 10 nmi or less, good to about 2 nmi, would rule out all four physical models at 0.35 deg by a factor of 10 or more; a range above 17 nmi would rule out the witnesses'' range. At 0.7 deg the balloon fit moves in (9 to 14 nmi at the end) and the glare fit allows 11 nmi, so there a 10 nmi range would not exclude them. The aircrew say the radar (SA) page was recorded on the same tape as the FLIR. It has not been released.
+
+
+      **Balloon or slow flier.** At 0.7 deg the range alone separates them both ways (balloon 9.0 to 13.5 nmi, slow flier 19.1 to 22.1 nmi at the end; 2.6 nmi precision, which any radar has). At 0.35 deg their ranges overlap, and the only lever is the wind at the object''s altitude (about 20,000 ft): a balloon moves with it, so its air speed is 0 to 10 kt. The slow flier''s best fit flies at 60 kt, but it is allowed any air speed down to 0, so a measured wind can rule out the balloon (if the object''s air speed is far from zero, to about 24 kt precision) but can never rule out the slow flier.
+
+
+      **The free path (H-WIT).** No single measurement can rule out the free path: it can be at any range from 0.5 to 60 nmi and any speed, and pays for that freedom only through the complexity penalty. A measurement can only rule out the others if the free path is true. Its best fit to the video alone is not the witnesses'' path: it sits at the 60 nmi prior bound with an air speed near 1,600 kt, which is where a radar range or closure rate would put it to the test.
+
+
+      **Distant jet or glare on a target.** No measurement separates these: on this video they are the same physics (a glare whose rotation follows the pod), and the distant jet is the special case of the glare model with jet air speeds (250 to 520 kt). At 0.35 deg an air speed above 520 kt (where the glare model''s best fit sits) would rule out the jet; at 0.7 deg not even that works. What would test the glare idea itself is the raw pod recording with known gain (an unsaturated image shows the source behind the glare and its true intensity) or a second sensor: from an aircraft 2 nmi abeam the object''s bearing would differ from the recording jet''s by about 2 to 5 deg for these fits, against 4 to 7 deg for the balloon.
+
+
+      **The field of view.** Knowing whether the clip is at 0.35 or 0.7 deg (the 2x digital zoom question) does not change which explanation leads on the physics-only total (the balloon at both), but it changes how strongly: the balloon''s lead over the slow flier grows from 3.8 to 11.3 log units, and the balloon''s mid-clip range moves from 17 to 32 nmi to 11 to 15 nmi. In this scoring it does not decide whether a steady distant path exists: the distant-jet fit scores the same at both (-225 physics-only), because its heading and air speed are free. The reproduction finding (Sitrec''s fixed 340 kt distant path has no solution at 0.7 deg) concerns that fixed path, not the free one.
+
+
+      **Calibrated size.** With known gain and no saturation, a 3 m balloon at the fitted 17 to 32 nmi would be 3.5 to 6.6 pixels across at 0.35 deg, under the measured point-spread width (about 6.6 to 9.8 px): a point. A 12 m (40 ft) object at the witnesses'' 8 nmi would be about 56 px across, clearly resolved. A calibrated image therefore separates "witness-sized object at witness range" from "small object far away", which the saturated released video cannot.
+
+
+      **An uncut video.** A longer clip helps only through the same quantities: more frames of the sight line constrain range a little, and a balloon keeps drifting with the wind while the witnesses describe a stop and reversal. The lab cannot compute it quantitatively because the jet''s path before and after the clip is not known.'
+  gofast:
+    title: GOFAST
+    settle: '### What would settle GOFAST
+
+
+      The range on screen already fixes where the object is: every top hypothesis puts it at 3.8 nmi and 13,200 ft at mid-clip, moving about 53 kt over the ground. So range, closure, altitude and a second bearing cannot separate them (their bands coincide to within 0.1 nmi, 2 kt, 90 ft and 0.2 deg).
+
+
+      **The wind at 13,200 ft is the discriminator.** A balloon moves with the wind, so its air speed is 0 to 2.7 kt. The slow flier allows 0 to 18.5 kt (best 9.6), the glare-on-a-target model 0 to 14.6 (best 9.6), the free path 11 to 30 (best 23). With the object''s ground velocity already measured from the video, an independent wind measurement at its altitude (a radiosonde or an aircraft''s wind report near 02:30 UTC) is a measurement of its air speed.
+
+
+      - Balloon or free path: a wind good to 3.9 kt separates them both ways. ERA5''s 5 kt is just short; a nearby sounding is about right.
+
+      - Balloon or slow flier (and balloon or glare on a target): one way only. If the true air speed is near the slow flier''s best 9.6 kt, a wind good to 3.2 kt rules out the balloon. If the object is a balloon, nothing rules out the slow flier, which can fly at zero air speed too.
+
+
+      **Pairs no measurement separates.** The slow flier and the glare-on-a-target model are the same physics on GOFAST (they differ only in the size criterion, which carries no weight because the blob is unresolved, and in the width of the air-speed prior), so no kinematic measurement can tell them apart. Only an image that resolves the object, or the raw recording with known gain, could.
+
+
+      **Pairs the recovery test confused but the real data already separate.** The distant jet (needs at least 250 kt of air speed, so a wind of about 200 kt at 13,000 ft) and the close object (needs a range of 2 nmi or less against the on-screen 3.8) were confused with the glare model only on synthetic data generated from their own very poor fits. On the real video they trail by 19,000 and 47,000 log units. Any wind data, or the on-screen range itself, rules them out.
+
+
+      A calibrated size would not help here: a 1 to 3 m object at 3.8 nmi is 5 to 15 px across at 0.7 deg, near the measured point-spread width (about 5.5 px), and a balloon, a bird and a small drone are all in that range.'
+  flir1:
+    title: FLIR1
+    stub: 'FLIR1 is being scored by another worker; this section will be filled when its results exist (same method, `python -m solve.discriminators` once FLIR1 is added to the CLI). Expected levers: the on-screen range field is a constant 99.9 placeholder, so range is unknown as in GIMBAL, and the ships'' radar (USS Princeton) and the E-2 tracks the witnesses describe are the data that would supply it.'
+limits: '## Limits
+
+
+  - Bands come from a local search started at each best fit; a separate, distant family of good fits (another local optimum) would widen a band and is not guaranteed to be found. Bands for quantities at the clip''s start and end were not pushed directly (only the mid-frame range, closure, altitude and bearing, the end range, the air speed and the intensity ratio were), so they can be slightly narrow.
+
+  - Precisions assume the new measurement''s error is Gaussian and independent of the video. The typical precisions are stated assumptions, not specifications of any particular radar or pod.
+
+  - Only quantities the lab''s models predict are computed. Size and IR signature are discussed in words because the glare models'' size and brightness depend on the pod''s gain and saturation, which are not known.
+
+  - The likelihood ratio of 10 is per measurement. A measurement that separates two hypotheses says nothing about the others; read the whole table.
+
+  '

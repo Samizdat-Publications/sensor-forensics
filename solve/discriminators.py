@@ -24,7 +24,7 @@ Method (the same for every hypothesis; nothing here branches on a hypothesis):
    that could plausibly have measured it (data/discriminators/notes.yaml, stated assumptions).
 
 CLI:
-    python -m solve.discriminators gimbal|gofast|all [--procs N]   # writes data/derived/<case>/discriminators.json
+    python -m solve.discriminators gimbal|gofast|all [--procs N] [--variant fov070]   # writes data/derived/<case>/discriminators.json
     python -m solve.discriminators --report                          # writes docs/results/discriminators.md
 """
 
@@ -438,8 +438,11 @@ def fov_conditioning(case_name: str, pairs: list) -> list:
     if "variants" not in r:
         return []
     tab = {v: {h["hypothesis"]: h for h in d["hypotheses"]} for v, d in r["variants"].items()}
-    out = []
+    out, seen = [], set()
     for pr in pairs:
+        if (pr["a"], pr["b"]) in seen:
+            continue
+        seen.add((pr["a"], pr["b"]))
         row = {"a": pr["a"], "b": pr["b"]}
         for v, hs in tab.items():
             if pr["a"] in hs and pr["b"] in hs:
@@ -448,7 +451,7 @@ def fov_conditioning(case_name: str, pairs: list) -> list:
     return out
 
 
-def run_case(case_name: str, procs: int = 4) -> dict:
+def run_case(case_name: str, procs: int = 4, only_variant: str | None = None) -> dict:
     from concurrent.futures import ProcessPoolExecutor
     _below_normal()
     r = json.loads((ROOT / "data" / "derived" / case_name / "results.json").read_text(encoding="utf-8"))
@@ -456,6 +459,12 @@ def run_case(case_name: str, procs: int = 4) -> dict:
     cat = notes()["measurements"]
     result = {"case": case_name, "band_delta": BAND_DELTA, "lr_target": LR_TARGET,
               "second_sensor_offset_nmi": SECOND_SENSOR_OFFSET_NMI, "variants": {}}
+    out = ROOT / "data" / "derived" / case_name / "discriminators.json"
+    if only_variant is not None:
+        # Recompute one variant and keep the others from the existing file.
+        old = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
+        result["variants"] = {v: vv for v, vv in old.get("variants", {}).items() if v != only_variant}
+        variants = [only_variant]
     for v in variants:
         fitted = _fitted(case_name, v)
         pairs = pair_list(case_name, v, fitted)
@@ -480,8 +489,9 @@ def run_case(case_name: str, procs: int = 4) -> dict:
             "frames": frames, "times_s": {k: float(case.t[i] - case.t[0]) for k, i in tags.items()},
             "top": top_ids(fitted), "recovery_pairs": [list(p) for p in recovery_pairs(case_name, v)],
             "hypotheses": hb, "pairs": evaluate_pairs(pairs, bands, cat, t_of)}
+    order = list(r["variants"]) if "variants" in r else [""]
+    result["variants"] = {v: result["variants"][v] for v in order if v in result["variants"]}
     result["fov_conditioning"] = fov_conditioning(case_name, [p for vv in result["variants"].values() for p in vv["pairs"]])
-    out = ROOT / "data" / "derived" / case_name / "discriminators.json"
     out.write_text(json.dumps(result, indent=1, default=S._jsonable), encoding="utf-8")
     return result
 
@@ -550,7 +560,7 @@ def _variant_lines(case_name: str, v: str, vv: dict, cat: dict, labels: dict) ->
             need = ("both " + _fmt(c["sigma_both"], c["quantity"])) if c["sigma_both"] else (
                 "one way " + _fmt(c["required_sigma"], c["quantity"]) if c["required_sigma"] else "none")
             L.append(f"| {p['a']} vs {p['b']} | {m['label']} | {_when(c['quantity'], vv)} | {_band_txt(c['a_band'], c['quantity'])} | "
-                     f"{_band_txt(c['b_band'], c['quantity'])} | {_fmt(c['gap'], c['quantity'])} | {need} {m['unit']} | "
+                     f"{_band_txt(c['b_band'], c['quantity'])} | {_fmt(c['gap'], c['quantity']) if c['gap'] > 0 else 'overlap'} | {need} {m['unit']} | "
                      f"{_fmt(c['typical_sigma'], c['quantity'])} | {c['feasibility']:.2f} |")
     L.append("")
     return L
@@ -612,9 +622,10 @@ def main(argv: list[str]) -> int:
     procs = 4
     if "--procs" in argv:
         procs = int(argv[argv.index("--procs") + 1])
+    only = argv[argv.index("--variant") + 1] if "--variant" in argv else None
     names = [a for a in argv if a in ("gimbal", "gofast", "all")]
     for n in (["gimbal", "gofast"] if "all" in names else names):
-        d = run_case(n, procs=procs)
+        d = run_case(n, procs=procs, only_variant=only)
         for v, vv in d["variants"].items():
             for p in vv["pairs"]:
                 t = p["top"]

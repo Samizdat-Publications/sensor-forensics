@@ -144,5 +144,14 @@ Implied size is the blob's length times the range: an upper bound, because the b
 | H-SLOW | 0 | 4 | 2 | 0 | 0 | 0 | 6 |
 | H-WIT | 0 | 0 | 2 | 0 | 0 | 4 | 6 |
 
-- Discriminators for the top pair (M3.6) are not written yet.
+- Discriminators for the top pair (M3.6): see "What would settle it" below and `docs/results/discriminators.md`.
+
+## What would settle it
+
+Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`). In short:
+
+- The on-screen range already fixes position: every top hypothesis puts the object at 3.8 nmi and 13,200 ft at mid-clip, so range, closure, altitude and a second bearing cannot separate them.
+- **The wind at 13,200 ft is the discriminator.** A balloon's air speed is 0 to 2.7 kt; the slow flier allows 0 to 18.5 kt (best 9.6), the free path 11 to 30 kt (best 23). An independent wind good to 3.9 kt separates the balloon from the free path both ways (ERA5's 5 kt is just short). Against the slow flier it works one way only: a wind good to 3.2 kt rules out the balloon if the object really flies near 9.6 kt; nothing rules out the slow flier if it is a balloon.
+- **Pairs no measurement separates.** The slow flier and the glare-on-a-target model are the same physics on GOFAST; only a resolved image or the raw recording with known gain could tell them apart.
+
 

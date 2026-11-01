@@ -307,5 +307,15 @@ With no range on screen, a constant-velocity object is fitted at each assumed ra
 | H-SLOW | 0 | 0 | 2 | 0 | 2 | 0 | 4 |
 | H-WIT | 0 | 0 | 6 | 0 | 0 | 0 | 6 |
 
-- Discriminators for the top pairs (M3.6) are not written yet.
+- Discriminators for the top pairs (M3.6): see "What would settle it" below and `docs/results/discriminators.md`.
+
+## What would settle it
+
+Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`). In short:
+
+- **Radar range near the end of the clip.** Fitted to the video alone, every physical model at 0.35 deg puts the object at 15 nmi or more at 34 s (balloon 15 to 30, slow flier 20 to 36, distant jet 17 to 57, glare on a target 17 to 61 nmi). A radar range of 10 nmi or less (the aircrew's account), good to about 2 nmi, would rule out all four by a likelihood ratio of 10 or more; a range above 17 nmi would rule out the witnesses' range. The aircrew say the radar page was taped with the FLIR; it has not been released.
+- **Balloon or slow flier.** At 0.7 deg their ranges do not overlap (9.0 to 13.5 vs 19.1 to 22.1 nmi at the end), so a radar range good to 2.6 nmi separates them both ways. At 0.35 deg only a wind measurement at about 20,000 ft helps, and only one way (it can rule out the balloon, never the slow flier, which may fly at zero air speed).
+- **Pairs no measurement separates.** The distant jet and the glare-on-a-target model are the same physics here (the jet is the glare model with jet air speeds). The free path (H-WIT) can sit at any range and speed, so no single measurement can rule it out; it is charged only by the complexity penalty.
+- **Field of view.** It does not change the physics-only leader (the balloon at both) but changes its lead over the slow flier from 3.8 to 11.3 log units and moves the balloon's range in from 17 to 32 nmi to 11 to 15 nmi.
+
 

@@ -2779,8 +2779,357 @@
     "H-BAL",
     "H-SLOW"
    ],
-   "recovery_pairs": [],
+   "recovery_pairs": [
+    [
+     "H-AC",
+     "H-ART"
+    ],
+    [
+     "H-BAL",
+     "H-SLOW"
+    ],
+    [
+     "H-BAL",
+     "H-WIT"
+    ]
+   ],
    "hypotheses": [
+    {
+     "hypothesis": "H-AC",
+     "best_total_physics_only": -225.35912850769134,
+     "reported_total_physics_only": -225.35940436765915,
+     "accepted_points": 132,
+     "n_points": 212,
+     "n_eval": 116797,
+     "bands": {
+      "range_nmi@start": {
+       "best": 21.09597227929805,
+       "lo": 15.461662139407421,
+       "hi": 29.502369410672355,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "closure_kt@start": {
+       "best": -195.91078983624047,
+       "lo": -312.1649030490651,
+       "hi": 92.46305772899802,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "altitude_ft@start": {
+       "best": 20095.421227836112,
+       "lo": 18330.954779895863,
+       "hi": 21527.441586706947,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "range_nmi@mid": {
+       "best": 21.814304219012442,
+       "lo": 15.23425831232226,
+       "hi": 30.314001904816408,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "closure_kt@mid": {
+       "best": -103.11163023395068,
+       "lo": -213.70031538741662,
+       "hi": 186.7327673817543,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "altitude_ft@mid": {
+       "best": 20079.44330112615,
+       "lo": 18301.534883951732,
+       "hi": 21588.026050519773,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "range_nmi@end": {
+       "best": 22.194823713894845,
+       "lo": 14.628251392874299,
+       "hi": 30.83178870872753,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "closure_kt@end": {
+       "best": -77.26368133462536,
+       "lo": -183.14530649945254,
+       "hi": 209.92884650171325,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "altitude_ft@end": {
+       "best": 20063.34079019151,
+       "lo": 18271.885593103983,
+       "hi": 21649.082907820193,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "air_speed_kt": {
+       "best": 438.62789580372487,
+       "lo": 250.00152394072555,
+       "hi": 520.038224858394,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "ground_speed_kt": {
+       "best": 369.0771176983641,
+       "lo": 168.41795275978794,
+       "hi": 467.7439156320571,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "intensity_ratio_end_over_start": {
+       "best": 0.9034324638186354,
+       "lo": 0.7929899028158223,
+       "hi": 1.170764173018981,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "second_bearing_deg@mid": {
+       "best": 5.242687305172545,
+       "lo": 3.777783341637453,
+       "hi": 7.485320982638584,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      }
+     },
+     "testimony_weighted_fit": {
+      "range_nmi@start": 13.978517701517085,
+      "closure_kt@start": 457.1640831538696,
+      "altitude_ft@start": 22319.355587480502,
+      "range_nmi@mid": 11.543600612655668,
+      "closure_kt@mid": 567.0992955526395,
+      "altitude_ft@mid": 22557.60679704692,
+      "range_nmi@end": 8.695306116898234,
+      "closure_kt@end": 599.0378455848944,
+      "altitude_ft@end": 22797.7157158507,
+      "air_speed_kt": 250.1359798994976,
+      "ground_speed_kt": 152.49180020241891,
+      "intensity_ratio_end_over_start": 2.584356900984646,
+      "second_bearing_deg@mid": 9.835866002765805
+     },
+     "best_params": {
+      "jet_heading_deg": 6.383758198586254,
+      "anchor_daz_deg": 0.030656709977469943,
+      "anchor_del_deg": -0.3088306385454118,
+      "wind_err_e_kt": -0.0021729277891964216,
+      "wind_err_n_kt": -0.0033623759116565566,
+      "turn_rate_z": -0.12239669908523432,
+      "jet_pitch_deg": 3.137542418076412,
+      "range_ref_nmi": 21.814304219012445,
+      "airspeed_kt": 438.62754713951904,
+      "heading_deg": 283.77344204214205,
+      "vz_fpm": -56.00689384402904
+     }
+    },
+    {
+     "hypothesis": "H-ART",
+     "best_total_physics_only": -225.35900123048515,
+     "reported_total_physics_only": -225.35900398793527,
+     "accepted_points": 103,
+     "n_points": 212,
+     "n_eval": 119084,
+     "bands": {
+      "range_nmi@start": {
+       "best": 21.10245826652743,
+       "lo": 14.885528868887617,
+       "hi": 30.432034034798946,
+       "lo_at_bound": [],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "closure_kt@start": {
+       "best": -194.3134253735866,
+       "lo": -390.566923417606,
+       "hi": 410.16275499978,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "altitude_ft@start": {
+       "best": 20097.606735932823,
+       "lo": 18152.67161029853,
+       "hi": 21948.328841412855,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "range_nmi@mid": {
+       "best": 21.813160377445406,
+       "lo": 13.0694669170168,
+       "hi": 31.624423845220697,
+       "lo_at_bound": [],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "closure_kt@mid": {
+       "best": -101.50838644070157,
+       "lo": -293.4212516639539,
+       "hi": 517.5880328564771,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "altitude_ft@mid": {
+       "best": 20081.32456979052,
+       "lo": 18100.099297676705,
+       "hi": 22096.726275699973,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "range_nmi@end": {
+       "best": 22.18603519479703,
+       "lo": 10.558323463135599,
+       "hi": 32.53540907264812,
+       "lo_at_bound": [],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "closure_kt@end": {
+       "best": -75.67456457386872,
+       "lo": -263.17168104061443,
+       "hi": 547.8265384553757,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "altitude_ft@end": {
+       "best": 20064.91544718788,
+       "lo": 18047.11706448698,
+       "hi": 22357.51439027092,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "air_speed_kt": {
+       "best": 437.1475325959512,
+       "lo": 28.928280181534827,
+       "hi": 600.0419613717379,
+       "lo_at_bound": [],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "ground_speed_kt": {
+       "best": 395.8939907399011,
+       "lo": 16.447150005799205,
+       "hi": 553.9604381552615,
+       "lo_at_bound": [],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "intensity_ratio_end_over_start": {
+       "best": 0.9047044050435125,
+       "lo": 0.7422911421480777,
+       "hi": 2.066002998528577,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      },
+      "second_bearing_deg@mid": {
+       "best": 5.242968296907039,
+       "lo": 3.6216655323847338,
+       "hi": 8.70689385154632,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": []
+      }
+     },
+     "testimony_weighted_fit": {
+      "range_nmi@start": 14.482063970816764,
+      "closure_kt@start": 315.80366750916414,
+      "altitude_ft@start": 21841.54015870733,
+      "range_nmi@mid": 12.727517135410784,
+      "closure_kt@mid": 423.0187412499039,
+      "altitude_ft@mid": 22109.50502195075,
+      "range_nmi@end": 10.5704495282302,
+      "closure_kt@end": 454.7124517081509,
+      "altitude_ft@end": 22379.559279841753,
+      "air_speed_kt": 103.70500201069589,
+      "ground_speed_kt": 16.19333890339203,
+      "intensity_ratio_end_over_start": 1.8770420818845321,
+      "second_bearing_deg@mid": 8.937350641803542
+     },
+     "best_params": {
+      "jet_heading_deg": 31.05757426826815,
+      "anchor_daz_deg": 0.03158443007811951,
+      "anchor_del_deg": -0.308119002394067,
+      "wind_err_e_kt": 0.0010863083659664596,
+      "wind_err_n_kt": -0.010142129841558045,
+      "turn_rate_z": -0.12373446686253642,
+      "jet_pitch_deg": 3.1373403693165876,
+      "range_ref_nmi": 21.813160377445406,
+      "airspeed_kt": 437.1471693012166,
+      "heading_deg": 309.41963301666226,
+      "vz_fpm": -57.073334181566224
+     }
+    },
     {
      "hypothesis": "H-BAL",
      "best_total_physics_only": -146.74384777043588,
@@ -3313,9 +3662,462 @@
    ],
    "pairs": [
     {
+     "a": "H-AC",
+     "b": "H-ART",
+     "why": [
+      "recovery: not separated"
+     ],
+     "candidates": [
+      {
+       "quantity": "air_speed_kt",
+       "time_s": null,
+       "a_band": {
+        "best": 438.62789580372487,
+        "lo": 250.00152394072555,
+        "hi": 520.038224858394,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 437.1475325959512,
+        "lo": 28.928280181534827,
+        "hi": 600.0419613717379,
+        "lo_at_bound": [],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "gap": -350.0404374310124,
+       "central_difference": 1.480363207773678,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.68983534205032,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 5.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "altitude_ft@end",
+       "time_s": 34.367666666666665,
+       "a_band": {
+        "best": 20063.34079019151,
+        "lo": 18271.885593103983,
+        "hi": 21649.082907820193,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 20064.91544718788,
+        "lo": 18047.11706448698,
+        "hi": 22357.51439027092,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -3601.9658433332115,
+       "central_difference": 1.5746569963703223,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.7337753613430255,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 500.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "altitude_ft@mid",
+       "time_s": 17.1171,
+       "a_band": {
+        "best": 20079.44330112615,
+        "lo": 18301.534883951732,
+        "hi": 21588.026050519773,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 20081.32456979052,
+        "lo": 18100.099297676705,
+        "hi": 22096.726275699973,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -3487.9267528430682,
+       "central_difference": 1.8812686643686902,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.8766535170277822,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 500.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "altitude_ft@start",
+       "time_s": 0.0,
+       "a_band": {
+        "best": 20095.421227836112,
+        "lo": 18330.954779895863,
+        "hi": 21527.441586706947,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 20097.606735932823,
+        "lo": 18152.67161029853,
+        "hi": 21948.328841412855,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -3374.7699764084173,
+       "central_difference": 2.1855080967106915,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 1.0184262331914535,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 500.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "closure_kt@end",
+       "time_s": 34.367666666666665,
+       "a_band": {
+        "best": -77.26368133462536,
+        "lo": -183.14530649945254,
+        "hi": 209.92884650171325,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": -75.67456457386872,
+        "lo": -263.17168104061443,
+        "hi": 547.8265384553757,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -473.10052754232765,
+       "central_difference": 1.5891167607566388,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.7405134756510695,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 5.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "closure_kt@mid",
+       "time_s": 17.1171,
+       "a_band": {
+        "best": -103.11163023395068,
+        "lo": -213.70031538741662,
+        "hi": 186.7327673817543,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": -101.50838644070157,
+        "lo": -293.4212516639539,
+        "hi": 517.5880328564771,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -480.1540190457082,
+       "central_difference": 1.6032437932491064,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.7470965400236659,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 5.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "closure_kt@start",
+       "time_s": 0.0,
+       "a_band": {
+        "best": -195.91078983624047,
+        "lo": -312.1649030490651,
+        "hi": 92.46305772899802,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": -194.3134253735866,
+        "lo": -390.566923417606,
+        "hi": 410.16275499978,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -483.02998114660403,
+       "central_difference": 1.5973644626538714,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.7443568272215013,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 5.0,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "intensity_ratio_end_over_start",
+       "time_s": null,
+       "a_band": {
+        "best": 0.9034324638186354,
+        "lo": 0.7929899028158223,
+        "hi": 1.170764173018981,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 0.9047044050435125,
+        "lo": 0.7422911421480777,
+        "hi": 2.066002998528577,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -0.4284730308709034,
+       "central_difference": 0.00127194122487706,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.0005927126568151738,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 0.1,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "range_nmi@end",
+       "time_s": 34.367666666666665,
+       "a_band": {
+        "best": 22.194823713894845,
+        "lo": 14.628251392874299,
+        "hi": 30.83178870872753,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 22.18603519479703,
+        "lo": 10.558323463135599,
+        "hi": 32.53540907264812,
+        "lo_at_bound": [],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "gap": -17.907157679773825,
+       "central_difference": 0.008788519097816305,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.004095367303187363,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 0.1,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "range_nmi@mid",
+       "time_s": 17.1171,
+       "a_band": {
+        "best": 21.814304219012442,
+        "lo": 15.23425831232226,
+        "hi": 30.314001904816408,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 21.813160377445406,
+        "lo": 13.0694669170168,
+        "hi": 31.624423845220697,
+        "lo_at_bound": [],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "gap": -16.390165532898436,
+       "central_difference": 0.0011438415670355084,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.0005330194201691806,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 0.1,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "range_nmi@start",
+       "time_s": 0.0,
+       "a_band": {
+        "best": 21.09597227929805,
+        "lo": 15.461662139407421,
+        "hi": 29.502369410672355,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 21.10245826652743,
+        "lo": 14.885528868887617,
+        "hi": 30.432034034798946,
+        "lo_at_bound": [],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "gap": -14.616840541784738,
+       "central_difference": 0.006485987229382317,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.00302240909218746,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 0.1,
+       "feasibility": 0.0
+      },
+      {
+       "quantity": "second_bearing_deg@mid",
+       "time_s": 17.1171,
+       "a_band": {
+        "best": 5.242687305172545,
+        "lo": 3.777783341637453,
+        "hi": 7.485320982638584,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": [
+         "airspeed_kt"
+        ]
+       },
+       "b_band": {
+        "best": 5.242968296907039,
+        "lo": 3.6216655323847338,
+        "hi": 8.70689385154632,
+        "lo_at_bound": [
+         "airspeed_kt"
+        ],
+        "hi_at_bound": []
+       },
+       "gap": -3.86365545025385,
+       "central_difference": 0.0002809917344936963,
+       "sigma_both": null,
+       "sigma_rules_out_b": null,
+       "sigma_rules_out_a": null,
+       "sigma_central": 0.00013093950745323183,
+       "required_sigma": null,
+       "kind": "none",
+       "typical_sigma": 0.3,
+       "feasibility": 0.0
+      }
+     ],
+     "top": {
+      "quantity": "air_speed_kt",
+      "time_s": null,
+      "a_band": {
+       "best": 438.62789580372487,
+       "lo": 250.00152394072555,
+       "hi": 520.038224858394,
+       "lo_at_bound": [
+        "airspeed_kt"
+       ],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "b_band": {
+       "best": 437.1475325959512,
+       "lo": 28.928280181534827,
+       "hi": 600.0419613717379,
+       "lo_at_bound": [],
+       "hi_at_bound": [
+        "airspeed_kt"
+       ]
+      },
+      "gap": -350.0404374310124,
+      "central_difference": 1.480363207773678,
+      "sigma_both": null,
+      "sigma_rules_out_b": null,
+      "sigma_rules_out_a": null,
+      "sigma_central": 0.68983534205032,
+      "required_sigma": null,
+      "kind": "none",
+      "typical_sigma": 5.0,
+      "feasibility": 0.0
+     },
+     "realistic": false
+    },
+    {
      "a": "H-BAL",
      "b": "H-SLOW",
      "why": [
+      "recovery: not separated",
       "top by a total"
      ],
      "candidates": [
@@ -3742,6 +4544,7 @@
      "a": "H-BAL",
      "b": "H-WIT",
      "why": [
+      "recovery: not separated",
       "top by a total"
      ],
      "candidates": [
@@ -4708,42 +5511,6 @@
    "fov070": {
     "total_physics_only": -0.0004003797238851803,
     "total_testimony_weighted": -23.15763156936032
-   }
-  },
-  {
-   "a": "H-BAL",
-   "b": "H-SLOW",
-   "fov035": {
-    "total_physics_only": 3.7601755584792897,
-    "total_testimony_weighted": 10.347262589890306
-   },
-   "fov070": {
-    "total_physics_only": 11.348716704395514,
-    "total_testimony_weighted": 22.699312973964766
-   }
-  },
-  {
-   "a": "H-BAL",
-   "b": "H-WIT",
-   "fov035": {
-    "total_physics_only": 22.80353040927207,
-    "total_testimony_weighted": -16.86074482294518
-   },
-   "fov070": {
-    "total_physics_only": 22.108690178729034,
-    "total_testimony_weighted": -9.09161107894272
-   }
-  },
-  {
-   "a": "H-SLOW",
-   "b": "H-WIT",
-   "fov035": {
-    "total_physics_only": 19.04335485079278,
-    "total_testimony_weighted": -27.208007412835485
-   },
-   "fov070": {
-    "total_physics_only": 10.75997347433352,
-    "total_testimony_weighted": -31.790924052907485
    }
   },
   {
