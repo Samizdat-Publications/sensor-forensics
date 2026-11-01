@@ -46,6 +46,11 @@ image:
   brightness_column: obj_lo_integ   # integrated contrast (gray levels x px), low threshold
   background_columns: [bg_dx, bg_dy]  # ocean texture motion, px/frame (+x right, +y down)
   min_segment_frames: 20
+  # D-016 resolved test (REVIEW-M3 item 4, Rule P): point-spread width from extract/psf.py (upper bound, the
+  # size criterion's own metric). Added 10/31/2026: D-016 applies to every video.
+  psf_file: data/derived/gofast/psf.json
+  # REVIEW-M3 item 1 (Rule B): brightness audit decision (solve/brightness_audit.py).
+  brightness_audit: data/derived/gofast/brightness_audit.json
 
 weather:
   event: gofast

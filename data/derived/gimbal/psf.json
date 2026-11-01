@@ -1,0 +1,51 @@
+{
+ "symbology_line_spread": {
+  "horizontal": {
+   "n_profiles": 929,
+   "fwhm_px_median": 1.3237354028531412,
+   "fwhm_px_p25_p75": [
+    1.0191722037652273,
+    1.7818425602484034
+   ],
+   "n_strokes": 50
+  },
+  "vertical": {
+   "n_profiles": 1858,
+   "fwhm_px_median": 2.689580046178953,
+   "fwhm_px_p25_p75": [
+    1.94817940610256,
+    3.2630109584374294
+   ],
+   "n_strokes": 160
+  }
+ },
+ "object_minor": {
+  "n_frames": 372,
+  "hi_minor_px_median": 9.7973,
+  "fwhm_upper_px": 9.7973,
+  "note": "half-maximum minor axis of the unsaturated blob; a real object only widens the PSF"
+ },
+ "chain_fwhm_lower_px": 1.3237354028531412,
+ "variants": {
+  "fov035": {
+   "digital_zoom": 2.0,
+   "upper_bounds_fwhm_px": {
+    "own_object_minor": 9.7973,
+    "gofast_point_source_x_digital_zoom": 6.555
+   },
+   "psf_fwhm_upper_px": 6.555,
+   "psf_width_px_lo_metric": 9.828761269502245,
+   "chain_fwhm_lower_px": 1.3237354028531412
+  },
+  "fov070": {
+   "digital_zoom": 1.0,
+   "upper_bounds_fwhm_px": {
+    "own_object_minor": 9.7973,
+    "gofast_point_source_x_digital_zoom": 3.2775
+   },
+   "psf_fwhm_upper_px": 3.2775,
+   "psf_width_px_lo_metric": 5.521040520199006,
+   "chain_fwhm_lower_px": 1.3237354028531412
+  }
+ }
+}

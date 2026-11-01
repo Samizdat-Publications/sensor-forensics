@@ -11,7 +11,7 @@ parameters:
   range_ref_nmi:
     prior: loguniform
     bounds: [0.05, 2.0]
-    source: "Design table: 0.05 to 2 nmi."
+    source: "Design table: 0.05 to 2 nmi. REVIEW-M3 item 2 (Rule R): the one exception to the common 0.5 to 60 nmi support, because the binding design defines this hypothesis by its range (with 0.5 to 60 it would duplicate H-SLOW)."
   airspeed_kt:
     prior: uniform
     bounds: [0.0, 80.0]

@@ -1,4 +1,5 @@
 # Hypothesis file (data only; read by solve/score.py). Priors and sources written 10/31/2026 before any fit.
+# REVIEW-M3 (10/31/2026, before the rerun): range support 0.5 to 60 nmi like every hypothesis.
 id: H-ART
 label: Sensor artifact (glare in the pod optics) on a target of any type
 description: >
@@ -10,8 +11,8 @@ applies_to: [GIMBAL, FLIR1]
 parameters:
   range_ref_nmi:
     prior: loguniform
-    bounds: [0.05, 60.0]
-    source: "Any range from very close to beyond the IR detection range of a jet (design: as H-AC, target of any type)."
+    bounds: [0.5, 60.0]
+    source: "REVIEW-M3 item 2 (Rule R): the common range support of every hypothesis, 0.5 to 60 nmi log-uniform (was 0.05 to 60). Design: as H-AC, target of any type."
   airspeed_kt:
     prior: uniform
     bounds: [0.0, 600.0]

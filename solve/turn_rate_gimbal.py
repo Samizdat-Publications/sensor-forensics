@@ -36,6 +36,7 @@ PLACEHOLDERS: jet heading 315 deg at frame 0 and wind 120 kt from 270 (as M2.6);
 wind 17 kt from 240 (Sitrec). solve/weather.py (ERA5) replaces them when it lands.
 
 CLI: python -m solve.turn_rate_gimbal            (the 0.35 deg run below)
+     python -m solve.turn_rate_gimbal --era5     (REVIEW-M3: ERA5 winds and temperature; turn_rate_era5_fov035/070.csv)
      python -m solve.turn_rate_gimbal --fov 0.7  (turn_rate_fov070.csv: same method at another field of view, M3.5)
 Writes data/derived/gimbal/turn_rate.csv, data/derived/gimbal/turn_rate_summary.json,
 docs/reproductions/gimbal_turn_rate.png
@@ -618,8 +619,131 @@ def fov_csv(fov_deg: float) -> Path:
     return GIMBAL / f"turn_rate_fov{int(round(fov_deg * 100)):03d}.csv"
 
 
+# ----------------------------------------------------------------------------- ERA5 winds and temperature (REVIEW-M3 item 3)
+
+ERA5_TIME = "2015-01-25T02:30"
+ERA5_WINDOW = ("2015-01-24T18:00", "2015-01-25T06:00")
+ERA5_WIND_SIGMA_KT = 5.0            # per component, ERA5 upper-air wind error (as solve/cases/*.yaml)
+
+
+def era5_at(time_utc: str, h_cloud_ft: float) -> dict:
+    """ERA5 (box centre) at the jet's pressure altitude and at the cloud deck: winds (from deg, kt) and the jet-level
+    temperature offset from ISA (K)."""
+    from . import weather as W
+
+    tj = W.temperature_at("gimbal", time_utc, H_JET, ref="pressure_altitude")
+    dT = float(tj - A.isa(np.array(H_JET))[0])
+    jkt, jdir = W.wind_speed_dir_at("gimbal", time_utc, H_JET, ref="pressure_altitude")
+    ckt, cdir = W.wind_speed_dir_at("gimbal", time_utc, h_cloud_ft * F.FT, ref="pressure_altitude")
+    return {"jet_wind": (jdir, jkt), "cloud_wind": (cdir, ckt), "dT_jet_K": dT}
+
+
+def _perturb(wind: tuple, rng: np.random.Generator, sigma_kt: float) -> tuple:
+    e, n = -wind[1] * np.sin(np.radians(wind[0])), -wind[1] * np.cos(np.radians(wind[0]))
+    e, n = e + rng.normal(0, sigma_kt), n + rng.normal(0, sigma_kt)
+    return (float(np.degrees(np.arctan2(-e, -n)) % 360.0), float(np.hypot(e, n)))
+
+
+def era5_variant(fov_deg: float, n: int = N_MC, seed: int = SEED) -> tuple[pd.DataFrame, dict]:
+    """The lab cloud-derived turn rate with ERA5 winds and temperature in place of the placeholders.
+
+    Nominal history: ERA5 at 01/25/2015 02:30Z, jet wind at the jet's pressure altitude, cloud wind
+    at the nominal deck (11,740 ft), TAS from the on-screen Mach with the ERA5 jet-level temperature.
+    Band: the same Monte Carlo as monte_carlo(), except that each draw takes a time uniformly in
+    01/24 18Z to 01/25 06Z and uses ERA5 at that time (jet wind, cloud wind at the drawn deck
+    height, both plus 5 kt per component, and the jet-level temperature for TAS) instead of the
+    placeholder ranges (jet wind 120 kt from 240 to 300, cloud wind 0 to 40 kt from anywhere, ISA).
+    The jet's initial heading stays a draw in 295 to 335 deg (not on screen).
+    """
+    from . import repro_gimbal as RG_
+
+    inp = inputs()
+    scale = FOV_DEG / float(fov_deg)
+    t0 = pd.Timestamp(ERA5_WINDOW[0])
+    span_h = (pd.Timestamp(ERA5_WINDOW[1]) - t0) / pd.Timedelta(hours=1)
+    e0 = era5_at(ERA5_TIME, H_CLOUD_FT)
+    tas_cache: dict = {}
+
+    def with_tas(dT: float) -> dict:
+        key = round(dT, 2)
+        if key not in tas_cache:
+            tas_cache[key] = RG_.lab_tas_kt(dT)
+        d = dict(inp)
+        d["tas"] = tas_cache[key]
+        return d
+
+    nom = cloud_rate(with_tas(e0["dT_jet_K"]), scale=scale, jet_wind=e0["jet_wind"], cloud_wind=e0["cloud_wind"])
+    old_nom = cloud_rate(inp, scale=scale)
+    rng = np.random.default_rng(seed)
+    lam = inp["az_info"]["lambda"]
+    draws, totals, params = [], [], []
+    for _ in range(n):
+        az = crossing_azimuth(inp["readings"], lam, rng, latency=rng.uniform(0.0, 6.0))
+        when = (t0 + pd.Timedelta(hours=float(rng.uniform(0.0, span_h)))).strftime("%Y-%m-%dT%H:%M")
+        h_cloud = rng.uniform(8_000.0, 18_000.0)
+        e = era5_at(when, h_cloud)
+        p = {"h_cloud_ft": h_cloud, "refraction": bool(rng.random() < 0.5),
+             "below": rng.uniform(0.01, 0.12), "scale": scale * rng.uniform(0.95, 1.05),
+             "aspect": rng.uniform(1.0, 1.05), "cloud_wind": _perturb(e["cloud_wind"], rng, ERA5_WIND_SIGMA_KT),
+             "jet_wind": _perturb(e["jet_wind"], rng, ERA5_WIND_SIGMA_KT), "heading0": rng.uniform(295, 335),
+             "pitch": rng.uniform(2.0, 6.0), "source": "bg" if rng.random() < 0.5 else "cloud"}
+        r = cloud_rate(with_tas(e["dT_jet_K"]), az=az, **p)
+        draws.append(r["omega"])
+        totals.append(r["heading_change_deg"])
+        params.append({"time": when, "dT_jet_K": e["dT_jet_K"], **{k: (list(v) if isinstance(v, tuple) else v)
+                                                                   for k, v in p.items()}})
+    D = np.array(draws)
+    lo, hi = np.percentile(D, 2.5, axis=0), np.percentile(D, 97.5, axis=0)
+    df = pd.DataFrame({"frame": np.arange(N), "omega_cloud_lab": nom["omega"], "omega_cloud_lab_lo": lo,
+                       "omega_cloud_lab_hi": hi, "fov_deg": float(fov_deg),
+                       "heading_change_deg": nom["heading_change_deg"]})
+    old = pd.read_csv(OUT_CSV if abs(fov_deg - FOV_DEG) < 1e-9 else fov_csv(fov_deg))
+    old_half = (old["omega_cloud_lab_hi"] - old["omega_cloud_lab_lo"]).to_numpy()[CORE] / 2
+    new_half = (hi - lo)[CORE] / 2
+    jw = [q["jet_wind"] for q in params]
+    cw = [q["cloud_wind"] for q in params]
+    summ = {
+        "fov_deg": float(fov_deg),
+        "era5_nominal": {"time_utc": ERA5_TIME, **{k: (list(v) if isinstance(v, tuple) else v) for k, v in e0.items()},
+                         "cloud_deck_ft": H_CLOUD_FT},
+        "era5_window": list(ERA5_WINDOW),
+        "mc_draws": n,
+        "mc_jet_wind_kt_from_deg_2p5_97p5": {"kt": np.percentile([w[1] for w in jw], [2.5, 97.5]).tolist(),
+                                             "from_deg": np.percentile([w[0] for w in jw], [2.5, 97.5]).tolist()},
+        "mc_cloud_wind_kt_2p5_97p5": np.percentile([w[1] for w in cw], [2.5, 97.5]).tolist(),
+        "mc_dT_jet_K_min_max": [float(min(q["dT_jet_K"] for q in params)), float(max(q["dT_jet_K"] for q in params))],
+        "heading_change_deg": {"era5": nom["heading_change_deg"], "placeholder_recomputed": old_nom["heading_change_deg"],
+                               "placeholder_file": float(np.trapezoid(old["omega_cloud_lab"].to_numpy(), T)),
+                               "era5_mc_2p5_50_97p5": np.percentile(totals, [2.5, 50, 97.5]).tolist()},
+        "nominal_change_vs_placeholder_deg_s": {
+            "rms_core": rms((nom["omega"] - old["omega_cloud_lab"].to_numpy())[CORE]),
+            "max_abs_core": float(np.max(np.abs(nom["omega"] - old["omega_cloud_lab"].to_numpy())[CORE])),
+            "mean_core": float(np.mean((nom["omega"] - old["omega_cloud_lab"].to_numpy())[CORE]))},
+        "band_halfwidth_core_median_deg_s": {"era5": float(np.median(new_half)), "placeholder": float(np.median(old_half))},
+        "band_halfwidth_core_max_deg_s": {"era5": float(np.max(new_half)), "placeholder": float(np.max(old_half))},
+        "nominal_outside_placeholder_band_fraction_core": float(np.mean(
+            ((nom["omega"] < old["omega_cloud_lab_lo"].to_numpy()) | (nom["omega"] > old["omega_cloud_lab_hi"].to_numpy()))[CORE])),
+        "notes": "jet heading at f0 still a draw in 295 to 335 deg (not on screen); deck height 8,000 to 18,000 ft as before",
+    }
+    return df, summ
+
+
+def era5_csv(fov_deg: float) -> Path:
+    return GIMBAL / f"turn_rate_era5_fov{int(round(fov_deg * 100)):03d}.csv"
+
+
 def main() -> int:
     import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "--era5":
+        out = {}
+        for fov in (0.35, 0.7):
+            df, s = era5_variant(fov)
+            df.to_csv(era5_csv(fov), index=False, float_format="%.5f")
+            out[f"fov{int(round(fov * 100)):03d}"] = s
+            print(f"wrote {era5_csv(fov)}")
+        (GIMBAL / "turn_rate_era5_summary.json").write_text(json.dumps(RG.strip(out), indent=1) + "\n", encoding="utf-8")
+        print(json.dumps(RG.strip(out), indent=1))
+        return 0
     if len(sys.argv) > 2 and sys.argv[1] == "--fov":
         fov = float(sys.argv[2])
         df = fov_variant(fov)

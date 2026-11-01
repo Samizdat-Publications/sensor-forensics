@@ -1,0 +1,158 @@
+{
+ "case": "gofast",
+ "rule": "docs/results/REVIEW-M3.md, Rule B (stated before the measurements)",
+ "scored_frames": [
+  368,
+  1030
+ ],
+ "n_frames": 661,
+ "n_eff": 591.3916012511966,
+ "clip_codes": {
+  "bright": 185,
+  "dark": 0,
+  "tolerance": 2
+ },
+ "B1": {
+  "saturated_fraction": 0.21936459909228442,
+  "limit": 0.5,
+  "fail": false,
+  "segments": {
+   "0": {
+    "frames": [
+     368,
+     636
+    ],
+    "n": 269,
+    "polarity": "BLK",
+    "saturated_fraction": 0.0,
+    "median_blob_px_at_clip": 0.0,
+    "median_blob_px": 114.0,
+    "median_object_peak_contrast": 98.4043,
+    "median_ring_background": 33.0
+   },
+   "1": {
+    "frames": [
+     638,
+     782
+    ],
+    "n": 145,
+    "polarity": "WHT",
+    "saturated_fraction": 1.0,
+    "median_blob_px_at_clip": 14.0,
+    "median_blob_px": 23.0,
+    "median_object_peak_contrast": 55.9452,
+    "median_ring_background": 57.0
+   },
+   "2": {
+    "frames": [
+     784,
+     1030
+    ],
+    "n": 247,
+    "polarity": "BLK",
+    "saturated_fraction": 0.0,
+    "median_blob_px_at_clip": 0.0,
+    "median_blob_px": 114.0,
+    "median_object_peak_contrast": 113.959,
+    "median_ring_background": 33.0
+   }
+  }
+ },
+ "B2": {
+  "regressors": [
+   "ln pic_level",
+   "ln pic_contrast",
+   "ln tile_level",
+   "ln tile_contrast"
+  ],
+  "r2": 0.02477143915298574,
+  "r2_adjusted_n_eff": 0.018119034454377236,
+  "limit": 0.5,
+  "fail": false,
+  "coefficients": {
+   "pic_level": -0.21433892338849875,
+   "pic_contrast": -0.18937095600212012,
+   "tile_level": 0.6576866531347539,
+   "tile_contrast": -0.2201178647469824
+  },
+  "single_regressor": {
+   "pic_level": {
+    "r": 0.10050370246156314,
+    "r2": 0.010100994208482412
+   },
+   "pic_contrast": {
+    "r": -0.032084458723730766,
+    "r2": 0.0010294124915947833
+   },
+   "tile_level": {
+    "r": 0.12944326306000847,
+    "r2": 0.016755558351622554
+   },
+   "tile_contrast": {
+    "r": -0.07793813521451723,
+    "r2": 0.00607435292071637
+   }
+  },
+  "r2_by_segment": {
+   "0": 0.09079585648070843,
+   "1": 0.20569449975885512,
+   "2": 0.009799501412591782
+  }
+ },
+ "B3": {
+  "zoom_changes_inside_segments": [],
+  "fail": false
+ },
+ "steps": {
+  "object_brightness": [
+   636,
+   875
+  ],
+  "frame_level": {
+   "pic_level": [
+    429,
+    448,
+    565,
+    577,
+    635,
+    735,
+    781,
+    823,
+    912,
+    928,
+    934,
+    1014,
+    1020
+   ],
+   "pic_contrast": [],
+   "tile_level": [
+    376,
+    429,
+    458,
+    477,
+    576,
+    635,
+    735,
+    781,
+    816,
+    862,
+    911,
+    934
+   ],
+   "tile_contrast": []
+  },
+  "co_occurring_within_2_frames": {
+   "pic_level": [
+    636
+   ],
+   "pic_contrast": [],
+   "tile_level": [
+    636
+   ],
+   "tile_contrast": []
+  }
+ },
+ "fails": [],
+ "range_informative": true,
+ "decision": "brightness criterion kept with its measured noise"
+}

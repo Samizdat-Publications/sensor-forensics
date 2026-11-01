@@ -37,6 +37,94 @@ CRIT_NAMES = {
 }
 
 
+WHY_ZERO = {
+    "size_trend": "D-016: the blob is not resolved against the point-spread width measured on this video (REVIEW-M3 item 4)",
+    "brightness_trend": "REVIEW-M3 Rule B: the blob is saturated, so its integrated contrast is not range-informative",
+}
+
+
+def _zero(o: dict) -> list:
+    """Physics criteria this case gives weight 0 (reported, not in any total)."""
+    return [c for c in ("size_trend", "brightness_trend", "rotation", "background_motion", "range", "closure")
+            if float(o["weights"].get(c, 1.0)) == 0.0]
+
+
+def _lab(c: str, o: dict, names: dict) -> str:
+    return names.get(c, c) + (" (weight 0)" if c in _zero(o) else "")
+
+
+def _added_back(L: list, hyps_by_v: dict, labels: dict, names: dict) -> None:
+    """Sensitivity: each weight-0 criterion added back at weight 1 (testimony-weighted fit values)."""
+    if not any(_zero(o) for o, _ in hyps_by_v.values()):
+        return
+    L.append("### Sensitivity: weight-0 criteria added back")
+    L.append("")
+    L.append("Criteria that fail a data-quality test are reported but kept out of every total. For transparency, this table adds each one back at weight 1 to the testimony-weighted fit's totals (the fit itself is not redone, so a refit could only raise these numbers).")
+    L.append("")
+    for v, (o, hyps) in hyps_by_v.items():
+        z = _zero(o)
+        if not z:
+            continue
+        head = f"{labels[v]}: " if labels[v] else ""
+        L.append(head + "; ".join(f"{names.get(c, c)}: {WHY_ZERO.get(c, 'weight 0 on this case')}" for c in z) + ".")
+        L.append("")
+        L.append("| Hypothesis | " + " | ".join(f"+ {names.get(c, c)}: weighted / physics" for c in z) + " | + all: weighted / physics |")
+        L.append("|---|" + "---|" * (len(z) + 1))
+        for h in hyps:
+            cells = []
+            tot_w = h["total_testimony_weighted"]
+            tot_p = tot_w - o["weights"]["testimony"] * h["criteria"].get("testimony", 0.0)
+            aw, ap = tot_w, tot_p
+            for c in z:
+                x = h["criteria"].get(c, 0.0)
+                cells.append(f"{_f(tot_w + x)} / {_f(tot_p + x)}")
+                aw += x
+                ap += x
+            cells.append(f"{_f(aw)} / {_f(ap)}")
+            L.append(f"| {h['hypothesis']} | " + " | ".join(cells) + " |")
+        L.append("")
+
+
+def _recovery_lines(case: str, variant: str = "") -> list:
+    """Brief confusion matrix from data/derived/<case>/recovery.csv (M3.4), if it exists."""
+    import pandas as pd
+
+    p = ROOT / "data" / "derived" / case / "recovery.csv"
+    if not p.exists():
+        return ["- Which hypotheses this data can separate in principle: the M3.4 recovery test has not been run for this case."]
+    df = pd.read_csv(p, keep_default_na=False, na_values=[""])
+    df["variant"] = df["variant"].astype(object).fillna("").astype(str)
+    df = df[df["variant"] == variant]
+    if df.empty or "winner" not in df:
+        return ["- Which hypotheses this data can separate in principle: no M3.4 recovery run for this setting."]
+    ok = df[df["valid"].astype(str).str.lower() == "true"]
+    win = ok.loc[ok.groupby(["generator", "set", "trial"])["total_physics_only"].idxmax()]
+    tab = pd.crosstab(win["generator"], win["fitted"])
+    cols = sorted(set(df["fitted"]))
+    out = ["- Model recovery (M3.4, `docs/results/recovery.md`): synthetic data from each hypothesis, scored by the same path (physics-only total). Rows: the hypothesis that made the data; columns: how often each hypothesis won.", ""]
+    out.append("| Data made by | " + " | ".join(cols) + " | data sets |")
+    out.append("|---|" + "---|" * (len(cols) + 1))
+    for g in sorted(set(df["generator"])):
+        row = tab.loc[g] if g in tab.index else None
+        n = int(row.sum()) if row is not None else 0
+        out.append(f"| {g} | " + " | ".join(str(int(row.get(c, 0))) if row is not None else "0" for c in cols) + f" | {n} |")
+    out.append("")
+    return out
+
+
+def _bounds(h: dict, d: dict, bnd: list) -> str:
+    """Parameters at a prior bound, plus any altitude constraint the fit sits on (within 50 ft)."""
+    from . import score as S_
+
+    out = list(bnd)
+    hy = {x.id: x for x in S_.load_hypotheses()}.get(h["hypothesis"])
+    for c in (hy.constraints if hy else []):
+        if c["quantity"] == "object_altitude_ft":
+            if d.get("altitude_ft_min", 1e9) <= float(c["min"]) + 50 or d.get("altitude_ft_max", -1e9) >= float(c["max"]) - 50:
+                out.append(f"altitude constraint ({float(c['min']):,.0f} to {float(c['max']):,.0f} ft)")
+    return ", ".join(out) or "none"
+
+
 def build(case: str) -> str:
     res = json.loads((ROOT / "data" / "derived" / case / "results.json").read_text(encoding="utf-8"))
     hyps = [h for h in res["hypotheses"] if h["valid"]]
@@ -55,6 +143,7 @@ def build(case: str) -> str:
         ts = {h.get("testimony_status") for h in hyps}
         for s in ts:
             L.append(f"- Testimony: {s}.")
+        L.append("- Review: the M3 review items (brightness audit, equal range priors, point-spread width) are resolved in `docs/results/REVIEW-M3.md`; which hypotheses this data can separate at all is in `docs/results/recovery.md`.")
         L.append("")
     L.append("## What was scored")
     L.append("")
@@ -64,7 +153,7 @@ def build(case: str) -> str:
     L.append("- Jet heading and the wind error at the object's altitude are fitted for every hypothesis (shared nuisance parameters); the jet's heading is not on screen.")
     ne = res["criteria_n_eff"]
     L.append("- Effective sample sizes (from the data's own autocorrelation, the same for every hypothesis): " +
-             ", ".join(f"{CRIT_NAMES.get(k, k)} {v:.0f}" for k, v in ne.items()) + f"; total {res['n_eff_total']:.0f}.")
+             ", ".join(f"{_lab(k, res, CRIT_NAMES)} {v:.0f}" for k, v in ne.items()) + f"; total of the criteria in the totals (the BIC n) {res['n_eff_total']:.0f}.")
     L.append("- Log-likelihoods: higher is better. A difference of 2.3 is a likelihood ratio of 10. Totals include a complexity penalty of 0.5 k ln(n_eff) for k free parameters.")
     L.append("")
     L.append("## Results table")
@@ -83,19 +172,7 @@ def build(case: str) -> str:
         f"{h['hypothesis']} {_f(h['total_testimony_weighted'] - top['total_testimony_weighted'])} / "
         f"{_f(h['total_physics_only'] - max(x['total_physics_only'] for x in hyps))}" for h in hyps[1:]) + ".")
     L.append("")
-    L.append("### Sensitivity: the same totals without the apparent-size criterion")
-    L.append("")
-    L.append("The design's size rule (a real object's blob scales as 1/range; a glare's follows its brightness) assumes a resolved object. Here the blob is only a few pixels long (implied size at most about 1.3 m at the readout range), so a fixed-threshold blob grows with brightness for any faint point source, glare or not. The table removes that one criterion (testimony-weighted fit values).")
-    L.append("")
-    L.append("| Hypothesis | Testimony-weighted total without size | Physics-only total without size |")
-    L.append("|---|---|---|")
-    sens = sorted(hyps, key=lambda h: -(h["total_testimony_weighted"] - h["criteria"].get("size_trend", 0.0)))
-    for h in sens:
-        s = h["criteria"].get("size_trend", 0.0)
-        tw = h["total_testimony_weighted"] - s
-        po = tw - res["weights"]["testimony"] * h["criteria"].get("testimony", 0.0)
-        L.append(f"| {h['hypothesis']} | {_f(tw)} | {_f(po)} |")
-    L.append("")
+    _added_back(L, {"": (res, hyps)}, {"": ""}, CRIT_NAMES)
     L.append("## Best-fit object (testimony-weighted fit)")
     L.append("")
     L.append("| Hypothesis | Range (nmi, mean) | Altitude (ft) | Air speed (kt) | Ground speed (kt) | Ground track (deg) | Vertical speed (ft/min) | Jet heading (deg) | Wind error E, N (kt) | Params at a prior bound |")
@@ -105,18 +182,24 @@ def build(case: str) -> str:
         L.append(f"| {h['hypothesis']} | {_f(d['range_nmi_mean'], 2)} | {_f(d['altitude_ft_mean'], 0)} | {_f(d['air_speed_kt'])} | "
                  f"{_f(d['ground_speed_kt'])} | {_f(d['ground_track_deg'], 0)} | {_f(d['vertical_speed_fpm'], 0)} | "
                  f"{_f(p['jet_heading_deg'], 0)} | {_f(p['wind_err_e_kt'])}, {_f(p['wind_err_n_kt'])} | "
-                 f"{', '.join(h['params_at_bound']) or 'none'} |")
+                 f"{_bounds(h, d, h['params_at_bound'])} |")
     L.append("")
     L.append("All fitted parameters (both fits) are in `results.json`.")
     L.append("")
     L.append("## Per-criterion log-likelihoods (testimony-weighted fit)")
     L.append("")
     crits = list(hyps[0]["criteria"].keys())
-    L.append("| Criterion | " + " | ".join(h["hypothesis"] for h in hyps) + " |")
-    L.append("|---|" + "---|" * len(hyps))
+    L.append("| Criterion | Weight | " + " | ".join(h["hypothesis"] for h in hyps) + " |")
+    L.append("|---|---|" + "---|" * len(hyps))
     for c in crits:
-        L.append(f"| {CRIT_NAMES.get(c, c)} | " + " | ".join(_f(h["criteria"].get(c)) for h in hyps) + " |")
+        key = "line_of_sight" if c.startswith("line_of_sight") else c
+        wt = res["weights"].get(key, 1.0) if c not in ("prior", "complexity_penalty") else 1.0
+        L.append(f"| {_lab(c, res, CRIT_NAMES)} | {_f(wt, 1)} | " + " | ".join(_f(h["criteria"].get(c)) for h in hyps) + " |")
     L.append("")
+    for c in _zero(res):
+        L.append(f"- {CRIT_NAMES.get(c, c)}: shown but weight 0 ({WHY_ZERO.get(c, 'weight 0 on this case')}).")
+    if _zero(res):
+        L.append("")
     cc = res.get("closure_check") or {}
     if cc:
         L.append("## Closure-rate check")
@@ -191,14 +274,14 @@ def build(case: str) -> str:
     L.append("")
     L.append("- Likelihoods, not verdicts. No prior probability is put on any class of explanation; readers can add their own.")
     L.append("- The ocean-motion, closure and brightness criteria carry large negative values for every hypothesis: they measure how well the shared jet and pod model reproduces the data, and mostly cancel between hypotheses. Compare differences, not absolute values.")
-    L.append("- Interpretations made where the design was silent: n_eff comes from the data's autocorrelation about a cubic fit (not from each hypothesis's residuals), so every hypothesis gets the same n_eff; the BIC n is the sum of the physics criteria's n_eff; parameters with a normal prior (wind error, vertical speed) enter through their log prior (relative to its peak) instead of k; azimuth and elevation are compared at the display's 6-frame update frames, range and Vc on every frame with the n_eff correction.")
+    L.append("- Interpretations made where the design was silent: n_eff comes from the data's autocorrelation about a cubic fit (not from each hypothesis's residuals), so every hypothesis gets the same n_eff; the BIC n is the sum of the n_eff of the physics criteria that carry weight; parameters with a normal prior (wind error, vertical speed) enter through their log prior (relative to its peak) instead of k; azimuth and elevation are compared at the display's 6-frame update frames, range and Vc on every frame with the n_eff correction.")
     raw = sorted(((h["total_physics_only"] - h["criteria"].get("complexity_penalty", 0.0), h["hypothesis"]) for h in hyps), reverse=True)
     L.append("- Fit before the complexity penalty (physics-only): " + "; ".join(f"{n} {_f(v)}" for v, n in raw) +
              ". A model with more free parameters always fits at least as well; the penalty decides whether the extra freedom is earned.")
     common = set.intersection(*[set(h["params_at_bound"]) for h in hyps]) if hyps else set()
     if common:
         L.append(f"- Every hypothesis puts {', '.join(sorted(common))} at its prior bound. That is a property of the shared data and jet model, not of any hypothesis (for the elevation anchor: the readout seems to sit about half a degree or more below the true sight line, as if the display truncated rather than rounded, or the jet's pitch entered; open).")
-    L.append("- Which hypotheses this data can separate in principle is the M3.4 confusion matrix (not yet run). The synthetic recovery test (`tests/test_score_gofast.py`) shows that balloon and slow-flier data are told apart when the wind is known to about 5 kt; with the 20 kt placeholder wind a slow flier's air speed is partly absorbed by the wind error.")
+    L += _recovery_lines(case)
     L.append("- Discriminators for the top pair (M3.6) are not written yet.")
     L.append("")
     return "\n".join(L) + "\n"
@@ -206,8 +289,7 @@ def build(case: str) -> str:
 
 # ----------------------------------------------------------------------------- cases with sensor variants (GIMBAL)
 
-CRIT_NAMES_V = dict(CRIT_NAMES, background_motion="Cloud motion (turn-rate band)", rotation="Image rotation",
-                    size_trend="Apparent size trend (weight 0, D-016)")
+CRIT_NAMES_V = dict(CRIT_NAMES, background_motion="Cloud motion (turn-rate band)", rotation="Image rotation")
 
 
 def _fov(o) -> str:
@@ -296,6 +378,7 @@ def build_variants(case: str) -> str:
     for s_ in ts:
         L.append(f"- Testimony: {s_}.")
     L.append("- Field of view is a sensor setting, not a hypothesis parameter: every hypothesis is scored at 0.35 deg and again at 0.7 deg, and the two runs are reported side by side, never mixed.")
+    L.append("- Review: the four M3 review items (brightness audit, equal range priors, ERA5 turn rate, point-spread width) are resolved in `docs/results/REVIEW-M3.md`; which hypotheses this data can separate at all is in `docs/results/recovery.md`.")
     L.append("")
 
     # ---------------------------------------------------------------- what was scored
@@ -306,14 +389,15 @@ def build_variants(case: str) -> str:
     L.append("- Every hypothesis was fitted by the same code (maximum likelihood within its prior bounds, multi-start), against the same observables, with the same noise model and weights (`solve/scoring.yaml`). Hypotheses differ only in their physical model and priors (`solve/hypotheses/*.yaml`).")
     L.append("- Shared nuisance parameters, fitted for every hypothesis: the jet's starting heading (not on screen), the wind error at the object's altitude, the sight-line offsets inside the whole-degree readouts, the jet's turn-rate offset inside its measured band, and the jet's pitch (which only moves the pod roll and image horizon).")
     tr = {v: V[v].get("turn_rate", {}) for v in names}
-    L.append("- Jet turn rate: the lab's own cloud-derived history (`docs/reproductions/gimbal_turn_rate.md`), re-derived from the same cloud measurement at each field of view: total heading change " +
+    L.append("- Jet turn rate: the lab's own cloud-derived history (`docs/reproductions/gimbal_turn_rate.md`), recomputed with ERA5 winds and temperature (REVIEW-M3 item 3) and re-derived from the same cloud measurement at each field of view: total heading change " +
              ", ".join(f"{_f(tr[v].get('heading_change_deg'))} deg at {_fov(V[v])}" for v in names) +
              "; median 1-sigma band " + ", ".join(f"{_f(tr[v].get('sigma_median_deg_s'), 3)} deg/s" for v in names) +
              ". The cloud motion enters once, as the band's Gaussian on the turn-rate offset (the \"cloud motion\" row).")
     L.append(f"- Display rounding (D-016, shared): the readout {first['display_rounding']}s (fitted once from the azimuth readout's hold times).")
     ne = first["criteria_n_eff"]
     L.append("- Effective sample sizes (from the data's own autocorrelation, the same for every hypothesis): " +
-             ", ".join(f"{CRIT_NAMES_V.get(k, k)} {v:.0f}" for k, v in ne.items()) + f"; total {first['n_eff_total']:.0f}.")
+             ", ".join(f"{CRIT_NAMES_V.get(k, k)} {v:.0f}" for k, v in ne.items()) +
+             "; total of the criteria in the totals (the BIC n): " + ", ".join(f"{V[v]['n_eff_total']:.0f} at {_fov(V[v])}" for v in names) + ".")
     rs = first["data_sigmas"].get("rotation")
     L.append(f"- Image rotation: the measured orientation of the blob's major axis on all 1,031 frames, noise {_f(rs, 2)} deg (scatter about a 9-frame running median). A glare model predicts it from the pod geometry with ONE free offset (Sitrec's glare start angle); a physical model gets a free smooth rotation (a spline whose knot count the data choose, each knot charged 0.5 ln(n_eff) like any parameter). Both get one shared offset for the black-hot segment.")
     L.append("- Log-likelihoods: higher is better. A difference of 2.3 is a likelihood ratio of 10. Totals include a complexity penalty of 0.5 k ln(n_eff) for k free parameters.")
@@ -376,7 +460,7 @@ def build_variants(case: str) -> str:
                 L.append(f"| {h['hypothesis']} | {tag} | {_f(d['range_nmi_mean'], 1)} | {_f(d['altitude_ft_mean'], 0)} | {_f(d['air_speed_kt'], 0)} | "
                          f"{_f(d['ground_speed_kt'], 0)} ({_f(d['min_ground_speed_kt'], 0)}) | {_f(d['ground_track_deg'], 0)} | {_f(d['vertical_speed_fpm'], 0)} | "
                          f"{_f(d['stop_reverse'])} | {_f(p['jet_heading_deg'], 0)} | {_f(p.get('turn_rate_z'), 2)} | {_f(p.get('jet_pitch_deg'), 1)} | "
-                         f"{', '.join(bnd) or 'none'} |")
+                         f"{_bounds(h, d, bnd)} |")
         L.append("")
     L.append("All fitted parameters (both fits, both fields of view) are in `results.json`.")
     L.append("")
@@ -395,31 +479,35 @@ def build_variants(case: str) -> str:
         for c in crits:
             key = "line_of_sight" if c.startswith("line_of_sight") else c
             wt = o["weights"].get(key, 1.0) if c not in ("prior", "complexity_penalty") else 1.0
-            L.append(f"| {CRIT_NAMES_V.get(c, c)} | {_f(wt, 1)} | " + " | ".join(_f(h["criteria"].get(c)) for h in hyps) + " |")
+            L.append(f"| {_lab(c, o, CRIT_NAMES_V)} | {_f(wt, 1)} | " + " | ".join(_f(h["criteria"].get(c)) for h in hyps) + " |")
         L.append("")
-    L.append("The apparent-size row is shown but has weight 0 (D-016: resolution not established on this video), so it does not enter any total.")
-    L.append("")
+        for c in _zero(o):
+            L.append(f"- {CRIT_NAMES_V.get(c, c)} at {_fov(o)}: shown but weight 0 ({WHY_ZERO.get(c, 'weight 0 on this case')}), so it enters no total.")
+        L.append("")
 
     # ---------------------------------------------------------------- sensitivity
-    L.append("### Sensitivity: totals without the brightness trend")
-    L.append("")
-    L.append("The brightness criterion compares the trend of the blob's integrated contrast with 1/range squared. It is relative only, but it is not calibrated for the sensor's automatic gain or for atmospheric path changes, and it carries a large share of the separation between hypotheses here. The table removes that one criterion (testimony-weighted fit values; physics-only is the same fit minus testimony).")
-    L.append("")
-    L.append("| Hypothesis | " + " | ".join(f"{_fov(V[v])} weighted | {_fov(V[v])} physics" for v in names) + " |")
-    L.append("|---|" + "---|---|" * len(names))
-    for hid in ids:
-        cells = []
-        for v in names:
-            h = next(x for x in V[v]["hypotheses"] if x["hypothesis"] == hid)
-            if not h["valid"]:
-                cells += ["invalid", "invalid"]
-                continue
-            b = h["criteria"].get("brightness_trend", 0.0)
-            tw = h["total_testimony_weighted"] - b
-            po = tw - V[v]["weights"]["testimony"] * h["criteria"].get("testimony", 0.0)
-            cells += [_f(tw), _f(po)]
-        L.append(f"| {hid} | " + " | ".join(cells) + " |")
-    L.append("")
+    _added_back(L, {v: (V[v], sorted((h for h in V[v]["hypotheses"] if h["valid"]), key=lambda h: h["rank_testimony_weighted"]))
+                    for v in names}, {v: _fov(V[v]) for v in names}, CRIT_NAMES_V)
+    open_size = [v for v in names if "size_trend" not in _zero(V[v]) and "brightness_trend" in _zero(V[v])]
+    if open_size:
+        L.append("### Sensitivity: the apparent-size criterion removed where it is in the totals")
+        L.append("")
+        L.append("Open item (REVIEW-M3, section 4): where D-016 finds the blob resolved, the size criterion is in the totals, but in the black-hot segment the blob is the same clipped blob that failed the brightness audit, and the glare models' size prediction uses the measured brightness. D-016 does not cover saturation, so the totals without the size row are shown (testimony-weighted fit values; not refitted).")
+        L.append("")
+        L.append("| Hypothesis | " + " | ".join(f"{_fov(V[v])} weighted / physics, without size" for v in open_size) + " |")
+        L.append("|---|" + "---|" * len(open_size))
+        for hid in ids:
+            cells = []
+            for v in open_size:
+                h = next(x for x in V[v]["hypotheses"] if x["hypothesis"] == hid)
+                if not h["valid"]:
+                    cells.append("invalid")
+                    continue
+                x = h["criteria"].get("size_trend", 0.0)
+                tw = h["total_testimony_weighted"] - x
+                cells.append(f"{_f(tw)} / {_f(tw - V[v]['weights']['testimony'] * h['criteria'].get('testimony', 0.0))}")
+            L.append(f"| {hid} | " + " | ".join(cells) + " |")
+        L.append("")
 
     # ---------------------------------------------------------------- rotation
     L.append("## The rotation test")
@@ -577,13 +665,27 @@ def build_variants(case: str) -> str:
         L.append(f"- **Wind and temperature**: PLACEHOLDER {env['source']} (wind uncertainty {_f(env['wind_sigma_kt'], 0)} kt), ISA temperature at the jet. ERA5 replaces it when `data/weather/era5_gimbal_gofast_profiles.csv` exists; the balloon, slow-mover and wind-related testimony terms move with it.")
     else:
         L.append(f"- **Wind and temperature**: {env['source']}, wind uncertainty {_f(env['wind_sigma_kt'], 0)} kt, jet-level temperature ISA {env['dT_jet_K']:+.1f} K (TAS from Mach uses it). The ERA5 time is nominal: the date and hour of the recording are not certain (the file metadata points to 01/25/2015 near 02 to 03 UTC; the release lists 01/21/2015). The balloon, slow-mover and wind-related testimony terms move with the wind.")
-    L.append("- **Turn-rate derivation inputs**: the cloud-derived turn rate (M2.5) was computed with placeholder jet heading 315 deg, jet wind 120 kt from 270, cloud wind 17 kt from 240 and ISA TAS; the lab found each moves the rate by under 0.01 deg/s, inside the band carried here, but it has not been recomputed with ERA5.")
+    trs = ROOT / "data" / "derived" / case / "turn_rate_era5_summary.json"
+    if trs.exists():
+        te = json.loads(trs.read_text(encoding="utf-8"))
+        e0 = next(iter(te.values()))["era5_nominal"]
+        L.append("- **Turn-rate derivation inputs** (REVIEW-M3 item 3): the cloud-derived turn rate now uses ERA5 at "
+                 f"{e0['time_utc']}Z: jet-level wind {_f(e0['jet_wind'][1], 0)} kt from {_f(e0['jet_wind'][0], 0)}, cloud-deck wind "
+                 f"{_f(e0['cloud_wind'][1], 0)} kt from {_f(e0['cloud_wind'][0], 0)} (deck 11,740 ft nominal), TAS from Mach at ISA {e0['dT_jet_K']:+.1f} K; "
+                 "the band draws the time over 01/24 18Z to 01/25 06Z. Against the placeholder inputs the history moved by " +
+                 ", ".join(f"{_f(x['nominal_change_vs_placeholder_deg_s']['rms_core'], 4)} deg/s rms at {x['fov_deg']} deg" for x in te.values()) +
+                 " and the band's median half-width went from " +
+                 ", ".join(f"{_f(x['band_halfwidth_core_median_deg_s']['placeholder'], 3)} to {_f(x['band_halfwidth_core_median_deg_s']['era5'], 3)} deg/s at {x['fov_deg']} deg" for x in te.values()) +
+                 ". The jet's initial heading inside the inversion is still a draw in 295 to 335 deg (not on screen).")
+    else:
+        L.append("- **Turn-rate derivation inputs**: placeholder winds and ISA temperature (ERA5 recomputation not found).")
     L.append("- **Jet heading**: not on screen; fitted for every hypothesis. Testimony quantities that depend on direction (motion against the wind) inherit that freedom.")
-    L.append("- **Turn rate**: the lab's cloud-derived history and its Monte Carlo band (cloud deck height, texture distance, image scale, winds and the placeholder heading inside it). The horizon-bar bank is used only for the image horizon and pod roll, where the cloud motion's direction confirms it.")
+    L.append("- **Turn rate**: the lab's cloud-derived history and its Monte Carlo band (cloud deck height, texture distance, image scale, ERA5 winds and temperature over a 12-hour window, and the jet's initial heading inside it). The horizon-bar bank is used only for the image horizon and pod roll, where the cloud motion's direction confirms it.")
     L.append("- **Jet pitch**: a shared nuisance (Sitrec's 3.6 deg, scaled by 1/cos(bank) as Sitrec does). Near the end of the clip the pod looks within a few degrees of its roll axis, so the predicted glare rotation there is sensitive to pitch and to the azimuth inside its whole-degree interval; both are fitted, the same way for every glare model.")
     L.append("- **Rotation measurement**: the blob's major-axis angle at the high threshold, noise about 0.9 deg; one shared offset allows a white-hot / black-hot bias. Pixel aspect (frames about 5 percent wide) slightly flattens measured angles and is not corrected (it changes the angles by under 2 deg at 45 deg).")
-    L.append("- **Brightness trend**: uncalibrated (no automatic-gain or path correction); see the sensitivity table.")
-    L.append("- **Apparent size**: weight 0 (D-016).")
+    for c, txt in (("brightness_trend", "Brightness trend"), ("size_trend", "Apparent size")):
+        st = [f"weight 0 at {_fov(V[v])}" if c in _zero(V[v]) else f"in the totals at {_fov(V[v])}" for v in names]
+        L.append(f"- **{txt}**: " + ", ".join(st) + f" (where weight 0: {WHY_ZERO[c]}; see `docs/results/REVIEW-M3.md`).")
     L.append("- **Testimony**: the binding Gaussian edge grows quadratically outside a claim's interval, so a single distant memory can dominate a total; the physics-only column is the reading without it.")
     L.append("")
     L.append("## How to read this, and its limits")
@@ -591,7 +693,12 @@ def build_variants(case: str) -> str:
     L.append("- Likelihoods, not verdicts. No prior probability is put on any class of explanation; readers can add their own.")
     L.append("- Compare differences between hypotheses within one field of view, not absolute values, and not across fields of view (the jet's path differs).")
     L.append("- Interpretations made where the design was silent: as for GOFAST (n_eff from the data's autocorrelation; the BIC n is the sum of the physics criteria's n_eff; normal-prior nuisances enter through their log prior); plus, for GIMBAL, the cloud motion enters through the turn-rate band, the rotation noise is the scatter about a running median, and the physical rotation spline's knot count is chosen by the same penalized likelihood.")
-    L.append("- Which hypotheses this data can separate in principle is the M3.4 confusion matrix (not yet run). Discriminators for the top pairs (M3.6) are not written yet.")
+    for v in names:
+        rl = _recovery_lines(case, v)
+        if len(rl) > 1:
+            rl[0] = rl[0].replace("(M3.4,", f"(M3.4, {_fov(V[v])},")
+        L += rl
+    L.append("- Discriminators for the top pairs (M3.6) are not written yet.")
     L.append("")
     return "\n".join(L) + "\n"
 

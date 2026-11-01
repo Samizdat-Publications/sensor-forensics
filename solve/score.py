@@ -109,6 +109,7 @@ class Hypothesis:
     checks: list = field(default_factory=list)
     sources: dict = field(default_factory=dict)
     path: str = ""
+    constraints: list = field(default_factory=list)   # physical limits on predicted quantities (uniform priors)
 
 
 def _hyp_from_dict(d: dict, path: str = "") -> Hypothesis:
@@ -116,7 +117,7 @@ def _hyp_from_dict(d: dict, path: str = "") -> Hypothesis:
                       model=str(d["model"]), applies_to=[str(a).upper() for a in d.get("applies_to", [])],
                       parameters=dict(d.get("parameters", {})), parameter_groups=list(d.get("parameter_groups", [])),
                       model_options=dict(d.get("model_options") or {}), checks=list(d.get("checks", [])),
-                      sources=dict(d.get("sources", {})), path=path)
+                      sources=dict(d.get("sources", {})), path=path, constraints=list(d.get("constraints", [])))
 
 
 def load_hypotheses(directory: Path | str | None = None) -> list[Hypothesis]:
@@ -287,13 +288,31 @@ def _testimony(case: CaseData, pred: Prediction) -> tuple[float, list, str]:
     return T.total(rows), rows, f"solve/testimony.py: {len(rows)} claim terms scored"
 
 
+def constraint_log_prior(hyp: Hypothesis, pred: Prediction) -> float:
+    """Uniform prior on a predicted quantity (e.g. the object's altitude over the scored window).
+
+    Each constraint in the hypothesis YAML names a quantity of the testimony vocabulary (the same
+    keys for every model), a [min, max] support and a soft edge (sd, same units) for the optimizer.
+    The smallest and largest predicted values must lie inside the support; the log density is the
+    interval likelihood of each, ~0 inside and falling as a Gaussian edge outside. Applied by this
+    one function to every hypothesis that lists constraints; reported in the "prior" row.
+    """
+    out = 0.0
+    for c in hyp.constraints:
+        q = np.asarray(pred.testimony_quantities[c["quantity"]], float)
+        lo, hi, sd = float(c["min"]), float(c["max"]), float(c.get("edge_sd", 0.0))
+        ext = np.array([np.nanmin(q), np.nanmax(q)])
+        out += float(np.sum(L.interval_loglik(np.full(2, 0.5 * (lo + hi)), ext, hi - lo, max(sd, 1e-9))))
+    return out
+
+
 def _evaluate(case: CaseData, hyp: Hypothesis, params: dict, specs: list[ParamSpec], criteria=None,
               with_testimony: bool = True) -> dict:
     pred = predict(case, hyp, params)
     if not pred.valid:
         return {"valid": False, "reason": pred.reason}
     ll = criterion_logliks(case, pred, criteria)
-    lp = sum(s.log_prior(params[s.name]) for s in specs if not s.report_as)
+    lp = sum(s.log_prior(params[s.name]) for s in specs if not s.report_as) + constraint_log_prior(hyp, pred)
     crit = case.criteria if criteria is None else criteria
     for c in sorted({s.report_as for s in specs if s.report_as}):
         if c in crit:

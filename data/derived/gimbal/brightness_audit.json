@@ -1,0 +1,166 @@
+{
+ "case": "gimbal",
+ "rule": "docs/results/REVIEW-M3.md, Rule B (stated before the measurements)",
+ "scored_frames": [
+  0,
+  1030
+ ],
+ "n_frames": 1031,
+ "n_eff": 254.09514147383337,
+ "clip_codes": {
+  "bright": 185,
+  "dark": 0,
+  "tolerance": 2
+ },
+ "B1": {
+  "saturated_fraction": 0.6391852570320078,
+  "limit": 0.5,
+  "fail": true,
+  "segments": {
+   "0": {
+    "frames": [
+     0,
+     371
+    ],
+    "n": 372,
+    "polarity": "WHT",
+    "saturated_fraction": 0.0,
+    "median_blob_px_at_clip": 0.0,
+    "median_blob_px": 209.0,
+    "median_object_peak_contrast": 139.60514999999998,
+    "median_ring_background": 19.0
+   },
+   "1": {
+    "frames": [
+     372,
+     1030
+    ],
+    "n": 659,
+    "polarity": "BLK",
+    "saturated_fraction": 1.0,
+    "median_blob_px_at_clip": 162.0,
+    "median_blob_px": 225.0,
+    "median_object_peak_contrast": 70.0,
+    "median_ring_background": 70.0
+   }
+  }
+ },
+ "B2": {
+  "regressors": [
+   "ln pic_level",
+   "ln pic_contrast",
+   "ln tile_level",
+   "ln tile_contrast"
+  ],
+  "r2": 0.1534637259228886,
+  "r2_adjusted_n_eff": 0.13986994373880635,
+  "limit": 0.5,
+  "fail": false,
+  "coefficients": {
+   "pic_level": -0.1818484108231986,
+   "pic_contrast": 0.3966746138482866,
+   "tile_level": 0.2876273956163139,
+   "tile_contrast": -0.09406921259751172
+  },
+  "single_regressor": {
+   "pic_level": {
+    "r": 0.1986251070636995,
+    "r2": 0.03945193315606609
+   },
+   "pic_contrast": {
+    "r": 0.2970323180323536,
+    "r2": 0.08822819795567324
+   },
+   "tile_level": {
+    "r": 0.31313897122356554,
+    "r2": 0.09805601529895301
+   },
+   "tile_contrast": {
+    "r": -0.10930703571350232,
+    "r2": 0.011948028056472873
+   }
+  },
+  "r2_by_segment": {
+   "0": 0.11988900026908744,
+   "1": 0.5581886094399087
+  }
+ },
+ "B3": {
+  "zoom_changes_inside_segments": [],
+  "fail": false
+ },
+ "steps": {
+  "object_brightness": [
+   371,
+   594,
+   825,
+   868,
+   982,
+   991,
+   1004
+  ],
+  "frame_level": {
+   "pic_level": [
+    12,
+    27,
+    38,
+    47,
+    76,
+    87,
+    93,
+    111,
+    120,
+    178,
+    187,
+    197,
+    234,
+    248,
+    258,
+    268,
+    305,
+    311,
+    319,
+    325,
+    331,
+    371,
+    654,
+    845,
+    860,
+    869,
+    926,
+    944,
+    988,
+    1010
+   ],
+   "pic_contrast": [],
+   "tile_level": [
+    40,
+    121,
+    142,
+    178,
+    298,
+    372,
+    979,
+    987,
+    1009
+   ],
+   "tile_contrast": []
+  },
+  "co_occurring_within_2_frames": {
+   "pic_level": [
+    371,
+    868
+   ],
+   "pic_contrast": [],
+   "tile_level": [
+    371
+   ],
+   "tile_contrast": []
+  }
+ },
+ "fails": [
+  "B1 saturation"
+ ],
+ "range_informative": false,
+ "decision": "brightness criterion carries weight 0 for every hypothesis (reported, not in any total)"
+}

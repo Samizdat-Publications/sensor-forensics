@@ -104,9 +104,15 @@ class CaseData:
 
     @property
     def n_eff_total(self) -> float:
-        """Sum of the physics criteria's data-only n_eff (the BIC n)."""
+        """Sum of the physics criteria's data-only n_eff (the BIC n).
+
+        A criterion this case gives weight 0 (D-016, REVIEW-M3 Rule B) is reported but not in any
+        total, so its observations do not count in the BIC n either (REVIEW-M3).
+        """
         tot = 0.0
         for c in self.criteria:
+            if float(self.weight_overrides.get(c, 1.0)) == 0.0:
+                continue
             if c == "line_of_sight":
                 tot += self.readouts["azimuth"].n_eff + self.readouts["elevation"].n_eff
             elif c in self.readouts:
@@ -180,11 +186,12 @@ def _apply_variant(cfg: dict, variant: str | None) -> tuple[dict, str]:
     cfg = copy.deepcopy(cfg)
     for k, val in (v.get("sensor") or {}).items():
         cfg["sensor"][k] = val
-    for k, val in (v.get("jet") or {}).items():
-        if isinstance(val, dict):
-            cfg["jet"].setdefault(k, {}).update(val)
-        else:
-            cfg["jet"][k] = val
+    for block in ("jet", "image"):
+        for k, val in (v.get(block) or {}).items():
+            if isinstance(val, dict):
+                cfg[block].setdefault(k, {}).update(val)
+            else:
+                cfg[block][k] = val
     return cfg, str(v["name"])
 
 
@@ -332,6 +339,11 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
     # D-016: the size criterion carries weight only for a resolved object (blob major axis at least
     # 3 times the point-spread width measured on the same video). Applied when the case states it.
     weight_overrides: dict = {}
+    if "psf_file" in im:
+        # REVIEW-M3 item 4: the point-spread width measured on this video (extract/psf.py), in the size
+        # criterion's own metric, for this sensor variant (the upper bound: Rule P).
+        pj = json.loads((ROOT / im["psf_file"]).read_text(encoding="utf-8"))
+        im = dict(im, psf_width_px=float(pj["variants"][variant_name or "default"]["psf_width_px_lo_metric"]))
     if "psf_width_px" in im:
         psf = im["psf_width_px"]
         major = float(np.nanmedian(size_px[window]))
@@ -340,6 +352,18 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
             why = ("point-spread width not measured on this video" if psf is None else
                    f"blob major axis {major:.1f} px is under 3 x the point-spread width {float(psf):.1f} px")
             flags.append(f"D-016: apparent-size criterion reported with weight 0 ({why}); resolution not established.")
+
+    # REVIEW-M3 item 1 (Rule B): the brightness criterion carries weight only when the audit found the
+    # measured brightness range-informative (not saturated, not dominated by frame-level gain or level,
+    # no zoom change). The decision is the audit's (solve/brightness_audit.py), the same for every hypothesis.
+    if im.get("brightness_audit"):
+        ba = json.loads((ROOT / im["brightness_audit"]).read_text(encoding="utf-8"))
+        if not ba.get("range_informative", True):
+            weight_overrides["brightness_trend"] = 0.0
+            flags.append("REVIEW-M3 Rule B: brightness criterion reported with weight 0 (" + "; ".join(ba["fails"]) +
+                         f": blob saturated on {100 * ba['B1']['saturated_fraction']:.0f} percent of scored frames, "
+                         f"gain and level explain {100 * ba['B2']['r2_adjusted_n_eff']:.0f} percent of its variance); "
+                         "not range-informative.")
 
     flags += env.flags
     return CaseData(name=name, cfg=cfg, fps=fps, t=t, window=window, ref_frame=ref, az_read=az_all, el_read=el_all,

@@ -1,0 +1,130 @@
+{
+ "fov035": {
+  "fov_deg": 0.35,
+  "era5_nominal": {
+   "time_utc": "2015-01-25T02:30",
+   "jet_wind": [
+    261.42572576948794,
+    99.05894025074059
+   ],
+   "cloud_wind": [
+    264.1928808320945,
+    49.88371865618397
+   ],
+   "dT_jet_K": 8.816841202421443,
+   "cloud_deck_ft": 11740.0
+  },
+  "era5_window": [
+   "2015-01-24T18:00",
+   "2015-01-25T06:00"
+  ],
+  "mc_draws": 300,
+  "mc_jet_wind_kt_from_deg_2p5_97p5": {
+   "kt": [
+    81.93583773616062,
+    106.64122258518871
+   ],
+   "from_deg": [
+    245.2626022610963,
+    266.47350958236336
+   ]
+  },
+  "mc_cloud_wind_kt_2p5_97p5": [
+   35.4211146647076,
+   86.59884167498623
+  ],
+  "mc_dT_jet_K_min_max": [
+   8.048834114994776,
+   9.694555789971417
+  ],
+  "heading_change_deg": {
+   "era5": -65.12998375947471,
+   "placeholder_recomputed": -64.95549858934898,
+   "placeholder_file": -64.95613090633333,
+   "era5_mc_2p5_50_97p5": [
+    -65.63694119850119,
+    -65.24532618940684,
+    -64.83963060310755
+   ]
+  },
+  "nominal_change_vs_placeholder_deg_s": {
+   "rms_core": 0.0050912337346102786,
+   "max_abs_core": 0.005201904960796755,
+   "mean_core": -0.00508965470185297
+  },
+  "band_halfwidth_core_median_deg_s": {
+   "era5": 0.04261159497002753,
+   "placeholder": 0.04527999999999999
+  },
+  "band_halfwidth_core_max_deg_s": {
+   "era5": 0.06299109650552914,
+   "placeholder": 0.06121999999999994
+  },
+  "nominal_outside_placeholder_band_fraction_core": 0.0,
+  "notes": "jet heading at f0 still a draw in 295 to 335 deg (not on screen); deck height 8,000 to 18,000 ft as before"
+ },
+ "fov070": {
+  "fov_deg": 0.7,
+  "era5_nominal": {
+   "time_utc": "2015-01-25T02:30",
+   "jet_wind": [
+    261.42572576948794,
+    99.05894025074059
+   ],
+   "cloud_wind": [
+    264.1928808320945,
+    49.88371865618397
+   ],
+   "dT_jet_K": 8.816841202421443,
+   "cloud_deck_ft": 11740.0
+  },
+  "era5_window": [
+   "2015-01-24T18:00",
+   "2015-01-25T06:00"
+  ],
+  "mc_draws": 300,
+  "mc_jet_wind_kt_from_deg_2p5_97p5": {
+   "kt": [
+    81.93583773616062,
+    106.64122258518871
+   ],
+   "from_deg": [
+    245.2626022610963,
+    266.47350958236336
+   ]
+  },
+  "mc_cloud_wind_kt_2p5_97p5": [
+   35.4211146647076,
+   86.59884167498623
+  ],
+  "mc_dT_jet_K_min_max": [
+   8.048834114994776,
+   9.694555789971417
+  ],
+  "heading_change_deg": {
+   "era5": -68.56256714006268,
+   "placeholder_recomputed": -68.37779277704684,
+   "placeholder_file": -68.37999852016667,
+   "era5_mc_2p5_50_97p5": [
+    -69.1631114177338,
+    -68.63540772909091,
+    -68.10081559773083
+   ]
+  },
+  "nominal_change_vs_placeholder_deg_s": {
+   "rms_core": 0.005394996327009502,
+   "max_abs_core": 0.005512464693895769,
+   "mean_core": -0.005394154524665958
+  },
+  "band_halfwidth_core_median_deg_s": {
+   "era5": 0.0442662631458941,
+   "placeholder": 0.04632000000000014
+  },
+  "band_halfwidth_core_max_deg_s": {
+   "era5": 0.06632932140687586,
+   "placeholder": 0.06137500000000007
+  },
+  "nominal_outside_placeholder_band_fraction_core": 0.0,
+  "notes": "jet heading at f0 still a draw in 295 to 335 deg (not on screen); deck height 8,000 to 18,000 ft as before"
+ }
+}

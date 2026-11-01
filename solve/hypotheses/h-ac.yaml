@@ -1,4 +1,5 @@
 # Hypothesis file (data only; read by solve/score.py). Priors and sources written 10/31/2026 before any fit.
+# REVIEW-M3 (10/31/2026, before the rerun): range support 0.5 to 60 nmi like every hypothesis; altitude limit kept as a constraint.
 id: H-AC
 label: Distant aircraft (engine exhaust seen as glare)
 description: >
@@ -8,10 +9,10 @@ description: >
 model: glare_target
 applies_to: [GIMBAL, FLIR1]
 parameters:
-  altitude_ref_ft:
-    prior: uniform
-    bounds: [15000.0, 45000.0]
-    source: "S1, S2: airliner cruise levels FL300 to FL410, climbs and descents through lower levels; design table 15,000 to 45,000 ft."
+  range_ref_nmi:
+    prior: loguniform
+    bounds: [0.5, 60.0]
+    source: "REVIEW-M3 item 2 (docs/results/REVIEW-M3.md, Rule R): the common range support of every hypothesis, 0.5 to 60 nmi log-uniform. Was parameterized by altitude (15,000 to 45,000 ft); that limit is now the altitude constraint below."
   airspeed_kt:
     prior: uniform
     bounds: [250.0, 520.0]
@@ -27,6 +28,13 @@ parameters:
     sd: 1000.0
     bounds: [-4000.0, 4000.0]
     source: "S2: airliners in cruise hold altitude; climbs and descents are typically 1,000 to 3,000 ft/min."
+constraints:
+  # REVIEW-M3 item 2: physical limits act through altitude and speed, not through range.
+  - quantity: object_altitude_ft
+    min: 15000.0
+    max: 45000.0
+    edge_sd: 1.0
+    source: "S1, S2: airliner cruise levels FL300 to FL410, climbs and descents through lower levels; design table 15,000 to 45,000 ft. Uniform on the object's altitude over the scored window (a 1 ft soft edge, so effectively hard: zero density outside, as a uniform prior has)."
 checks:
   - quantity: implied_size_upper_m
     min: 0.0

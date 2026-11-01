@@ -1,0 +1,40 @@
+{
+ "symbology_line_spread": {
+  "horizontal": {
+   "n_profiles": 1150,
+   "fwhm_px_median": 1.3927228105999054,
+   "fwhm_px_p25_p75": [
+    1.1089206500009743,
+    1.809376138686619
+   ],
+   "n_strokes": 70
+  },
+  "vertical": {
+   "n_profiles": 2553,
+   "fwhm_px_median": 2.8483484175733764,
+   "fwhm_px_p25_p75": [
+    2.3600898164900492,
+    3.3200964816765146
+   ],
+   "n_strokes": 221
+  }
+ },
+ "object_minor": {
+  "n_frames": 626,
+  "hi_minor_px_median": 3.2775,
+  "fwhm_upper_px": 3.2775,
+  "note": "half-maximum minor axis of the unsaturated blob; a real object only widens the PSF"
+ },
+ "chain_fwhm_lower_px": 1.3927228105999054,
+ "variants": {
+  "default": {
+   "digital_zoom": 1.0,
+   "upper_bounds_fwhm_px": {
+    "own_object_minor": 3.2775
+   },
+   "psf_fwhm_upper_px": 3.2775,
+   "psf_width_px_lo_metric": 5.521040520199006,
+   "chain_fwhm_lower_px": 1.3927228105999054
+  }
+ }
+}

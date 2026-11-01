@@ -54,12 +54,15 @@ jet:
 # documentation value they test as a sensitivity. The turn rate is re-derived from the same cloud
 # measurement at each field of view (python -m solve.turn_rate_gimbal --fov 0.7).
 sensor_variants:
+# REVIEW-M3 item 3: the turn rate files are the ERA5 recomputation (python -m solve.turn_rate_gimbal --era5:
+# ERA5 jet-level and cloud-deck winds, TAS from Mach with the ERA5 temperature, band over 01/24 18Z to 01/25 06Z).
+# The placeholder-wind versions (turn_rate.csv, turn_rate_fov070.csv) are kept for comparison.
   - name: fov035
     sensor: {fov_deg: 0.35}
-    jet: {turn_rate: {file: data/derived/gimbal/turn_rate.csv}}
+    jet: {turn_rate: {file: data/derived/gimbal/turn_rate_era5_fov035.csv}}
   - name: fov070
     sensor: {fov_deg: 0.7}
-    jet: {turn_rate: {file: data/derived/gimbal/turn_rate_fov070.csv}}
+    jet: {turn_rate: {file: data/derived/gimbal/turn_rate_era5_fov070.csv}}
 
 sensor:
   fov_deg: 0.35                 # replaced by each sensor variant
@@ -77,10 +80,12 @@ image:
   # not again as image motion. (The ocean-flow model used for GOFAST does not apply: at el -2 deg from
   # 25,000 ft the sight line passes above the sea horizon.)
   background_mode: turn_rate_band
-  # D-016 resolved test: the point-spread width has not been measured on this video. The blob's minor axis
-  # (median 11 px at the high threshold) is only an upper bound on it, and the major axis (median 24 px) is
-  # 2.1 times that, so resolution is not established: the size criterion is reported with weight 0.
-  psf_width_px: null
+  # D-016 resolved test (REVIEW-M3 item 4, Rule P): the point-spread width measured by extract/psf.py, in the
+  # size criterion's own metric, per sensor variant (0.35 deg: NAR 2.0 is a 2x digital zoom, so GOFAST's point
+  # source bound doubles; 0.7 deg: no digital zoom). The upper bound is used.
+  psf_file: data/derived/gimbal/psf.json
+  # REVIEW-M3 item 1 (Rule B): brightness audit decision (solve/brightness_audit.py).
+  brightness_audit: data/derived/gimbal/brightness_audit.json
 
 rotation:
   orientation_column: obj_hi_angle_deg   # major-axis orientation, high threshold (matches Sitrec glare_angle to 0.99 deg)

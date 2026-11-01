@@ -1,0 +1,21 @@
+{
+ "case": "gimbal",
+ "active_rect": [
+  106,
+  29,
+  529,
+  453
+ ],
+ "tile": [
+  112,
+  245,
+  292,
+  398
+ ],
+ "clip_code_bright": 185,
+ "clip_code_dark": 0,
+ "clip_tolerance_codes": 2,
+ "object_box_masked_px": 30,
+ "saturated_frames": 659,
+ "frames": 1031
+}
