@@ -1,0 +1,81 @@
+{
+  "clip": "DOW-UAP-PR113",
+  "ladder": {
+    "type": "HUD pitch ladder (dive lines numbered downward 0 to 16 s, horizon line near 10 s, climb lines numbered upward after)",
+    "n_samples_used": 89,
+    "n_zero_roll": 78,
+    "spacing_zero_roll_px_per_5": [
+      180.30700000000002,
+      180.54500000000002,
+      181.286
+    ],
+    "px_per_deg_vertical": 36.109,
+    "fit_s0_px": 180.53685491808713,
+    "fit_s0_sd": 0.039626593723838754,
+    "fit_aspect_x_over_y": 1.3062318482240072,
+    "fit_aspect_sd": 0.01955194022087308,
+    "max_rung_angle_used_deg": 13.7,
+    "reticle_ring_by_eye_px": [
+      172,
+      94
+    ]
+  },
+  "object": {
+    "frames": [
+      407,
+      410
+    ],
+    "rate_px_per_frame": [
+      -103.82699999999997,
+      97.57400000000001,
+      142.48063519299737
+    ],
+    "extent_px": [
+      28.0,
+      25.5
+    ]
+  },
+  "cases": {
+    "square pixels (H&K assumption)": {
+      "aspect": 1.0,
+      "omega_deg_s": 118.37544810961036,
+      "omega_rad_s": 2.0660413230363983,
+      "size_deg": 0.775429948212357,
+      "hfov_deg_over_1850px": 51.2337644354593,
+      "range_for_mach1_m": 164.56592431574035,
+      "size_at_100m_m": 1.3533805714874747,
+      "speed_at_100m_mps": 206.60413230363983
+    },
+    "fitted aspect 1.31": {
+      "aspect": 1.3062318482240072,
+      "omega_deg_s": 104.55997027280922,
+      "omega_rad_s": 1.8249157470479145,
+      "size_deg": 0.7061951314076823,
+      "hfov_deg_over_1850px": 39.2225656610029,
+      "range_for_mach1_m": 186.30997104935008,
+      "size_at_100m_m": 1.2325430204618075,
+      "speed_at_100m_mps": 182.49157470479145
+    },
+    "reticle ring by eye 1.8": {
+      "aspect": 1.8,
+      "omega_deg_s": 94.17186983916582,
+      "omega_rad_s": 1.6436091914529865,
+      "size_deg": 0.7061951314076823,
+      "hfov_deg_over_1850px": 28.463202464144057,
+      "range_for_mach1_m": 206.86182686739087,
+      "size_at_100m_m": 1.2325430204618075,
+      "speed_at_100m_mps": 164.36091914529865
+    }
+  },
+  "HK2026": {
+    "px_per_deg": 35.4,
+    "fov_deg": 54,
+    "omega_rad_s": 2.1,
+    "omega_rad_s_recomputed": 2.100311472738939
+  },
+  "assumptions": [
+    "the HUD pitch ladder is conformal (1 ladder degree = 1 degree of view)",
+    "the background did not move across frames 406 to 411 (measured shift under 0.1 px/frame)",
+    "frame rate 30 fps, as the container states"
+  ]
+}

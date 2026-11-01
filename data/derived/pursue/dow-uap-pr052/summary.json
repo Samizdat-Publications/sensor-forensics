@@ -1,0 +1,24 @@
+{
+  "clip": "DOW-UAP-PR052",
+  "label_test": {
+    "n": 3,
+    "m_per_px_median": 0.055,
+    "m_per_px_rel_spread": 0.06719015135188891,
+    "gate_px_ratio": 1.8703703703703702,
+    "loglog_slope": 0.7455687386499007,
+    "loglog_r": 0.9980700020154191
+  },
+  "m_per_px_range": [
+    0.050605060506050605,
+    0.059670781893004114
+  ],
+  "notes": "Gate sizes by eye: 29M box 486 px, 33M brackets 600 px, 46M brackets 909 px in 0.8 s with no visible zoom: label follows gate size (0.051 to 0.060 m/px). Afterwards 92M to 93M floats without a visible gate (gate larger than the frame). Object extent: single elongated object about 105 px long (by eye, frame 1170), a cluster of three about 90 px.",
+  "assumptions": [
+    "gate sizes read by eye on a reduced view; glitched video"
+  ],
+  "object_extent_px": 105,
+  "object_size_at_ratio1_m": [
+    5.313531353135313,
+    6.265432098765432
+  ]
+}

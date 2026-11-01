@@ -1,0 +1,11 @@
+{
+  "case": "dow-uap-pr149",
+  "source_video": "data\\pursue\\raw\\R05\\DOD_111887426.mp4",
+  "source_sha256": "c4258089bf48feb62c718ea19d37bf457538dfcf643f8307f5287d99c38c7d92",
+  "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "fps_nominal": 30.0,
+  "n_frames": 1545,
+  "n_pts": 1545,
+  "n_exact_duplicates": 0,
+  "frame_set_sha256": "97f91b5f45a371147f8b6d4bd6657477c329d8861e80c16aeb1f8eef0f064594"
+}

@@ -1,0 +1,24 @@
+{
+  "clip": "DOW-UAP-PR059",
+  "label_test": {
+    "n": 10,
+    "m_per_px_median": 0.23529411764705882,
+    "m_per_px_rel_spread": 0.054889036218887945,
+    "gate_px_ratio": 5.2,
+    "loglog_slope": 0.9880650762182152,
+    "loglog_r": 0.9962122633073964
+  },
+  "m_per_px_range": [
+    0.23076923076923078,
+    0.2727272727272727
+  ],
+  "notes": "No zoom between 600 and 1470: label shrinks with the gate (36M at 153 px to 7M at 30 px), m/px 0.23 to 0.27. Object half-maximum extent 14 x 18 px (saturated, blooming overstates size). Object nearly fixed to the terrain while locked (0.8 px/s median, 43 to 95 s); before lock it crossed about 64 px/s (16 m/s at ratio 1, by eye from 1020 to 1110). Later labels (5M and 4M on 30 to 34 px gates at 65 to 92 s, 2M on 33 px after about 97 s) were read but left out of the test because the zoom state is not verified (the object grows on screen).",
+  "assumptions": [
+    "test restricted to frames 740 to 1260, where scene features keep their size"
+  ],
+  "object_extent_px": 16,
+  "object_size_at_ratio1_m": [
+    3.6923076923076925,
+    4.363636363636363
+  ]
+}

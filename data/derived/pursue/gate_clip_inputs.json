@@ -1,0 +1,52 @@
+{
+  "DOW-UAP-PR044": {
+    "width_px": 1920,
+    "fps": 30,
+    "track": true,
+    "object_extent_px": 9.5,
+    "notes": "Gate grows 144 to 304 px with label 23M to 33M (6030 to 6090), then a fixed 108 px gate with the label stepping 12M, 11M, 10M, 9M over 60 s. Object: white speck circling near the gate, half-maximum extent 8 to 11 px.",
+    "assumptions": [
+      "object speed is image motion relative to the frame; the sensor holds the gate on a sea point, so the frame is close to sea-fixed"
+    ]
+  },
+  "DOW-UAP-PR059": {
+    "width_px": 1280,
+    "fps": 30,
+    "track": false,
+    "object_extent_px": 16,
+    "notes": "No zoom between 600 and 1470: label shrinks with the gate (36M at 153 px to 7M at 30 px), m/px 0.23 to 0.27. Object half-maximum extent 14 x 18 px (saturated, blooming overstates size). Object nearly fixed to the terrain while locked (0.8 px/s median, 43 to 95 s); before lock it crossed about 64 px/s (16 m/s at ratio 1, by eye from 1020 to 1110). Later labels (5M and 4M on 30 to 34 px gates at 65 to 92 s, 2M on 33 px after about 97 s) were read but left out of the test because the zoom state is not verified (the object grows on screen).",
+    "assumptions": [
+      "test restricted to frames 740 to 1260, where scene features keep their size"
+    ]
+  },
+  "DOW-UAP-PR078": {
+    "width_px": 1280,
+    "fps": 30,
+    "track": false,
+    "object_extent_px": null,
+    "notes": "Light check: fixed 156 px box, label 21M down to 18M over 24 s, later 15M; at fixed gate size both readings scale with range, so this clip does not discriminate. Applied the PR044/PR059 reading. Object is a few px.",
+    "assumptions": [
+      "gate-width reading taken from PR044, PR059, PR052"
+    ]
+  },
+  "DOW-UAP-PR089": {
+    "width_px": 1280,
+    "fps": 30,
+    "track": false,
+    "object_extent_px": null,
+    "notes": "Light check: 92 px box at 18M to 19M (24 to 28 s), 156 px box at 24M to 20M (224 to 236 s); non-discriminating, reading applied from PR044/PR059/PR052. Object is a few px.",
+    "assumptions": [
+      "gate-width reading taken from PR044, PR059, PR052"
+    ]
+  },
+  "DOW-UAP-PR052": {
+    "width_px": 1920,
+    "fps": 24,
+    "track": false,
+    "object_extent_px": 105,
+    "notes": "Gate sizes by eye: 29M box 486 px, 33M brackets 600 px, 46M brackets 909 px in 0.8 s with no visible zoom: label follows gate size (0.051 to 0.060 m/px). Afterwards 92M to 93M floats without a visible gate (gate larger than the frame). Object extent: single elongated object about 105 px long (by eye, frame 1170), a cluster of three about 90 px.",
+    "assumptions": [
+      "gate sizes read by eye on a reduced view; glitched video"
+    ]
+  }
+}

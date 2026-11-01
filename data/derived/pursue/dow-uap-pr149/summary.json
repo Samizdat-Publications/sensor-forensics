@@ -1,0 +1,74 @@
+{
+  "clip": "DOW-UAP-PR149",
+  "ship_length_px": 926.2,
+  "object_rate_px_per_frame": [
+    -19.905492212753465,
+    -2.8638188992905476
+  ],
+  "ship_drift_px_per_frame": [
+    0.6246909502262438,
+    -0.0779579185520373
+  ],
+  "v_frame_px_s": 603.3134102835195,
+  "v_rel_ship_px_s": 621.5500767424513,
+  "object_extent_px": {
+    "along_track": 18.0,
+    "cross_track": 8.0
+  },
+  "frames": [
+    15,
+    97
+  ],
+  "bands": {
+    "HK2026_150_200m": {
+      "m_per_px": [
+        0.16195206218959188,
+        0.21593608291945582
+      ],
+      "bound_frame_mps": [
+        97.70785094205131,
+        130.27713458940173
+      ],
+      "bound_rel_ship_mps": [
+        100.66131668253908,
+        134.2150889100521
+      ],
+      "size_cross_at_ratio1_m": [
+        1.295616497516735,
+        1.7274886633556465
+      ]
+    },
+    "lab_120_200m": {
+      "m_per_px": [
+        0.1295616497516735,
+        0.21593608291945582
+      ],
+      "bound_frame_mps": [
+        78.16628075364105,
+        130.27713458940173
+      ],
+      "bound_rel_ship_mps": [
+        80.52905334603126,
+        134.2150889100521
+      ],
+      "size_cross_at_ratio1_m": [
+        1.036493198013388,
+        1.7274886633556465
+      ]
+    }
+  },
+  "HK2026": {
+    "v_px_per_frame": 20.2,
+    "hull_px": 920,
+    "bound_mps": [
+      99,
+      132
+    ]
+  },
+  "geometry_note": "the object stays below the ship's waterline in the image, so for an object above the sea its line of sight meets the sea nearer than the ship: R_obj/R_ship < 1",
+  "assumptions": [
+    "ship seen near broadside (foreshortening only lowers the true m/px, so the bound holds)",
+    "ship length 150 to 200 m (H&K, Handymax) or 120 to 200 m (lab: geared four-crane general cargo or bulk carrier, class not identified)",
+    "30 fps"
+  ]
+}

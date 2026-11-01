@@ -1,0 +1,19 @@
+{
+  "clip": "DOW-UAP-PR078",
+  "label_test": {
+    "n": 11,
+    "m_per_px_median": 0.11538461538461539,
+    "m_per_px_rel_spread": 0.1237744787359896,
+    "gate_px_ratio": 1.0129870129870129,
+    "loglog_slope": 4.972317413220601,
+    "loglog_r": 0.24207880608882484
+  },
+  "m_per_px_range": [
+    0.09615384615384616,
+    0.1346153846153846
+  ],
+  "notes": "Light check: fixed 156 px box, label 21M down to 18M over 24 s, later 15M; at fixed gate size both readings scale with range, so this clip does not discriminate. Applied the PR044/PR059 reading. Object is a few px.",
+  "assumptions": [
+    "gate-width reading taken from PR044, PR059, PR052"
+  ]
+}

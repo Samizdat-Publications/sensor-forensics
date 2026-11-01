@@ -1,0 +1,103 @@
+{
+  "clip": "DOW-UAP-PR111",
+  "gate_label_test": {
+    "n": 6,
+    "m_per_px_median": 4.291666666666666,
+    "m_per_px_rel_spread": 0.6527612054669167,
+    "gate_px_ratio": 14.166666666666666,
+    "loglog_slope": 0.15194000026855656,
+    "loglog_r": 0.26076547476838957
+  },
+  "segments": {
+    "A": {
+      "frames": [
+        765,
+        1185
+      ],
+      "n": 29,
+      "label_range": [
+        48.0,
+        72.0
+      ],
+      "el_range_deg": [
+        -10.0,
+        -7.0
+      ],
+      "h_below_sensor": 8.530854038360323,
+      "h_rel_spread": 0.03642977575566268,
+      "rounding_rel_halfwidth": 0.06209331457615965,
+      "horizontal_closing_per_s": 1.6866365141061341,
+      "slant_closing_per_s": 1.6702509330049247
+    },
+    "B": {
+      "frames": [
+        1230,
+        1275
+      ],
+      "n": 4,
+      "label_range": [
+        386.0,
+        398.0
+      ],
+      "el_range_deg": [
+        -11.0,
+        -10.0
+      ],
+      "h_below_sensor": 71.38212346339228,
+      "h_rel_spread": 0.03180276295812697,
+      "rounding_rel_halfwidth": 0.04719298667155076,
+      "horizontal_closing_per_s": 10.425888432452195,
+      "slant_closing_per_s": 9.590409599999882
+    },
+    "C": {
+      "frames": [
+        1305,
+        1350
+      ],
+      "n": 4,
+      "label_range": [
+        77.0,
+        81.0
+      ],
+      "el_range_deg": [
+        -14.0,
+        -12.0
+      ],
+      "h_below_sensor": 17.081039070358056,
+      "h_rel_spread": 0.04201028085742727,
+      "rounding_rel_halfwidth": 0.0394274502439547,
+      "horizontal_closing_per_s": 3.547455523934108,
+      "slant_closing_per_s": 3.1968032000000615
+    },
+    "D": {
+      "frames": [
+        1380,
+        1470
+      ],
+      "n": 7,
+      "label_range": [
+        228.0,
+        280.0
+      ],
+      "el_range_deg": [
+        -18.0,
+        -15.0
+      ],
+      "h_below_sensor": 71.66571251241979,
+      "h_rel_spread": 0.009771810411357865,
+      "rounding_rel_halfwidth": 0.030433432213315372,
+      "horizontal_closing_per_s": 18.164362334827494,
+      "slant_closing_per_s": 17.62523192857121
+    }
+  },
+  "sea_plane_h_if_B_D_are_surface": 71.52391798790603,
+  "object_altitude_if_metres_and_B_D_surface": {
+    "A": 62.99306394954571,
+    "C": 54.44287891754797
+  },
+  "assumptions": [
+    "label read as slant range in label units (M taken as metres only where stated)",
+    "elevation readout is the line-of-sight depression from the horizontal",
+    "whole-degree display rounding, half width 0.5 deg"
+  ]
+}

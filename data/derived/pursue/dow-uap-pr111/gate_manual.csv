@@ -1,0 +1,7 @@
+frame,gate_shape,gate_px,label_m,method
+847,small square,12,70,"eye, 2x crop, +-2 px"
+960,large square,42,60,"eye, 2x crop, +-2 px"
+1073,H,12,55,"eye, 2x crop, +-2 px"
+1186,H,12,48,"eye, 2x crop, +-2 px"
+1299,two tall vertical bars,170,81,"eye, 2x crop, +-2 px"
+1412,diamond,30,260,"eye, 2x crop, +-2 px"

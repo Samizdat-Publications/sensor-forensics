@@ -1,0 +1,381 @@
+{
+  "DOW-UAP-PR113": {
+    "clip": "DOW-UAP-PR113",
+    "ladder": {
+      "type": "HUD pitch ladder (dive lines numbered downward 0 to 16 s, horizon line near 10 s, climb lines numbered upward after)",
+      "n_samples_used": 89,
+      "n_zero_roll": 78,
+      "spacing_zero_roll_px_per_5": [
+        180.30700000000002,
+        180.54500000000002,
+        181.286
+      ],
+      "px_per_deg_vertical": 36.109,
+      "fit_s0_px": 180.53685491808713,
+      "fit_s0_sd": 0.039626593723838754,
+      "fit_aspect_x_over_y": 1.3062318482240072,
+      "fit_aspect_sd": 0.01955194022087308,
+      "max_rung_angle_used_deg": 13.7,
+      "reticle_ring_by_eye_px": [
+        172,
+        94
+      ]
+    },
+    "object": {
+      "frames": [
+        407,
+        410
+      ],
+      "rate_px_per_frame": [
+        -103.82699999999997,
+        97.57400000000001,
+        142.48063519299737
+      ],
+      "extent_px": [
+        28.0,
+        25.5
+      ]
+    },
+    "cases": {
+      "square pixels (H&K assumption)": {
+        "aspect": 1.0,
+        "omega_deg_s": 118.37544810961036,
+        "omega_rad_s": 2.0660413230363983,
+        "size_deg": 0.775429948212357,
+        "hfov_deg_over_1850px": 51.2337644354593,
+        "range_for_mach1_m": 164.56592431574035,
+        "size_at_100m_m": 1.3533805714874747,
+        "speed_at_100m_mps": 206.60413230363983
+      },
+      "fitted aspect 1.31": {
+        "aspect": 1.3062318482240072,
+        "omega_deg_s": 104.55997027280922,
+        "omega_rad_s": 1.8249157470479145,
+        "size_deg": 0.7061951314076823,
+        "hfov_deg_over_1850px": 39.2225656610029,
+        "range_for_mach1_m": 186.30997104935008,
+        "size_at_100m_m": 1.2325430204618075,
+        "speed_at_100m_mps": 182.49157470479145
+      },
+      "reticle ring by eye 1.8": {
+        "aspect": 1.8,
+        "omega_deg_s": 94.17186983916582,
+        "omega_rad_s": 1.6436091914529865,
+        "size_deg": 0.7061951314076823,
+        "hfov_deg_over_1850px": 28.463202464144057,
+        "range_for_mach1_m": 206.86182686739087,
+        "size_at_100m_m": 1.2325430204618075,
+        "speed_at_100m_mps": 164.36091914529865
+      }
+    },
+    "HK2026": {
+      "px_per_deg": 35.4,
+      "fov_deg": 54,
+      "omega_rad_s": 2.1,
+      "omega_rad_s_recomputed": 2.100311472738939
+    },
+    "assumptions": [
+      "the HUD pitch ladder is conformal (1 ladder degree = 1 degree of view)",
+      "the background did not move across frames 406 to 411 (measured shift under 0.1 px/frame)",
+      "frame rate 30 fps, as the container states"
+    ]
+  },
+  "DOW-UAP-PR149": {
+    "clip": "DOW-UAP-PR149",
+    "ship_length_px": 926.2,
+    "object_rate_px_per_frame": [
+      -19.905492212753465,
+      -2.8638188992905476
+    ],
+    "ship_drift_px_per_frame": [
+      0.6246909502262438,
+      -0.0779579185520373
+    ],
+    "v_frame_px_s": 603.3134102835195,
+    "v_rel_ship_px_s": 621.5500767424513,
+    "object_extent_px": {
+      "along_track": 18.0,
+      "cross_track": 8.0
+    },
+    "frames": [
+      15,
+      97
+    ],
+    "bands": {
+      "HK2026_150_200m": {
+        "m_per_px": [
+          0.16195206218959188,
+          0.21593608291945582
+        ],
+        "bound_frame_mps": [
+          97.70785094205131,
+          130.27713458940173
+        ],
+        "bound_rel_ship_mps": [
+          100.66131668253908,
+          134.2150889100521
+        ],
+        "size_cross_at_ratio1_m": [
+          1.295616497516735,
+          1.7274886633556465
+        ]
+      },
+      "lab_120_200m": {
+        "m_per_px": [
+          0.1295616497516735,
+          0.21593608291945582
+        ],
+        "bound_frame_mps": [
+          78.16628075364105,
+          130.27713458940173
+        ],
+        "bound_rel_ship_mps": [
+          80.52905334603126,
+          134.2150889100521
+        ],
+        "size_cross_at_ratio1_m": [
+          1.036493198013388,
+          1.7274886633556465
+        ]
+      }
+    },
+    "HK2026": {
+      "v_px_per_frame": 20.2,
+      "hull_px": 920,
+      "bound_mps": [
+        99,
+        132
+      ]
+    },
+    "geometry_note": "the object stays below the ship's waterline in the image, so for an object above the sea its line of sight meets the sea nearer than the ship: R_obj/R_ship < 1",
+    "assumptions": [
+      "ship seen near broadside (foreshortening only lowers the true m/px, so the bound holds)",
+      "ship length 150 to 200 m (H&K, Handymax) or 120 to 200 m (lab: geared four-crane general cargo or bulk carrier, class not identified)",
+      "30 fps"
+    ]
+  },
+  "DOW-UAP-PR111": {
+    "clip": "DOW-UAP-PR111",
+    "gate_label_test": {
+      "n": 6,
+      "m_per_px_median": 4.291666666666666,
+      "m_per_px_rel_spread": 0.6527612054669167,
+      "gate_px_ratio": 14.166666666666666,
+      "loglog_slope": 0.15194000026855656,
+      "loglog_r": 0.26076547476838957
+    },
+    "segments": {
+      "A": {
+        "frames": [
+          765,
+          1185
+        ],
+        "n": 29,
+        "label_range": [
+          48.0,
+          72.0
+        ],
+        "el_range_deg": [
+          -10.0,
+          -7.0
+        ],
+        "h_below_sensor": 8.530854038360323,
+        "h_rel_spread": 0.03642977575566268,
+        "rounding_rel_halfwidth": 0.06209331457615965,
+        "horizontal_closing_per_s": 1.6866365141061341,
+        "slant_closing_per_s": 1.6702509330049247
+      },
+      "B": {
+        "frames": [
+          1230,
+          1275
+        ],
+        "n": 4,
+        "label_range": [
+          386.0,
+          398.0
+        ],
+        "el_range_deg": [
+          -11.0,
+          -10.0
+        ],
+        "h_below_sensor": 71.38212346339228,
+        "h_rel_spread": 0.03180276295812697,
+        "rounding_rel_halfwidth": 0.04719298667155076,
+        "horizontal_closing_per_s": 10.425888432452195,
+        "slant_closing_per_s": 9.590409599999882
+      },
+      "C": {
+        "frames": [
+          1305,
+          1350
+        ],
+        "n": 4,
+        "label_range": [
+          77.0,
+          81.0
+        ],
+        "el_range_deg": [
+          -14.0,
+          -12.0
+        ],
+        "h_below_sensor": 17.081039070358056,
+        "h_rel_spread": 0.04201028085742727,
+        "rounding_rel_halfwidth": 0.0394274502439547,
+        "horizontal_closing_per_s": 3.547455523934108,
+        "slant_closing_per_s": 3.1968032000000615
+      },
+      "D": {
+        "frames": [
+          1380,
+          1470
+        ],
+        "n": 7,
+        "label_range": [
+          228.0,
+          280.0
+        ],
+        "el_range_deg": [
+          -18.0,
+          -15.0
+        ],
+        "h_below_sensor": 71.66571251241979,
+        "h_rel_spread": 0.009771810411357865,
+        "rounding_rel_halfwidth": 0.030433432213315372,
+        "horizontal_closing_per_s": 18.164362334827494,
+        "slant_closing_per_s": 17.62523192857121
+      }
+    },
+    "sea_plane_h_if_B_D_are_surface": 71.52391798790603,
+    "object_altitude_if_metres_and_B_D_surface": {
+      "A": 62.99306394954571,
+      "C": 54.44287891754797
+    },
+    "assumptions": [
+      "label read as slant range in label units (M taken as metres only where stated)",
+      "elevation readout is the line-of-sight depression from the horizontal",
+      "whole-degree display rounding, half width 0.5 deg"
+    ]
+  },
+  "DOW-UAP-PR044": {
+    "clip": "DOW-UAP-PR044",
+    "label_test": {
+      "n": 65,
+      "m_per_px_median": 0.09259259259259259,
+      "m_per_px_rel_spread": 0.06162956692964971,
+      "gate_px_ratio": 2.814814814814815,
+      "loglog_slope": 1.0831735505729874,
+      "loglog_r": 0.9427400399507001
+    },
+    "m_per_px_range": [
+      0.08333333333333333,
+      0.1111111111111111
+    ],
+    "notes": "Gate grows 144 to 304 px with label 23M to 33M (6030 to 6090), then a fixed 108 px gate with the label stepping 12M, 11M, 10M, 9M over 60 s. Object: white speck circling near the gate, half-maximum extent 8 to 11 px.",
+    "assumptions": [
+      "object speed is image motion relative to the frame; the sensor holds the gate on a sea point, so the frame is close to sea-fixed"
+    ],
+    "object_extent_px": 9.5,
+    "object_size_at_ratio1_m": [
+      0.7916666666666666,
+      1.0555555555555556
+    ],
+    "object_image_speed_px_s": {
+      "median": 46.1064474883937,
+      "p10": 14.844037331151636,
+      "p90": 123.34225724135888,
+      "n": 1816
+    },
+    "object_speed_at_ratio1_mps": [
+      1.237003110929303,
+      4.269115508184601,
+      13.704695249039874
+    ]
+  },
+  "DOW-UAP-PR059": {
+    "clip": "DOW-UAP-PR059",
+    "label_test": {
+      "n": 10,
+      "m_per_px_median": 0.23529411764705882,
+      "m_per_px_rel_spread": 0.054889036218887945,
+      "gate_px_ratio": 5.2,
+      "loglog_slope": 0.9880650762182152,
+      "loglog_r": 0.9962122633073964
+    },
+    "m_per_px_range": [
+      0.23076923076923078,
+      0.2727272727272727
+    ],
+    "notes": "No zoom between 600 and 1470: label shrinks with the gate (36M at 153 px to 7M at 30 px), m/px 0.23 to 0.27. Object half-maximum extent 14 x 18 px (saturated, blooming overstates size). Object nearly fixed to the terrain while locked (0.8 px/s median, 43 to 95 s); before lock it crossed about 64 px/s (16 m/s at ratio 1, by eye from 1020 to 1110). Later labels (5M and 4M on 30 to 34 px gates at 65 to 92 s, 2M on 33 px after about 97 s) were read but left out of the test because the zoom state is not verified (the object grows on screen).",
+    "assumptions": [
+      "test restricted to frames 740 to 1260, where scene features keep their size"
+    ],
+    "object_extent_px": 16,
+    "object_size_at_ratio1_m": [
+      3.6923076923076925,
+      4.363636363636363
+    ]
+  },
+  "DOW-UAP-PR078": {
+    "clip": "DOW-UAP-PR078",
+    "label_test": {
+      "n": 11,
+      "m_per_px_median": 0.11538461538461539,
+      "m_per_px_rel_spread": 0.1237744787359896,
+      "gate_px_ratio": 1.0129870129870129,
+      "loglog_slope": 4.972317413220601,
+      "loglog_r": 0.24207880608882484
+    },
+    "m_per_px_range": [
+      0.09615384615384616,
+      0.1346153846153846
+    ],
+    "notes": "Light check: fixed 156 px box, label 21M down to 18M over 24 s, later 15M; at fixed gate size both readings scale with range, so this clip does not discriminate. Applied the PR044/PR059 reading. Object is a few px.",
+    "assumptions": [
+      "gate-width reading taken from PR044, PR059, PR052"
+    ]
+  },
+  "DOW-UAP-PR089": {
+    "clip": "DOW-UAP-PR089",
+    "label_test": {
+      "n": 10,
+      "m_per_px_median": 0.14423076923076922,
+      "m_per_px_rel_spread": 0.17889459296371737,
+      "gate_px_ratio": 1.7173913043478262,
+      "loglog_slope": 0.32844904800204966,
+      "loglog_r": 0.8483379650514098
+    },
+    "m_per_px_range": [
+      0.1282051282051282,
+      0.20652173913043478
+    ],
+    "notes": "Light check: 92 px box at 18M to 19M (24 to 28 s), 156 px box at 24M to 20M (224 to 236 s); non-discriminating, reading applied from PR044/PR059/PR052. Object is a few px.",
+    "assumptions": [
+      "gate-width reading taken from PR044, PR059, PR052"
+    ]
+  },
+  "DOW-UAP-PR052": {
+    "clip": "DOW-UAP-PR052",
+    "label_test": {
+      "n": 3,
+      "m_per_px_median": 0.055,
+      "m_per_px_rel_spread": 0.06719015135188891,
+      "gate_px_ratio": 1.8703703703703702,
+      "loglog_slope": 0.7455687386499007,
+      "loglog_r": 0.9980700020154191
+    },
+    "m_per_px_range": [
+      0.050605060506050605,
+      0.059670781893004114
+    ],
+    "notes": "Gate sizes by eye: 29M box 486 px, 33M brackets 600 px, 46M brackets 909 px in 0.8 s with no visible zoom: label follows gate size (0.051 to 0.060 m/px). Afterwards 92M to 93M floats without a visible gate (gate larger than the frame). Object extent: single elongated object about 105 px long (by eye, frame 1170), a cluster of three about 90 px.",
+    "assumptions": [
+      "gate sizes read by eye on a reduced view; glitched video"
+    ],
+    "object_extent_px": 105,
+    "object_size_at_ratio1_m": [
+      5.313531353135313,
+      6.265432098765432
+    ]
+  }
+}

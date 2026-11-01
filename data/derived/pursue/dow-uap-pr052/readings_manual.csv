@@ -1,0 +1,4 @@
+frame,t_s,gate_px,label_m,scene_scale,method,notes
+1110,46.250,486,29,,box height by eye on a 3x reduced view (+-10 px),video glitched; magenta symbology
+1120,46.667,600,33,,bracket gate height by eye (+-10 px),
+1130,47.083,909,46,,bracket gate width by eye (top corners out of view) (+-15 px),square gate assumed

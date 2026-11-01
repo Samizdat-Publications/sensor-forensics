@@ -1,0 +1,12 @@
+frame,t_s,gate_px,label_m,scene_scale,method,notes
+4315,143.833,156,21,,label by eye; gate_px from gate_scan.csv,
+4435,147.833,156,20,,label by eye; gate_px from gate_scan.csv,
+4555,151.833,156,20,,label by eye; gate_px from gate_scan.csv,
+4675,155.833,154,19,,label by eye; gate_px from gate_scan.csv,
+4795,159.833,154,19,,label by eye; gate_px from gate_scan.csv,
+4915,163.833,156,18,,label by eye; gate_px from gate_scan.csv,
+5035,167.833,156,18,,label by eye; gate_px from gate_scan.csv,
+5845,194.833,156,15,,label by eye; gate_px from gate_scan.csv,
+5965,198.833,154,15,,label by eye; gate_px from gate_scan.csv,
+6085,202.833,154,15,,label by eye; gate_px from gate_scan.csv,
+6205,206.833,156,15,,label by eye; gate_px from gate_scan.csv,

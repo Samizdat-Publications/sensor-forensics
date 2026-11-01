@@ -1,0 +1,19 @@
+{
+  "clip": "DOW-UAP-PR089",
+  "label_test": {
+    "n": 10,
+    "m_per_px_median": 0.14423076923076922,
+    "m_per_px_rel_spread": 0.17889459296371737,
+    "gate_px_ratio": 1.7173913043478262,
+    "loglog_slope": 0.32844904800204966,
+    "loglog_r": 0.8483379650514098
+  },
+  "m_per_px_range": [
+    0.1282051282051282,
+    0.20652173913043478
+  ],
+  "notes": "Light check: 92 px box at 18M to 19M (24 to 28 s), 156 px box at 24M to 20M (224 to 236 s); non-discriminating, reading applied from PR044/PR059/PR052. Object is a few px.",
+  "assumptions": [
+    "gate-width reading taken from PR044, PR059, PR052"
+  ]
+}
