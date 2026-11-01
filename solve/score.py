@@ -46,7 +46,7 @@ from scipy.optimize import minimize
 from . import frames as F
 from . import likelihoods as L
 from . import models as M
-from .case_data import CaseData, case_variants, load_case, scoring_config
+from .case_data import CaseData, case_variants, derived_dir, load_case, scoring_config
 from .models.base import Prediction
 from .models.geometry import JetModel
 
@@ -786,7 +786,7 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
     """
     hyps = load_hypotheses() if hypotheses is None else [_resolve_hypothesis(h) for h in hypotheses]
     names = case_variants(case_name) if variants is None else list(variants)
-    d = ROOT / "data" / "derived" / case_name
+    d = derived_dir(case_name)
     if names == [""]:
         out, score_rows = _run_one(load_case(case_name), case_name, hyps, with_range_curve)
         if write:
@@ -811,7 +811,7 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
 
 def _write_variants(case_name: str, names: list) -> dict:
     """Merge per-variant part files (written by `--part`) into scores.csv and results.json."""
-    d = ROOT / "data" / "derived" / case_name
+    d = derived_dir(case_name)
     outs = {v: json.loads((d / f"results_part_{v}.json").read_text(encoding="utf-8")) for v in names}
     rows = [pd.read_csv(d / f"scores_part_{v}.csv") for v in names]
     out = {"case": case_name, "label": outs[names[0]]["label"], "variant_names": names, "variants": outs}
@@ -825,7 +825,7 @@ def _write_variants(case_name: str, names: list) -> dict:
 
 def recheck_rotation(case_name: str) -> dict:
     """Recompute only the rotation diagnostic from the stored best fits (no refitting), and rewrite results.json."""
-    d = ROOT / "data" / "derived" / case_name
+    d = derived_dir(case_name)
     out = json.loads((d / "results.json").read_text(encoding="utf-8"))
     by_id = {h.id: h for h in load_hypotheses()}
     for v, o in (out["variants"].items() if "variants" in out else [("", out)]):
@@ -854,7 +854,7 @@ def main(argv: list[str]) -> int:
         # One sensor variant per process (run them in parallel), then `--merge`.
         v = argv[3]
         o, rows = _run_one(load_case(case, variant=v), case, load_hypotheses(), True)
-        d = ROOT / "data" / "derived" / case
+        d = derived_dir(case)
         d.mkdir(parents=True, exist_ok=True)
         pd.concat(rows, ignore_index=True).to_csv(d / f"scores_part_{v}.csv", index=False, float_format="%.6g")
         (d / f"results_part_{v}.json").write_text(json.dumps(_jsonable(o), indent=1) + "\n", encoding="utf-8")

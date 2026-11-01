@@ -1,0 +1,241 @@
+{
+ "case": "flir1",
+ "variant": "",
+ "sets": {
+  "H-AC": [
+   {
+    "tag": "best",
+    "params": {
+     "jet_heading_deg": 356.85887863288275,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": 0.4999971509930853,
+     "wind_err_e_kt": 2.091514485353116,
+     "wind_err_n_kt": 6.226878742777284,
+     "jet_pitch_deg": 0.0,
+     "range_ref_nmi": 0.7150979130541011,
+     "airspeed_kt": 353.17273114703784,
+     "heading_deg": 356.4929545042056,
+     "vz_fpm": 88.69203496071168
+    },
+    "range_nmi_mean": 0.721419832271351
+   },
+   {
+    "tag": "near",
+    "params": {
+     "range_ref_nmi": 0.5005,
+     "jet_heading_deg": 153.11925866443318,
+     "anchor_daz_deg": -0.07097193493667348,
+     "anchor_del_deg": -0.0626558509371467,
+     "wind_err_e_kt": -4.162598257543152,
+     "wind_err_n_kt": 4.21620444540817,
+     "jet_pitch_deg": 0.0,
+     "airspeed_kt": 374.6106747311151,
+     "heading_deg": 153.0698146217506,
+     "vz_fpm": 251.97605106553056
+    },
+    "range_nmi_mean": 0.5064246738882393,
+    "factor": 0.6
+   },
+   {
+    "tag": "far",
+    "params": {
+     "range_ref_nmi": 1.1441566608865619,
+     "jet_heading_deg": 129.3317959127272,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": 0.49035717999931117,
+     "wind_err_e_kt": -13.471250710305286,
+     "wind_err_n_kt": -1.0198990259313874,
+     "jet_pitch_deg": 0.0,
+     "airspeed_kt": 348.00718984555795,
+     "heading_deg": 126.7610521071097,
+     "vz_fpm": -139.2755546213948
+    },
+    "range_nmi_mean": 1.1511602522897635,
+    "factor": 1.6
+   }
+  ],
+  "H-ART": [
+   {
+    "tag": "best",
+    "params": {
+     "jet_heading_deg": 77.12366025160199,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": 0.49999081155696634,
+     "wind_err_e_kt": 0.20477199037225446,
+     "wind_err_n_kt": -5.779543647188866,
+     "jet_pitch_deg": 0.0,
+     "range_ref_nmi": 0.7590515872814912,
+     "airspeed_kt": 355.49846498086595,
+     "heading_deg": 75.63881664837515,
+     "vz_fpm": 48.9093319350759
+    },
+    "range_nmi_mean": 0.7654567865328383
+   },
+   {
+    "tag": "near",
+    "params": {
+     "range_ref_nmi": 0.5005,
+     "jet_heading_deg": 37.52931062995976,
+     "anchor_daz_deg": 0.47985847671106885,
+     "anchor_del_deg": 0.4997960735748048,
+     "wind_err_e_kt": 3.7828914695634595,
+     "wind_err_n_kt": 5.350006307409473,
+     "jet_pitch_deg": 0.0,
+     "airspeed_kt": 361.16994349115737,
+     "heading_deg": 37.63251686586257,
+     "vz_fpm": 233.47362658903694
+    },
+    "range_nmi_mean": 0.5064295012417347,
+    "factor": 0.6
+   },
+   {
+    "tag": "far",
+    "params": {
+     "range_ref_nmi": 1.214482539650386,
+     "jet_heading_deg": 332.25931780291603,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": 0.5,
+     "wind_err_e_kt": 17.28423997485232,
+     "wind_err_n_kt": 3.6319379325728534,
+     "jet_pitch_deg": 0.0,
+     "airspeed_kt": 351.5326149794578,
+     "heading_deg": 329.24462990639677,
+     "vz_fpm": -188.60222478441756
+    },
+    "range_nmi_mean": 1.2216322716966133,
+    "factor": 1.6
+   }
+  ],
+  "H-CLOSE": [
+   {
+    "tag": "best",
+    "params": {
+     "jet_heading_deg": 152.49424048912996,
+     "anchor_daz_deg": -0.5,
+     "anchor_del_deg": 0.5,
+     "wind_err_e_kt": 20.0,
+     "wind_err_n_kt": -20.0,
+     "jet_pitch_deg": 2.988361480854141,
+     "range_ref_nmi": 2.0,
+     "airspeed_kt": 80.0,
+     "heading_deg": 143.61305794374934,
+     "vz_fpm": -1923.4598568673994
+    },
+    "range_nmi_mean": 2.0611390570266557
+   },
+   {
+    "tag": "near",
+    "params": {
+     "range_ref_nmi": 1.2,
+     "jet_heading_deg": 163.05318485480282,
+     "anchor_daz_deg": -0.5,
+     "anchor_del_deg": 0.5,
+     "wind_err_e_kt": 20.0,
+     "wind_err_n_kt": -20.0,
+     "jet_pitch_deg": 3.480559536247893,
+     "airspeed_kt": 80.0,
+     "heading_deg": 140.78068635444365,
+     "vz_fpm": -1445.1667495451293
+    },
+    "range_nmi_mean": 1.5811365624854326,
+    "factor": 0.6
+   },
+   {
+    "tag": "far",
+    "params": {
+     "range_ref_nmi": 1.998,
+     "jet_heading_deg": 152.5629985433389,
+     "anchor_daz_deg": -0.5,
+     "anchor_del_deg": 0.5,
+     "wind_err_e_kt": 20.0,
+     "wind_err_n_kt": -20.0,
+     "jet_pitch_deg": 3.3790819539348127,
+     "airspeed_kt": 80.0,
+     "heading_deg": 143.60664414317296,
+     "vz_fpm": -1922.0545152290772
+    },
+    "range_nmi_mean": 2.0596989478545105,
+    "factor": 1.6
+   }
+  ],
+  "H-WIT": [
+   {
+    "tag": "best",
+    "params": {
+     "jet_heading_deg": 192.46765058867243,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": -0.01430285973421569,
+     "wind_err_e_kt": -1.906822602748548e-05,
+     "wind_err_n_kt": -1.906822602748548e-05,
+     "jet_pitch_deg": 3.873689489937787,
+     "range_ref_nmi": 30.02236705059392,
+     "knot_e_0": -5142.802473841601,
+     "knot_n_0": -1971.4382965209406,
+     "knot_u_0": 2044.4636268126633,
+     "knot_e_1": -1508.320398761458,
+     "knot_n_1": 1663.5689718989124,
+     "knot_u_1": 11.42565437740268,
+     "knot_e_2": 217.54773684140673,
+     "knot_n_2": -5396.626484106866,
+     "knot_u_2": -428.3976303581585,
+     "knot_e_3": 5915.841880243559,
+     "knot_n_3": 5678.471402564803,
+     "knot_u_3": -1686.4340242130456
+    },
+    "range_nmi_mean": 29.20656114578648
+   },
+   {
+    "tag": "near",
+    "params": {
+     "range_ref_nmi": 18.013420230356353,
+     "jet_heading_deg": 287.6610826854398,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": -0.06366980792907728,
+     "wind_err_e_kt": -0.038161284672536766,
+     "wind_err_n_kt": -0.16125251157578546,
+     "jet_pitch_deg": 3.752550729408147,
+     "knot_e_0": 2942.5963837225972,
+     "knot_n_0": 4199.317920063433,
+     "knot_u_0": 10795.012061342488,
+     "knot_e_1": 3391.188477330874,
+     "knot_n_1": 1506.4976985514513,
+     "knot_u_1": 9602.666697500743,
+     "knot_e_2": -2290.644829892237,
+     "knot_n_2": 495.7731131641631,
+     "knot_u_2": 9305.660190625738,
+     "knot_e_3": 2638.346784048488,
+     "knot_n_3": -3852.689143267855,
+     "knot_u_3": 8638.916929907326
+    },
+    "range_nmi_mean": 17.51033495888814,
+    "factor": 0.6
+   },
+   {
+    "tag": "far",
+    "params": {
+     "range_ref_nmi": 48.035787280950274,
+     "jet_heading_deg": 196.30675945707705,
+     "anchor_daz_deg": 0.5,
+     "anchor_del_deg": -0.05491710918334802,
+     "wind_err_e_kt": -0.059336074843805875,
+     "wind_err_n_kt": 0.07518919371598543,
+     "jet_pitch_deg": 3.8158514566675574,
+     "knot_e_0": -16719.330565555134,
+     "knot_n_0": -9885.287476961354,
+     "knot_u_0": 7128.672399762709,
+     "knot_e_1": -9871.630971282972,
+     "knot_n_1": -2167.281132715594,
+     "knot_u_1": 3868.2350942517805,
+     "knot_e_2": -6977.052593145914,
+     "knot_n_2": -10841.926495847994,
+     "knot_u_2": 3115.140125426362,
+     "knot_e_3": 4312.419782988876,
+     "knot_n_3": 9260.267878301693,
+     "knot_u_3": 1098.8102606986686
+    },
+    "range_nmi_mean": 46.6379505756884,
+    "factor": 1.6
+   }
+  ]
+ }
+}

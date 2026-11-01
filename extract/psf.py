@@ -30,6 +30,7 @@ only high-contrast compact features lie on a straight moving track (symbology, n
 GOFAST they cannot be told apart from compression noise, so neither is used as a bound.
 
 CLI: python -m extract.psf   (writes data/derived/gimbal/psf.json and data/derived/gofast/psf.json)
+     python -m extract.psf flir1   (writes data/derived/flir1_navy/psf.json; see run_flir1)
 """
 
 from __future__ import annotations
@@ -176,7 +177,65 @@ def run() -> dict:
     return res
 
 
+def run_flir1() -> dict:
+    """FLIR1 (REVIEW-M3 Rule P applied to the third video, 11/01/2026).
+
+    The field of view changes on screen (NAR 1.0x / 2.0x, a brief MFOV / WFOV), so every width is expressed in
+    px at the case's reference field (NAR 1.0x, 0.7 deg): native px x fov(frame) / 0.7, the same conversion the
+    case loader applies to the size series. Bounds:
+      - symbology line spread: LOWER bound (recording chain), native px (symbology is not zoomed);
+      - the object's own half-maximum minor axis, median over the scored, unsaturated frames where it is found
+        (UPPER bound; the same rule as GIMBAL and GOFAST), in reference px; also reported per sensor;
+      - GOFAST's point source is NOT carried over: FLIR1 is a different recording chain (a 2004 tape, 352 x 264
+        copy), whose blur can be wider than GOFAST's, so that number does not bound FLIR1's PSF from above.
+    """
+    import yaml
+
+    from solve.case_data import fov_per_frame
+
+    case_dir = ROOT / "data" / "derived" / "flir1_navy"
+    cfg = yaml.safe_load((ROOT / "solve" / "cases" / "flir1.yaml").read_text(encoding="utf-8"))
+    n = int(cfg["n_frames"])
+    t = pd.read_csv(case_dir / "image_track.csv").sort_values("frame").reset_index(drop=True)
+    fl = pd.read_csv(case_dir / "frame_levels.csv").sort_values("frame").reset_index(drop=True)
+    sym = pd.read_csv(ROOT / cfg["files"]["symbology"], dtype=str)
+    sym["frame"] = sym["frame"].astype(int)
+    fov = fov_per_frame(cfg, sym, n)
+    scale = fov / float(cfg["sensor"]["fov_deg"])
+    ok = (t["obj_found"] == 1).to_numpy() & ~fl["blob_saturated"].astype(bool).to_numpy() & np.isfinite(scale)
+    for a, b in cfg["image"].get("exclude_frames", []) or []:
+        ok[int(a):int(b) + 1] = False
+    minor_ref = t["obj_hi_minor_px"].to_numpy(float) * scale
+    sensor = sym[sym["field"] == "sensor"].set_index("frame")["value"].reindex(range(n)).astype(str).to_numpy()
+    per_sensor = {s: {"n_frames": int((ok & (sensor == s)).sum()),
+                      "hi_minor_ref_px_median": float(np.median(minor_ref[ok & (sensor == s)]))
+                      if (ok & (sensor == s)).any() else None}
+                  for s in sorted(set(sensor))}
+    up = float(np.median(minor_ref[ok]))
+    lsf = symbology_lsf("flir1_navy")
+    lows = [v["fwhm_px_median"] for v in lsf.values() if v["fwhm_px_median"]]
+    r = {"symbology_line_spread": lsf,
+         "object_minor": {"n_frames": int(ok.sum()), "hi_minor_ref_px_median": up, "fwhm_upper_px": up,
+                          "per_sensor": per_sensor,
+                          "note": "half-maximum minor axis of the unsaturated blob, px at NAR 1.0x (0.7 deg); a real "
+                                  "object only widens the PSF"},
+         "chain_fwhm_lower_px": float(min(lows)) if lows else None,
+         "reference_field": "px at NAR 1.0x (0.7 deg); native px x fov(frame) / 0.7",
+         "not_used": "GOFAST point source: different recording chain, not an upper bound for FLIR1",
+         "variants": {"default": {"digital_zoom": None, "upper_bounds_fwhm_px": {"own_object_minor": up},
+                                  "psf_fwhm_upper_px": up, "psf_width_px_lo_metric": lo_metric(up),
+                                  "chain_fwhm_lower_px": float(min(lows)) if lows else None}}}
+    (case_dir / "psf.json").write_text(json.dumps(r, indent=1) + "\n", encoding="utf-8")
+    return r
+
+
 def main() -> int:
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "flir1":
+        r = run_flir1()
+        print(json.dumps({k: r[k] for k in ("object_minor", "chain_fwhm_lower_px", "variants")}, indent=1))
+        return 0
     res = run()
     for case, r in res.items():
         print(case, json.dumps(r["variants"], indent=1), "chain lower", r["chain_fwhm_lower_px"],

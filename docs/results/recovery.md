@@ -146,10 +146,52 @@ In plain words:
 - Never recovered (another hypothesis always won on its data): H-AC, H-CLOSE and H-SLOW.
 - Same physics on this case, different priors only (emitter physics counted only where a weighted criterion sees it; such models can differ only where a prior bound or constraint binds, or through the penalty for extra free parameters): H-AC, H-ART, H-CLOSE and H-SLOW.
 
+## FLIR1 (design-set hypotheses only)
+
+Generating parameter sets (mean range of each set, nmi): H-AC best 0.7, near 0.5, far 1.2; H-ART best 0.8, near 0.5, far 1.2; H-CLOSE best 2.1, near 1.6, far 2.1; H-WIT best 29.2, near 17.5, far 46.6.
+
+Confusion matrix (counts of synthetic data sets; rows: the hypothesis that made the data; columns: the winner on the physics-only total; an exact or near tie goes to whichever fit came out ahead, so read ties from the margins below):
+
+| Data made by | H-AC | H-ART | H-CLOSE | H-WIT | correct |
+|---|---|---|---|---|---|
+| H-AC | 1 | 2 | 0 | 0 | 1 of 3 |
+| H-ART | 1 | 2 | 0 | 0 | 2 of 3 |
+| H-CLOSE | 0 | 0 | 2 | 1 | 2 of 3 |
+| H-WIT | 0 | 0 | 0 | 3 | 3 of 3 |
+
+| Data made by | Set | Trial | Winner | Runner-up | Winner's lead over the runner-up | The truth's deficit to the winner | Truth's own fit minus its total at the true parameters |
+|---|---|---|---|---|---|---|---|
+| H-AC | best | 0 | H-AC | H-ART | 0.2 | 0.0 | -1.4 |
+| H-AC | far | 0 | H-ART | H-AC | 1.8 | 1.8 | 1.7 |
+| H-AC | near | 0 | H-ART | H-AC | 6.7 | 6.7 | -19.9 |
+| H-ART | best | 0 | H-ART | H-AC | 9.6 | 0.0 | -1.6 |
+| H-ART | far | 0 | H-AC | H-ART | 0.3 | 0.3 | 7.0 |
+| H-ART | near | 0 | H-ART | H-AC | 14.6 | 0.0 | -7.9 |
+| H-CLOSE | best | 0 | H-WIT | H-ART | 850.5 | 58695.1 | -58710.2 |
+| H-CLOSE | far | 0 | H-CLOSE | H-WIT | 14.5 | 0.0 | -1.2 |
+| H-CLOSE | near | 0 | H-CLOSE | H-WIT | 31.4 | 0.0 | 14.8 |
+| H-WIT | best | 0 | H-WIT | H-ART | 693.0 | 0.0 | 0.3 |
+| H-WIT | far | 0 | H-WIT | H-ART | 673.7 | 0.0 | 0.6 |
+| H-WIT | near | 0 | H-WIT | H-AC | 632.8 | 0.0 | 1.4 |
+
+Optimizer check: in 6 of 12 data sets the generating model's own fit ended more than 1 log unit below its total at the true parameters (those cells understate the truth; read them as a lower bound on its score).
+
+In plain words:
+
+- Data made by H-AC: it wins 1 of 3 (lead over the runner-up 0.2 to 0.2); otherwise the winner is H-ART, with H-AC behind by 1.8 to 6.7.
+- Data made by H-ART: it wins 2 of 3 (lead over the runner-up 9.6 to 14.6); otherwise the winner is H-AC, with H-ART behind by 0.3 to 0.3.
+- Data made by H-CLOSE: it wins 2 of 3 (lead over the runner-up 14.5 to 31.4); otherwise the winner is H-WIT, with H-CLOSE behind by 58695.1 to 58695.1.
+- Data made by H-WIT: it wins 3 of 3 (lead over the runner-up 632.8 to 693.0).
+- At the best-fit parameter sets (the synthetic data that look most like the real video), the winner was: H-AC for data made by H-AC; H-ART for data made by H-ART; H-WIT for data made by H-CLOSE and H-WIT. A hypothesis that wins on data made by several others cannot, by winning on the real data, tell them apart.
+
+- Not separated by this data (a wrong winner, or the true model winning by less than 2.3, a likelihood ratio of 10, at least once): H-AC and H-ART; H-CLOSE and H-WIT.
+- Recovered every time, by a likelihood ratio of 10 or more over every other hypothesis: H-WIT. Data made by these are told apart from all the others here.
+- Same physics on this case, different priors only (emitter physics counted only where a weighted criterion sees it; such models can differ only where a prior bound or constraint binds, or through the penalty for extra free parameters): H-AC and H-ART.
+
 ## Limits
 
 - Few trials per cell: a 1 in a cell is an existence proof that the pair can be confused, not a rate.
 - The synthetic data are drawn from each hypothesis's own model, so this tests separability under the lab's sensor model; errors in that model (shared by every hypothesis) are not tested here.
 - Testimony is not part of this test (physics-only total).
-- GIMBAL at 0.7 deg was not run (next step: python -m solve.recovery gimbal fov070 --trials 2, about 80 minutes on 14 processes; on a shared machine, run it with fewer processes at low priority). At 0.7 deg the resolved size criterion is also in the totals, so the glare and physical groups may separate differently.
+- GIMBAL at 0.7 deg is scored with the apparent-size criterion at weight 0 (D-017: the blob is resolved but saturated), the same as the real 0.7 deg run, so its weighted criteria are the same kinds as at 0.35 deg; the two fields of view differ through the jet's path (turn rate) and the point-spread width, not through which criteria count.
 

@@ -20,7 +20,7 @@ The decision is written to data/derived/<case>/brightness_audit.json; solve/case
 (image.brightness_audit in the case YAML) and, when the criterion is not range-informative, gives
 it weight 0 for every hypothesis (reported, not in any total).
 
-CLI: python -m solve.brightness_audit gimbal|gofast
+CLI: python -m solve.brightness_audit gimbal|gofast|flir1
 """
 
 from __future__ import annotations
@@ -66,18 +66,36 @@ def _steps(y: np.ndarray, half: int = 5, k: float = 6.0) -> list[int]:
     return out
 
 
+def _dir(case_name: str) -> Path:
+    from .case_data import derived_dir
+
+    return derived_dir(case_name)   # data/derived/<case>, or the case YAML's derived_dir (FLIR1: flir1_navy)
+
+
+def frame_levels_path(case_name: str) -> Path:
+    return _dir(case_name) / "frame_levels.csv"
+
+
+def saturated_flags(case_name: str, frames: np.ndarray) -> np.ndarray:
+    """B1 per-frame saturation flag (extract.frame_levels: at least 3 blob pixels within 2 codes of the
+    clip code on the object's side) on the given frames. Shared by the brightness audit (B1) and the
+    D-017 saturated-blob size rule in solve/case_data.py, so both use one definition."""
+    fl = pd.read_csv(frame_levels_path(case_name)).set_index("frame")
+    return fl.loc[np.asarray(frames, int), "blob_saturated"].astype(bool).to_numpy()
+
+
 def audit(case_name: str) -> dict:
     from .case_data import load_case
 
     case = load_case(case_name)
     s = case.series["brightness_trend"]
-    fl = pd.read_csv(ROOT / "data" / "derived" / case_name / "frame_levels.csv").set_index("frame")
-    summ = json.loads((ROOT / "data" / "derived" / case_name / "frame_levels_summary.json").read_text(encoding="utf-8"))
+    fl = pd.read_csv(frame_levels_path(case_name)).set_index("frame")
+    summ = json.loads((_dir(case_name) / "frame_levels_summary.json").read_text(encoding="utf-8"))
     fr, seg = s.frames, s.segment
     y = s.obs
 
     # B1 saturation, on the frames the criterion scores.
-    sat = fl.loc[fr, "blob_saturated"].astype(bool).to_numpy()
+    sat = saturated_flags(case_name, fr)
     sat_frac = float(sat.mean())
     per_seg = {}
     for sg in np.unique(seg):
@@ -154,7 +172,7 @@ def audit(case_name: str) -> dict:
 def main(argv: list[str]) -> int:
     case = argv[1] if len(argv) > 1 else "gimbal"
     out = audit(case)
-    p = ROOT / "data" / "derived" / case / "brightness_audit.json"
+    p = _dir(case) / "brightness_audit.json"
     p.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
     print(json.dumps({k: out[k] for k in ("case", "B1", "B2", "B3", "fails", "decision")}, indent=1))
     return 0

@@ -13,6 +13,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def derived_dir(case: str) -> Path:
+    from .case_data import derived_dir as _d
+
+    return _d(case)
+
+
 def _f(x, nd=1):
     if x is None:
         return "n/a"
@@ -41,6 +47,19 @@ WHY_ZERO = {
     "size_trend": "D-016: the blob is not resolved against the point-spread width measured on this video (REVIEW-M3 item 4)",
     "brightness_trend": "REVIEW-M3 Rule B: the blob is saturated, so its integrated contrast is not range-informative",
 }
+# A data-quality rule other than the default one, identified by the case loader's flag (solve/case_data.py).
+WHY_ZERO_BY_FLAG = {
+    "size_trend": [("D-017: apparent-size criterion reported with weight 0",
+                    "D-017: the blob is resolved but saturated (Rule B1 saturation flag), so its size is clipped, not range-informative")],
+}
+
+
+def _why(c: str, o: dict | None = None) -> str:
+    """Why criterion c has weight 0 on this result (the loader's flag decides which rule applied)."""
+    for prefix, txt in WHY_ZERO_BY_FLAG.get(c, []):
+        if o is not None and any(str(f).startswith(prefix) for f in o.get("flags", [])):
+            return txt
+    return WHY_ZERO.get(c, "weight 0 on this case")
 
 
 def _zero(o: dict) -> list:
@@ -66,7 +85,7 @@ def _added_back(L: list, hyps_by_v: dict, labels: dict, names: dict) -> None:
         if not z:
             continue
         head = f"{labels[v]}: " if labels[v] else ""
-        L.append(head + "; ".join(f"{names.get(c, c)}: {WHY_ZERO.get(c, 'weight 0 on this case')}" for c in z) + ".")
+        L.append(head + "; ".join(f"{names.get(c, c)}: {_why(c, o)}" for c in z) + ".")
         L.append("")
         L.append("| Hypothesis | " + " | ".join(f"+ {names.get(c, c)}: weighted / physics" for c in z) + " | + all: weighted / physics |")
         L.append("|---|" + "---|" * (len(z) + 1))
@@ -89,7 +108,7 @@ def _recovery_lines(case: str, variant: str = "") -> list:
     """Brief confusion matrix from data/derived/<case>/recovery.csv (M3.4), if it exists."""
     import pandas as pd
 
-    p = ROOT / "data" / "derived" / case / "recovery.csv"
+    p = derived_dir(case) / "recovery.csv"
     if not p.exists():
         return ["- Which hypotheses this data can separate in principle: the M3.4 recovery test has not been run for this case."]
     df = pd.read_csv(p, keep_default_na=False, na_values=[""])
@@ -126,7 +145,7 @@ def _bounds(h: dict, d: dict, bnd: list) -> str:
 
 
 def build(case: str) -> str:
-    res = json.loads((ROOT / "data" / "derived" / case / "results.json").read_text(encoding="utf-8"))
+    res = json.loads((derived_dir(case) / "results.json").read_text(encoding="utf-8"))
     hyps = [h for h in res["hypotheses"] if h["valid"]]
     hyps.sort(key=lambda h: h["rank_testimony_weighted"])
     L = []
@@ -197,7 +216,7 @@ def build(case: str) -> str:
         L.append(f"| {_lab(c, res, CRIT_NAMES)} | {_f(wt, 1)} | " + " | ".join(_f(h["criteria"].get(c)) for h in hyps) + " |")
     L.append("")
     for c in _zero(res):
-        L.append(f"- {CRIT_NAMES.get(c, c)}: shown but weight 0 ({WHY_ZERO.get(c, 'weight 0 on this case')}).")
+        L.append(f"- {CRIT_NAMES.get(c, c)}: shown but weight 0 ({_why(c, res)}).")
     if _zero(res):
         L.append("")
     cc = res.get("closure_check") or {}
@@ -354,7 +373,7 @@ def _rotation_plot(res: dict, path: Path) -> str | None:
 
 def build_variants(case: str) -> str:
     import math
-    res = json.loads((ROOT / "data" / "derived" / case / "results.json").read_text(encoding="utf-8"))
+    res = json.loads((derived_dir(case) / "results.json").read_text(encoding="utf-8"))
     names = res["variant_names"]
     V = res["variants"]
     first = V[names[0]]
@@ -373,7 +392,9 @@ def build_variants(case: str) -> str:
     L.append("**Status flags (read first):**")
     L.append("")
     for f in flags:
-        L.append(f"- {f}")
+        where = [v for v in names if f in V[v]["flags"]]
+        tag = "" if len(where) == len(names) else "At " + ", ".join(_fov(V[v]) for v in where) + ": "
+        L.append(f"- {tag}{f}")
     ts = {h.get("testimony_status") for v in names for h in V[v]["hypotheses"] if h["valid"]}
     for s_ in ts:
         L.append(f"- Testimony: {s_}.")
@@ -482,7 +503,7 @@ def build_variants(case: str) -> str:
             L.append(f"| {_lab(c, o, CRIT_NAMES_V)} | {_f(wt, 1)} | " + " | ".join(_f(h["criteria"].get(c)) for h in hyps) + " |")
         L.append("")
         for c in _zero(o):
-            L.append(f"- {CRIT_NAMES_V.get(c, c)} at {_fov(o)}: shown but weight 0 ({WHY_ZERO.get(c, 'weight 0 on this case')}), so it enters no total.")
+            L.append(f"- {CRIT_NAMES_V.get(c, c)} at {_fov(o)}: shown but weight 0 ({_why(c, o)}), so it enters no total.")
         L.append("")
 
     # ---------------------------------------------------------------- sensitivity
@@ -561,7 +582,7 @@ def build_variants(case: str) -> str:
                          f"); {cm['n_predicted_unmatched']} predicted steps have no measured counterpart. Rotation log-likelihood {_f(c['loglik_scaled'])} against {_f(bg[1]['loglik_scaled'])} for the smooth derotation (residual RMS {_f(c['resid_rms_deg'], 2)} deg); change after one parameter's penalty {_f(db['best_coarse_gain_vs_smooth_after_one_parameter_penalty'])}.")
                 L.append("")
                 try:
-                    summ = json.loads((ROOT / "data" / "derived" / case / "image_track_summary.json").read_text(encoding="utf-8"))
+                    summ = json.loads((derived_dir(case) / "image_track_summary.json").read_text(encoding="utf-8"))
                     ref = [int(x["center_frame"]) for x in summ.get("orientation_steps", []) if abs(x["obj_angle_change_deg"]) > 5]
                 except (OSError, KeyError, ValueError):
                     ref = []
@@ -665,7 +686,7 @@ def build_variants(case: str) -> str:
         L.append(f"- **Wind and temperature**: PLACEHOLDER {env['source']} (wind uncertainty {_f(env['wind_sigma_kt'], 0)} kt), ISA temperature at the jet. ERA5 replaces it when `data/weather/era5_gimbal_gofast_profiles.csv` exists; the balloon, slow-mover and wind-related testimony terms move with it.")
     else:
         L.append(f"- **Wind and temperature**: {env['source']}, wind uncertainty {_f(env['wind_sigma_kt'], 0)} kt, jet-level temperature ISA {env['dT_jet_K']:+.1f} K (TAS from Mach uses it). The ERA5 time is nominal: the date and hour of the recording are not certain (the file metadata points to 01/25/2015 near 02 to 03 UTC; the release lists 01/21/2015). The balloon, slow-mover and wind-related testimony terms move with the wind.")
-    trs = ROOT / "data" / "derived" / case / "turn_rate_era5_summary.json"
+    trs = derived_dir(case) / "turn_rate_era5_summary.json"
     if trs.exists():
         te = json.loads(trs.read_text(encoding="utf-8"))
         e0 = next(iter(te.values()))["era5_nominal"]
@@ -685,7 +706,8 @@ def build_variants(case: str) -> str:
     L.append("- **Rotation measurement**: the blob's major-axis angle at the high threshold, noise about 0.9 deg; one shared offset allows a white-hot / black-hot bias. Pixel aspect (frames about 5 percent wide) slightly flattens measured angles and is not corrected (it changes the angles by under 2 deg at 45 deg).")
     for c, txt in (("brightness_trend", "Brightness trend"), ("size_trend", "Apparent size")):
         st = [f"weight 0 at {_fov(V[v])}" if c in _zero(V[v]) else f"in the totals at {_fov(V[v])}" for v in names]
-        L.append(f"- **{txt}**: " + ", ".join(st) + f" (where weight 0: {WHY_ZERO[c]}; see `docs/results/REVIEW-M3.md`).")
+        why = list(dict.fromkeys(_why(c, V[v]) for v in names if c in _zero(V[v]))) or [WHY_ZERO[c]]
+        L.append(f"- **{txt}**: " + ", ".join(st) + f" (where weight 0: {'; '.join(why)}; see `docs/results/REVIEW-M3.md`).")
     L.append("- **Testimony**: the binding Gaussian edge grows quadratically outside a claim's interval, so a single distant memory can dominate a total; the physics-only column is the reading without it.")
     L.append("")
     L.append("## How to read this, and its limits")
@@ -707,7 +729,7 @@ def main(argv):
     case = argv[1] if len(argv) > 1 else "gofast"
     out = ROOT / "docs" / "results" / f"{case}.md"
     out.parent.mkdir(parents=True, exist_ok=True)
-    res = json.loads((ROOT / "data" / "derived" / case / "results.json").read_text(encoding="utf-8"))
+    res = json.loads((derived_dir(case) / "results.json").read_text(encoding="utf-8"))
     text = build_variants(case) if "variants" in res else build(case)
     assert "—" not in text  # no em dashes in reader-facing output
     out.write_text(text, encoding="utf-8")

@@ -165,6 +165,52 @@ def _data_n_eff(t: np.ndarray, y: np.ndarray, degree: int) -> float:
     return L.n_eff_autocorr(L.smooth_residual(t, y, degree))
 
 
+def derived_dir(name: str) -> Path:
+    """Where a case's derived tables live: the case YAML's `derived_dir` (FLIR1: data/derived/flir1_navy, next
+    to its M1 readings), else data/derived/<case>."""
+    p = CASE_DIR / f"{name}.yaml"
+    if p.exists():
+        d = (yaml.safe_load(p.read_text(encoding="utf-8")) or {}).get("derived_dir")
+        if d:
+            return ROOT / d
+    return ROOT / "data" / "derived" / name
+
+
+def _sym_strings(sym: pd.DataFrame, field: str, n: int) -> np.ndarray:
+    """A symbology field as strings on every frame (blank where absent)."""
+    s = sym[sym["field"] == field].set_index("frame")["value"].reindex(range(n))
+    return np.array(["" if pd.isna(v) else str(v) for v in s.to_numpy()], dtype=object)
+
+
+def _segment_ids(keys: list, cues: pd.DataFrame, sym: pd.DataFrame, n: int, polarity_column: str) -> np.ndarray:
+    """Segment id per frame: a new segment at every change of any listed key. "polarity" is the image track's
+    polarity column; any other key is a symbology field (e.g. sensor, zoom, FOV mode)."""
+    cols = []
+    for k in keys:
+        if k == "polarity":
+            cols.append(np.array(["" if pd.isna(v) else str(v) for v in cues[polarity_column].to_numpy()[:n]],
+                                 dtype=object))
+        else:
+            cols.append(_sym_strings(sym, k, n))
+    tup = np.array(["|".join(v) for v in zip(*cols)]) if cols else np.full(n, "")
+    return _segments(tup)
+
+
+def fov_per_frame(cfg: dict, sym: pd.DataFrame, n: int) -> np.ndarray | None:
+    """Field of view (deg) on every frame from the on-screen FOV mode and zoom (sensor.fov_by_frame), or None
+    when the case has one fixed field. Unknown modes (e.g. an unresolved MFOV / WFOV word) give nan."""
+    fb = cfg["sensor"].get("fov_by_frame")
+    if not fb:
+        return None
+    mode = _sym_strings(sym, fb["mode_field"], n)
+    table = {str(k): float(v) for k, v in fb["mode_fov_deg"].items()}
+    fov = np.array([table.get(m, np.nan) for m in mode])
+    if fb.get("divide_by_zoom", False):
+        z = pd.to_numeric(pd.Series(_sym_strings(sym, fb["zoom_field"], n)), errors="coerce").to_numpy(float)
+        fov = fov / z
+    return fov
+
+
 def _segments(pol: np.ndarray) -> np.ndarray:
     seg = np.zeros(len(pol), int)
     for i in range(1, len(pol)):
@@ -273,10 +319,19 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
 
     # Image cues.
     im = cfg["image"]
-    pol = cues[im["polarity_column"]].astype(str).to_numpy()
-    seg_all = _segments(pol)
+    # Segments ("within one polarity", design table). A case may also split at other on-screen settings that
+    # change the blob's scale or gain for any source (FLIR1: sensor, zoom, FOV mode); default: polarity only.
+    seg_all = _segment_ids(list(im.get("segment_by", ["polarity"])), cues, sym, n, im["polarity_column"])
     found = cues[im["found_column"]].to_numpy(int) == 1
+    # Frames excluded from every image series (FLIR1: the unresolved MFOV / WFOV stretch); readouts are kept.
+    for a, b in im.get("exclude_frames", []) or []:
+        found[int(a):int(b) + 1] = False
     size_px = np.where(found, cues[im["size_column"]].to_numpy(float), np.nan)
+    # A field of view that changes on screen (FLIR1 zoom and FOV mode): image sizes are expressed in px at the
+    # case's reference field (sensor.fov_deg), so one px-per-degree scale holds on every frame.
+    fov_f = fov_per_frame(cfg, sym, n)
+    if fov_f is not None:
+        size_px = size_px * fov_f / float(cfg["sensor"]["fov_deg"])
     bright = np.where(found, cues[im["brightness_column"]].to_numpy(float), np.nan)
     with np.errstate(divide="ignore", invalid="ignore"):
         size_log = np.log(np.where(size_px > 0, size_px, np.nan))
@@ -309,9 +364,21 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
     rotation_knots: tuple = ()
     if "rotation" in cfg["criteria"]:
         rc = cfg["rotation"]
-        ang = np.where(found, cues[rc["orientation_column"]].to_numpy(float), np.nan)
+        ok = found.copy()
+        # Optional quality rule (FLIR1): orientation only where the blob is elongated, large and bright enough.
+        if "min_elongation" in rc:
+            ma, mi = (cues[c].to_numpy(float) for c in rc["elongation_columns"])
+            with np.errstate(divide="ignore", invalid="ignore"):
+                ok &= (ma / mi) >= float(rc["min_elongation"])
+        if "min_area_px" in rc:
+            ok &= cues[rc["area_column"]].to_numpy(float) >= float(rc["min_area_px"])
+        if "min_snr" in rc:
+            ok &= cues[rc["snr_column"]].to_numpy(float) >= float(rc["min_snr"])
+        ang = np.where(ok, cues[rc["orientation_column"]].to_numpy(float), np.nan)
         fr = window[np.isfinite(ang[window])]
-        segs = seg_all[fr]
+        rseg = (_segment_ids(list(rc["segment_by"]), cues, sym, n, im["polarity_column"])
+                if "segment_by" in rc else seg_all)
+        segs = rseg[fr]
         y = np.unwrap(ang[fr], period=180.0)   # axial angle: continuous series
         resid = np.full(len(fr), np.nan)
         for sg in np.unique(segs):
@@ -333,7 +400,9 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
         series["background_motion"] = Series("background_motion", fr, bg[fr], np.full(len(fr), -1),
                                              float(np.nanstd(L.smooth_residual(t[fr], bg[fr], deg))),
                                              _data_n_eff(t[fr], bg[fr], deg))
-    elif im["background_mode"] != "turn_rate_band":
+    elif im["background_mode"] not in ("turn_rate_band", "none"):
+        # turn_rate_band: background motion enters through the jet's measured turn-rate nuisance (GIMBAL);
+        # none: not measurable on this clip, no background criterion (FLIR1).
         raise ValueError(f"unknown background_mode {im['background_mode']!r}")
 
     # D-016: the size criterion carries weight only for a resolved object (blob major axis at least
@@ -352,11 +421,29 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
             why = ("point-spread width not measured on this video" if psf is None else
                    f"blob major axis {major:.1f} px is under 3 x the point-spread width {float(psf):.1f} px")
             flags.append(f"D-016: apparent-size criterion reported with weight 0 ({why}); resolution not established.")
+        else:
+            # D-017 (owner ruling): a resolved blob whose size comes from a saturated (clipped) blob is not
+            # range-informative either. Same saturation flag and limit as the brightness audit's B1, on the
+            # size criterion's own scored frames; the same for every hypothesis.
+            from .brightness_audit import SAT_LIMIT, frame_levels_path, saturated_flags
+            if frame_levels_path(name).exists():
+                sat_frac = float(saturated_flags(name, series["size_trend"].frames).mean())
+                if sat_frac > SAT_LIMIT:
+                    weight_overrides["size_trend"] = 0.0
+                    flags.append(f"D-017: apparent-size criterion reported with weight 0 (resolved, but the blob is "
+                                 f"saturated on {100 * sat_frac:.0f} percent of its scored frames, over the "
+                                 f"{100 * SAT_LIMIT:.0f} percent limit of Rule B1); size is clipped, not range-informative.")
+            else:
+                flags.append("D-017: blob saturation not measured on this video (no frame_levels.csv); "
+                             "apparent-size criterion kept.")
 
     # REVIEW-M3 item 1 (Rule B): the brightness criterion carries weight only when the audit found the
     # measured brightness range-informative (not saturated, not dominated by frame-level gain or level,
     # no zoom change). The decision is the audit's (solve/brightness_audit.py), the same for every hypothesis.
-    if im.get("brightness_audit"):
+    if im.get("brightness_audit") and not (ROOT / im["brightness_audit"]).exists():
+        # Only while the audit itself is being run (it loads the case to read the scored series).
+        flags.append("REVIEW-M3 Rule B: brightness audit not yet run on this case; brightness criterion kept.")
+    elif im.get("brightness_audit"):
         ba = json.loads((ROOT / im["brightness_audit"]).read_text(encoding="utf-8"))
         if not ba.get("range_informative", True):
             weight_overrides["brightness_trend"] = 0.0

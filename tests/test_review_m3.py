@@ -94,9 +94,31 @@ def test_gimbal_scores_the_era5_turn_rate(gimbal035, gimbal070):
 def test_d016_uses_the_measured_point_spread_width(gimbal035, gimbal070, gofast):
     assert gimbal035.weight_overrides.get("size_trend") == 0.0
     assert gofast.weight_overrides.get("size_trend") == 0.0
-    assert "size_trend" not in gimbal070.weight_overrides
+    # At 0.7 deg D-016 finds the blob resolved; the weight then comes from D-017 (saturation), not D-016.
+    assert not any(f.startswith("D-016") for f in gimbal070.flags)
     from extract.psf import lo_metric
     assert lo_metric(2.0) < lo_metric(4.0) < lo_metric(8.0)
+
+
+def test_d017_saturated_blob_size_carries_weight_0(gimbal035, gimbal070, gofast):
+    """D-017: a resolved blob that is saturated (Rule B1's flag and limit, on the size criterion's own
+    frames) gives the size criterion weight 0 for the case; unresolved cases are left to D-016."""
+    from solve.brightness_audit import SAT_LIMIT, saturated_flags
+    frac = float(saturated_flags("gimbal", gimbal070.series["size_trend"].frames).mean())
+    assert frac > SAT_LIMIT
+    assert gimbal070.weight_overrides.get("size_trend") == 0.0
+    assert any(f.startswith("D-017: apparent-size criterion reported with weight 0") for f in gimbal070.flags)
+    for c in (gimbal035, gofast):
+        assert not any(f.startswith("D-017") for f in c.flags)
+    # Weight-0 criteria leave the BIC n: only line of sight and rotation remain from the data series.
+    c = gimbal070
+    kept = c.readouts["azimuth"].n_eff + c.readouts["elevation"].n_eff + c.series["rotation"].n_eff
+    assert abs(c.n_eff_total - kept) < 1e-9
+    for h in S.load_hypotheses():
+        specs = S.param_specs(gimbal070, h)
+        p = {x.name: (x.mean if x.prior == "normal" else x.from_unit(0.5)) for x in specs}
+        row = S.score(gimbal070, h, p).set_index("criterion").loc["size_trend"]
+        assert row["weight"] == 0.0 and row["weighted"] == 0.0
 
 
 def test_synthetic_data_keep_the_display_quantization(gofast):

@@ -37,6 +37,7 @@ parameters on that synthetic data set (a check on the optimizer: its own fit sho
 
 CLI: python -m solve.recovery gimbal fov035 [--procs 12] [--trials 2]
      python -m solve.recovery gofast "" [--procs 12] [--trials 2]
+     python -m solve.recovery flir1 "" --design-set --procs 4   (FLIR1: only the hypotheses whose design row names it)
      python -m solve.recovery --report   (docs/results/recovery.md)
 Writes data/derived/<case>/recovery_sets[_<variant>].json and data/derived/<case>/recovery.csv (all variants).
 """
@@ -55,7 +56,7 @@ import pandas as pd
 from . import frames as F
 from . import likelihoods as L
 from . import score as S
-from .case_data import load_case, scoring_config
+from .case_data import derived_dir, load_case, scoring_config
 
 ROOT = Path(__file__).resolve().parents[1]
 FIT_KW: dict = {}   # the real-data runs' fit settings (solve/scoring.yaml), the same for every hypothesis
@@ -65,12 +66,21 @@ SEED = 20261101
 
 # ----------------------------------------------------------------------------- helpers
 
-def _hyps() -> dict:
-    return {h.id: h for h in S.load_hypotheses()}
+def _hyps(only: list | None = None) -> dict:
+    """Every hypothesis, or only the listed ids (the --design-set option: the hypotheses whose design-table
+    row applies to the case; the same list is both the generators and the fitted set)."""
+    allh = {h.id: h for h in S.load_hypotheses()}
+    return {k: v for k, v in allh.items() if only is None or k in only}
+
+
+def design_set(case_name: str) -> list:
+    """Ids of the hypotheses whose `applies_to` names the case's label (the binding design table)."""
+    label = str(load_case(case_name).cfg.get("label", case_name)).upper()
+    return sorted(h.id for h in S.load_hypotheses() if label in h.applies_to)
 
 
 def _results(case_name: str, variant: str) -> dict:
-    out = json.loads((ROOT / "data" / "derived" / case_name / "results.json").read_text(encoding="utf-8"))
+    out = json.loads((derived_dir(case_name) / "results.json").read_text(encoding="utf-8"))
     return out["variants"][variant] if variant else out
 
 
@@ -176,7 +186,7 @@ def synthetic_case(case, hyp, params: dict, rng: np.random.Generator):
 def run_dataset(task: dict) -> list:
     """One synthetic data set: generate, then fit every hypothesis (physics-only)."""
     case = load_case(task["case"], variant=task["variant"] or None)
-    hyps = _hyps()
+    hyps = _hyps(task.get("only"))
     gen = hyps[task["generator"]]
     rng = np.random.default_rng(task["seed"])
     syn = synthetic_case(case, gen, task["params"], rng)
@@ -209,12 +219,13 @@ def main(argv: list[str]) -> int:
     variant = argv[2] if len(argv) > 2 else ""
     procs = int(argv[argv.index("--procs") + 1]) if "--procs" in argv else 12
     trials = int(argv[argv.index("--trials") + 1]) if "--trials" in argv else 1
-    d = ROOT / "data" / "derived" / case_name
+    only = design_set(case_name) if "--design-set" in argv else None
+    d = derived_dir(case_name)
     sets_path = d / f"recovery_sets{'_' + variant if variant else ''}.json"
     if "--reuse-sets" in argv and sets_path.exists():
         sets = json.loads(sets_path.read_text(encoding="utf-8"))["sets"]
     else:
-        hyp_ids = sorted(_hyps())
+        hyp_ids = sorted(_hyps(only))
         with Pool(min(procs, len(hyp_ids))) as pool:
             parts = pool.starmap(_sets_one, [(case_name, variant, hid) for hid in hyp_ids])
         sets = {k: v for p in parts for k, v in p.items()}
@@ -228,7 +239,7 @@ def main(argv: list[str]) -> int:
             for t in range(trials):
                 tasks.append({"case": case_name, "variant": variant, "generator": gid, "tag": st["tag"],
                               "params": st["params"], "range_nmi_mean": st["range_nmi_mean"], "trial": t,
-                              "seed": SEED + 1000 * k + t})
+                              "seed": SEED + 1000 * k + t, "only": only})
             k += 1
     rows = []
     part = d / f"recovery_part_{variant or 'default'}.csv"
@@ -236,7 +247,7 @@ def main(argv: list[str]) -> int:
         for r in pool.imap_unordered(run_dataset, tasks):
             rows += r
             pd.DataFrame(rows).to_csv(part, index=False, float_format="%.6g")
-            print(f"{len(rows) // len(_hyps())}/{len(tasks)} data sets done", flush=True)
+            print(f"{len(rows) // len(_hyps(only))}/{len(tasks)} data sets done", flush=True)
     df = pd.DataFrame(rows)
     best = df[df["valid"]].groupby(["generator", "set", "trial"])["total_physics_only"].transform("max")
     df["winner"] = df["valid"] & (df["total_physics_only"] == best.reindex(df.index))
@@ -304,7 +315,7 @@ def _fmt_ids(ids) -> str:
 
 
 def report_lines(case_name: str, variant: str, label: str) -> list:
-    p = ROOT / "data" / "derived" / case_name / "recovery.csv"
+    p = derived_dir(case_name) / "recovery.csv"
     df = pd.read_csv(p, keep_default_na=False, na_values=[""])
     df["variant"] = df["variant"].astype(object).fillna("").astype(str)
     df = df[df["variant"] == variant]
@@ -313,7 +324,7 @@ def report_lines(case_name: str, variant: str, label: str) -> list:
     ids = sorted(set(df["fitted"]))
     key = ["generator", "set", "trial"]
     L = [f"## {label}", ""]
-    sp = ROOT / "data" / "derived" / case_name / f"recovery_sets{'_' + variant if variant else ''}.json"
+    sp = derived_dir(case_name) / f"recovery_sets{'_' + variant if variant else ''}.json"
     sets = json.loads(sp.read_text(encoding="utf-8"))["sets"] if sp.exists() else {}
     if sets:
         L.append("Generating parameter sets (mean range of each set, nmi): " + "; ".join(
@@ -418,8 +429,9 @@ def write_report() -> Path:
     L.append("")
     for case_name, variant, label in (("gimbal", "fov035", "GIMBAL, 0.35 deg field of view"),
                                       ("gimbal", "fov070", "GIMBAL, 0.7 deg field of view"),
-                                      ("gofast", "", "GOFAST")):
-        p = ROOT / "data" / "derived" / case_name / "recovery.csv"
+                                      ("gofast", "", "GOFAST"),
+                                      ("flir1", "", "FLIR1 (design-set hypotheses only)")):
+        p = derived_dir(case_name) / "recovery.csv"
         if not p.exists():
             continue
         d = pd.read_csv(p, keep_default_na=False, na_values=[""])
@@ -430,7 +442,7 @@ def write_report() -> Path:
     L.append("- Few trials per cell: a 1 in a cell is an existence proof that the pair can be confused, not a rate.")
     L.append("- The synthetic data are drawn from each hypothesis's own model, so this tests separability under the lab's sensor model; errors in that model (shared by every hypothesis) are not tested here.")
     L.append("- Testimony is not part of this test (physics-only total).")
-    L.append("- GIMBAL at 0.7 deg was not run (next step: python -m solve.recovery gimbal fov070 --trials 2, about 80 minutes on 14 processes; on a shared machine, run it with fewer processes at low priority). At 0.7 deg the resolved size criterion is also in the totals, so the glare and physical groups may separate differently.")
+    L.append("- GIMBAL at 0.7 deg is scored with the apparent-size criterion at weight 0 (D-017: the blob is resolved but saturated), the same as the real 0.7 deg run, so its weighted criteria are the same kinds as at 0.35 deg; the two fields of view differ through the jet's path (turn rate) and the point-spread width, not through which criteria count.")
     L.append("")
     text = "\n".join(L) + "\n"
     assert "—" not in text

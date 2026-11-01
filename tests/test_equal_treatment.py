@@ -64,7 +64,7 @@ def test_hypothesis_files_hold_no_code_paths():
         assert h.sources, f"{h.id} lists no sources"
 
 
-@pytest.fixture(scope="module", params=["gofast", "gimbal"])
+@pytest.fixture(scope="module", params=["gofast", "gimbal", "flir1"])
 def case(request):
     return load_case(request.param)
 

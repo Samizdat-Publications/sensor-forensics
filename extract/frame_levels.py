@@ -36,7 +36,15 @@ CLIP_TOL = 2          # codes: "at the clip" means within this many gray levels 
 OBJ_BOX = 30          # px half size of the object box masked from the frame statistics
 
 
+# Fixed background tile for cases without a cloud tile of their own. FLIR1 (352 x 264 copy, active picture
+# x 54 to 294, y 17 to 251): a lower-left sky tile clear of the elevation box (y <= 137 with its pad), the
+# airspeed / Mach boxes (y >= 221) and the reticle; chosen from the layout before any level was measured.
+LEVEL_TILES: dict[str, tuple[int, int, int, int]] = {"flir1_navy": (58, 140, 150, 215)}
+
+
 def _tile(case: str) -> tuple[int, int, int, int]:
+    if case in LEVEL_TILES:
+        return LEVEL_TILES[case]
     t = CASES[case].cloud_tile
     return t if t is not None else CASES["gimbal"].cloud_tile
 

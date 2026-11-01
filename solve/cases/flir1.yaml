@@ -1,0 +1,149 @@
+# Case configuration for M3 scoring: FLIR1 ("Tic Tac", 11/14/2004, F/A-18F, ATFLIR, IR and TV, no range on screen).
+# Read by solve/case_data.py. Case data only: nothing here names or favors a hypothesis.
+# Written 11/01/2026 (M3, FLIR1 scoring) before any FLIR1 hypothesis was fitted.
+
+case: flir1
+label: FLIR1
+fps: 29.97002997002997          # 30000 / 1001 (Sitrec SitFlir1.js:8-9: 29.97 fps)
+n_frames: 2288                  # official NAVAIR 2020 copy (data/derived/flir1_navy/frames_meta.json)
+derived_dir: data/derived/flir1_navy   # outputs (scores.csv, results.json, recovery.csv) sit with the M1 readings
+
+files:
+  symbology: data/derived/flir1_navy/symbology_final.csv
+  symbology_summary: data/derived/flir1_navy/symbology_summary.json
+  image_track: data/derived/flir1_navy/image_track.csv
+  transitions: data/derived/flir1_navy/transitions.csv   # interlaced readout-change frames (not scored; for reference)
+
+# Frames scored: all 2288. The azimuth readout is on screen on every frame; the image series use the frames where
+# the object is found (1705 of 2288, image_track_summary.json), as on every case.
+track_window:
+  rule: field_present
+  field: azimuth
+
+readouts:
+  # Whole degrees; 9 of 14 clean azimuth changes fall on residue 5 of a 6-frame cycle (symbology_summary.json).
+  azimuth: {field: azimuth, step: 1.0, update: summary_phase}
+  # The elevation changes once (6 to 5 at f682), so it has no change phase of its own; it is drawn by the same
+  # display update as the azimuth (as on GIMBAL).
+  elevation: {field: elevation, step: 1.0, update: phase_of, phase_field: azimuth}
+update_modulus: 6
+
+# D-016 display rounding convention, set once for this video and shared by every hypothesis: ROUND. Evidence: the
+# display shows a signed zero ("0L" held f1151 to f1336), which a rounding (or truncation toward zero) display
+# produces and truncation toward minus infinity ("floor", the loader's other option) cannot (floor would show
+# 0 only for angles in [0, 1), i.e. to the right). Same convention as GIMBAL.
+display_rounding: round
+
+jet:
+  altitude_field: altitude      # ft, pressure altitude readout (19,990 / 20,000)
+  mach_field: mach              # 0.54 / 0.55; TAS from Mach with the ERA5 temperature (about 333 kt, as Sitrec's 333)
+  bank_column: bank_deg         # horizon-bar bank, image_track.csv (M1: reliable, -0.7 to +1.8 deg)
+  bank_smooth_frames: 31
+  # Turn rate: the coordinated-turn rate from the bank, g tan(bank) / TAS (no cloud or ocean texture to measure it
+  # from; background motion is not measurable on this clip). Sitrec flies FLIR1 straight (bank 0, SitFlir1.js:220-228).
+  pitch_deg: 3.8                # Sitrec SitFlir1.js:408 (angle of attack of the F/A-18F model); refined by the shared nuisance below
+  pitch_scale_with_bank: true   # Sitrec scaleJetPitch, as on GIMBAL
+  convention: level             # az from the nose in the level plane, el from the local horizontal (Sitrec)
+
+sensor:
+  # Field of view per frame from the on-screen zoom and FOV mode (sensor setting, shared by every hypothesis):
+  # NAR 0.7 deg at 1.0x and 0.35 deg at 2.0x (docs/audit/flir1.md, Sitrec Flir1 FOV Data.csv); MFOV 3 deg, WFOV 6 deg.
+  # The TV channel is assumed to share the IR channel's NAR field (no separate TV value is documented in the lab's
+  # sources; ASSUMPTION, listed on the results page).
+  fov_deg: 0.7                  # reference field: image sizes are expressed in px at NAR 1.0x
+  fov_by_frame:
+    mode_field: fov
+    zoom_field: zoom
+    mode_fov_deg: {NAR: 0.7, MFOV: 3.0, WFOV: 6.0}
+    divide_by_zoom: true
+  picture_width_px: 244.0       # active picture width of the 352 x 264 copy (columns 52 to 295, extract.image_cues.active_rect)
+  pixel_aspect_x: 1.0           # not measured on this copy (ASSUMPTION); enters only the image angles (rotation)
+
+image:
+  polarity_column: polarity     # WHT throughout (M1); the column is blank in image_track.csv
+  found_column: obj_found
+  size_column: obj_lo_major_px      # blob length (px), low threshold; converted to px at the reference field
+  brightness_column: obj_lo_integ   # integrated contrast, low threshold
+  min_segment_frames: 20
+  # Segments for the size and brightness trends ("within one polarity", design table): also split at every change of
+  # the sensor (IR / TV: a different camera), the zoom (1.0 / 2.0) and the FOV mode, because each changes the blob's
+  # scale and gain for any source (REVIEW-M3 Rule B3: a zoom change inside a segment would otherwise be unmodeled).
+  segment_by: [polarity, sensor, zoom, fov]
+  # The brief MFOV / WFOV stretch (f2169 to f2221: the first letter is not resolvable, docs/audit/flir1.md M1) is
+  # EXCLUDED from every image series (its field of view is 3 or 6 deg, unknown which). The angle readouts there
+  # do not depend on the field of view and are kept.
+  exclude_frames: [[2169, 2221]]
+  # Background motion is not measurable on this clip (featureless sky; image_track.csv bg_* are noise), so there is
+  # no background-motion criterion; the turn rate comes from the bank.
+  background_mode: none
+  # REVIEW-M3 item 4 (Rule P): point-spread width measured on this video by extract/psf.py (upper bound, in the size
+  # criterion's metric, px at the reference field).
+  psf_file: data/derived/flir1_navy/psf.json
+  # REVIEW-M3 item 1 (Rule B): brightness audit decision (solve/brightness_audit.py).
+  brightness_audit: data/derived/flir1_navy/brightness_audit.json
+
+rotation:
+  orientation_column: obj_hi_angle_deg   # major-axis orientation, high threshold (as GIMBAL)
+  noise_window_frames: 9
+  # Quality rule, stated before any FLIR1 orientation was examined: the orientation of a nearly round or faint blob
+  # is not a measurement, so only frames where the high-threshold blob is elongated (major / minor at least 1.5),
+  # has at least 6 px and an SNR of at least 8 are scored. Same frames for every hypothesis.
+  min_elongation: 1.5
+  min_area_px: 6
+  min_snr: 8.0
+  elongation_columns: [obj_hi_major_px, obj_hi_minor_px]
+  area_column: obj_hi_area_px
+  snr_column: obj_snr
+  # One measurement offset per sensor (IR / TV) and polarity segment, as GIMBAL has per polarity (a camera change can
+  # bias the thresholded orientation); zoom does not change an angle, so it does not split.
+  segment_by: [polarity, sensor]
+  physical_spline_knots: [4, 8, 16, 32, 64, 128]
+
+weather:
+  event: flir1
+  time_utc: "2004-11-14T20:30"      # Sitrec SitFlir1.js:15-18 ("approximately between 20:00 and 21:00 UTC")
+  wind_sigma_kt_era5: 5.0
+  placeholder:
+    # Used only while data/weather/era5_flir1_profiles.csv is missing. FLAGGED in every output.
+    source: igra
+    file: data/weather/igra_USM00072293_flir1.csv   # San Diego (Miramar) radiosonde
+    time: "2004-11-15T00:00Z"
+    wind_sigma_kt: 20.0
+
+criteria: [line_of_sight, size_trend, rotation, brightness_trend, testimony]
+
+range_curve_nmi: [0.5, 1.0, 2.0, 5.0, 10.0, 15.0, 20.0, 30.0, 40.0, 60.0]
+
+# Shared nuisance parameters: identical for every hypothesis on this case.
+shared_parameters:
+  jet_heading_deg:
+    prior: uniform
+    bounds: [0.0, 360.0]
+    periodic: true
+    source: "Not on screen (Sitrec uses 227 deg, SitFlir1.js:270, not a reading). Fitted jointly; constrained through the wind and the testimony quantities that depend on it."
+  anchor_daz_deg:
+    prior: uniform
+    bounds: [-0.5, 0.5]
+    source: "The az readout at the reference frame is a whole degree (rounded); the true angle lies within +-0.5 deg of it."
+  anchor_del_deg:
+    prior: uniform
+    bounds: [-0.5, 0.5]
+    source: "As above for elevation."
+  wind_err_e_kt:
+    prior: normal
+    mean: 0.0
+    sd: environment.wind_sigma_kt
+    source: "Error of the modeled wind at the object's altitude (ERA5 about 5 kt; placeholder 20 kt)."
+  wind_err_n_kt:
+    prior: normal
+    mean: 0.0
+    sd: environment.wind_sigma_kt
+    source: "As above, north component."
+  jet_pitch_deg:
+    prior: normal
+    mean: 3.8
+    sd: 1.5
+    bounds: [0.0, 8.0]
+    source: "Jet pitch (nose up) before Sitrec's 1/cos(bank) scaling: Sitrec SitFlir1.js:408 angle of attack 3.8 deg; spread as GIMBAL (_PLAN.md M2.3, 4 +- 2 deg). Enters only the pod roll and the image horizon (rotation criterion)."
+
+testimony_case: flir1

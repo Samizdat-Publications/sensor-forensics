@@ -1,0 +1,52 @@
+{
+ "symbology_line_spread": {
+  "horizontal": {
+   "n_profiles": 803,
+   "fwhm_px_median": 2.663068181818182,
+   "fwhm_px_p25_p75": [
+    1.6690180903942964,
+    5.091938978158087
+   ],
+   "n_strokes": 56
+  },
+  "vertical": {
+   "n_profiles": 254,
+   "fwhm_px_median": 3.342497515528782,
+   "fwhm_px_p25_p75": [
+    2.6877664996055337,
+    3.9703589143954012
+   ],
+   "n_strokes": 17
+  }
+ },
+ "object_minor": {
+  "n_frames": 1003,
+  "hi_minor_ref_px_median": 1.7638,
+  "fwhm_upper_px": 1.7638,
+  "per_sensor": {
+   "IR": {
+    "n_frames": 972,
+    "hi_minor_ref_px_median": 1.7638
+   },
+   "TV": {
+    "n_frames": 31,
+    "hi_minor_ref_px_median": 3.3558
+   }
+  },
+  "note": "half-maximum minor axis of the unsaturated blob, px at NAR 1.0x (0.7 deg); a real object only widens the PSF"
+ },
+ "chain_fwhm_lower_px": 2.663068181818182,
+ "reference_field": "px at NAR 1.0x (0.7 deg); native px x fov(frame) / 0.7",
+ "not_used": "GOFAST point source: different recording chain, not an upper bound for FLIR1",
+ "variants": {
+  "default": {
+   "digital_zoom": null,
+   "upper_bounds_fwhm_px": {
+    "own_object_minor": 1.7638
+   },
+   "psf_fwhm_upper_px": 1.7638,
+   "psf_width_px_lo_metric": 3.8853265624953286,
+   "chain_fwhm_lower_px": 2.663068181818182
+  }
+ }
+}

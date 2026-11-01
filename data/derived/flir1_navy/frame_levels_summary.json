@@ -1,0 +1,21 @@
+{
+ "case": "flir1_navy",
+ "active_rect": [
+  54,
+  17,
+  294,
+  251
+ ],
+ "tile": [
+  58,
+  140,
+  150,
+  215
+ ],
+ "clip_code_bright": 255,
+ "clip_code_dark": 0,
+ "clip_tolerance_codes": 2,
+ "object_box_masked_px": 30,
+ "saturated_frames": 652,
+ "frames": 2288
+}
