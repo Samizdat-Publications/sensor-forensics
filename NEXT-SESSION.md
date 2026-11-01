@@ -1,23 +1,28 @@
 # NEXT-SESSION.md
 
-Last updated: 11/01/2026 (overnight pause requested by Stewart: the jump-sim project needs the CPU)
+Last updated: 11/01/2026 (weekly quota at 99 percent; Stewart will reset it)
 
 ## Where we are
 
-- Checkpoints passed and tagged: cp-01 (data audit), cp-02 (symbology, fresh blind sample), cp-03 (geometry and reproductions, with documented differences and the field-of-view condition). Reviews in `artifacts/review/`.
-- Owner rulings D-010 to D-014 (testimony high weight with a physics-only total beside it; PURSUE frozen to 8 clips; schema v0.1 here); lab decisions D-015 (25 percent floor on recalled numbers; H-WIT range free) and D-016 (size criterion only for resolved objects; rounding convention shared).
-- M3 under way: single scoring path (`solve/score.py`), hypotheses as data (`solve/hypotheses/`), testimony likelihoods (`solve/testimony.py`, 160 claims in `data/testimony/`), weather (`solve/weather.py`, ERA5 1 deg plus IGRA), FLIR1 readouts done (range line is a constant 99.9 placeholder from frame 973).
-- GOFAST scored (`docs/results/gofast.md`). GIMBAL scored but PROVISIONAL (`docs/results/gimbal.md` banner): brightness criterion audit, equal range priors, ERA5 turn rate, point-spread width.
-- M3 review DONE and committed (`docs/results/REVIEW-M3.md`): GIMBAL brightness weight 0 (saturated blob), equal 0.5 to 60 nmi range priors, ERA5 turn rate (changes about 0.005 deg/s), point-spread width measured. Recovery test (`docs/results/recovery.md`): GIMBAL rotation separates glare from physical models; GOFAST cannot separate balloon, slow flier, glare-on-slow-target. GIMBAL recovery at 0.7 deg not yet run. Q-007 open (size of a saturated blob at 0.7 deg; default weight 0).
+- Tagged: cp-01, cp-02, cp-03. Reviews in `artifacts/review/`.
+- Owner rulings D-010 to D-014, D-017; lab decisions D-015, D-016. Open questions: Q-003 (publish later?), Q-008 (FLIR1 scoring judgment calls; defaults in use).
+- M3 scoring done for all three Navy videos through one path (`solve/score.py`), both totals reported, testimony weighted high (D-011):
+  - GOFAST (`docs/results/gofast.md`): balloon, slow mover, glare-on-slow-target fit one path at about 13,200 ft; data cannot separate them (recovery test).
+  - GIMBAL (`docs/results/gimbal.md`, both fields of view): physics-only led by the balloon model, testimony-weighted by the free path; free-path data is always won by the balloon model (not separable); rotation separates glare from physical objects.
+  - FLIR1 (`docs/results/flir1.md`): free path leads both totals; glare models lose on rotation.
+  - Recovery matrices: `docs/results/recovery.md`. Review decisions: `docs/results/REVIEW-M3.md`.
+- M4 started: app shell committed (`app/`, three.js 0.170.0 vendored; `tools/build_app_data.py`, `tools/serve.py`; design in `docs/design/app.md`; screenshots in `artifacts/cp05/`).
+- A discriminators worker (M3.6) may have left uncommitted files: `solve/discriminators.py`, `tests/test_discriminators.py`, `data/derived/<case>/discriminators.json`, `docs/results/discriminators.md`. Check `git status`; run `tools/gate.py`; commit if green, otherwise finish it.
 
 ## Do next (in order)
 
-1. GIMBAL recovery test at 0.7 deg (low priority if anything else is running).
-2. FLIR1 scoring through the same path (`solve/cases/flir1.yaml`), testimony included.
-3. Discriminators per video (`docs/results/<case>.md`), equal-treatment review, CP-04 with an independent check.
-4. Then M4 app, M5 (8 frozen PURSUE clips), M6 exports and schema v0.1.
+1. Finish/commit M3.6 discriminators (see above), add a FLIR1 section.
+2. Rebuild app data (`tools/build_app_data.py --no-frames`) since GIMBAL/FLIR1 results changed; rerun the node parity test.
+3. CP-04: write `checkpoints/CP-04.md` (results tables per video with per-criterion scores and range curves; equal-treatment evidence: `tests/test_equal_treatment.py`), run an independent check (verifier agent), fix, tag cp-04.
+4. M4 views (cockpit re-render frame-locked, god's-eye, range explorer, compare, ledger), screenshots, the 60 s GIMBAL recording, CP-05.
+5. M5 (8 frozen PURSUE clips), M6 (schema v0.1, exports, README, 2-minute recording).
 
 ## House rules for this run
 
-- Check `mcp__ccd_session_mgmt__get_usage` between items; Stewart sets the quota cap per run.
+- Commit after every result (quota can run out mid-task).
 - When Stewart runs another heavy project, run at BelowNormal priority with one thread, or pause.
