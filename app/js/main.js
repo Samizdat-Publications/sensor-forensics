@@ -18,6 +18,9 @@ const VIEW_KEYS = Object.keys(VIEWS);
 const state = {
   index: null, caseId: "gimbal", view: "cockpit", frame: 0, variant: null,
   wT: null, hyp: null, data: null, playing: false,
+  range: null,        // assumed range (nmi) shared by the god's-eye view and the range explorer
+  overrides: {},      // per-criterion weight changes from the ledger (same for every hypothesis)
+  cmode: "render",    // cockpit re-render mode: render, diff, blink
 };
 const subs = new Set();
 const $ = (s) => document.querySelector(s);
@@ -33,7 +36,14 @@ export function currentVariant() {
 }
 export function currentScores() {
   const v = currentVariant();
-  return v ? scoreVariant(v, state.wT ?? v.weights.testimony) : null;
+  return v ? scoreVariant(v, state.wT ?? v.weights.testimony, state.overrides) : null;
+}
+
+// The hypothesis the views draw: the selected one, else the leader at the live weight.
+export function currentHyp() {
+  const rows = currentScores();
+  if (!rows?.length) return null;
+  return rows.find((r) => r.h.id === state.hyp) || rows[0];
 }
 
 export function set(patch, { route = true } = {}) {
@@ -52,6 +62,8 @@ function parseHash() {
     caseId: c || null, view: VIEW_KEYS.includes(v) ? v : null,
     frame: p.has("f") ? +p.get("f") : null, variant: p.get("v"),
     wT: p.has("w") ? +p.get("w") : null, hyp: p.get("h"),
+    range: p.has("r") ? +p.get("r") : null,
+    cmode: ["render", "diff", "blink"].includes(p.get("m")) ? p.get("m") : null,
   };
 }
 
@@ -64,6 +76,8 @@ function writeHash() {
     if (state.variant) p.set("v", state.variant);
     if (state.wT !== null) p.set("w", state.wT.toFixed(2));
     if (state.hyp) p.set("h", state.hyp);
+    if (state.range !== null) p.set("r", String(state.range));
+    if (state.cmode !== "render") p.set("m", state.cmode);
     const h = `#/${state.caseId}/${state.view}?${p}`;
     if (location.hash !== h) history.replaceState(null, "", h);
   }, state.playing ? 400 : 60);
@@ -75,7 +89,8 @@ async function switchCase(cid, keep = {}) {
   const variant = keep.variant && variants.includes(keep.variant) ? keep.variant : (variants[0] ?? null);
   const v = data.results?.variants.find((x) => x.variant === variant);
   const frame = Math.min(Math.max(0, keep.frame ?? v?.reference_frame ?? 0), data.meta.n_frames - 1);
-  const patch = { data, caseId: cid, variant, frame, wT: keep.wT ?? v?.weights.testimony ?? null, hyp: keep.hyp ?? null, playing: false };
+  const patch = { data, caseId: cid, variant, frame, wT: keep.wT ?? v?.weights.testimony ?? null, hyp: keep.hyp ?? null, playing: false,
+    range: keep.range ?? null, overrides: {} };
   if (keep.view) patch.view = keep.view;
   set(patch);
   document.title = `${data.meta.label}: Sensor Forensics Lab`;
@@ -129,7 +144,7 @@ function showView() {
   }
 }
 
-const api = { getState, set, currentVariant, currentScores, subscribe: (fn) => subs.add(fn) };
+const api = { getState, set, currentVariant, currentScores, currentHyp, subscribe: (fn) => subs.add(fn) };
 
 function keyboard(e) {
   const t = e.target;
@@ -184,6 +199,7 @@ async function boot() {
   const h = parseHash();
   const cid = state.index.cases.some((c) => c.case === h.caseId) ? h.caseId : state.index.cases[0].case;
   if (h.view) state.view = h.view;
+  if (h.cmode) state.cmode = h.cmode;
   await switchCase(cid, h);
   window.__app = { state, ready: true };
 }

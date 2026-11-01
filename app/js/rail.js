@@ -20,7 +20,7 @@ export function renderRail(el, api, changed) {
   if (!s.data) return;
   const caseChanged = changed.has("data") || changed.has("caseId") || changed.has("variant");
   if (!built || caseChanged) { build(el, api); built = true; }
-  if (caseChanged || changed.has("wT") || changed.has("hyp")) scores(el, api);
+  if (caseChanged || changed.has("wT") || changed.has("hyp") || changed.has("overrides")) scores(el, api);
   if (caseChanged || changed.has("frame")) readouts(el, api);
 }
 
@@ -55,6 +55,7 @@ function build(el, api) {
         <thead><tr><th>Hypothesis</th><th class="r">Physics only</th><th class="r">With testimony</th></tr></thead>
         <tbody id="score-rows"></tbody>
       </table>
+      <p class="note warn-note" id="ov-note" hidden style="padding:6px 16px 0;margin:0"></p>
       <p class="note" id="wT-help" style="padding:6px 16px 12px;margin:0">Higher is better; a gap of 2.3 is a likelihood ratio of 10.
       Totals are recomputed here from each criterion's log-likelihood. Not a verdict on what the object was.</p>
     </section>
@@ -76,6 +77,10 @@ function scores(el, api) {
   const v = api.currentVariant();
   const w = s.wT ?? v.weights.testimony;
   el.querySelector("#wT-out").textContent = w.toFixed(2);
+  const ov = Object.entries(s.overrides || {});
+  const on = el.querySelector("#ov-note");
+  on.hidden = !ov.length;
+  on.innerHTML = ov.length ? `Criterion weights changed in the evidence ledger: ${ov.map(([k, x]) => `${esc(k.replace(/_/g, " "))} ${num(x, 2)}`).join(", ")}. Both totals below use them.` : "";
   const input = el.querySelector("#wT");
   if (+input.value !== w) input.value = w;
   tb.innerHTML = rows.map((r) => {

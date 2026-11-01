@@ -105,3 +105,17 @@ Units and words: feet, knots with mph beside them, nautical miles with statute m
 - Panel headers wrapped at 1440 px; titles and the mode switch no longer wrap, and the source note truncates instead.
 - Lab best-fit table cells wrapped mid-number; numeric cells no longer wrap.
 - The FLIR1 header showed an empty field-of-view control (a CSS rule overrode `hidden`); fixed globally.
+
+## Build status (M4.3 to M4.7, 11/01/2026)
+
+Done (not committed):
+
+- **Exporter.** `tools/build_app_data.py` now also writes `predictions.json` (via `tools/app_predictions.py`: every stored fit re-evaluated on every frame by the scorer's own `solve.score.predict` and `rotation_terms`, read-only), `testimony.json` (every claim, source, use), `range_curves.json` (from `data/derived/<case>/range_curves.csv` when the scorer writes it), per-variant `excluded_criteria`, and an `extras` pass-through of any new results field (both-ways totals, rotation-noise sensitivity), plus `artifacts/cp05/framelock.json`.
+- **Cockpit.** Original frame and three.js re-render, both cropped to the active picture, frame-locked by index. Camera at the jet along the predicted sight line, frame field of view, rolled to the predicted image horizon; object at its 3D position with predicted size and rotation; level lines; polarity as on screen. Modes Re-render, Difference, Blink. Frame-lock strip: median horizon error (GIMBAL, measured from the cloud-deck motion direction, 15-frame running median) and median object-position error. GIMBAL 0.35 deg: horizon 2.4 to 5.7 px, object 1.9 px; GOFAST object 1.4 px, FLIR1 object 5.8 px, horizon n/a (no horizon reference in that footage).
+- **God's-eye.** Jet path, sight-line fan every 30 frames, each hypothesis's path in its own color (each aligned to its own jet, the heading being a fitted nuisance), fixed-range path from the range slider with its kinematics, angles-only probe readout, scale bar in nmi, show and hide per hypothesis.
+- **Range explorer.** Air speed (log), altitude, peak acceleration (log), sight-line misfit against range; reference bands (balloon, birds 15 to 60 kt, airliners 400 to 500 kt), Mach 1 at altitude, 1 g and 9 g; best-fit markers and band; shared range cursor; per-hypothesis curves drawn automatically when `range_curves.csv` appears.
+- **Evidence ledger.** Virtualized table of every reading (click opens the frame in the cockpit), testimony claims tab, one weight slider per criterion, exclusions add-back, both totals as weighted now and with exclusions added back, per-criterion breakdown, "More from the scorer".
+- **Compare.** Published vs reproduced table with check marks, range and altitude over the clip (lab per frame, prior work at the frames it states), lab best fits.
+- **Tests.** `tests/js/geom.test.mjs` (JS vs Python image position and frame lock, camera basis, projection, range interpolation vs the Python grid, path kinematics, ISA); new export tests in `tests/test_build_app_data.py`.
+
+Remaining: the 60-second GIMBAL recording (M4.8); a 3D overlay of prior-work paths (only their stated endpoints are drawn, since the reproductions do not export per-frame paths).

@@ -1,7 +1,9 @@
 """Screenshot every view of the web app with Playwright (CP-05 evidence).
 
 Usage (from the repo root):
-    .venv/Scripts/python tools/screenshot_app.py                 # app views -> artifacts/cp05/shell_*.png
+    .venv/Scripts/python tools/screenshot_app.py                 # every view of every case, both sizes -> artifacts/cp05/<case>_<view>_<size>.png
+    .venv/Scripts/python tools/screenshot_app.py --only gimbal_cockpit   # names containing this text
+    .venv/Scripts/python tools/screenshot_app.py --shell         # the M4.2 shell set -> artifacts/cp05/shell_*.png
     .venv/Scripts/python tools/screenshot_app.py --mock          # design mockups -> docs/design/mock_*.png
 
 Serves app/ (or the repo, for docs/design mockups) to the page straight from disk via Playwright routing. Tries headless Chromium first; if WebGL
@@ -65,6 +67,7 @@ def shots(page, base: str, out: Path, prefix: str, plan: list[tuple[str, str, st
     for name, url, size in plan:
         w, h = SIZES[size]
         page.set_viewport_size({"width": w, "height": h})
+        page.goto("about:blank")   # a fresh load per shot: a hash-only change would keep the previous state
         page.goto(f"{base}{url}")
         try:
             page.wait_for_function("() => window.__app && (window.__app.ready || window.__app.error)", timeout=20000)
@@ -72,27 +75,61 @@ def shots(page, base: str, out: Path, prefix: str, plan: list[tuple[str, str, st
             raise SystemExit(f"{name} {size}: app did not report ready; " + " | ".join(errors[:20]))
         page.wait_for_timeout(900)
         path = out / f"{prefix}{name}_{size}.png"
-        page.screenshot(path=str(path))
+        page.screenshot(path=str(path), timeout=30000)
         made.append(path)
+        print(f"  {path.name}", flush=True)
     if errors:
         raise SystemExit("console errors:\n" + "\n".join(errors[:20]))
     return made
 
 
+# Reference frames for the screenshots: a frame where each case's object is found and readouts are on screen.
+CASE_URLS = {
+    "gimbal": "f=719&v=fov035",
+    "gofast": "f=701",
+    "flir1": "f=600",
+}
+EXTRA = [
+    ("gimbal_cockpit_diff", "#/gimbal/cockpit?f=719&v=fov035&m=diff"),
+    ("gimbal_cockpit_fov070", "#/gimbal/cockpit?f=300&v=fov070&h=H-AC"),
+    ("gimbal_ledger_weight0", "#/gimbal/ledger?f=513&v=fov070&w=0.00&h=H-WIT"),
+    ("gimbal_godseye_r30", "#/gimbal/godseye?f=500&v=fov035&r=30"),
+]
+
+
+def full_plan() -> list[tuple[str, str, str]]:
+    plan = []
+    for c, q in CASE_URLS.items():
+        for v in VIEWS:
+            for s in SIZES:
+                plan.append((f"{c}_{v}", f"#/{c}/{v}?{q}", s))
+    for name, url in EXTRA:
+        plan.append((name, url, "1440"))
+    return plan
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mock", action="store_true")
+    ap.add_argument("--shell", action="store_true")
+    ap.add_argument("--only", default=None)
     a = ap.parse_args(argv)
     if a.mock:
         served, base = ROOT, HOST + "docs/design/"
         out, prefix = ROOT / "docs" / "design", "mock_"
         plan = [(v, f"mockup.html#{v}", s) for v in ["cockpit", "range", "ledger"] for s in SIZES]
+    elif not a.shell:
+        served, base = ROOT / "app", HOST
+        out, prefix = ROOT / "artifacts" / "cp05", ""
+        plan = full_plan()
     else:
         served, base = ROOT / "app", HOST
         out, prefix = ROOT / "artifacts" / "cp05", "shell_"
         plan = [(f"gimbal_{v}", f"#/gimbal/{v}?f=719&v=fov035&w=1.00&h=H-BAL", s) for v in VIEWS for s in SIZES]
         plan += [("gofast_cockpit", "#/gofast/cockpit?f=701", "1440"), ("gofast_range", "#/gofast/range?f=701", "1440"),
                  ("flir1_cockpit", "#/flir1/cockpit?f=600", "1440"), ("gimbal_weight0", "#/gimbal/ledger?f=513&v=fov070&w=0.00&h=H-WIT", "1440")]
+    if a.only:
+        plan = [x for x in plan if a.only in f"{x[0]}_{x[2]}"]
     out.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
         b, mode = launch(p)

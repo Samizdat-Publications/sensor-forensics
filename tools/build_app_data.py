@@ -17,6 +17,12 @@ Reads only data/derived/ and data/frames/ (never writes there). Writes:
     app/data/<case>/range_curve.json         angles-only fit as a function of assumed range
     app/data/<case>/turn_rate.json           jet turn rate per frame (where it exists)
     app/data/<case>/compare.json             prior work (published) beside the lab's reproduction
+    app/data/<case>/predictions.json         per frame, every stored fit re-evaluated by the scorer's own
+                                             forward model (tools/app_predictions.py): sight line, image
+                                             horizon, rotation, size, image position, object and jet paths,
+                                             frame-lock errors; plus the measured references
+    app/data/<case>/testimony.json           every testimony claim with its source and how it is used
+    app/data/<case>/range_curves.json        per-hypothesis curves over range (range_curves.csv), when present
     app/data/frames/<case>/f000000.jpg ...   gitignored, regenerated
 
 All values stay in SI or the units the derived files use; the app converts for display.
@@ -32,6 +38,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import app_predictions as AP  # noqa: E402
 DERIVED = ROOT / "data" / "derived"
 FRAMES = ROOT / "data" / "frames"
 OUT = ROOT / "app" / "data"
@@ -46,7 +56,7 @@ CASES = {
 CUE_COLUMNS = [
     "bank_deg", "bank_sigma_deg", "obj_found", "obj_snr", "obj_hi_cx", "obj_hi_cy",
     "obj_hi_major_px", "obj_hi_minor_px", "obj_hi_angle_deg", "obj_hi_area_px", "obj_peak",
-    "bg_dx", "bg_dy",
+    "obj_lo_major_px", "obj_lo_minor_px", "bg_dx", "bg_dy", "cloud_dx", "cloud_dy",
 ]
 
 
@@ -104,6 +114,31 @@ DERIVED_KEYS = [
 ]
 
 
+# Keys export_variant consumes itself; anything else the scorer adds is passed through under "extras"
+# (both-ways totals, sensitivity runs and the like), so a rerun with new fields shows up without a code change.
+HYP_KEYS = {"hypothesis", "label", "model", "valid", "in_design_set", "k", "testimony_status", "total_testimony_weighted",
+            "total_physics_only", "criteria", "criteria_physics_only_fit", "derived", "derived_physics_only_fit",
+            "params_testimony_weighted_fit", "params_physics_only_fit", "checks", "testimony_rows",
+            "testimony_rows_physics_only_fit"}
+VARIANT_KEYS = {"case", "label", "variant", "sensor", "window_frames", "reference_frame", "weights", "flags", "environment",
+                "n_eff_total", "hypotheses", "range_curve_angles_only"}
+EXTRA_MAX_BYTES = 60_000
+
+
+def _extras(d: dict, known: set) -> dict:
+    out = {}
+    for k, x in d.items():
+        if k in known:
+            continue
+        try:
+            js = json.dumps(_clean(x))
+        except (TypeError, ValueError):
+            continue
+        if len(js) <= EXTRA_MAX_BYTES:
+            out[k] = _clean(x)
+    return out
+
+
 def export_variant(v: dict, vname: str, rows: dict) -> dict:
     hyps = []
     for h in v["hypotheses"]:
@@ -140,7 +175,13 @@ def export_variant(v: dict, vname: str, rows: dict) -> dict:
             },
             "fits": fits,
             "checks": h.get("checks", []),
+            "testimony_rows": [{k: r.get(k) for k in ("claim_id", "quantity", "predicted_value", "interval", "loglik", "weight",
+                                                      "firsthand", "weighted_loglik")} for r in h.get("testimony_rows") or []],
+            "extras": _extras(h, HYP_KEYS),
         })
+    # Criteria a data-quality rule holds at weight 0 for every hypothesis (D-016, D-017, REVIEW-M3 Rule B).
+    excluded = sorted({c["name"] for hh in hyps for f in hh["fits"] for c in f["criteria"]
+                       if c["kind"] == "physics" and c["weight"] == 0})
     return {
         "variant": vname,
         "sensor": v.get("sensor"),
@@ -150,7 +191,9 @@ def export_variant(v: dict, vname: str, rows: dict) -> dict:
         "flags": v.get("flags", []),
         "environment": v.get("environment"),
         "n_eff_total": v.get("n_eff_total"),
+        "excluded_criteria": excluded,
         "hypotheses": hyps,
+        "extras": _extras(v, VARIANT_KEYS),
     }
 
 
@@ -202,6 +245,18 @@ def compare_rows(cid: str) -> dict | None:
             ("Altitude change", "ft", {"pvr_close": (pub["A"]["alt_change_ft"], A["alt_change_ft"]), "pvr_far": (0.0, 0.0),
                                         "sitrec": (None, B["alt_end_ft"] - B["alt_start_ft"])}),
         ]
+        # Points to draw over the clip (lab frame numbers; Sitrec frames are lab - 1, under one frame).
+        n_last = 1030
+        points = {
+            "pvr_close": [("range_nmi", 0, pub["A"]["start_range_nmi"], A["start_range_nmi"]),
+                          ("range_nmi", n_last, pub["A"]["end_range_nmi"], A["end_range_nmi"]),
+                          ("altitude_ft", 0, None, A["alt_start_ft"]), ("altitude_ft", n_last, None, A["alt_start_ft"] + A["alt_change_ft"])],
+            "pvr_far": [("range_nmi", 0, pub["A7"]["range_nmi"], A7["range_start_end_nmi"][0]),
+                        ("range_nmi", n_last, pub["A7"]["range_nmi"], A7["range_start_end_nmi"][1]),
+                        ("altitude_ft", 0, pub["A7"]["alt_ft"], A7["alt_ft"]), ("altitude_ft", n_last, pub["A7"]["alt_ft"], A7["alt_ft"])],
+            "sitrec": [("range_nmi", 0, None, B["start_range_nmi"]), ("range_nmi", n_last, None, B["end_range_nmi"]),
+                       ("altitude_ft", 0, None, B["alt_start_ft"]), ("altitude_ft", n_last, None, B["alt_end_ft"])],
+        }
     elif cid == "gofast":
         pub, sw = d["published"], d["sitrec_way"]
         sources = [
@@ -216,6 +271,16 @@ def compare_rows(cid: str) -> dict | None:
         ]
     else:
         return None
+    if cid == "gofast":
+        points = {
+            "sitrec": [("altitude_ft", 375, pub["sitrec_observed_alt_ft"][0], sw["alt_ft_at_375"]),
+                       ("altitude_ft", 1030, pub["sitrec_observed_alt_ft"][1], sw["alt_ft_at_1030"])],
+            "aaro": [("altitude_ft", 375, pub["aaro_alt_ft"][0], None), ("altitude_ft", 1030, pub["aaro_alt_ft"][1], None)],
+        }
+    if cid not in ("gimbal", "gofast"):
+        return None
+    for src in sources:
+        src["points"] = [{"quantity": q, "frame": f, "published": a, "reproduced": b} for q, f, a, b in points.get(src["id"], [])]
     return {
         "case": cid, "source": f"docs/reproductions/{cid}.json", "sources": sources,
         "rows": [{"quantity": q, "unit": u, "values": {k: {"published": v[0], "reproduced": v[1]} for k, v in vals.items()}}
@@ -223,7 +288,7 @@ def compare_rows(cid: str) -> dict | None:
     }
 
 
-def export_case(cid: str, spec: dict, frames: bool, force_frames: bool) -> dict:
+def export_case(cid: str, spec: dict, frames: bool, force_frames: bool, predictions: bool = True) -> dict:
     folder = DERIVED / spec["folder"]
     out = OUT / cid
     meta_src = json.loads((folder / "frames_meta.json").read_text(encoding="utf-8"))
@@ -247,6 +312,20 @@ def export_case(cid: str, spec: dict, frames: bool, force_frames: bool) -> dict:
         files.append("range_curve.json")
         rc = next(iter(vmap.values())).get("rotation_check") or {}
         steps = [s["frame"] for s in rc.get("measured_steps", []) if "frame" in s]
+
+    res_obj = json.loads(res_path.read_text(encoding="utf-8")) if res_path.exists() else None
+    if predictions:
+        _write(out / "predictions.json", {"case": cid, **AP.case_predictions(spec["folder"], res_obj)})
+        files.append("predictions.json")
+    claims = AP.testimony_claims(cid)
+    if claims:
+        _write(out / "testimony.json", {"case": cid, "source": f"data/testimony/{cid}.yaml, data/testimony/scorable.yaml",
+                                        "claims": claims})
+        files.append("testimony.json")
+    rcc = AP.range_curves_csv(spec["folder"])
+    if rcc is not None:
+        _write(out / "range_curves.json", {"case": cid, **rcc})
+        files.append("range_curves.json")
 
     cmp = compare_rows(cid)
     if cmp:
@@ -272,13 +351,13 @@ def export_case(cid: str, spec: dict, frames: bool, force_frames: bool) -> dict:
     # image cues
     it = folder / "image_track.csv"
     if it.exists():
-        cols = {c: [None] * n for c in CUE_COLUMNS}
-        for r in _read_csv(it):
+        itr = _read_csv(it)
+        cols = {c: [None] * n for c in CUE_COLUMNS if c in itr[0]}
+        for r in itr:
             i = int(r["frame"])
             if 0 <= i < n:
-                for c in CUE_COLUMNS:
-                    if c in r:
-                        cols[c][i] = _round(_num(r[c]), 4)
+                for c in cols:
+                    cols[c][i] = _round(_num(r[c]), 4)
         _write(out / "cues.json", {"case": cid, "source": f"data/derived/{spec['folder']}/image_track.csv",
                                    "n_frames": n, "columns": cols})
         files.append("cues.json")
@@ -340,6 +419,7 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--no-frames", action="store_true")
     ap.add_argument("--force-frames", action="store_true")
+    ap.add_argument("--no-predictions", action="store_true", help="skip predictions.json (loads every case through solve/)")
     ap.add_argument("--out", type=Path, default=None, help="output folder (default app/data)")
     a = ap.parse_args(argv)
     global OUT
@@ -347,11 +427,34 @@ def main(argv: list[str]) -> int:
         OUT = a.out
     index = []
     for cid, spec in CASES.items():
-        meta = export_case(cid, spec, frames=not a.no_frames, force_frames=a.force_frames)
+        meta = export_case(cid, spec, frames=not a.no_frames, force_frames=a.force_frames,
+                           predictions=not a.no_predictions)
         index.append({k: meta[k] for k in ("case", "label", "date", "platform", "n_frames", "fps", "scored", "variants")})
         print(f"{cid}: {meta['n_frames']} frames, variants {meta['variants'] or 'none (not scored yet)'}")
     _write(OUT / "index.json", {"cases": index})
+    if not a.no_predictions and a.out is None:
+        write_framelock(ROOT / "artifacts" / "cp05" / "framelock.json")
     return 0
+
+
+def write_framelock(path: Path) -> None:
+    """CP-05 frame-lock metric: median pixel error of horizon and object position, every fit of every case."""
+    rows = []
+    for cid in CASES:
+        p = OUT / cid / "predictions.json"
+        if not p.exists():
+            continue
+        d = json.loads(p.read_text(encoding="utf-8"))
+        for vn, v in d["variants"].items():
+            for h, fits in v["hypotheses"].items():
+                for fn, f in fits.items():
+                    if f.get("valid"):
+                        rows.append({"case": cid, "variant": vn, "hypothesis": h, "fit": fn, **f["frame_lock"]})
+        src = d.get("measured", {}).get("horizon_source")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({
+        "definition": AP.__doc__.split("Frame-lock metric (CP-05):")[1].strip(),
+        "rows": rows}, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":

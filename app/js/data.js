@@ -21,15 +21,18 @@ export async function loadIndex() {
 export async function loadCase(cid) {
   const meta = await getJSON(`data/${cid}/meta.json`);
   const has = (f) => meta.files.includes(f);
-  const [results, readings, cues, rangeCurve, turnRate, compare] = await Promise.all([
+  const [results, readings, cues, rangeCurve, turnRate, compare, predictions, testimony, rangeCurves] = await Promise.all([
     has("results.json") ? getJSON(`data/${cid}/results.json`) : null,
     has("readings.json") ? getJSON(`data/${cid}/readings.json`) : null,
     has("cues.json") ? getJSON(`data/${cid}/cues.json`) : null,
     has("range_curve.json") ? optional(getJSON(`data/${cid}/range_curve.json`)) : null,
     has("turn_rate.json") ? optional(getJSON(`data/${cid}/turn_rate.json`)) : null,
     has("compare.json") ? optional(getJSON(`data/${cid}/compare.json`)) : null,
+    has("predictions.json") ? optional(getJSON(`data/${cid}/predictions.json`)) : null,
+    has("testimony.json") ? optional(getJSON(`data/${cid}/testimony.json`)) : null,
+    has("range_curves.json") ? optional(getJSON(`data/${cid}/range_curves.json`)) : null,
   ]);
-  return { meta, results, readings, cues, rangeCurve, turnRate, compare };
+  return { meta, results, readings, cues, rangeCurve, turnRate, compare, predictions, testimony, rangeCurves };
 }
 
 export function frameURL(meta, i) {
@@ -45,4 +48,20 @@ export function reading(data, field, i) {
 export function cue(data, col, i) {
   const c = data.cues?.columns?.[col];
   return c ? c[i] : null;
+}
+
+// Predictions for the current variant (predictions.json), or null.
+export function variantPredictions(data, variant) {
+  const p = data.predictions;
+  if (!p) return null;
+  return p.variants[variant ?? ""] ?? p.variants[Object.keys(p.variants)[0]] ?? null;
+}
+
+// The stored fit of one hypothesis that the live total uses (scoring.js envelope), as predictions.
+export function fitPredictions(data, variant, hypId, fitName) {
+  const v = variantPredictions(data, variant);
+  const h = v?.hypotheses?.[hypId];
+  if (!h) return null;
+  const f = h[fitName] && h[fitName].valid !== false ? h[fitName] : h.testimony_weighted ?? h.physics_only;
+  return f && f.valid !== false ? f : null;
 }

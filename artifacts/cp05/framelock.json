@@ -1,0 +1,485 @@
+{
+ "definition": "median over frames of\n- object: distance (px) between the measured blob centroid and the predicted image position;\n- horizon: (picture width / 2) x |sin(theta_pred - theta_meas)| (px), the offset between the predicted\n  and the measured horizon lines at the picture's left and right edges. theta_meas is measured only\n  where the image shows a horizon reference: GIMBAL's cloud deck, whose texture moves along the image\n  horizon (solve/cloud_motion.py), so its motion direction measures the horizon angle (frames where the\n  cloud tile moves at least 1 px/frame). GOFAST looks down at the sea and FLIR1 at a featureless sky:\n  no measured horizon, metric n/a.",
+ "rows": [
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-AC",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559914574,
+   "object_n": 1031,
+   "horizon_px_median": 2.403404331822398,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-AC",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559913344,
+   "object_n": 1031,
+   "horizon_px_median": 2.2673728416787267,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-ART",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559916143,
+   "object_n": 1031,
+   "horizon_px_median": 2.36165674603903,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-ART",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559925465,
+   "object_n": 1031,
+   "horizon_px_median": 2.269866508609174,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-BAL",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.856993055991507,
+   "object_n": 1031,
+   "horizon_px_median": 2.811710016871343,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-BAL",
+   "fit": "physics_only",
+   "object_px_median": 1.856993055993692,
+   "object_n": 1031,
+   "horizon_px_median": 2.752471913467606,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-CLOSE",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559896584,
+   "object_n": 1031,
+   "horizon_px_median": 5.739850444498607,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-CLOSE",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559917243,
+   "object_n": 1031,
+   "horizon_px_median": 5.913002991473081,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-SLOW",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559920058,
+   "object_n": 1031,
+   "horizon_px_median": 2.7028090518062178,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-SLOW",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559882981,
+   "object_n": 1031,
+   "horizon_px_median": 2.737759236012112,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-WIT",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559926946,
+   "object_n": 1031,
+   "horizon_px_median": 3.0476508634300457,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov035",
+   "hypothesis": "H-WIT",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559916523,
+   "object_n": 1031,
+   "horizon_px_median": 2.746381614388021,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-AC",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559915149,
+   "object_n": 1031,
+   "horizon_px_median": 2.349517093435557,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-AC",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559894476,
+   "object_n": 1031,
+   "horizon_px_median": 2.2682170438744835,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-ART",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.856993055990131,
+   "object_n": 1031,
+   "horizon_px_median": 2.313594798839574,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-ART",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559913828,
+   "object_n": 1031,
+   "horizon_px_median": 2.269608038749765,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-BAL",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559909766,
+   "object_n": 1031,
+   "horizon_px_median": 2.783245772507312,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-BAL",
+   "fit": "physics_only",
+   "object_px_median": 1.856993055993797,
+   "object_n": 1031,
+   "horizon_px_median": 2.774747627462362,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-CLOSE",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559917138,
+   "object_n": 1031,
+   "horizon_px_median": 6.196552803631886,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-CLOSE",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559921943,
+   "object_n": 1031,
+   "horizon_px_median": 5.456216744274714,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-SLOW",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559917571,
+   "object_n": 1031,
+   "horizon_px_median": 2.8491566844736704,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-SLOW",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559900656,
+   "object_n": 1031,
+   "horizon_px_median": 2.6741724927336095,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-WIT",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.8569930559909087,
+   "object_n": 1031,
+   "horizon_px_median": 3.3837223949082134,
+   "horizon_n": 995
+  },
+  {
+   "case": "gimbal",
+   "variant": "fov070",
+   "hypothesis": "H-WIT",
+   "fit": "physics_only",
+   "object_px_median": 1.8569930559909416,
+   "object_n": 1031,
+   "horizon_px_median": 2.7412250795066986,
+   "horizon_n": 995
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-AC",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.411193147659023,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-AC",
+   "fit": "physics_only",
+   "object_px_median": 1.4111931476564123,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-ART",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.4111931476591013,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-ART",
+   "fit": "physics_only",
+   "object_px_median": 1.411193147659075,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-BAL",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.411193147656817,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-BAL",
+   "fit": "physics_only",
+   "object_px_median": 1.4111931476590203,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-CLOSE",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.4111931476568038,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-CLOSE",
+   "fit": "physics_only",
+   "object_px_median": 1.4111931476590882,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-SLOW",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.4111931476613464,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-SLOW",
+   "fit": "physics_only",
+   "object_px_median": 1.4111931476613857,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-WIT",
+   "fit": "testimony_weighted",
+   "object_px_median": 1.4111931476567359,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "gofast",
+   "variant": "",
+   "hypothesis": "H-WIT",
+   "fit": "physics_only",
+   "object_px_median": 1.4111931476591144,
+   "object_n": 771,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-AC",
+   "fit": "testimony_weighted",
+   "object_px_median": 5.802970098149573,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-AC",
+   "fit": "physics_only",
+   "object_px_median": 5.802970098148421,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-ART",
+   "fit": "testimony_weighted",
+   "object_px_median": 5.802970098147532,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-ART",
+   "fit": "physics_only",
+   "object_px_median": 5.802970098147667,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-BAL",
+   "fit": "testimony_weighted",
+   "object_px_median": 5.802970098149478,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-BAL",
+   "fit": "physics_only",
+   "object_px_median": 5.802970098147576,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-CLOSE",
+   "fit": "testimony_weighted",
+   "object_px_median": 5.802970098147785,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-CLOSE",
+   "fit": "physics_only",
+   "object_px_median": 5.8029700981465835,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-SLOW",
+   "fit": "testimony_weighted",
+   "object_px_median": 5.80297009814928,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-SLOW",
+   "fit": "physics_only",
+   "object_px_median": 5.802970098149051,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-WIT",
+   "fit": "testimony_weighted",
+   "object_px_median": 5.8029700981479495,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  },
+  {
+   "case": "flir1",
+   "variant": "",
+   "hypothesis": "H-WIT",
+   "fit": "physics_only",
+   "object_px_median": 5.802970098148573,
+   "object_n": 1655,
+   "horizon_px_median": null,
+   "horizon_n": 0
+  }
+ ]
+}

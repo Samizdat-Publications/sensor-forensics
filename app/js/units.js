@@ -61,3 +61,11 @@ export function variantLabel(v) {
   const m = /^fov(\d+)$/.exec(v); // fov035 = 0.35 deg, fov070 = 0.70 deg (hundredths of a degree)
   return m ? `${(+m[1] / 100).toFixed(2)}°` : v;
 }
+
+// One color per hypothesis for paths and curves (never the two total colors, the cue amber or warn red).
+const HYP_COLORS = { "H-AC": "#e89f6b", "H-ART": "#9aa6b2", "H-BAL": "#6fcfb5", "H-CLOSE": "#e57fae", "H-SLOW": "#b9cc6a", "H-WIT": "#7f9cf5" };
+const SPARE = ["#d6c38f", "#a98fd6", "#8fc7d6", "#d68f8f"];
+export function hypColor(id, i = 0) { return HYP_COLORS[id] ?? SPARE[i % SPARE.length]; }
+
+export const mi = (vNmi) => vNmi * NMI_TO_MI;
+export const mph = (vKt) => vKt * KT_TO_MPH;
