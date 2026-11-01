@@ -179,7 +179,7 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - spherical Earth (ECEF and local ENU frames) with a standard-refraction toggle;
    - SI units inside the code, feet, knots and mph on display.
    - Curvature matters: about 800 ft of drop at 30 nmi.
-- [ ] 2. **[bg + W]** `solve/weather.py`:
+- [x] 2. **[bg + W]** `solve/weather.py`:
    - an ARCO-ERA5 slice (wind and temperature by pressure level) for each case's window, plus IGRA soundings as a measured check;
    - a wind profile file per case, with its source.
 - [x] 3. **[me]** `solve/jet.py`:
@@ -189,28 +189,28 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - ground track from wind;
    - pitch from angle of attack (4 deg plus or minus 2 deg);
    - an uncertainty ensemble.
-- [~] 4. **[me]** `solve/sensor_atflir.py`:
+- [x] 4. **[me]** `solve/sensor_atflir.py`:
    - two conventions for azimuth and elevation (body frame, or relative to the local horizon), both kept and reported;
    - pod roll and pitch gimbal kinematics and derotation;
    - FOV by zoom from `data/sensors/atflir.yaml`, with citations;
    - round-trip tests.
-- [ ] 5. **[me]** Line of sight per frame:
+- [x] 5. **[me]** Line of sight per frame:
    - Whole-degree readouts are treated as intervals, not exact points.
    - The smooth line of sight is refined with the background flow (logicbear's method).
    - The horizon and cloud evidence decide between the two angle conventions.
-- [ ] 6. **[me spec, W+ build]** `solve/families.py`:
+- [x] 6. **[me spec, W+ build]** `solve/families.py`:
    - **constant velocity:** bearings-only target motion analysis; its likelihood as a function of range is the range curve;
    - **constant altitude;**
    - **wind drift;**
    - **stationary in the air mass.**
    - Outputs go to `data/derived/<video>/families/` on a range grid from 0.5 to 60 nmi.
-- [ ] 7. **[me]** Reproductions, written up in `docs/reproductions/`:
+- [x] 7. **[me]** Reproductions, written up in `docs/reproductions/`:
    - Sitrec GOFAST from Sitrec's own inputs;
    - Sitrec GIMBAL's far path;
    - Peings and von Rennenkampff's GIMBAL path (8 to 6.8 nmi, TAS 363 to 369 kt, wind 120 kt, elevation -1.95 deg, azimuth smoothed over 50 frames).
    - Then each is rerun with this lab's M1 inputs, and every difference is attributed to a specific input or assumption with a sensitivity run.
 
-**CP-03 acceptance:** reproductions within a stated tolerance, or a documented explanation of the difference.
+**CP-03: PASSED 10/31/2026 with documented differences, see checkpoints/CP-03.md.** CP-03 acceptance: reproductions within a stated tolerance, or a documented explanation of the difference.
 
 **Tolerance, stated now:**
 - line-of-sight RMS residual at most 0.1 deg;

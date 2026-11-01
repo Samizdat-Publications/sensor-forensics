@@ -24,3 +24,8 @@ app/data/frames/
 artifacts/tmp/
 artifacts/tmp_*
 data/audio/
+
+# weather: partial downloads and any full-resolution ERA5 file over 20 MB stay out of git
+data/weather/_part_*.nc
+data/weather/*_0p25_full*.nc
+data/weather/_cache/
