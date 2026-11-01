@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensor Forensics Lab</title>
+<link rel="stylesheet" href="css/app.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="head">
+    <div class="brand"><b>Sensor Forensics Lab</b><span>Reconstruction from public footage</span></div>
+    <div class="cases" role="group" aria-label="Case" id="cases"></div>
+    <div class="variant" id="variant" hidden><span>Field of view</span><div class="seg" role="group" aria-label="Field of view" id="variant-seg"></div></div>
+    <nav class="views" aria-label="Views" id="views">
+      <a class="view-tab" href="#" data-view="cockpit"><kbd>1</kbd>Cockpit</a>
+      <a class="view-tab" href="#" data-view="godseye"><kbd>2</kbd>God's-eye</a>
+      <a class="view-tab" href="#" data-view="range"><kbd>3</kbd>Range explorer</a>
+      <a class="view-tab" href="#" data-view="compare"><kbd>4</kbd>Compare analyses</a>
+      <a class="view-tab" href="#" data-view="ledger"><kbd>5</kbd>Evidence ledger</a>
+    </nav>
+  </header>
+
+  <main class="main" id="main">
+    <section class="view" id="view-cockpit" aria-label="Cockpit view"></section>
+    <section class="view" id="view-godseye" aria-label="God's-eye view"></section>
+    <section class="view" id="view-range" aria-label="Range explorer"></section>
+    <section class="view" id="view-compare" aria-label="Compare analyses"></section>
+    <section class="view" id="view-ledger" aria-label="Evidence ledger"></section>
+  </main>
+
+  <aside class="rail" id="rail" aria-label="Scores and readouts"></aside>
+
+  <footer class="tape" id="tape" aria-label="Timeline"></footer>
+</div>
+<div class="sr" aria-live="polite" id="live"></div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

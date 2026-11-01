@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensor Forensics Lab: design mockup</title>
+<!-- Static design mockup of the target views (docs/design/app.md). Uses the app's own stylesheet so the
+     tokens are defined once. Numbers are real GIMBAL values (0.35 deg run) at frame 719; parts that do not
+     exist yet (re-render, difference overlay, per-criterion sliders) are drawn as intended. -->
+<link rel="stylesheet" href="../../app/css/app.css">
+<style>
+  .mock-diff { background: repeating-conic-gradient(#0c1015 0% 25%, #121820 0% 50%) 0 0 / 16px 16px; }
+  .lock { display: flex; gap: 22px; font-size: var(--fs-s); color: var(--text-2); }
+  .lock b { font-family: var(--font-num); color: var(--text); font-weight: 400; margin-left: 6px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; height: calc(100% - 70px); min-height: 380px; }
+  .wrow { display: grid; grid-template-columns: 1fr 110px 44px; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--rule); font-size: var(--fs-s); }
+  .wrow input { width: 100%; accent-color: var(--text); }
+  .wrow.t input { accent-color: var(--testi); }
+  .wrow output { font-family: var(--font-num); text-align: right; }
+  .band { fill: rgba(99, 182, 217, 0.10); }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="head">
+    <div class="brand"><b>Sensor Forensics Lab</b><span>Reconstruction from public footage</span></div>
+    <div class="cases">
+      <button class="case-btn" aria-pressed="true"><b>GIMBAL</b><small>01/21/2015</small></button>
+      <button class="case-btn" aria-pressed="false"><b>GOFAST</b><small>01/2015</small></button>
+      <button class="case-btn" aria-pressed="false"><b>FLIR1</b><small>11/14/2004</small></button>
+    </div>
+    <div class="variant"><span>Field of view</span><div class="seg"><button aria-pressed="true">0.35°</button><button aria-pressed="false">0.70°</button></div></div>
+    <nav class="views" id="tabs">
+      <a class="view-tab" data-v="cockpit"><kbd>1</kbd>Cockpit</a>
+      <a class="view-tab" data-v="godseye"><kbd>2</kbd>God's-eye</a>
+      <a class="view-tab" data-v="range"><kbd>3</kbd>Range explorer</a>
+      <a class="view-tab" data-v="compare"><kbd>4</kbd>Compare analyses</a>
+      <a class="view-tab" data-v="ledger"><kbd>5</kbd>Evidence ledger</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="view" id="m-cockpit">
+      <div class="panel" style="margin-bottom:14px"><div class="panel-b lock">
+        <span>Frame-lock error, median<b>1.4 px</b></span><span>Horizon<b>0.3°</b></span><span>Object position<b>1.1 px</b></span><span class="note">(placeholder values)</span>
+        <span style="margin-left:auto" class="note">Re-render: H-BAL best fit, 0.35° field of view, frame 719</span></div></div>
+      <div class="grid2" style="height:calc(100% - 70px)">
+        <div class="panel fill"><div class="panel-h"><h2>Original</h2><span class="src">GIMBAL_navy2020.wmv</span></div>
+          <div class="panel-b"><div class="frame-box"><img src="../../app/data/frames/gimbal/f000719.jpg" alt=""></div></div></div>
+        <div class="panel fill"><div class="panel-h"><h2>Re-render</h2>
+            <div class="seg" style="margin-left:12px"><button aria-pressed="false">Re-render</button><button aria-pressed="true">Difference</button><button aria-pressed="false">Blink</button></div>
+            <span class="src">reconstructed geometry</span></div>
+          <div class="panel-b"><div class="frame-box" style="background:#06090c"><svg viewBox="0 0 640 480" style="width:100%;height:100%">
+            <image href="../../app/data/frames/gimbal/f000719.jpg" width="640" height="480" opacity=".35"/>
+            <path d="M0 330 C120 300 240 350 360 320 S560 300 640 290" stroke="#a3afbb" stroke-width="2" fill="none"/>
+            <path d="M0 334 C120 306 240 353 360 325 S560 305 640 295" stroke="#e8ecf0" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+            <g transform="translate(320 240) rotate(-35.6)"><line x1="-90" x2="-30" stroke="#e8ecf0" stroke-width="2" stroke-dasharray="6 4"/><line x1="30" x2="90" stroke="#e8ecf0" stroke-width="2" stroke-dasharray="6 4"/></g>
+            <ellipse cx="318" cy="238" rx="12.8" ry="5.7" transform="rotate(46.7 318 238)" fill="none" stroke="#e8ecf0" stroke-width="2" stroke-dasharray="6 4"/>
+            <circle cx="318" cy="238" r="20" fill="none" stroke="#f2b84b" stroke-width="1.5"/>
+            <text x="344" y="232" fill="#e8ecf0" font-family="Consolas" font-size="14">object offset (placeholder)</text>
+            <g font-family="Consolas" font-size="13"><rect x="10" y="440" width="12" height="3" fill="#a3afbb"/><text x="28" y="446" fill="#a3afbb">measured in the original</text>
+            <line x1="230" x2="244" y1="441.5" y2="441.5" stroke="#e8ecf0" stroke-width="2" stroke-dasharray="4 3"/><text x="248" y="446" fill="#a3afbb">predicted by the re-render</text></g>
+          </svg></div></div></div>
+      </div>
+    </section>
+
+    <section class="view" id="m-range">
+      <div class="grid2" style="grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr auto">
+        <div class="panel fill"><div class="panel-h"><h2>Air speed</h2><span class="src">kt (mph)</span></div><div class="panel-b chart" id="c-speed"></div></div>
+        <div class="panel fill"><div class="panel-h"><h2>Altitude</h2><span class="src">ft</span></div><div class="panel-b chart" id="c-alt"></div></div>
+        <div class="panel fill"><div class="panel-h"><h2>Peak acceleration</h2><span class="src">g (illustrative)</span></div><div class="panel-b chart" id="c-acc"></div></div>
+        <div class="panel" style="grid-column:1/-1"><div class="panel-b range-ctl"><label>Assumed range</label><input type="range" min="1" max="40" value="16"><output>16.0 nmi (18.4 mi)</output></div></div>
+      </div>
+    </section>
+
+    <section class="view" id="m-ledger">
+      <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;height:100%">
+        <div class="panel fill"><div class="panel-h"><h2>Every number, its frame, its confidence</h2><span class="src">click a row to open the frame</span></div>
+          <div class="panel-b" style="overflow:auto"><table class="data"><thead><tr><th class="num">Frame</th><th>Quantity</th><th class="num">Value</th><th class="num">Confidence</th><th>Method</th><th>Source</th></tr></thead><tbody id="ledger-rows"></tbody></table></div></div>
+        <div class="panel fill"><div class="panel-h"><h2>Weights</h2><span class="src">same for every hypothesis</span></div>
+          <div class="panel-b" id="weights"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="rail">
+    <section>
+      <div class="sec-h"><h2>Scores</h2><span class="src">GIMBAL 0.35° log-likelihood</span></div>
+      <div class="weight"><div class="weight-row"><label>Testimony weight</label><span><output>1.00</output> <button class="reset">Default 1.0</button></span>
+        <input type="range" min="0" max="2" step="0.05" value="1"><div class="ticks"><span>0 physics only</span><span>1</span><span>2</span></div></div></div>
+      <div class="legend"><span class="p"><i></i>Physics only (fixed)</span><span class="t"><i></i>Testimony weighted (live)</span></div>
+      <table class="scores"><thead><tr><th>Hypothesis</th><th class="r">Physics only</th><th class="r">With testimony</th></tr></thead><tbody id="score-rows"></tbody></table>
+    </section>
+    <section>
+      <div class="sec-h"><h2>On screen at frame 719</h2><span class="src">confidence</span></div>
+      <dl class="readouts" id="readouts"></dl>
+    </section>
+  </aside>
+
+  <footer class="tape">
+    <div class="transport"><div class="fr">0719 <small>/ 1030</small></div><div class="tc">00:23.99 <span class="u2">29.97 fps</span></div>
+      <div class="btns"><button><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button><button><svg viewBox="0 0 16 16"><path d="M10 2v12L2 8zM14 2v12h-2V2z"/></svg></button><button><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg></button><button><svg viewBox="0 0 16 16"><path d="M6 2v12l8-6zM2 2v12h2V2z"/></svg></button></div></div>
+    <div class="tracks" id="tracks"><div class="playhead" id="ph"></div></div>
+  </footer>
+</div>
+<script>
+const rows = [
+  ["H-WIT", "Object on a free path (no physical model)", -168.9, -22.8, 3, -191.8, 0, 1],
+  ["H-BAL", "Balloon drifting with the wind", -146.1, 0, 1, -208.6, -16.9, 2],
+  ["H-SLOW", "Slow object (bird or small drone)", -149.8, -3.8, 2, -219.0, -27.2, 3],
+  ["H-ART", "Sensor artifact (glare in the pod optics)", -225.2, -79.2, 4, -285.5, -93.7, 4],
+  ["H-AC", "Distant aircraft (engine exhaust seen as glare)", -225.2, -79.2, 5, -308.8, -117.0, 5],
+  ["H-CLOSE", "Close small object", -14617.7, -14471.7, 6, -14667.7, -14475.9, 6],
+];
+const f = (v, d = 1) => v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }).replace("-", "−");
+const bar = (g) => Math.max(0.02, 1 - Math.log10(1 + Math.abs(g)) / 4) * 100;
+document.getElementById("score-rows").innerHTML = rows.map(([id, l, p, gp, rp, t, gt, rt]) => `<tr${id === "H-BAL" ? ' aria-selected="true"' : ""}>
+  <td><span class="hid">${id}</span><span class="hlabel">${l}</span></td>
+  <td class="r"><span class="tot p">${f(p)}</span><span class="gap">${gp ? f(gp) : "best"} <span class="rank">#${rp}</span></span><div class="bar p"><span style="width:${bar(gp)}%"></span></div></td>
+  <td class="r"><span class="tot t">${f(t)}</span><span class="gap">${gt ? f(gt) : "best"} <span class="rank">#${rt}</span></span><div class="bar t"><span style="width:${bar(gt)}%"></span></div></td></tr>`).join("");
+const ro = [["Azimuth", "14° L", "0.50"], ["Elevation", "−2°", "0.50"], ["Indicated air speed", "242 kt (278 mph)", "0.90"], ["Altitude", "25,010 ft", "0.90"], ["Mach", "0.59", "0.99"], ["Zoom", "2.0", "0.92"], ["Polarity", "black hot", "1.00"]];
+document.getElementById("readouts").innerHTML = ro.map(([k, v, c]) => `<dt>${k}</dt><dd>${v}</dd><dd class="conf">${c}</dd>`).join("");
+const lr = [[716, "Azimuth", "15L", "0.25", "template", "symbology_final.csv"], [717, "Azimuth", "14L", "0.50", "template", "symbology_final.csv"], [719, "Elevation", "−2", "0.50", "template", "symbology_final.csv"],
+  [719, "Artificial-horizon bank", "−35.6°", "σ 0.04°", "line fit on the bars", "image_track.csv"], [719, "Object centre", "317.8, 237.8 px", "σ 0.05 px", "blob moments", "image_track.csv"],
+  [719, "Blob major axis", "25.6 px", "saturated", "threshold blob", "image_track.csv"], [719, "Rotation step", "8.6°", "σ 0.88°", "running median", "results.json"],
+  [719, "Turn rate (clouds)", "−2.20°/s", "−2.25 to −2.16", "cloud motion, ERA5 wind", "turn_rate.csv"], [720, "Indicated air speed", "242 kt", "0.84", "template", "symbology_final.csv"]];
+document.getElementById("ledger-rows").innerHTML = lr.map(([fr, q, v, c, m, s]) => `<tr class="${fr === 719 ? "cur" : ""}"><td class="num">${fr}</td><td>${q}</td><td class="num">${v}</td><td class="num${c === "0.25" ? " low" : ""}">${c}</td><td>${m}</td><td class="note">${s}</td></tr>`).join("");
+const ws = [["Line of sight", 1], ["Range readout", 1], ["Closure readout", 1], ["Background motion", 1], ["Image rotation", 1], ["Apparent size trend", 0, "D-016: unresolved"], ["Brightness trend", 0, "saturated (Rule B)"], ["Testimony", 1, "D-011 default", "t"]];
+document.getElementById("weights").innerHTML = ws.map(([k, w, n, t]) => `<div class="wrow ${t || ""}"><span>${k}${n ? ` <span class="note">${n}</span>` : ""}</span><input type="range" min="0" max="2" step="0.05" value="${w}"><output>${w.toFixed(2)}</output></div>`).join("") +
+  `<p class="note">Moving any weight re-scores every hypothesis from its stored per-criterion log-likelihoods. Both totals stay on screen.</p>`;
+// tape
+const tracks = document.getElementById("tracks");
+for (const [label, kind] of [["", "ruler"], ["Scored", "w"], ["Azimuth", "c"], ["Elevation", "c2"], ["Air speed", "c3"], ["Altitude", "c3"], ["Object", "o"]]) {
+  const el = document.createElement("div"); el.className = "track" + (kind === "ruler" ? " ruler" : "");
+  el.innerHTML = `<span class="tl">${label}</span><canvas></canvas>`; tracks.insertBefore(el, document.getElementById("ph"));
+  requestAnimationFrame(() => {
+    const c = el.querySelector("canvas"), w = c.clientWidth, h = c.clientHeight; c.width = w; c.height = h; const x = c.getContext("2d");
+    let seed = label.length * 7 + 3; const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+    if (kind === "ruler") { x.fillStyle = "#75828f"; x.strokeStyle = "#445466"; x.font = "11px Consolas"; for (let t = 0; t <= 34; t++) { const px = t / 34.4 * w; x.beginPath(); x.moveTo(px + .5, h); x.lineTo(px + .5, t % 5 ? h - 3 : h - 7); x.stroke(); if (t % 5 === 0) x.fillText(t + "s", px + 3, 10); } return; }
+    if (kind === "w") { x.fillStyle = "#445466"; x.fillRect(0, 2, w, h - 4); x.fillStyle = "#e8ecf0"; for (const fr of [719, 818, 866, 891, 912, 981]) x.fillRect(fr / 1030 * w - 1, 0, 2, h); return; }
+    for (let i = 0; i < 1031; i++) { const px = i / 1030 * w; let c = kind === "c" ? (rnd() < .04 ? .2 : .5) : kind === "o" ? .9 : .85 + rnd() * .15; if (kind === "c2") c = .5;
+      x.fillStyle = c < .3 ? "#e8705f" : `hsl(205 12% ${28 + c * 62}%)`; x.fillRect(Math.floor(px), c < .3 ? 0 : 1, Math.ceil(w / 1031), c < .3 ? h : h - 2); }
+  });
+}
+requestAnimationFrame(() => requestAnimationFrame(() => { const c = tracks.querySelector("canvas").getBoundingClientRect(); document.getElementById("ph").style.left = (c.left - tracks.getBoundingClientRect().left + 719 / 1030 * c.width) + "px"; }));
+// charts (range explorer target): real GIMBAL 0.35 deg range grid points
+const grid = [[2, 82.7, 24683], [4, 297, 24300], [6, 640, 23700], [8, 1000, 23300], [10, 1070, 23023], [15, 860, 22100], [20, 300, 21100], [25, 120, 20200], [30, 564, 19300], [35, 950, 18600], [40, 1240, 17900]];
+function chart(id, ys, thr, band) {
+  const box = document.getElementById(id), r = box.getBoundingClientRect(), W = r.width - 24, H = r.height - 20, m = { l: 58, r: 12, t: 10, b: 30 };
+  const y1 = Math.max(...ys, ...thr.map((t) => t[0])) * 1.1, X = (v) => m.l + v / 42 * (W - m.l - m.r), Y = (v) => H - m.b - v / y1 * (H - m.t - m.b);
+  let s = `<svg viewBox="0 0 ${W} ${H}"><rect class="band" x="${X(band[0])}" y="${m.t}" width="${X(band[1]) - X(band[0])}" height="${H - m.t - m.b}"/>`;
+  for (let k = 0; k <= 4; k++) { const v = y1 / 4.4 * k; s += `<g class="grid"><line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}"/></g><text x="${m.l - 6}" y="${Y(v) + 4}" text-anchor="end">${Math.round(v).toLocaleString()}</text>`; }
+  for (const v of [0, 10, 20, 30, 40]) s += `<text x="${X(v)}" y="${H - m.b + 15}" text-anchor="middle">${v}</text>`;
+  s += `<text x="${W - m.r}" y="${H - 2}" text-anchor="end">assumed range, nmi</text>`;
+  for (const [v, l] of thr) s += `<g class="thr"><line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${m.l + 6}" y="${Y(v) - 4}">${l}</text></g>`;
+  s += `<path class="curve" d="${grid.map((g, i) => `${i ? "L" : "M"}${X(g[0])},${Y(ys[i])}`).join("")}"/><line class="cursor" x1="${X(16)}" x2="${X(16)}" y1="${m.t}" y2="${H - m.b}"/></svg>`;
+  box.innerHTML = s;
+}
+function draw() {
+  const v = (location.hash || "#cockpit").slice(1);
+  for (const s of document.querySelectorAll(".view")) s.classList.toggle("active", s.id === "m-" + v);
+  for (const a of document.querySelectorAll(".view-tab")) a.toggleAttribute("aria-current", a.dataset.v === v);
+  if (v === "range") requestAnimationFrame(() => {
+    chart("c-speed", grid.map((g) => g[1]), [[45, "fast birds, about 45 kt"], [450, "airliner cruise, about 450 kt"], [602, "speed of sound at 25,000 ft (ISA)"]], [9, 24]);
+    chart("c-alt", grid.map((g) => g[2]), [], [9, 24]);
+    chart("c-acc", grid.map((g) => Math.abs(g[1] - 300) / 120 + 0.4), [[1, "1 g"], [9, "9 g, fighter limit"]], [9, 24]);
+  });
+}
+window.addEventListener("hashchange", draw); draw();
+window.__app = { ready: true };
+</script>
+</body>
+</html>
