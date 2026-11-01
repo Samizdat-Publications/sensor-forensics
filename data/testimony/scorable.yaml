@@ -1,0 +1,543 @@
+# Which testimony claims the scorer can use, and how (work item M3.3c, 10/31/2026).
+#
+# Written by hand: every claim in gimbal.yaml, gofast.yaml and flir1.yaml was read and given one entry here.
+# Read by solve/testimony.py, which validates this file against the claim files (every claim has exactly one entry,
+# firsthand matches the claim, quantities come from the vocabulary below).
+#
+# Entry fields
+#   firsthand   copied from the claim (weight 1.0 if true, 0.5 if false; docs/design/scoring.md, Testimony row)
+#   scorable    true if the claim constrains a quantity the trajectory models predict (it then has `terms`)
+#   use         one or more of: hypothesis (scored by testimony_loglik), witness_consistency (memory vs the on-screen
+#               record, reported separately, never changes a hypothesis score), environment (wind, time of day,
+#               visibility: checked against ERA5 or ephemeris, not a hypothesis discriminator), context (listed, not scored)
+#   kind        for claims that are not scored: count, class_statement, other_event, first_encounter, outside_clip,
+#               duplicate, image_content, location_or_time, sensor_or_data, role
+#   terms       hypothesis terms: quantity, interval [lo, hi] in the unit in the quantity's name, sigma (the claim's
+#               uncertainty band, same unit; in dex when scale is log), reduce (how a per-frame prediction is summarized:
+#               median by default, last for "when it left the field of view"), or value + error_rate for categories
+#   witness     on-screen comparisons: quantity, recalled interval [lo, hi] and tol (the rounding implied by the
+#               wording), or a categorical value
+#   why         one-line justification
+#
+# Rules applied to every claim, the same for every hypothesis
+#   1. Only claims about this object during this clip are scored. Class statements about all East Coast contacts over
+#      2014 to 2015 are context: scoring them would treat a generalization as an observation of this event.
+#   2. FLIR1: the clip is the second sortie (Underwood), not Fravor's visual merge about an hour earlier. Claims about the
+#      object's state during the merge (altitudes, closest approach, accelerations, headings) are first_encounter and
+#      not scored. Claims scored for FLIR1: statements about the filmed object, the radar contacts' steady cruise state
+#      that the second sortie was vectored to (Day, T-T51), and the object's length (time-independent, scored under the
+#      witnesses' identification of the filmed object as the Tic Tac they saw; a hypothesis that the clip shows
+#      something else is penalized by them, which is what testing testimony means).
+#   3. The same witness repeating the same value is scored once (the other ids are kind: duplicate). A different value,
+#      or a different witness, enters with its own interval; conflicts widen, they do not cancel.
+#   4. Ranges stated in "miles" are read as covering statute and nautical miles where the source does not say which.
+#   5. Speeds from radar are ground-referenced (ground_speed_kt). Where a claim does not say whether a speed is through
+#      the air or over the ground, the term is an equal mixture of both readings (quantity given as a list).
+
+version: 1
+
+weights:
+  firsthand: 1.0
+  relayed: 0.5
+
+categorical_error_rate: 0.1   # probability that a categorical recollection is wrong; one value for every claim
+
+# The quantities a hypothesis model may predict. The scorer passes them in `predicted`, the same keys for every
+# hypothesis (solve.testimony.required_quantities gives the list per case). Definitions the scorer must follow:
+quantities:
+  range_nmi: {type: number, unit: nmi, meaning: "slant range from the recording jet to the object (scalar, or per-frame array reduced by the term's reduce)"}
+  object_altitude_ft: {type: number, unit: ft, meaning: "object altitude above mean sea level (scalar or per-frame array)"}
+  ground_speed_kt: {type: number, unit: kt, meaning: "object horizontal speed over the ground (scalar or per-frame array)"}
+  air_speed_kt: {type: number, unit: kt, meaning: "object horizontal speed through the air, ground velocity minus the ERA5 wind (scalar or per-frame array)"}
+  min_ground_speed_kt: {type: number, unit: kt, meaning: "minimum horizontal ground speed over the clip (scalar)"}
+  size_ft: {type: number, unit: ft, meaning: "object length implied by its angular size at the predicted range (scalar or per-frame array)"}
+  reversal_radius_ft: {type: number, unit: ft, meaning: "radius of the tightest turn in the object's 3D path over the clip, capped at 1,000,000 ft for a straight path (scalar)"}
+  stops_and_reverses: {type: bool, meaning: "true if at some frame the ground speed is below 20 kt and the ground-velocity direction 3 s before and 3 s after that frame differs by at least 120 degrees; a probability in [0, 1] is also accepted"}
+  motion_vs_wind: {type: category, values: [against, with, neither], meaning: "against if the ground-velocity component along the downwind direction (median over the clip) is below -10 kt, with if above +10 kt, else neither (holding or crossing)"}
+  range_trend: {type: category, values: [decreasing, increasing, constant], meaning: "decreasing if last-frame range is more than 1 percent below first-frame range, increasing if more than 1 percent above, else constant"}
+
+# On-screen quantities used by witness_consistency (memory against the record).
+witness_quantities:
+  jet_altitude_ft: {source: symbology, field: altitude, unit: ft}
+  jet_speed_kt: {source: symbology, field: airspeed, unit: kt}
+  display_range_nmi: {source: symbology, field: range, unit: nmi}
+  closure_kt: {source: symbology, field: closure, unit: kt}
+  polarity: {source: symbology, field: polarity}
+  display_range_field: {source: symbology, field: range}
+  clip_duration_s: {source: frames_meta, unit: s}
+  object_contrast: {source: image_track, values: [hotter, colder]}
+
+environment_quantities: [wind_kt, time_of_day, visibility_mi, sea_state]
+
+cases:
+
+  # ---------------------------------------------------------------- GIMBAL (41 claims)
+  gimbal:
+    derived_dir: gimbal
+    claims:
+      G-T01: {firsthand: true, scorable: false, use: [context], kind: count, why: "Number of objects and which sensor saw them; the models describe one object, so counts are context."}
+      G-T02: {firsthand: true, scorable: false, use: [context], kind: role, why: "Witness role and provenance of what he saw; no quantity."}
+      G-T03: {firsthand: true, scorable: false, use: [context], kind: image_content, why: "Rocking at the end of the clip describes the image itself, already measured by the rotation criterion; scoring it would count the video twice."}
+      G-T04: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Stationary in hurricane winds and Mach 1.1 to 1.2 describe the whole East Coast class over 2014 to 2015, not this object in this clip."}
+      G-T05: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Mach 2 and spherical shape are class statements, not this object in this clip."}
+      G-T06: {firsthand: false, scorable: false, use: [context], kind: other_event, why: "The W-72 near miss is a different event."}
+      G-T07: {firsthand: true, scorable: false, use: [context], kind: count, why: "Five or six other objects in a wedge; other objects are not modeled."}
+      G-T08: {firsthand: true, scorable: false, use: [context], kind: location_or_time, why: "Distance from the carrier; the carrier's position is not known to the lab, so no model predicts it."}
+      G-T09:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "'Basically stationary' constrains ground speed; 'roughly 20,000 ft, unsure' constrains altitude. The 120 kt is not scored separately: if it is air speed it is the same statement as near-zero ground speed in the 120 kt wind."
+        terms:
+          - {quantity: ground_speed_kt, lo: 0, hi: 30, sigma: 20, reduce: median}
+          - {quantity: object_altitude_ft, lo: 15000, hi: 25000, sigma: 2500, reduce: median}
+      G-T10: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Same witness, same stop-and-follow assertion as G-T11 (scored once there); the racetrack after the clip is outside the clip."}
+      G-T11:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "The object reversed direction without a turn radius: a stop and reverse, scored as the stops_and_reverses category (assumes the reversal falls within the clip, as P&vR read Graves)."
+        terms:
+          - {quantity: stops_and_reverses, value: true}
+      G-T12:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "Within 10 nmi of the recording jet, from the radar, relayed through the paper; an upper bound with a 1.5 nmi edge."
+        terms:
+          - {quantity: range_nmi, lo: 0, hi: 10, sigma: 1.5, reduce: median}
+      G-T13:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "6 to 8 (nmi in the paper, 'miles' in 2022); the claim's plus or minus 2 nmi band also covers the statute-mile reading."
+        terms:
+          - {quantity: range_nmi, lo: 6, hi: 8, sigma: 2, reduce: median}
+      G-T14:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "The jet came closer during the clip: direction of the range change only."
+        terms:
+          - {quantity: range_trend, value: decreasing}
+      G-T15:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: location_or_time
+        why: "After sunset: checkable against the on-screen clock and the sun's position; not a hypothesis discriminator."
+        environment:
+          - {quantity: time_of_day, value: "after sunset"}
+      G-T16: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Radar and FLIR behavior of the class after the radar upgrade; not this clip."}
+      G-T17: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Distance offshore and loiter behavior of the class; no case-level numbers."}
+      G-T18: {firsthand: false, scorable: false, use: [context], kind: location_or_time, why: "Location (plus or minus 100 mi) and the approach heading before the clip; Graves says the object then stopped and reversed, so the pre-clip heading does not fix the in-clip motion."}
+      G-T19: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Detection and track quality before the clip; the range is redacted."}
+      G-T20:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: location_or_time
+        why: "Wind 120 kt from the west at the jet's altitude: environment, checked against ERA5; it sets the wind the models use, it does not discriminate between them."
+        environment:
+          - {quantity: wind_kt, lo: 110, hi: 130, from_deg: 270, height_ft: 25000}
+      G-T21:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Crew on the tape: the objects are moving against the 120 kt wind; scored as motion_vs_wind = against for the filmed object (the crew's 'they're all' includes it)."
+        terms:
+          - {quantity: motion_vs_wind, value: against}
+      G-T22: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Hypersonic acceleration and instant stops across many encounters; class statement, low weight in the source."}
+      G-T23: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "No wing, tail or plume for the class; shape is not a model output."}
+      G-T24: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Same witness, same straight-then-reverse assertion as G-T11 (scored once); position relative to the unmodeled wedge."}
+      G-T25:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Vertical U-turn within about 500 ft: turn radius, scored in log space (order-of-magnitude memory, 0.5 dex edge) from 50 ft (effectively zero) to 500 ft."
+        terms:
+          - {quantity: reversal_radius_ft, lo: 50, hi: 500, sigma: 0.5, scale: log}
+      G-T26: {firsthand: true, scorable: false, use: [context], kind: count, why: "Spacing and count of the other objects; not modeled."}
+      G-T27: {firsthand: true, scorable: false, use: [context], kind: count, why: "Total objects over both events."}
+      G-T28:
+        firsthand: false
+        scorable: true
+        use: [hypothesis, witness_consistency]
+        why: "Recalled radar speed around 100 kt, not stated as air or ground speed (equal mixture of both); the 242 kt jet speed is read off the clip and tested against the record."
+        terms:
+          - {quantity: [ground_speed_kt, air_speed_kt], lo: 90, hi: 110, sigma: 20, reduce: median}
+        witness:
+          - {quantity: jet_speed_kt, lo: 242, hi: 242, tol: 1, recalled: "242 kt (bottom left of the display)"}
+      G-T29:
+        firsthand: true
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Black-hot polarity and a dark (hot) object are on-screen facts tested against the record; the disc-with-crown shape is image content."
+        witness:
+          - {quantity: polarity, value: BLK, recalled: "black hot"}
+          - {quantity: object_contrast, value: hotter, recalled: "dark central object putting out heat"}
+      G-T30: {firsthand: false, scorable: false, use: [context], kind: location_or_time, why: "About 350 mi offshore; location is not a model output."}
+      G-T31: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Data availability (FLIR and SA page on one tape)."}
+      G-T32: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Stationary in up to 120 kt winds: class statement, not this object in this clip."}
+      G-T33: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Speed regimes of the class over 2014 to 2015."}
+      G-T34: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Nothing visible at 500 ft on other occasions; not this event."}
+      G-T35: {firsthand: false, scorable: false, use: [context], kind: count, why: "About five smaller objects in a V, relayed; count."}
+      G-T36: {firsthand: false, scorable: false, use: [context], kind: class_statement, why: "Relayed class statement (stationary in 70 or 90 kt winds)."}
+      G-T37: {firsthand: false, scorable: false, use: [context], kind: other_event, why: "The cube-in-sphere near miss is a different event."}
+      G-T38: {firsthand: false, scorable: false, use: [context], kind: count, why: "Number of people who saw the objects on radar."}
+      G-T39: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Same reversal as G-T11 (scored once); 'north' and 'left to right' are page-up directions from memory, not a true heading."}
+      G-T40: {firsthand: true, scorable: false, use: [context], kind: role, why: "Witness role and mission context."}
+      G-T41: {firsthand: true, scorable: false, use: [context], kind: class_statement, why: "Sustained Mach 0.6 to 0.8 for hours: class statement, not tied to this clip."}
+
+  # ---------------------------------------------------------------- GOFAST (11 claims)
+  gofast:
+    derived_dir: gofast
+    claims:
+      F-T01:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "Reported object height near the ocean surface (case card): an impression without range, so a wide edge of 2,000 ft. The on-screen range fixes altitude near 13,000 ft for every model, so this term costs every hypothesis about the same."
+        terms:
+          - {quantity: object_altitude_ft, lo: 0, hi: 2000, sigma: 2000, reduce: median}
+      F-T02: {firsthand: false, scorable: false, use: [context], kind: count, why: "Timing relative to GIMBAL and 'many more objects'; relayed, no model quantity."}
+      F-T03: {firsthand: false, scorable: false, use: [context], kind: sensor_or_data, why: "What sensor produces the RNG field; the lab reads the field's behavior from the frames instead."}
+      F-T04:
+        firsthand: false
+        scorable: true
+        use: [hypothesis, witness_consistency]
+        why: "His estimate of the true range, about 5 miles (4.3 nmi statute to 5 nmi), 'probably a little further' than the display, 1 nmi edge; his reading of the display (3.4 to 3.5) is tested against the record."
+        terms:
+          - {quantity: range_nmi, lo: 4.3, hi: 5.0, sigma: 1.0, reduce: median}
+        witness:
+          - {quantity: display_range_nmi, lo: 3.4, hi: 3.5, tol: 0.05, recalled: "3.4 to 3.5, ticking down"}
+      F-T05:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Recording jet about 10,000 ft above the ocean, tested against the altitude readout; 'somewhere around 10,000 or so' rounds to 5,000 ft (tol 2,500)."
+        witness:
+          - {quantity: jet_altitude_ft, lo: 10000, hi: 10000, tol: 2500, recalled: "about 10,000 ft"}
+      F-T06:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "The 170 under the range: a display value, tested against the closure field (10 kt steps)."
+        witness:
+          - {quantity: closure_kt, lo: 170, hi: 170, tol: 5, recalled: "170 (relative velocity, kt)"}
+      F-T07: {firsthand: false, scorable: false, use: [context], kind: sensor_or_data, why: "Lock mode and tracker box behavior: testable on the tracker gate in the frames, not a geometry quantity or a symbology field."}
+      F-T08: {firsthand: false, scorable: false, use: [context], kind: count, why: "About four objects line abreast a mile apart; other objects are not modeled."}
+      F-T09:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Object reads cooler than the background in the displayed polarity: polarity and contrast sign are on-screen facts."
+        witness:
+          - {quantity: polarity, value: BLK, recalled: "black hot (captions garbled)"}
+          - {quantity: object_contrast, value: colder, recalled: "object cooler than the surroundings"}
+      F-T10:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Black hot with a white object, so colder than the ocean: polarity and contrast sign are on-screen facts."
+        witness:
+          - {quantity: polarity, value: BLK, recalled: "black hot"}
+          - {quantity: object_contrast, value: colder, recalled: "white object, colder than the ocean"}
+      F-T11: {firsthand: false, scorable: false, use: [context], kind: role, why: "Crew identity and radar type."}
+
+  # ---------------------------------------------------------------- FLIR1 (108 claims)
+  flir1:
+    derived_dir: flir1_navy
+    # No per-frame OCR exists for FLIR1 yet (no symbology_final.csv). These M0 hand readings stand in, labeled as such.
+    lab_fallback:
+      source: "docs/audit/flir1.md (M0 hand reading of 8 frames, not per-frame OCR)"
+      jet_altitude_ft: {lo: 19990, hi: 20000}
+      jet_speed_kt: {lo: 240, hi: 253}
+      display_range_field: {value: absent, note: "the M0 audit found no RNG field anywhere in the clip"}
+    claims:
+      T-T01:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "Controller via Fravor: the contacts hung near 20,000 ft for hours (their cruise state); the claim's own band is plus or minus 8,000 ft. The 80,000 ft descent is outside the clip."
+        terms:
+          - {quantity: object_altitude_ft, lo: 20000, hi: 20000, sigma: 8000, reduce: median}
+      T-T02: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Fravor's own altitude at the merge, an hour before the clip."}
+      T-T03:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: location_or_time
+        why: "Clear, light winds, no whitecaps: surface weather, environment only."
+        environment:
+          - {quantity: sea_state, value: "no whitecaps, light winds"}
+      T-T04: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Shape and long-axis orientation seen at the merge, not in the clip."}
+      T-T05: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Absence of rotors and wings seen at the merge; shape is not a model output."}
+      T-T06: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Maneuver geometry during the merge."}
+      T-T07: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Object at about 12,000 ft at the merge, not the cruise state the clip's object was vectored from."}
+      T-T08: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Closest approach and departure at the merge."}
+      T-T09: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Whitewater gone after the merge."}
+      T-T10: {firsthand: false, scorable: false, use: [context], kind: outside_clip, why: "The CAP-point jump is a radar event outside the clip."}
+      T-T11: {firsthand: false, scorable: false, use: [context], kind: sensor_or_data, why: "Which radars held the track."}
+      T-T12: {firsthand: false, scorable: false, use: [context], kind: sensor_or_data, why: "Radar jamming and the switch to the pod; no model quantity."}
+      T-T13:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "Fravor on the pod video: the object 'just sitting in space at 20,000 feet' (he was not in the video jet; may conflate the jet's 20,000 ft readout, so a 3,000 ft edge). No plume is image content."
+        terms:
+          - {quantity: object_altitude_ft, lo: 20000, hi: 20000, sigma: 3000, reduce: median}
+      T-T14:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "About 40 ft long, plus or minus 10 ft (hearing); length is time-independent, scored under the witnesses' identification of the filmed object."
+        terms:
+          - {quantity: size_ft, lo: 40, hi: 40, sigma: 10, reduce: median}
+      T-T15: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Acceleration at the merge; no number."}
+      T-T16: {firsthand: false, scorable: false, use: [context], kind: outside_clip, why: "Stop-and-reverse and hours of hang are radar history outside the clip."}
+      T-T17:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Video length about 90 s ('a minute and a half', rounding to half minutes, tol 15 s), tested against the clip."
+        witness:
+          - {quantity: clip_duration_s, lo: 90, hi: 90, tol: 15, recalled: "about 90 s (a minute and a half)"}
+      T-T18: {firsthand: true, scorable: false, use: [context], kind: count, why: "Number of observers and aircraft."}
+      T-T19: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Five minutes of visual observation at the merge."}
+      T-T20:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "About the size of an F/A-18F (about 56 ft), plus or minus 15 ft; a different value from the same witness than T-T14, so it enters separately."
+        terms:
+          - {quantity: size_ft, lo: 56, hi: 56, sigma: 15, reduce: median}
+      T-T21: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Size of the whitewater, not of the object."}
+      T-T22: {firsthand: true, scorable: false, use: [context], kind: location_or_time, why: "Location; the descent figure is network narration."}
+      T-T23: {firsthand: false, scorable: false, use: [context], kind: location_or_time, why: "Two weeks of tracking before 11/14."}
+      T-T24: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Fravor's own speed at the merge."}
+      T-T25: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Heading during the merge."}
+      T-T26: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Erratic motion at the merge; no number."}
+      T-T27: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Duration of Dietrich's visual contact at the merge."}
+      T-T28:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "Report paraphrase of Dietrich: 30 to 40 ft long (scored, time-independent); the 1,000 to 3,000 ft and 300 to 500 kt are the merge, not scored."
+        terms:
+          - {quantity: size_ft, lo: 30, hi: 40, sigma: 10, reduce: median}
+      T-T29: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Altitude offset and dive angle at the merge."}
+      T-T30: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Altitude offset and acceleration time at the merge."}
+      T-T31: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Initial altitude offset at the merge."}
+      T-T32: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Vanishing time at the merge."}
+      T-T33:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "About 47 ft (2018 statement), plus or minus 10 ft; a different value from T-T14."
+        terms:
+          - {quantity: size_ft, lo: 47, hi: 47, sigma: 10, reduce: median}
+      T-T34: {firsthand: false, scorable: false, use: [context], kind: location_or_time, why: "CAP point 40 mi south of the ship."}
+      T-T35: {firsthand: false, scorable: false, use: [context], kind: outside_clip, why: "CAP-point transit time, outside the clip."}
+      T-T36:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: location_or_time
+        why: "Visibility about 50 mi and a rule-of-thumb detection range: environment."
+        environment:
+          - {quantity: visibility_mi, lo: 50, hi: 50}
+      T-T37: {firsthand: true, scorable: false, use: [context], kind: location_or_time, why: "Distance to the ship."}
+      T-T38: {firsthand: false, scorable: false, use: [context], kind: duplicate, why: "Same witness and value as T-T01 (scored once there)."}
+      T-T39: {firsthand: false, scorable: false, use: [context], kind: sensor_or_data, why: "Sensor sequence and jamming; no model quantity."}
+      T-T40: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Same witness, same 40 ft as T-T14 (scored once there)."}
+      T-T41: {firsthand: true, scorable: false, use: [context], kind: other_event, why: "A different day (11/04/2004); the same witness's general cruise statement T-T44 is scored."}
+      T-T42: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "The 0.78 s drop at the first merge; the cruise altitude (28,000 ft) is scored through T-T44."}
+      T-T43: {firsthand: false, scorable: false, use: [context], kind: outside_clip, why: "Descent from 80,000 ft seen by other radars, before the clip."}
+      T-T44:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Day: the contacts cruised co-altitude at 28,000 ft and about 100 kt (radar, ground speed); the second sortie was vectored onto the same group (T-T51)."
+        terms:
+          - {quantity: object_altitude_ft, lo: 28000, hi: 28000, sigma: 2000, reduce: median}
+          - {quantity: ground_speed_kt, lo: 100, hi: 100, sigma: 20, reduce: median}
+      T-T45: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Same witness, same 100 kt as T-T44 (scored once); the 250-mile route is outside the clip."}
+      T-T46: {firsthand: true, scorable: false, use: [context], kind: count, why: "Group sizes and totals."}
+      T-T47: {firsthand: true, scorable: false, use: [context], kind: count, why: "Spacing between group members; other objects are not modeled."}
+      T-T48: {firsthand: false, scorable: false, use: [context], kind: first_encounter, why: "Barrel roll at the merge, relayed."}
+      T-T49: {firsthand: true, scorable: false, use: [context], kind: outside_clip, why: "CAP-point jump, outside the clip."}
+      T-T50: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Which radar held the objects."}
+      T-T51: {firsthand: false, scorable: false, use: [context], kind: location_or_time, why: "Timing of the second sortie; it is the basis for applying the cruise claims to the filmed object, but has no quantity itself."}
+      T-T52: {firsthand: false, scorable: false, use: [context], kind: sensor_or_data, why: "Visual contact claimed in the second sortie; no quantity (Underwood says he had none, T-T56)."}
+      T-T53:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "The snippet he received was about 10 s (tol 5 s), tested against the clip; he may have been sent an excerpt."
+        witness:
+          - {quantity: clip_duration_s, lo: 10, hi: 10, tol: 5, recalled: "about 10 s"}
+      T-T54: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Track quality."}
+      T-T55: {firsthand: true, scorable: false, use: [context], kind: location_or_time, why: "Dates."}
+      T-T56: {firsthand: true, scorable: false, use: [context], kind: image_content, why: "No visual and no plume; the plume is image content measured from the frames."}
+      T-T57:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Underwood via Gizmodo: about 40 ft and about 120 kt (138 mph); he had no visual (T-T56), so the firsthand flag of the claim file is questionable, kept as recorded."
+        terms:
+          - {quantity: size_ft, lo: 40, hi: 40, sigma: 10, reduce: median}
+          - {quantity: ground_speed_kt, lo: 120, hi: 120, sigma: 25, reduce: median}
+      T-T58: {firsthand: false, scorable: false, use: [context], kind: outside_clip, why: "Drop from 50,000 ft, relayed and of uncertain attribution; outside the clip."}
+      T-T59: {firsthand: true, scorable: false, use: [context], kind: image_content, why: "Departure to the left and loss of radar contact; the departure is in the frames, the radar part is not."}
+      T-T60:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Underwood (read directly in 2021): about 10 to 15 miles off his nose when it left the field of view; 8.7 to 13 nmi, 2.5 nmi edge, compared with the range at the last frame."
+        terms:
+          - {quantity: range_nmi, lo: 8.7, hi: 13.0, sigma: 2.5, reduce: last}
+      T-T61: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Slow radar targets on earlier days; no number."}
+      T-T62: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Radar tuning and data surrender."}
+      T-T63:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "8 to 10 minutes of video (tol 1 min), tested against the released clip; a longer tape is not ruled out by it."
+        witness:
+          - {quantity: clip_duration_s, lo: 480, hi: 600, tol: 60, recalled: "8 to 10 min"}
+      T-T64:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "CVW-11 log (unverified): contact at about 25,000 ft and 100 kt; the 40 nm vector range is from the ship, not scored."
+        terms:
+          - {quantity: object_altitude_ft, lo: 25000, hi: 25000, sigma: 2000, reduce: median}
+          - {quantity: ground_speed_kt, lo: 100, hi: 100, sigma: 20, reduce: median}
+      T-T65: {firsthand: false, scorable: false, use: [context], kind: location_or_time, why: "Vector range from the ship."}
+      T-T66: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Merge altitudes and position relative to the whitewater; the length is scored under T-T67."}
+      T-T67:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "CVW-11 log: 25 to 30 ft long, edge 7.5 ft; the log is unverified (README), weight as recorded."
+        terms:
+          - {quantity: size_ft, lo: 25, hi: 30, sigma: 7.5, reduce: median}
+      T-T68: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "600 to 700 kt and climb at the merge."}
+      T-T69: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Closest approach at the merge."}
+      T-T70:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: first_encounter
+        why: "Whitewater size is the merge; late morning is a time-of-day environment check."
+        environment:
+          - {quantity: time_of_day, value: "late morning"}
+      T-T71:
+        firsthand: false
+        scorable: true
+        use: [hypothesis]
+        why: "Leaked 2009 report: 45 ft long (edge 10 ft); the other values are merge or radar history."
+        terms:
+          - {quantity: size_ft, lo: 45, hi: 45, sigma: 10, reduce: median}
+      T-T72: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Initial geometry of the merge."}
+      T-T73: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Jet altitudes during the merge."}
+      T-T74: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Whitewater shape and object orientation at the merge."}
+      T-T75:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Fravor reading the clip's display: about 20,000 ft (19,990) and 250 kt, tested against the record."
+        witness:
+          - {quantity: jet_altitude_ft, lo: 19990, hi: 20000, tol: 10, recalled: "about 20,000 ft (19,990)"}
+          - {quantity: jet_speed_kt, lo: 250, hi: 250, tol: 5, recalled: "250 kt"}
+      T-T76:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Recording jet at 250 kt on autopilot, tested against the airspeed readout."
+        witness:
+          - {quantity: jet_speed_kt, lo: 250, hi: 250, tol: 5, recalled: "250 kt"}
+      T-T77:
+        firsthand: false
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "A 99.9 in the pod's range field: an on-screen fact, tested against the record."
+        witness:
+          - {quantity: display_range_field, value: "99.9", recalled: "range field shows 99.9"}
+      T-T78:
+        firsthand: true
+        scorable: false
+        use: [witness_consistency]
+        kind: image_content
+        why: "Underwood agrees the range field read 99.9; tested against the record (the jam strobes are on the unreleased radar tape)."
+        witness:
+          - {quantity: display_range_field, value: "99.9", recalled: "range field shows 99.9"}
+      T-T79: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Sensor sequence; no range."}
+      T-T80: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "Two tapes; radar tape not public."}
+      T-T81: {firsthand: true, scorable: false, use: [context], kind: image_content, why: "Tracker bars widening and recentering: testable on the tracker gate in the frames, not a geometry quantity or a symbology field."}
+      T-T82: {firsthand: true, scorable: false, use: [context], kind: outside_clip, why: "Five to ten seconds after the object left the screen."}
+      T-T83: {firsthand: true, scorable: false, use: [context], kind: image_content, why: "Near-stationary at the start of the clip describes the image's apparent motion, measured directly from the frames."}
+      T-T84: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "No other traffic in the warning area: bears on an aircraft explanation as a prior, not as a geometric quantity; the design puts no priors on hypothesis classes."}
+      T-T85: {firsthand: false, scorable: false, use: [context], kind: count, why: "Up to about a dozen objects at once."}
+      T-T86: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "An example range call during the first vector, not a reading."}
+      T-T87:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: location_or_time
+        why: "Surface wind 5 to 10 kt from the sea state: environment, checked against ERA5."
+        environment:
+          - {quantity: wind_kt, lo: 5, hi: 10, height_ft: 0}
+      T-T88: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Position over the whitewater at the merge."}
+      T-T89: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Sweep across the canopy at the merge; no angle."}
+      T-T90: {firsthand: false, scorable: false, use: [context], kind: image_content, why: "Appendages in the TV-mode image: image content."}
+      T-T91:
+        firsthand: true
+        scorable: false
+        use: [environment]
+        kind: location_or_time
+        why: "Launch about noon to 1 pm local: time-of-day environment."
+        environment:
+          - {quantity: time_of_day, value: "launch about 12:00 to 13:00 local"}
+      T-T92: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Sighting sequence at the merge."}
+      T-T93: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Disappearance at the merge."}
+      T-T94: {firsthand: true, scorable: false, use: [context], kind: outside_clip, why: "CAP-point transit time, outside the clip."}
+      T-T95:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Day 2026: groups held between 20,000 and 28,000 ft (a band, different from T-T44's single value, so it enters separately)."
+        terms:
+          - {quantity: object_altitude_ft, lo: 20000, hi: 28000, sigma: 2000, reduce: median}
+      T-T96: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Same witness and speed as T-T44 (100 mph vs 100 kt is a unit slip inside T-T44's band); scored once."}
+      T-T97: {firsthand: true, scorable: false, use: [context], kind: sensor_or_data, why: "No IFF response: bears on an aircraft explanation as a prior, not a geometric quantity."}
+      T-T98: {firsthand: true, scorable: false, use: [context], kind: duplicate, why: "Day's 28,000 ft is T-T44; Fravor's 20,000 ft is T-T01 and T-T13; scored there."}
+      T-T99: {firsthand: true, scorable: false, use: [context], kind: location_or_time, why: "Strike group location."}
+      T-T100: {firsthand: true, scorable: false, use: [context], kind: location_or_time, why: "Encounter location."}
+      T-T101:
+        firsthand: true
+        scorable: true
+        use: [hypothesis]
+        why: "Voorhis: before the intercept the tracks flew about 100 kt at 25,000 to 28,000 ft (radar)."
+        terms:
+          - {quantity: object_altitude_ft, lo: 25000, hi: 28000, sigma: 2000, reduce: median}
+          - {quantity: ground_speed_kt, lo: 100, hi: 100, sigma: 20, reduce: median}
+      T-T102: {firsthand: true, scorable: false, use: [context], kind: count, why: "At most three tracks at once."}
+      T-T103: {firsthand: true, scorable: false, use: [context], kind: other_event, why: "Binocular sightings at twilight and night on other occasions."}
+      T-T104: {firsthand: true, scorable: false, use: [context], kind: other_event, why: "Lights shooting up on other occasions."}
+      T-T105: {firsthand: false, scorable: false, use: [context], kind: outside_clip, why: "Descent timing relayed from Day; outside the clip."}
+      T-T106: {firsthand: true, scorable: false, use: [context], kind: outside_clip, why: "Day's correction of the descent figures; outside the clip."}
+      T-T107: {firsthand: true, scorable: false, use: [context], kind: other_event, why: "A daytime sighting at about 30 mi on another day."}
+      T-T108: {firsthand: true, scorable: false, use: [context], kind: first_encounter, why: "Formation geometry at the merge."}
