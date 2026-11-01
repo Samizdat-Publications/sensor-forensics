@@ -35,7 +35,8 @@ constant-velocity range curve).
 PLACEHOLDERS: jet heading 315 deg at frame 0 and wind 120 kt from 270 (as M2.6); cloud-level
 wind 17 kt from 240 (Sitrec). solve/weather.py (ERA5) replaces them when it lands.
 
-CLI: python -m solve.turn_rate_gimbal
+CLI: python -m solve.turn_rate_gimbal            (the 0.35 deg run below)
+     python -m solve.turn_rate_gimbal --fov 0.7  (turn_rate_fov070.csv: same method at another field of view, M3.5)
 Writes data/derived/gimbal/turn_rate.csv, data/derived/gimbal/turn_rate_summary.json,
 docs/reproductions/gimbal_turn_rate.png
 """
@@ -216,14 +217,15 @@ def cloud_rate(inp: dict, az: np.ndarray | None = None, source: str = "bg", h_cl
             "heading_change_deg": heading_change(om)}
 
 
-def monte_carlo(inp: dict, n: int = N_MC, seed: int = SEED) -> dict:
+def monte_carlo(inp: dict, n: int = N_MC, seed: int = SEED, base_scale: float = 1.0) -> dict:
+    """Monte Carlo band. base_scale multiplies the image scale (px/deg): 0.5 is a 0.7 deg field."""
     rng = np.random.default_rng(seed)
     lam = inp["az_info"]["lambda"]
     draws, totals, params, azs = [], [], [], []
     for _ in range(n):
         az = crossing_azimuth(inp["readings"], lam, rng, latency=rng.uniform(0.0, 6.0))
         p = {"h_cloud_ft": rng.uniform(8_000.0, 18_000.0), "refraction": bool(rng.random() < 0.5),
-             "below": rng.uniform(0.01, 0.12), "scale": rng.uniform(0.95, 1.05),
+             "below": rng.uniform(0.01, 0.12), "scale": base_scale * rng.uniform(0.95, 1.05),
              "aspect": rng.uniform(1.0, 1.05), "cloud_wind": (rng.uniform(0, 360), rng.uniform(0, 40)),
              "jet_wind": (rng.uniform(240, 300), 120.0), "heading0": rng.uniform(295, 335),
              "pitch": rng.uniform(2.0, 6.0), "source": "bg" if rng.random() < 0.5 else "cloud"}
@@ -595,7 +597,35 @@ def plot(series: dict, path: Path = PLOT) -> None:
     plt.close(fig)
 
 
+def fov_variant(fov_deg: float, n: int = N_MC) -> pd.DataFrame:
+    """The lab cloud-derived turn rate and its band for another field of view (M3.5).
+
+    The field of view sets the image scale (0.35 deg spans the 426 px picture by default); a wider
+    field means each pixel of measured cloud motion is a larger angle, so the inverted turn rate
+    changes. Same inversion, smoothing and Monte Carlo as compute(), with the scale multiplied by
+    FOV_DEG / fov_deg. Written to data/derived/gimbal/turn_rate_fov<NNN>.csv.
+    """
+    inp = inputs()
+    scale = FOV_DEG / float(fov_deg)
+    nom = cloud_rate(inp, scale=scale)
+    mc = monte_carlo(inp, n=n, base_scale=scale)
+    return pd.DataFrame({"frame": np.arange(N), "omega_cloud_lab": nom["omega"], "omega_cloud_lab_lo": mc["lo"],
+                         "omega_cloud_lab_hi": mc["hi"], "fov_deg": float(fov_deg),
+                         "heading_change_deg": nom["heading_change_deg"]})
+
+
+def fov_csv(fov_deg: float) -> Path:
+    return GIMBAL / f"turn_rate_fov{int(round(fov_deg * 100)):03d}.csv"
+
+
 def main() -> int:
+    import sys
+    if len(sys.argv) > 2 and sys.argv[1] == "--fov":
+        fov = float(sys.argv[2])
+        df = fov_variant(fov)
+        df.to_csv(fov_csv(fov), index=False, float_format="%.5f")
+        print(f"wrote {fov_csv(fov)}; heading change {df['heading_change_deg'].iloc[0]:.2f} deg")
+        return 0
     res = compute()
     res["csv"].to_csv(OUT_CSV, index=False, float_format="%.5f")
     OUT_JSON.write_text(json.dumps(RG.strip(res["summary"]), indent=1) + "\n", encoding="utf-8")

@@ -15,11 +15,17 @@ solve/ (enforced by tests/test_equal_treatment.py).
   positive sequence). Frames are not independent; each criterion's summed
   log-likelihood is scaled by n_eff / n.
 - bic_penalty: 0.5 k ln(n_eff).
+- rotation_loglik: the image-rotation criterion for every model (M3.5). The model supplies a
+  predicted orientation up to fitted terms and its kind; the free terms (a glare's one offset,
+  or a physical object's smooth rotation spline, plus a shared per-polarity-segment offset of
+  the measurement) are fitted here by linear least squares and returned as a count for the
+  complexity penalty, so the same code and the same rule serve every hypothesis.
 """
 
 from __future__ import annotations
 
 import numpy as np
+from scipy.interpolate import CubicSpline
 from scipy.special import log_ndtr
 
 LOG_FLOOR = -1e6
@@ -122,3 +128,87 @@ def smooth_residual(t: np.ndarray, y: np.ndarray, degree: int = 3) -> np.ndarray
 
 def bic_penalty(k: int | float, n_eff: float) -> float:
     return 0.5 * float(k) * float(np.log(max(n_eff, 1.0)))
+
+
+_BASIS_CACHE: dict = {}
+
+
+def natural_spline_basis(t: np.ndarray, n_knots: int) -> np.ndarray:
+    """Columns: natural cubic splines through n_knots evenly spaced knots over t (one unit value each).
+
+    Any natural cubic spline on those knots is a linear combination of the columns, so fitting it
+    is linear least squares; its degrees of freedom are n_knots.
+    """
+    t = np.asarray(t, float)
+    k = int(n_knots)
+    key = (t.tobytes(), k)
+    if key not in _BASIS_CACHE:
+        tk = np.linspace(t.min(), t.max(), k)
+        _BASIS_CACHE[key] = CubicSpline(tk, np.eye(k), bc_type="natural", axis=0)(t)
+    return _BASIS_CACHE[key]
+
+
+def rotation_fit(obs: np.ndarray, base: np.ndarray, kind: str, segment: np.ndarray, t: np.ndarray,
+                 n_knots, penalty_per_term: float = 0.0, scale: float = 1.0, sigma: float = 1.0) -> dict:
+    """Best fit of the free rotation terms for one model (shared by every hypothesis).
+
+    obs: measured orientation (deg, unwrapped with period 180); base: the model's predicted
+    orientation without its free terms, at the same samples; kind: "glare" (free terms: one
+    constant offset, Sitrec's glare start angle) or "physical" (a natural cubic spline: the
+    object's own rotation, free and smooth). Every kind also gets one offset per polarity
+    segment after the first (a measurement bias between white-hot and black-hot thresholds,
+    the same for all). Orientations are axial, so base is unwrapped with period 180 and any
+    whole multiple of 180 is absorbed by the offset or the spline's constant.
+
+    n_knots: an int, or a sequence of candidate knot counts for the physical spline; the count
+    is then chosen by the same penalized likelihood as the totals, scale * sum(loglik) -
+    penalty_per_term * (free terms), so the data decide how flexible the free rotation is and
+    pay for it. Returns residuals, fitted values and the number of free terms (counted in k).
+    """
+    obs = np.asarray(obs, float)
+    base = np.unwrap(np.asarray(base, float), period=180.0)
+    r = obs - base
+    segment = np.asarray(segment)
+    n_seg = len(np.unique(segment)) - 1
+    if kind == "glare":
+        ks = [1]
+    elif kind == "physical":
+        ks = [int(n_knots)] if np.isscalar(n_knots) else [int(k) for k in n_knots]
+    else:
+        raise ValueError(f"unknown rotation kind {kind!r}")
+    best = None
+    for k in ks:
+        A, A_pinv = _rotation_design(kind, k, np.asarray(t, float), segment)
+        coef = A_pinv @ r
+        fitted = A @ coef
+        res = r - fitted
+        score = scale * float(np.sum(gaussian_loglik(res, sigma))) - penalty_per_term * A.shape[1]
+        if best is None or score > best["score"]:
+            best = {"resid": res, "fitted": base + fitted, "dof": int(A.shape[1]), "coef": coef, "score": score,
+                    "n_model_terms": int(k), "n_segment_terms": n_seg}
+    return best
+
+
+_DESIGN_CACHE: dict = {}
+
+
+def _rotation_design(kind: str, k: int, t: np.ndarray, segment: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Design matrix of the free rotation terms and its pseudo-inverse (cached: fixed per case)."""
+    key = (kind, k, t.tobytes(), segment.tobytes())
+    if key not in _DESIGN_CACHE:
+        cols = [np.ones(len(t))] if kind == "glare" else list(natural_spline_basis(t, k).T)
+        cols += [(segment == sg).astype(float) for sg in np.unique(segment)[1:]]
+        A = np.column_stack(cols)
+        _DESIGN_CACHE[key] = (A, np.linalg.pinv(A))
+    return _DESIGN_CACHE[key]
+
+
+def rotation_loglik(obs: np.ndarray, base: np.ndarray, kind: str, segment: np.ndarray, t: np.ndarray,
+                    sigma: float, n_knots, penalty_per_term: float = 0.0, scale: float = 1.0
+                    ) -> tuple[np.ndarray, int, dict]:
+    """Per-sample Gaussian log-likelihood of the measured orientation under the best-fit free terms.
+
+    Returns (per-sample loglik, free-term count for the complexity penalty, fit details).
+    """
+    fit = rotation_fit(obs, base, kind, segment, t, n_knots, penalty_per_term, scale, sigma)
+    return gaussian_loglik(fit["resid"], sigma), fit["dof"], fit

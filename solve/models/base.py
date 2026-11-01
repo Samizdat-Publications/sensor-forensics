@@ -17,7 +17,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from .. import frames as F
-from ..sensor_atflir import pod_roll
+from ..sensor_atflir import glare_angle_base_v, human_horizon_v
 from .geometry import JetState, angles_from, height_of, los_enu, range_to_height, sea_range
 
 
@@ -30,7 +30,8 @@ class Prediction:
     closure_mps: np.ndarray | None = None
     size_log: np.ndarray | None = None        # log apparent size factor (un-normalized)
     brightness_log: np.ndarray | None = None  # log brightness factor (un-normalized)
-    glare_rotation: np.ndarray | None = None  # deg, pod roll (None for physical objects or if not scored)
+    rotation_base: np.ndarray | None = None   # deg, predicted image orientation up to the fitted terms (see below)
+    rotation_kind: str = ""                   # "glare" (fixed in the optics) or "physical" (free smooth rotation)
     background_px: np.ndarray | None = None   # px/frame, ocean image motion at the boresight
     obj_pos: np.ndarray | None = None
     obj_alt: np.ndarray | None = None
@@ -88,22 +89,33 @@ def observables(case, jet: JetState, pos: np.ndarray, vel: np.ndarray, air_vel: 
         raise ValueError(f"unknown size model {size_model!r}")
     brightness_log = -2.0 * np.log(rng)
 
-    glare_rot = None
-    if glare and "rotation" in case.criteria:
-        pitch = float(case.cfg["jet"].get("pitch_deg", 0.0))
-        glare_rot = np.array([pod_roll(el[k], az[k], pitch, case.bank[k]) for k in range(len(az))])
+    # Image rotation of the object (the rotation criterion). The model registry decides the kind:
+    # a glare fixed in the pod optics is displayed at g0 + derotation (sensor_atflir.glare_angle_base_v,
+    # Sitrec's model; g0 is fitted by the scorer); a physical object keeps its own attitude, so its
+    # image orientation is the displayed horizon plus a free smooth rotation (fitted by the scorer and
+    # charged by the complexity penalty). Both are evaluated on the model's own predicted sight line.
+    rot_base, rot_kind = None, ""
+    if "rotation" in case.criteria:
+        pitch = jet.pitch_deg
+        if glare:
+            rot_base, rot_kind = glare_angle_base_v(el, az, pitch, case.bank), "glare"
+        else:
+            rot_base, rot_kind = human_horizon_v(pitch, case.bank, az, el), "physical"
 
     u = rel / rng[:, None]
-    s = sea_range(jet.pos, u)
-    vj = jet.vel
-    d_dot = -(vj - np.sum(vj * u, axis=-1)[:, None] * u) / s[:, None]
-    u_dot = np.gradient(u, case.t, axis=0)
-    flow = np.linalg.norm(d_dot - u_dot, axis=-1)
-    bg_px = np.degrees(flow) * case.ppd / case.fps
+    if "background_motion" in case.series:
+        s = sea_range(jet.pos, u)
+        vj = jet.vel
+        d_dot = -(vj - np.sum(vj * u, axis=-1)[:, None] * u) / s[:, None]
+        u_dot = np.gradient(u, case.t, axis=0)
+        flow = np.linalg.norm(d_dot - u_dot, axis=-1)
+        bg_px = np.degrees(flow) * case.ppd / case.fps
+    else:
+        bg_px = None   # background motion enters through the jet's measured turn rate (GIMBAL)
 
     alt = height_of(pos)
     pred = Prediction(valid=True, az=az, el=el, range_m=rng, closure_mps=closure, size_log=size_log,
-                      brightness_log=brightness_log, glare_rotation=glare_rot, background_px=bg_px,
+                      brightness_log=brightness_log, rotation_base=rot_base, rotation_kind=rot_kind, background_px=bg_px,
                       obj_pos=pos, obj_alt=alt, obj_vel=vel, air_vel=air_vel)
     pred.scalars = scalar_quantities(case, pred, wind_xy)
     for k in ("reversal_radius_ft", "stops_and_reverses", "motion_vs_wind", "range_trend"):

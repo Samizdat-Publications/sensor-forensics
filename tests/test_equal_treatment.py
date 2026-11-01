@@ -64,14 +64,14 @@ def test_hypothesis_files_hold_no_code_paths():
         assert h.sources, f"{h.id} lists no sources"
 
 
-@pytest.fixture(scope="module")
-def case():
-    return load_case("gofast")
+@pytest.fixture(scope="module", params=["gofast", "gimbal"])
+def case(request):
+    return load_case(request.param)
 
 
 PARAMS = {"jet_heading_deg": 270.0, "anchor_daz_deg": 0.1, "anchor_del_deg": -0.2, "wind_err_e_kt": 3.0,
           "wind_err_n_kt": -2.0, "range_ref_nmi": 3.8, "airspeed_kt": 30.0, "heading_deg": 120.0, "vz_fpm": 50.0,
-          "altitude_ref_ft": 15500.0}
+          "altitude_ref_ft": 15500.0, "turn_rate_z": 0.2, "jet_pitch_deg": 3.6}
 
 
 def _params_for(case, h):

@@ -1,0 +1,150 @@
+# Case configuration for M3 scoring: GIMBAL (January 2015, F/A-18F, ATFLIR, IR, no range on screen).
+# Read by solve/case_data.py. Case data only: nothing here names or favors a hypothesis.
+# Written 10/31/2026 (M3.5) before any GIMBAL hypothesis was fitted.
+
+case: gimbal
+label: GIMBAL
+fps: 29.97002997002997          # 30000 / 1001
+n_frames: 1031
+
+files:
+  symbology: data/derived/gimbal/symbology_final.csv
+  symbology_summary: data/derived/gimbal/symbology_summary.json
+  image_track: data/derived/gimbal/image_track.csv
+  transitions: data/derived/gimbal/transitions.csv   # interlaced readout-change frames (not scored; for reference)
+
+# Frames scored: all 1031. The object is found on every frame (image_track_summary.json: found_frames 1031)
+# and the azimuth readout is on screen throughout.
+track_window:
+  rule: field_present
+  field: azimuth
+
+readouts:
+  # Whole degrees on a 6-frame display cycle: 34 of 46 azimuth changes on residue 3 (symbology_summary.json).
+  azimuth: {field: azimuth, step: 1.0, update: summary_phase}
+  # The elevation reads -2 on every frame, so it has no change phase of its own; it is drawn by the same
+  # display update as the azimuth.
+  elevation: {field: elevation, step: 1.0, update: phase_of, phase_field: azimuth}
+update_modulus: 6
+
+# D-016 display rounding convention, fitted once for this video and shared by every hypothesis: the azimuth
+# readout ROUNDS. Evidence: "0" is held 19 frames between "-1" (17) and "1" (17); truncation toward zero
+# would hold "0" about twice as long (docs/reproductions/gimbal_turn_rate.md, Method 5).
+display_rounding: round
+
+jet:
+  altitude_field: altitude      # ft, pressure altitude readout (25,000 to 25,010)
+  mach_field: mach              # TAS from Mach and ISA (+ ERA5 temperature offset when available)
+  bank_column: bank_deg         # horizon-bar bank, image_track.csv (M1); used for the image horizon and pod roll only
+  bank_smooth_frames: 31
+  pitch_deg: 3.6                # Sitrec par.jetPitch (par.js:12); a shared nuisance below refines it
+  pitch_scale_with_bank: true   # Sitrec scaleJetPitch: pitch / cos(bank) (par.js:51, JetUtils.js:11-19)
+  convention: level             # az from the nose in the level plane, el from the local horizontal (Sitrec)
+  # Turn rate: the lab's cloud-derived history (M2.5, docs/reproductions/gimbal_turn_rate.md), NOT the
+  # bank formula (the horizon bars lag the roll and fail the cloud test). The 95 percent band of its
+  # Monte Carlo sets the nuisance turn_rate_z below. The file depends on the field of view (sensor_variants).
+  turn_rate:
+    column: omega_cloud_lab
+    lo_column: omega_cloud_lab_lo
+    hi_column: omega_cloud_lab_hi
+
+# Field of view: a SENSOR setting shared by every hypothesis, never a per-hypothesis parameter. Both values
+# are run and reported separately (CP-03 review, FINDINGS-LOG 10/31/2026): 0.35 deg is the documented
+# consensus for NAR at 2x (Sitrec SitGimbal.js:86; Peings and von Rennenkampff); 0.7 deg is the conflicting
+# documentation value they test as a sensitivity. The turn rate is re-derived from the same cloud
+# measurement at each field of view (python -m solve.turn_rate_gimbal --fov 0.7).
+sensor_variants:
+  - name: fov035
+    sensor: {fov_deg: 0.35}
+    jet: {turn_rate: {file: data/derived/gimbal/turn_rate.csv}}
+  - name: fov070
+    sensor: {fov_deg: 0.7}
+    jet: {turn_rate: {file: data/derived/gimbal/turn_rate_fov070.csv}}
+
+sensor:
+  fov_deg: 0.35                 # replaced by each sensor variant
+  picture_width_px: 426.0       # active picture width of our 640 x 480 copies (columns 104.5 to 530.5)
+  pixel_aspect_x: 1.050         # reticle ring measured 6.64 x 6.33 px (FINDINGS-LOG 10/31/2026)
+
+image:
+  polarity_column: polarity     # WHT f0 to f371, BLK f372 to f1030
+  found_column: obj_found
+  size_column: obj_lo_major_px      # blob length (px), low threshold
+  brightness_column: obj_lo_integ   # integrated contrast, low threshold
+  min_segment_frames: 20
+  # Background motion: the cloud motion is what the jet's turn rate was measured from (M2.5), so it enters
+  # once, through the turn-rate nuisance and its measured band (scored as the background-motion criterion),
+  # not again as image motion. (The ocean-flow model used for GOFAST does not apply: at el -2 deg from
+  # 25,000 ft the sight line passes above the sea horizon.)
+  background_mode: turn_rate_band
+  # D-016 resolved test: the point-spread width has not been measured on this video. The blob's minor axis
+  # (median 11 px at the high threshold) is only an upper bound on it, and the major axis (median 24 px) is
+  # 2.1 times that, so resolution is not established: the size criterion is reported with weight 0.
+  psf_width_px: null
+
+rotation:
+  orientation_column: obj_hi_angle_deg   # major-axis orientation, high threshold (matches Sitrec glare_angle to 0.99 deg)
+  noise_window_frames: 9                 # measurement scatter about a 9-frame running median (about 0.9 deg)
+  # Free smooth rotation of a physical object: a natural cubic spline over the clip with evenly spaced knots,
+  # the same for every non-glare model. The knot count is chosen from this list by the same penalized
+  # likelihood as the totals (each knot counted in k: 0.5 ln(n_eff) apiece), so the data decide how
+  # flexible the free rotation is and pay for it (128 knots = one every 8 frames, enough to follow a step).
+  # A glare model instead has one free offset (Sitrec's glare start angle). Both also get one shared offset
+  # for the second polarity segment (a possible white-hot / black-hot measurement bias).
+  physical_spline_knots: [4, 8, 16, 32, 64, 128]
+
+weather:
+  event: gimbal
+  time_utc: "2015-01-25T02:30"      # as GOFAST (recorded within minutes of each other, F-T02)
+  wind_sigma_kt_era5: 5.0
+  placeholder:
+    # Used only while data/weather/era5_gimbal_gofast_profiles.csv is missing. FLAGGED in every output.
+    source: igra
+    file: data/weather/igra_USM00072206_gimbal_gofast.csv   # Jacksonville radiosonde (about 109 kt from 270 at 25,000 ft)
+    time: "2015-01-25T00:00Z"
+    wind_sigma_kt: 20.0
+
+criteria: [line_of_sight, background_motion, size_trend, rotation, brightness_trend, testimony]
+
+range_curve_nmi: [2.0, 4.0, 6.0, 8.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0]
+
+# Shared nuisance parameters: identical for every hypothesis on this case.
+shared_parameters:
+  jet_heading_deg:
+    prior: uniform
+    bounds: [0.0, 360.0]
+    periodic: true
+    source: "Not on screen. Fitted jointly; constrained through the wind (jet and object) and the testimony quantities that depend on it."
+  anchor_daz_deg:
+    prior: uniform
+    bounds: [-0.5, 0.5]
+    source: "The az readout at the reference frame is a whole degree (rounded); the true angle lies within +-0.5 deg of it."
+  anchor_del_deg:
+    prior: uniform
+    bounds: [-0.5, 0.5]
+    source: "As above for elevation (reads -2 throughout)."
+  wind_err_e_kt:
+    prior: normal
+    mean: 0.0
+    sd: environment.wind_sigma_kt
+    source: "Error of the modeled wind at the object's altitude (ERA5 about 5 kt; placeholder 20 kt)."
+  wind_err_n_kt:
+    prior: normal
+    mean: 0.0
+    sd: environment.wind_sigma_kt
+    source: "As above, north component."
+  turn_rate_z:
+    prior: normal
+    mean: 0.0
+    sd: 1.0
+    bounds: [-4.0, 4.0]
+    report_as: background_motion
+    source: "Shift of the jet's turn rate in units of its measured 1-sigma band (95 percent band / 3.92) from the lab cloud measurement; its log density is the background-motion criterion (the cloud data enter once)."
+  jet_pitch_deg:
+    prior: normal
+    mean: 3.6
+    sd: 1.5
+    bounds: [0.0, 8.0]
+    source: "Jet pitch (nose up) before Sitrec's 1/cos(bank) scaling: Sitrec par.jetPitch 3.6 deg; _PLAN.md M2.3 angle of attack 4 +- 2 deg. Enters only the pod roll and the image horizon (rotation criterion)."
+
+testimony_case: gimbal

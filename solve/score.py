@@ -25,6 +25,8 @@ and k the number of uniform / log-uniform parameters (shared nuisances included,
 same for every hypothesis on a case).
 
 Usage: python -m solve.score gofast
+       python -m solve.score gimbal [fov035,fov070]   (one run per sensor variant, reported separately)
+       python -m solve.score gimbal --part fov035; ... --part fov070; python -m solve.score gimbal --merge
 """
 
 from __future__ import annotations
@@ -44,7 +46,7 @@ from scipy.optimize import minimize
 from . import frames as F
 from . import likelihoods as L
 from . import models as M
-from .case_data import CaseData, load_case, scoring_config
+from .case_data import CaseData, case_variants, load_case, scoring_config
 from .models.base import Prediction
 from .models.geometry import JetModel
 
@@ -69,6 +71,7 @@ class ParamSpec:
     sd: float = 1.0
     periodic: bool = False
     source: str = ""
+    report_as: str = ""      # a criterion name: the log prior is reported as that criterion, not as "prior"
 
     @property
     def counted(self) -> bool:
@@ -155,7 +158,8 @@ def _spec(name: str, d: dict, case: CaseData) -> ParamSpec:
     lo, hi = float(bounds[0]), float(bounds[1])
     if hi == lo:
         prior = "fixed"
-    return ParamSpec(name, prior, lo, hi, mean, sd, bool(d.get("periodic", False)), str(d.get("source", "")))
+    return ParamSpec(name, prior, lo, hi, mean, sd, bool(d.get("periodic", False)), str(d.get("source", "")),
+                     str(d.get("report_as", "")))
 
 
 def param_specs(case: CaseData, hyp: Hypothesis) -> list[ParamSpec]:
@@ -175,14 +179,23 @@ def param_specs(case: CaseData, hyp: Hypothesis) -> list[ParamSpec]:
 def _jet_model(case: CaseData) -> JetModel:
     jm = case.__dict__.get("_jet_model")
     if jm is None:
-        jm = JetModel(case.t, case.tas, case.bank, case.jet_alt)
+        jm = JetModel(case.t, case.tas, case.bank, case.jet_alt, case.turn_rate, case.turn_rate_sigma)
         case.__dict__["_jet_model"] = jm
     return jm
 
 
+def _jet_pitch(case: CaseData, params: dict):
+    j = case.cfg["jet"]
+    p = float(params.get("jet_pitch_deg", j.get("pitch_deg", 0.0)))
+    if j.get("pitch_scale_with_bank", False):
+        return p / np.cos(np.radians(np.abs(case.bank)))
+    return p
+
+
 def predict(case: CaseData, hyp: Hypothesis, params: dict) -> Prediction:
     jet_wind = case.env.wind_enu(float(np.nanmedian(case.jet_alt)))
-    jet = _jet_model(case).state(params.get("jet_heading_deg", 0.0), jet_wind)
+    jet = _jet_model(case).state(params.get("jet_heading_deg", 0.0), jet_wind,
+                                 turn_rate_z=params.get("turn_rate_z", 0.0), pitch_deg=_jet_pitch(case, params))
     return M.get(hyp.model)(case, jet, params, hyp.model_options)
 
 
@@ -195,7 +208,11 @@ def _segment_norm(y: np.ndarray, seg: np.ndarray) -> np.ndarray:
 
 
 def criterion_logliks(case: CaseData, pred: Prediction, criteria: list | None = None) -> dict:
-    """{criterion: (scaled loglik, n, n_eff)} for the physics criteria."""
+    """{criterion: (scaled loglik, n, n_eff, free terms)} for the physics criteria.
+
+    "free terms" counts parameters a criterion fits internally (the rotation criterion's glare
+    offset or smooth-rotation spline, and its polarity offset); they enter k like any other.
+    """
     sc = scoring_config()["noise"]
     out: dict = {}
     crit = case.criteria if criteria is None else criteria
@@ -204,22 +221,24 @@ def criterion_logliks(case: CaseData, pred: Prediction, criteria: list | None = 
             for key, arr in (("azimuth", pred.az), ("elevation", pred.el)):
                 r = case.readouts[key]
                 ll = L.interval_loglik(r.obs, arr[r.frames], r.step, sc["angle_sigma_deg"])
-                out[f"line_of_sight_{key[:2]}"] = (L.scaled_sum(ll, r.n_eff), len(r.frames), r.n_eff)
+                out[f"line_of_sight_{key[:2]}"] = (L.scaled_sum(ll, r.n_eff), len(r.frames), r.n_eff, 0)
         elif c == "range":
             r = case.readouts["range"]
             ll = L.interval_loglik(r.obs, pred.range_m[r.frames] / F.NMI, r.step, sc["range_sigma_nmi"])
-            out[c] = (L.scaled_sum(ll, r.n_eff), len(r.frames), r.n_eff)
+            out[c] = (L.scaled_sum(ll, r.n_eff), len(r.frames), r.n_eff, 0)
         elif c == "closure":
             r = case.readouts["closure"]
             sig = sc["closure_step_kt"] / math.sqrt(12.0)
             ll = L.gaussian_loglik(r.obs - pred.closure_mps[r.frames] / F.KT, sig)
-            out[c] = (L.scaled_sum(ll, r.n_eff), len(r.frames), r.n_eff)
+            out[c] = (L.scaled_sum(ll, r.n_eff), len(r.frames), r.n_eff, 0)
         elif c == "background_motion":
+            if c not in case.series:
+                continue   # measured through the jet's turn rate: scored from its nuisance (see _evaluate)
             s = case.series[c]
             p = np.nan_to_num(pred.background_px[s.frames], nan=0.0)
             sig = np.sqrt(s.sigma ** 2 + (sc["background_model_frac"] * p) ** 2)
             ll = L.gaussian_loglik(s.obs - p, sig)
-            out[c] = (L.scaled_sum(ll, s.n_eff), len(s.frames), s.n_eff)
+            out[c] = (L.scaled_sum(ll, s.n_eff), len(s.frames), s.n_eff, 0)
         elif c in ("size_trend", "brightness_trend"):
             s = case.series[c]
             src = pred.size_log if c == "size_trend" else pred.brightness_log
@@ -227,10 +246,25 @@ def criterion_logliks(case: CaseData, pred: Prediction, criteria: list | None = 
             ok = np.isfinite(p)
             resid = _segment_norm(s.obs[ok], s.segment[ok]) - _segment_norm(p[ok], s.segment[ok])
             ll = L.gaussian_loglik(resid, s.sigma)
-            out[c] = (L.scaled_sum(ll, s.n_eff), int(ok.sum()), s.n_eff)
+            out[c] = (L.scaled_sum(ll, s.n_eff), int(ok.sum()), s.n_eff, 0)
         elif c == "rotation":
-            raise NotImplementedError("rotation criterion: built with the GIMBAL run (M3.5); GOFAST does not score it")
+            ll, dof, _ = rotation_terms(case, pred)
+            s = case.series[c]
+            out[c] = (L.scaled_sum(ll, s.n_eff), len(s.frames), s.n_eff, dof)
     return out
+
+
+def rotation_terms(case: CaseData, pred: Prediction) -> tuple[np.ndarray, int, dict]:
+    """The rotation criterion for any model: one call to likelihoods.rotation_loglik.
+
+    The model only supplies its predicted orientation (without free terms) and its kind (glare
+    fixed in the optics, or physical); the measured series, its noise and the spline size are
+    the case's, identical for every hypothesis.
+    """
+    s = case.series["rotation"]
+    return L.rotation_loglik(s.obs, pred.rotation_base[s.frames], pred.rotation_kind, s.segment,
+                             case.t[s.frames], s.sigma, case.rotation_knots,
+                             penalty_per_term=L.bic_penalty(1, case.n_eff_total), scale=s.n_eff / len(s.frames))
 
 
 def testimony_predicted(case: CaseData, pred: Prediction) -> dict:
@@ -259,7 +293,11 @@ def _evaluate(case: CaseData, hyp: Hypothesis, params: dict, specs: list[ParamSp
     if not pred.valid:
         return {"valid": False, "reason": pred.reason}
     ll = criterion_logliks(case, pred, criteria)
-    lp = sum(s.log_prior(params[s.name]) for s in specs)
+    lp = sum(s.log_prior(params[s.name]) for s in specs if not s.report_as)
+    crit = case.criteria if criteria is None else criteria
+    for c in sorted({s.report_as for s in specs if s.report_as}):
+        if c in crit:
+            ll[c] = (sum(s.log_prior(params[s.name]) for s in specs if s.report_as == c), 1, 1.0, 0)
     if with_testimony:
         lt, trows, tstatus = _testimony(case, pred)
     else:
@@ -268,26 +306,30 @@ def _evaluate(case: CaseData, hyp: Hypothesis, params: dict, specs: list[ParamSp
             "testimony_status": tstatus}
 
 
-def _weights() -> dict:
-    return dict(scoring_config()["weights"])
+def _weights(case: CaseData | None = None) -> dict:
+    """scoring.yaml weights, with the case's own overrides (D-016), the same for every hypothesis."""
+    w = dict(scoring_config()["weights"])
+    if case is not None:
+        w.update(getattr(case, "weight_overrides", {}) or {})
+    return w
 
 
-def _complexity(case: CaseData, specs: list[ParamSpec]) -> tuple[int, float, float]:
-    k = sum(1 for s in specs if s.counted)
+def _complexity(case: CaseData, specs: list[ParamSpec], ll: dict | None = None) -> tuple[int, float, float]:
+    k = sum(1 for s in specs if s.counted) + sum(int(v[3]) for v in (ll or {}).values())
     n = case.n_eff_total
     return k, n, L.bic_penalty(k, n)
 
 
 def _rows(case: CaseData, ev: dict, specs: list[ParamSpec], w_t: float) -> pd.DataFrame:
-    w = _weights()
+    w = _weights(case)
     rows = []
-    for name, (ll, n, ne) in ev["ll"].items():
+    for name, (ll, n, ne, _) in ev["ll"].items():
         key = "line_of_sight" if name.startswith("line_of_sight") else name
         rows.append({"criterion": name, "loglik": ll, "n": n, "n_eff": ne, "weight": float(w.get(key, 1.0)),
                      "kind": "physics"})
     rows.append({"criterion": "prior", "loglik": ev["log_prior"], "n": np.nan, "n_eff": np.nan, "weight": 1.0,
                  "kind": "prior"})
-    k, n, pen = _complexity(case, specs)
+    k, n, pen = _complexity(case, specs, ev["ll"])
     rows.append({"criterion": "complexity_penalty", "loglik": -pen, "n": k, "n_eff": n, "weight": 1.0,
                  "kind": "penalty"})
     rows.append({"criterion": "testimony", "loglik": ev["testimony"], "n": len(ev["testimony_rows"]),
@@ -324,7 +366,7 @@ def score(case, hypothesis, params: dict, testimony_weight: float | None = None)
     hyp = _resolve_hypothesis(hypothesis)
     specs = param_specs(case, hyp)
     p = _full_params(specs, params)
-    w_t = _weights()["testimony"] if testimony_weight is None else float(testimony_weight)
+    w_t = _weights(case)["testimony"] if testimony_weight is None else float(testimony_weight)
     ev = _evaluate(case, hyp, p, specs)
     if not ev["valid"]:
         raise ValueError(f"invalid parameters: {ev['reason']}")
@@ -351,7 +393,7 @@ def fit(case, hypothesis, testimony_weight: float | None = None, n_starts: int |
     n_starts = int(fc["n_starts"] if n_starts is None else n_starts)
     n_random = int(fc["n_random"] if n_random is None else n_random)
     seed = int(fc["seed"] if seed is None else seed)
-    w = _weights()
+    w = _weights(case)
     w_t = w["testimony"] if testimony_weight is None else float(testimony_weight)
     specs = param_specs(case, hyp)
     fixed = dict(fixed or {})
@@ -370,10 +412,13 @@ def fit(case, hypothesis, testimony_weight: float | None = None, n_starts: int |
         if not ev["valid"]:
             return None
         phys = 0.0
-        for name, (ll, _, _) in ev["ll"].items():
+        for name, (ll, _, _, _) in ev["ll"].items():
             key = "line_of_sight" if name.startswith("line_of_sight") else name
             phys += float(w.get(key, 1.0)) * ll
-        return phys + ev["log_prior"] + w_t * ev["testimony"]
+        # Terms fitted inside a criterion (rotation) can change in number with the parameters; their
+        # penalty is part of the objective so the fit and the reported total agree.
+        inner = sum(int(v[3]) for v in ev["ll"].values())
+        return phys + ev["log_prior"] + w_t * ev["testimony"] - L.bic_penalty(inner, case.n_eff_total)
 
     n_eval = [0]
 
@@ -509,12 +554,135 @@ def _jsonable(o):
     return o
 
 
-def run_case(case_name: str, hypotheses: list | None = None, write: bool = True, with_range_curve: bool = True) -> dict:
-    """Fit every hypothesis on a case (both totals), rank, and write the outputs."""
-    case = load_case(case_name)
-    hyps = load_hypotheses() if hypotheses is None else [_resolve_hypothesis(h) for h in hypotheses]
+def measured_rotation_steps(case: CaseData, min_change_deg: float = 6.0, half: int = 4, sep: int = 15) -> list:
+    """Steps in the measured orientation, found from the data alone (no model).
+
+    A step is a local maximum of |y(f + half) - y(f - half)| above min_change_deg on the 9-frame
+    running median of the series; its size is the change from 10 frames before to 10 after.
+    """
+    s = case.series["rotation"]
+    y = pd.Series(s.obs).rolling(9, center=True, min_periods=1).median().to_numpy()
+    f = s.frames
+    d = np.full(len(y), 0.0)
+    d[half:-half] = y[2 * half:] - y[:-2 * half]
+    cand = [i for i in range(half, len(y) - half) if abs(d[i]) >= min_change_deg
+            and abs(d[i]) == np.max(np.abs(d[max(0, i - sep):i + sep + 1]))]
+    out = []
+    for i in cand:
+        if out and f[i] - out[-1]["frame"] < sep:
+            continue
+        a, b = max(0, i - 10), min(len(y) - 1, i + 10)
+        out.append({"frame": int(f[i]), "change_deg": float(y[b] - y[a])})
+    return out
+
+
+def _match_steps(measured: list, predicted: list, tol: int = 10) -> dict:
+    mf = [m["frame"] for m in measured]
+    hits = {m: min(predicted, key=lambda q: abs(q - m)) if predicted else None for m in mf}
+    matched = {m: q for m, q in hits.items() if q is not None and abs(q - m) <= tol}
+    return {"tolerance_frames": tol, "nearest_predicted": hits, "matched": matched, "n_matched": len(matched),
+            "n_measured": len(mf), "n_predicted": len(predicted),
+            "n_predicted_unmatched": len([q for q in predicted if all(abs(q - m) > tol for m in mf)])}
+
+
+def rotation_check(case: CaseData, results: list) -> dict:
+    """The rotation test in detail, for every hypothesis at its testimony-weighted best fit.
+
+    For every model: residual RMS overall and around each measured step, and the mean residual
+    just before and just after each step (a model that predicts the step leaves no jump).
+    For glare models, also the step-timing test: Sitrec's derotation model with the ideal
+    (geometric) pod roll has no steps, so the simplest pod-roll controller that makes steps (a
+    deadband, solve.sensor_atflir.pod_roll_deadband; NOT in Sitrec) is scanned over its threshold
+    and two error measures, with the glare offset refitted by the same rotation likelihood. Its
+    best threshold is one extra fitted parameter; the result is reported, not added to any total.
+    """
+    from .sensor_atflir import pod_pitch_roll_v, pod_roll_deadband
+
+    if "rotation" not in case.series:
+        return {}
+    s = case.series["rotation"]
+    steps = measured_rotation_steps(case)
+    n_scale = s.n_eff / len(s.frames)
+    pen1 = L.bic_penalty(1, case.n_eff_total)
+    out = {"sigma_deg": s.sigma, "n_eff": s.n_eff, "measured_steps": steps, "hypotheses": {}}
+    fr = s.frames
+    for entry, res in results:
+        if not entry.get("valid"):
+            continue
+        pred = res["prediction"]
+        ll, dof, det = rotation_terms(case, pred)
+        resid = det["resid"]
+        per_step = []
+        for st in steps:
+            k = int(np.searchsorted(fr, st["frame"]))
+            pre = resid[max(0, k - 20):max(0, k - 5)]
+            post = resid[k + 5:k + 20]
+            win = resid[max(0, k - 15):k + 16]
+            per_step.append({"frame": st["frame"], "resid_before_deg": float(np.mean(pre)) if len(pre) else None,
+                             "resid_after_deg": float(np.mean(post)) if len(post) else None,
+                             "jump_left_deg": float(np.mean(post) - np.mean(pre)) if len(pre) and len(post) else None,
+                             "rms_window_deg": float(np.sqrt(np.mean(win ** 2)))})
+        h = {"kind": pred.rotation_kind, "free_terms": dof, "model_terms": det["n_model_terms"],
+             "loglik_scaled": float(L.scaled_sum(ll, s.n_eff)), "resid_rms_deg": float(np.sqrt(np.mean(resid ** 2))),
+             "resid_max_abs_deg": float(np.max(np.abs(resid))), "steps": per_step,
+             "fitted_deg": det["fitted"], "offset_deg": float(det["coef"][0]) if pred.rotation_kind == "glare" else None}
+        if pred.rotation_kind == "glare":
+            pitch = _jet_pitch(case, res["params"])
+            pitch = np.broadcast_to(np.asarray(pitch, float), pred.az.shape)
+            ball_pitch, groll = pod_pitch_roll_v(pred.el, pred.az, pitch)
+            base_s = pred.rotation_base[fr]
+            scan = []
+            for metric, grid in (("pointing", np.arange(0.1, 3.01, 0.1)), ("roll", np.arange(1.0, 30.01, 1.0))):
+                for reflect in (False, True):
+                    for thr in grid:
+                        ra, jumps = pod_roll_deadband(groll, ball_pitch, float(thr), metric, reflect)
+                        dr = ((ra - groll + 180.0) % 360.0) - 180.0
+                        llb, _, detb = L.rotation_loglik(s.obs, base_s - dr[fr], "glare", s.segment, case.t[fr], s.sigma,
+                                                         case.rotation_knots)
+                        scan.append({"metric": metric, "reflect": reflect, "threshold": float(thr),
+                                     "loglik_scaled": float(L.scaled_sum(llb, s.n_eff)),
+                                     "resid_rms_deg": float(np.sqrt(np.mean(detb["resid"] ** 2))),
+                                     "steps_predicted": [int(j) for j in jumps if j >= fr[0] + 30],
+                                     "_fitted": detb["fitted"]})
+            best = max(scan, key=lambda r: r["loglik_scaled"])
+            sm = _match_steps(steps, [q for q in best["steps_predicted"]])
+            # A fine threshold makes many tiny steps (near-continuous tracking), which says nothing about
+            # step timing. "Coarse" settings make about as many steps as were measured over the stepping
+            # stretch (from 150 frames before the first measured step): between half and twice as many.
+            first = steps[0]["frame"] - 150 if steps else fr[0]
+            nm = max(1, len(steps))
+            coarse = [r for r in scan if 0.5 * nm <= len([q for q in r["steps_predicted"] if q >= first]) <= 2 * nm]
+            best_c = max(coarse, key=lambda r: r["loglik_scaled"]) if coarse else None
+            # Predicted steps only count where the pod actually rolls fast enough to step (after the
+            # first measured step minus 100 frames); earlier jumps are listed too.
+            h["deadband"] = {
+                "best": {k: v for k, v in best.items() if not k.startswith("_")},
+                "step_match": sm,
+                "gain_vs_smooth_loglik": best["loglik_scaled"] - h["loglik_scaled"],
+                "gain_vs_smooth_after_one_parameter_penalty": best["loglik_scaled"] - h["loglik_scaled"] - pen1,
+                "by_metric": {f"{m}{'_reflect' if r else ''}": {k: v for k, v in max(
+                    (x for x in scan if x["metric"] == m and x["reflect"] == r), key=lambda x: x["loglik_scaled"]).items()
+                    if not k.startswith("_")} for m in ("pointing", "roll") for r in (False, True)},
+                "fitted_deg": best["_fitted"],
+                "coarse_window_start_frame": int(first),
+                "best_coarse": None if best_c is None else {k: v for k, v in best_c.items() if not k.startswith("_")},
+                "best_coarse_step_match": None if best_c is None else _match_steps(
+                    steps, [q for q in best_c["steps_predicted"] if q >= first]),
+                "best_coarse_gain_vs_smooth_after_one_parameter_penalty": None if best_c is None else
+                    best_c["loglik_scaled"] - h["loglik_scaled"] - pen1,
+                "best_coarse_fitted_deg": None if best_c is None else best_c["_fitted"],
+                "note": "Not in Sitrec and not in any total: a diagnostic of whether a pod-roll controller reproduces "
+                        "the step frames from the on-screen angles alone.",
+            }
+        out["hypotheses"][entry["hypothesis"]] = h
+    out["frames"] = fr
+    out["measured_deg"] = s.obs
+    return out
+
+
+def _run_one(case: CaseData, case_name: str, hyps: list, with_range_curve: bool) -> tuple[dict, list]:
     label = str(case.cfg.get("label", case_name)).upper()
-    w_t = _weights()["testimony"]
+    w_t = _weights(case)["testimony"]
     results = []
     score_rows = []
     for h in hyps:
@@ -528,6 +696,8 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
                 df = res["scores"].copy()
                 df.insert(0, "fit", tag)
                 df.insert(0, "hypothesis", h.id)
+                if case.variant:
+                    df.insert(0, "variant", case.variant)
                 score_rows.append(df)
             pred = res_w["prediction"]
             entry.update({
@@ -535,12 +705,16 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
                 "params_physics_only_fit": res_p["params"],
                 "total_testimony_weighted": res_w["total_testimony_weighted"],
                 "total_physics_only": res_p["total_physics_only"],
-                "k": res_w["k"], "n_eff_total": res_w["n_eff_total"],
+                "k": res_w["k"], "k_physics_only_fit": res_p["k"], "n_eff_total": res_w["n_eff_total"],
                 "criteria": {r.criterion: r.loglik for r in res_w["scores"].itertuples()},
+                "criteria_physics_only_fit": {r.criterion: r.loglik for r in res_p["scores"].itertuples()},
                 "derived": pred.scalars,
+                "derived_physics_only_fit": res_p["prediction"].scalars,
                 "checks": _checks(h, pred.scalars),
                 "params_at_bound": res_w["at_bound"],
+                "params_at_bound_physics_only_fit": res_p["at_bound"],
                 "testimony_rows": res_w["testimony_rows"],
+                "testimony_rows_physics_only_fit": res_p["testimony_rows"],
                 "testimony_status": res_w["testimony_status"],
                 "n_eval": res_w["n_eval"] + (res_p["n_eval"] if res_p is not res_w else 0),
             })
@@ -557,6 +731,9 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
     out = {
         "case": case_name,
         "label": label,
+        "variant": case.variant,
+        "sensor": dict(case.cfg.get("sensor", {})),
+        "display_rounding": str(case.cfg.get("display_rounding", "round")),
         "window_frames": [int(case.window[0]), int(case.window[-1])],
         "reference_frame": case.ref_frame,
         "flags": case.flags,
@@ -566,29 +743,114 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
                            **{k: v.n_eff for k, v in case.series.items()}},
         "n_eff_total": case.n_eff_total,
         "data_sigmas": {k: v.sigma for k, v in case.series.items()},
-        "weights": _weights(),
+        "weights": _weights(case),
         "hypotheses": [e for e, _ in results],
         "closure_check": closure_check(case, best[1]),
     }
+    if "rotation" in case.series:
+        out["rotation_check"] = rotation_check(case, results)
+    if case.turn_rate is not None:
+        out["turn_rate"] = {"heading_change_deg": float(np.trapezoid(case.turn_rate, case.t)),
+                            "sigma_median_deg_s": float(np.median(case.turn_rate_sigma))}
     if with_range_curve:
-        out["range_curve_angles_only"] = range_curve(case)
+        rc = case.cfg.get("range_curve_nmi")
+        out["range_curve_angles_only"] = range_curve(case, tuple(rc)) if rc else range_curve(case)
+    return out, score_rows
+
+
+def run_case(case_name: str, hypotheses: list | None = None, write: bool = True, with_range_curve: bool = True,
+             variants: list | None = None) -> dict:
+    """Fit every hypothesis on a case (both totals), rank, and write the outputs.
+
+    A case with sensor_variants (GIMBAL: the field of view) is run once per variant; every
+    hypothesis sees the same variant, and results are reported per variant, never mixed.
+    """
+    hyps = load_hypotheses() if hypotheses is None else [_resolve_hypothesis(h) for h in hypotheses]
+    names = case_variants(case_name) if variants is None else list(variants)
+    d = ROOT / "data" / "derived" / case_name
+    if names == [""]:
+        out, score_rows = _run_one(load_case(case_name), case_name, hyps, with_range_curve)
+        if write:
+            d.mkdir(parents=True, exist_ok=True)
+            if score_rows:
+                pd.concat(score_rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
+            (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
+        return out
+    outs, rows = {}, []
+    for v in names:
+        o, r = _run_one(load_case(case_name, variant=v), case_name, hyps, with_range_curve)
+        outs[v] = o
+        rows += r
+    out = {"case": case_name, "label": next(iter(outs.values()))["label"], "variant_names": names, "variants": outs}
     if write:
-        d = ROOT / "data" / "derived" / case_name
         d.mkdir(parents=True, exist_ok=True)
-        if score_rows:
-            pd.concat(score_rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
+        if rows:
+            pd.concat(rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
         (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
+    return out
+
+
+def _write_variants(case_name: str, names: list) -> dict:
+    """Merge per-variant part files (written by `--part`) into scores.csv and results.json."""
+    d = ROOT / "data" / "derived" / case_name
+    outs = {v: json.loads((d / f"results_part_{v}.json").read_text(encoding="utf-8")) for v in names}
+    rows = [pd.read_csv(d / f"scores_part_{v}.csv") for v in names]
+    out = {"case": case_name, "label": outs[names[0]]["label"], "variant_names": names, "variants": outs}
+    pd.concat(rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
+    (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
+    for v in names:
+        (d / f"results_part_{v}.json").unlink()
+        (d / f"scores_part_{v}.csv").unlink()
+    return out
+
+
+def recheck_rotation(case_name: str) -> dict:
+    """Recompute only the rotation diagnostic from the stored best fits (no refitting), and rewrite results.json."""
+    d = ROOT / "data" / "derived" / case_name
+    out = json.loads((d / "results.json").read_text(encoding="utf-8"))
+    by_id = {h.id: h for h in load_hypotheses()}
+    for v, o in (out["variants"].items() if "variants" in out else [("", out)]):
+        case = load_case(case_name, variant=v or None)
+        res = []
+        for e in o["hypotheses"]:
+            if e["valid"]:
+                p = e["params_testimony_weighted_fit"]
+                res.append((e, {"prediction": predict(case, by_id[e["hypothesis"]], p), "params": p}))
+        o["rotation_check"] = rotation_check(case, res)
+    (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
     return out
 
 
 def main(argv: list[str]) -> int:
     case = argv[1] if len(argv) > 1 else "gofast"
-    out = run_case(case)
-    for e in sorted(out["hypotheses"], key=lambda e: -(e.get("total_testimony_weighted") or -1e18)):
-        if e["valid"]:
-            print(f"{e['hypothesis']:8s} weighted {e['total_testimony_weighted']:10.2f}  physics {e['total_physics_only']:10.2f}  k={e['k']}")
-        else:
-            print(f"{e['hypothesis']:8s} invalid")
+    if len(argv) > 2 and argv[2] == "--recheck-rotation":
+        recheck_rotation(case)
+        print("rotation diagnostic recomputed")
+        return 0
+    if len(argv) > 2 and argv[2] == "--merge":
+        out = _write_variants(case, case_variants(case))
+        print(f"merged {out['variant_names']}")
+        return 0
+    if len(argv) > 3 and argv[2] == "--part":
+        # One sensor variant per process (run them in parallel), then `--merge`.
+        v = argv[3]
+        o, rows = _run_one(load_case(case, variant=v), case, load_hypotheses(), True)
+        d = ROOT / "data" / "derived" / case
+        d.mkdir(parents=True, exist_ok=True)
+        pd.concat(rows, ignore_index=True).to_csv(d / f"scores_part_{v}.csv", index=False, float_format="%.6g")
+        (d / f"results_part_{v}.json").write_text(json.dumps(_jsonable(o), indent=1) + "\n", encoding="utf-8")
+        out = {"variants": {v: o}}
+    else:
+        variants = argv[2].split(",") if len(argv) > 2 else None
+        out = run_case(case, variants=variants)
+    for vname, o in (out["variants"].items() if "variants" in out else [("", out)]):
+        if vname:
+            print(f"--- {vname}")
+        for e in sorted(o["hypotheses"], key=lambda e: -(e.get("total_testimony_weighted") or -1e18)):
+            if e["valid"]:
+                print(f"{e['hypothesis']:8s} weighted {e['total_testimony_weighted']:10.2f}  physics {e['total_physics_only']:10.2f}  k={e['k']}")
+            else:
+                print(f"{e['hypothesis']:8s} invalid")
     return 0
 
 

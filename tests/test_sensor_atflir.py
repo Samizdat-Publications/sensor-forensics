@@ -77,3 +77,37 @@ def test_level_to_enu_heading():
     v = S.ea_to_xyz(0, 0)  # straight along the track
     assert np.allclose(S.level_to_enu(v, 90.0), [1, 0, 0], atol=1e-12)
     assert np.allclose(S.level_to_enu(S.ea_to_xyz(0, -90), 0.0), [-1, 0, 0], atol=1e-12)
+
+
+def test_vectorized_forms_match_the_scalar_ports():
+    """The scorer's array versions (M3.5) equal the scalar Sitrec ports, golden frame included."""
+    pitch, roll, az, el = sitrec_inputs(435)
+    assert S.human_horizon_v(pitch, roll, [az], el)[0] == pytest.approx(-28.43948837191162, abs=1e-9)
+    rng = np.random.default_rng(5)
+    az = rng.uniform(-60, 10, 40)
+    el = rng.uniform(-3, -1, 40)
+    roll = rng.uniform(-40, -20, 40)
+    hv = S.human_horizon_v(3.6, roll, az, el)
+    pv, rv = S.pod_pitch_roll_v(el, az, 3.6)
+    for i in range(40):
+        assert hv[i] == pytest.approx(S.human_horizon(3.6, roll[i], az[i], el[i]), abs=1e-9)
+        assert (pv[i], rv[i]) == pytest.approx(S.pod_pitch_roll(el[i], az[i], 3.6), abs=1e-9)
+
+
+def test_glare_angle_follows_pod_roll_and_is_level_straight_ahead():
+    """Raw pod horizon: zero for a target straight below the nose (no roll); the glare angle base
+    then equals the human horizon. Away from the nose it turns with the pod's global roll."""
+    assert S.pod_horizon_v([-10.0], [0.0], 0.0)[0] == pytest.approx(0.0, abs=1e-9)
+    assert S.glare_angle_base_v([-10.0], [0.0], 0.0, -30.0)[0] == pytest.approx(
+        S.human_horizon(0.0, -30.0, 0.0, -10.0) - 0.0, abs=1e-9)
+    # Target to the left and slightly low: the pod rolls about 90 deg, and so does the raw horizon.
+    _, groll = S.pod_pitch_roll_v([-2.0], [-50.0], 0.0)
+    assert abs(S.pod_horizon_v([-2.0], [-50.0], 0.0)[0] - groll[0]) < 3.0
+
+
+def test_deadband_holds_then_jumps():
+    gr = np.linspace(80.0, -40.0, 200)
+    out, steps = S.pod_roll_deadband(gr, np.full(200, 30.0), 10.0, metric="roll")
+    assert len(steps) == 11 and np.all(np.abs(((out - gr + 180) % 360) - 180) <= 10.0 + 1e-9)
+    same, none = S.pod_roll_deadband(gr, np.full(200, 30.0), 0.0)
+    assert none == [] and np.allclose(same, gr)

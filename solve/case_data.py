@@ -12,6 +12,7 @@ FLAGGED in `env.flags` and in every output.
 
 from __future__ import annotations
 
+import copy
 import json
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -95,6 +96,11 @@ class CaseData:
     criteria: list
     shared_parameters: dict
     flags: list
+    variant: str = ""                         # sensor setting run (e.g. a field of view), shared by all hypotheses
+    turn_rate: np.ndarray | None = None       # deg/s per frame, when the case supplies a measured turn-rate history
+    turn_rate_sigma: np.ndarray | None = None # deg/s per frame, 1 sigma of that history (from its 95 percent band)
+    weight_overrides: dict = field(default_factory=dict)  # case-level, e.g. D-016 (size not resolved: weight 0)
+    rotation_knots: tuple = ()                # candidate knot counts of a physical object's free rotation spline
 
     @property
     def n_eff_total(self) -> float:
@@ -160,8 +166,43 @@ def _segments(pol: np.ndarray) -> np.ndarray:
     return seg
 
 
-def load_case(name: str, env: Environment | None = None) -> CaseData:
+def case_variants(name: str) -> list[str]:
+    """Names of the case's sensor-setting runs (sensor_variants in its YAML); [""] if it has none."""
     cfg = yaml.safe_load((CASE_DIR / f"{name}.yaml").read_text(encoding="utf-8"))
+    return [str(v["name"]) for v in cfg.get("sensor_variants", [])] or [""]
+
+
+def _apply_variant(cfg: dict, variant: str | None) -> tuple[dict, str]:
+    vs = cfg.get("sensor_variants") or []
+    if not vs:
+        return cfg, ""
+    v = vs[0] if not variant else next(x for x in vs if str(x["name"]) == str(variant))
+    cfg = copy.deepcopy(cfg)
+    for k, val in (v.get("sensor") or {}).items():
+        cfg["sensor"][k] = val
+    for k, val in (v.get("jet") or {}).items():
+        if isinstance(val, dict):
+            cfg["jet"].setdefault(k, {}).update(val)
+        else:
+            cfg["jet"][k] = val
+    return cfg, str(v["name"])
+
+
+def _running_median_sigma(y: np.ndarray, seg: np.ndarray, w: int) -> float:
+    """Measurement scatter: pooled standard deviation about a w-frame running median, per segment."""
+    parts = []
+    for s in np.unique(seg):
+        m = seg == s
+        yy = pd.Series(y[m])
+        r = (yy - yy.rolling(w, center=True, min_periods=1).median()).to_numpy()
+        parts.append((m.sum(), float(np.nanstd(r))))
+    tot = sum(k for k, _ in parts)
+    return float(np.sqrt(sum(k * v ** 2 for k, v in parts) / tot))
+
+
+def load_case(name: str, env: Environment | None = None, variant: str | None = None) -> CaseData:
+    cfg = yaml.safe_load((CASE_DIR / f"{name}.yaml").read_text(encoding="utf-8"))
+    cfg, variant_name = _apply_variant(cfg, variant)
     sc = scoring_config()
     deg = int(sc["autocorrelation"]["smooth_degree"])
     n = int(cfg["n_frames"])
@@ -187,17 +228,34 @@ def load_case(name: str, env: Environment | None = None) -> CaseData:
     if env is None:
         env = load_environment(cfg, float(np.nanmedian(alt_m)))
     tas = A.mach_to_tas(mach, alt_m, env.dT_jet)
+    turn_rate = turn_sigma = None
+    tr = j.get("turn_rate")
+    if tr:
+        d = pd.read_csv(ROOT / tr["file"]).sort_values("frame")
+        turn_rate = d[tr["column"]].to_numpy(float)[:n]
+        z95 = float(tr.get("band_z", 1.959964))
+        turn_sigma = (d[tr["hi_column"]].to_numpy(float) - d[tr["lo_column"]].to_numpy(float))[:n] / (2.0 * z95)
 
     # Readouts.
     mod = int(cfg["update_modulus"])
     readouts: dict = {}
-    az_all = _lab_series(cfg["readouts"]["azimuth"]["field"], sym)
-    el_all = _lab_series(cfg["readouts"]["elevation"]["field"], sym)
+    # Display rounding convention (D-016): a sensor setting shared by every hypothesis. "round": a
+    # whole-degree readout v means [v - 0.5, v + 0.5]; "floor" (truncation toward minus infinity):
+    # [v, v + 1), i.e. the interval centre is v + 0.5.
+    rounding = str(cfg.get("display_rounding", "round"))
+    if rounding not in ("round", "floor"):
+        raise ValueError(f"display_rounding must be round or floor, not {rounding!r}")
+    shift = {k: (0.5 * float(r["step"]) if rounding == "floor" and k in ("azimuth", "elevation") else 0.0)
+             for k, r in cfg["readouts"].items()}
+    az_all = _lab_series(cfg["readouts"]["azimuth"]["field"], sym) + shift["azimuth"]
+    el_all = _lab_series(cfg["readouts"]["elevation"]["field"], sym) + shift["elevation"]
     for key, r in cfg["readouts"].items():
-        vals = _lab_series(r["field"], sym)
+        vals = _lab_series(r["field"], sym) + shift.get(key, 0.0)
         fr = window
-        if r["update"] == "summary_phase":
-            ph = summ["fields"][r["field"]]["change_frame_phase"]["dominant_residue"]
+        if r["update"] in ("summary_phase", "phase_of"):
+            # phase_of: a readout that never changes on screen shares another field's display update.
+            src = r["field"] if r["update"] == "summary_phase" else r["phase_field"]
+            ph = summ["fields"][src]["change_frame_phase"]["dominant_residue"]
             fr = window[(window % mod) == ph]
         fr = fr[np.isfinite(vals[fr])]
         readouts[key] = Readout(key, fr, vals[fr], float(r["step"]), _data_n_eff(t[fr], vals[fr], deg))
@@ -237,19 +295,56 @@ def load_case(name: str, env: Environment | None = None) -> CaseData:
         sigma = float(np.sqrt(sum(k * s ** 2 for k, s in diffs_sig) / wsum))
         series[key] = Series(key, fr, y, segs, sigma, L.n_eff_autocorr(resid))
 
+    # Image rotation of the object (rotation criterion): measured orientation of the blob's major axis
+    # (deg, CCW, image y up). Noise: scatter about a running median (the series has real steps, so a
+    # low-order fit is not a noise estimate); n_eff: the standard rule (autocorrelation about a cubic
+    # per polarity segment), the same for every hypothesis.
+    rotation_knots: tuple = ()
+    if "rotation" in cfg["criteria"]:
+        rc = cfg["rotation"]
+        ang = np.where(found, cues[rc["orientation_column"]].to_numpy(float), np.nan)
+        fr = window[np.isfinite(ang[window])]
+        segs = seg_all[fr]
+        y = np.unwrap(ang[fr], period=180.0)   # axial angle: continuous series
+        resid = np.full(len(fr), np.nan)
+        for sg in np.unique(segs):
+            m = segs == sg
+            resid[m] = L.smooth_residual(t[fr[m]], y[m], deg)
+        sigma = _running_median_sigma(y, segs, int(rc["noise_window_frames"]))
+        series["rotation"] = Series("rotation", fr, y, segs, sigma, L.n_eff_autocorr(resid))
+        k = rc["physical_spline_knots"]
+        rotation_knots = tuple(int(x) for x in (k if isinstance(k, list) else [k]))
+
     sens = cfg["sensor"]
     ppd = float(sens["picture_width_px"]) / float(sens["fov_deg"])
-    bx, by = im["background_columns"]
-    bgx = cues[bx].to_numpy(float) / float(sens.get("pixel_aspect_x", 1.0))
-    bgy = cues[by].to_numpy(float)
-    bg = np.hypot(bgx, bgy)
-    fr = window[np.isfinite(bg[window])]
-    series["background_motion"] = Series("background_motion", fr, bg[fr], np.full(len(fr), -1),
-                                         float(np.nanstd(L.smooth_residual(t[fr], bg[fr], deg))),
-                                         _data_n_eff(t[fr], bg[fr], deg))
+    if im.get("background_mode", "image_motion") == "image_motion":
+        bx, by = im["background_columns"]
+        bgx = cues[bx].to_numpy(float) / float(sens.get("pixel_aspect_x", 1.0))
+        bgy = cues[by].to_numpy(float)
+        bg = np.hypot(bgx, bgy)
+        fr = window[np.isfinite(bg[window])]
+        series["background_motion"] = Series("background_motion", fr, bg[fr], np.full(len(fr), -1),
+                                             float(np.nanstd(L.smooth_residual(t[fr], bg[fr], deg))),
+                                             _data_n_eff(t[fr], bg[fr], deg))
+    elif im["background_mode"] != "turn_rate_band":
+        raise ValueError(f"unknown background_mode {im['background_mode']!r}")
+
+    # D-016: the size criterion carries weight only for a resolved object (blob major axis at least
+    # 3 times the point-spread width measured on the same video). Applied when the case states it.
+    weight_overrides: dict = {}
+    if "psf_width_px" in im:
+        psf = im["psf_width_px"]
+        major = float(np.nanmedian(size_px[window]))
+        if psf is None or major < 3.0 * float(psf):
+            weight_overrides["size_trend"] = 0.0
+            why = ("point-spread width not measured on this video" if psf is None else
+                   f"blob major axis {major:.1f} px is under 3 x the point-spread width {float(psf):.1f} px")
+            flags.append(f"D-016: apparent-size criterion reported with weight 0 ({why}); resolution not established.")
 
     flags += env.flags
     return CaseData(name=name, cfg=cfg, fps=fps, t=t, window=window, ref_frame=ref, az_read=az_all, el_read=el_all,
                     tas=tas, bank=bank, jet_alt=alt_m, ppd=ppd, readouts=readouts, series=series,
                     brightness_log_all=bright_log, size_px_all=size_px, env=env,
-                    criteria=list(cfg["criteria"]), shared_parameters=dict(cfg["shared_parameters"]), flags=flags)
+                    criteria=list(cfg["criteria"]), shared_parameters=dict(cfg["shared_parameters"]), flags=flags,
+                    variant=variant_name, turn_rate=turn_rate, turn_rate_sigma=turn_sigma,
+                    weight_overrides=weight_overrides, rotation_knots=rotation_knots)

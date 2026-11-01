@@ -61,43 +61,60 @@ class JetState:
     north: np.ndarray
     up: np.ndarray
     wind: np.ndarray       # (2,) wind at the jet, m/s
+    pitch_deg: np.ndarray | float = 0.0   # jet pitch (nose up) per frame; enters only the pod roll and image horizon
 
 
 class JetModel:
-    """Coordinated-turn jet track with the starting heading as a free (nuisance) parameter.
+    """Jet track with the starting heading as a free (nuisance) parameter.
 
-    The air track is integrated once for heading 0 (solve.jet's trapezoidal rule) and
-    rotated for each heading, so the fit can vary the heading cheaply.
+    Turn rate: the coordinated-turn rate g0 tan(bank) / TAS, or, when `turn_rate_deg_s` is given
+    (GIMBAL: the lab's cloud-derived history, solve.turn_rate_gimbal), that history; with
+    `turn_rate_sigma` a nuisance z shifts it by z sigma(t) (the measured band). The air track is
+    integrated once for heading 0 (solve.jet's trapezoidal rule) and rotated for each heading,
+    so the fit can vary the heading cheaply; a nonzero z re-integrates (a cumulative sum).
     """
 
-    def __init__(self, t: np.ndarray, tas: np.ndarray, bank_deg: np.ndarray, alt_m: np.ndarray):
+    def __init__(self, t: np.ndarray, tas: np.ndarray, bank_deg: np.ndarray, alt_m: np.ndarray,
+                 turn_rate_deg_s: np.ndarray | None = None, turn_rate_sigma: np.ndarray | None = None):
         self.t = np.asarray(t, float)
-        tas = np.asarray(tas, float)
-        rate = np.degrees(G0 * np.tan(np.radians(bank_deg)) / tas)
+        self.tas = np.asarray(tas, float)
+        if turn_rate_deg_s is None:
+            rate = np.degrees(G0 * np.tan(np.radians(bank_deg)) / self.tas)
+        else:
+            rate = np.asarray(turn_rate_deg_s, float)
+        self.rate = rate
+        self.rate_sigma = None if turn_rate_sigma is None else np.asarray(turn_rate_sigma, float)
+        self.alt = np.asarray(alt_m, float)
+        self.heading_rel, self.air_pos0, self.air_vel0 = self._integrate(rate)
+
+    def _integrate(self, rate: np.ndarray):
         dt = np.diff(self.t)
         hr = np.zeros(len(self.t))
         hr[1:] = np.cumsum(0.5 * (rate[1:] + rate[:-1]) * dt)
-        self.heading_rel = hr
         h = np.radians(hr)
-        v0 = np.stack([tas * np.sin(h), tas * np.cos(h)], axis=-1)
+        v0 = np.stack([self.tas * np.sin(h), self.tas * np.cos(h)], axis=-1)
         p0 = np.zeros((len(self.t), 2))
         p0[1:] = np.cumsum(0.5 * (v0[1:] + v0[:-1]) * dt[:, None], axis=0)
-        self.air_pos0 = p0
-        self.air_vel0 = v0
-        self.alt = np.asarray(alt_m, float)
+        return hr, p0, v0
 
-    def state(self, heading0_deg: float, wind_xy: np.ndarray) -> JetState:
+    def state(self, heading0_deg: float, wind_xy: np.ndarray, turn_rate_z: float = 0.0,
+              pitch_deg: np.ndarray | float = 0.0) -> JetState:
+        if turn_rate_z and self.rate_sigma is not None:
+            hr, p0, v0 = self._integrate(self.rate + float(turn_rate_z) * self.rate_sigma)
+        else:
+            hr, p0, v0 = self.heading_rel, self.air_pos0, self.air_vel0
         H = np.radians(heading0_deg)
         c, s = np.cos(H), np.sin(H)
         rot = np.array([[c, s], [-s, c]])  # rotates bearings clockwise by H
-        xy = self.air_pos0 @ rot.T + np.outer(self.t - self.t[0], wind_xy)
-        vxy = self.air_vel0 @ rot.T + wind_xy
+        xy = p0 @ rot.T + np.outer(self.t - self.t[0], wind_xy)
+        vxy = v0 @ rot.T + wind_xy
         z = z_on_shell(xy, self.alt)
         pos = np.column_stack([xy, z])
         vz = np.gradient(z, self.t)
         vel = np.column_stack([vxy, vz])
         e, n, u = local_basis(pos)
-        return JetState(self.t, pos, vel, (heading0_deg + self.heading_rel) % 360.0, e, n, u, np.asarray(wind_xy, float))
+        return JetState(self.t, pos, vel, (heading0_deg + hr) % 360.0, e, n, u, np.asarray(wind_xy, float),
+                        pitch_deg)
 
 
 def los_enu(jet: JetState, i: int, az_deg: float, el_deg: float, bank_deg: float = 0.0,

@@ -146,3 +146,125 @@ def level_to_enu(v_level: np.ndarray, heading_deg: float) -> np.ndarray:
     right = np.array([np.cos(h), -np.sin(h), 0.0])
     up = np.array([0.0, 0.0, 1.0])
     return v_level[0] * right + v_level[1] * up - v_level[2] * fwd
+
+
+# ----------------------------------------------------------------------------- vectorized forms (M3.5)
+# The scorer evaluates these on every frame of every fit, so they work on arrays. Each matches its
+# scalar port above to floating-point precision (tests/test_sensor_atflir.py).
+
+
+def _rot_v(v: np.ndarray, axis: np.ndarray, deg: np.ndarray) -> np.ndarray:
+    """Rodrigues rotation of rows v (N, 3) about unit axes (N, 3) or (3,) by deg (N,)."""
+    v = np.asarray(v, float)
+    k = np.broadcast_to(np.asarray(axis, float), v.shape)
+    k = k / np.linalg.norm(k, axis=-1, keepdims=True)
+    a = np.radians(np.asarray(deg, float))[:, None]
+    return v * np.cos(a) + np.cross(k, v) * np.sin(a) + k * np.sum(k * v, axis=-1, keepdims=True) * (1 - np.cos(a))
+
+
+def ea_to_xyz_v(el, az) -> np.ndarray:
+    e, a = np.radians(np.asarray(el, float)), np.radians(np.asarray(az, float))
+    e, a = np.broadcast_arrays(e, a)
+    return np.stack([np.cos(e) * np.sin(a), np.sin(e), -np.cos(e) * np.cos(a)], axis=-1)
+
+
+def pod_pitch_roll_v(el, az, jet_pitch) -> tuple[np.ndarray, np.ndarray]:
+    """Vectorized pod_pitch_roll: ball pitch and global roll (deg) per frame."""
+    v = ea_to_xyz_v(el, az)
+    jp = np.radians(-np.broadcast_to(np.asarray(jet_pitch, float), v.shape[:-1]))
+    x = v[..., 0]
+    y = v[..., 1] * np.cos(jp) - v[..., 2] * np.sin(jp)
+    z = v[..., 2] * np.cos(jp) + v[..., 1] * np.sin(jp)
+    pitch = np.degrees(np.arctan2(np.hypot(x, y), -z))
+    roll = np.degrees(np.arctan2(x, y)) + 180.0
+    roll = np.where(roll > 180, roll - 360, roll)
+    return pitch, roll
+
+
+def human_horizon_v(jet_pitch, jet_roll, az, el) -> np.ndarray:
+    """Vectorized human_horizon (Sitrec getHumanHorizonFromPitchRollAzEl), degrees per frame."""
+    az = np.atleast_1d(np.asarray(az, float))
+    n = len(az)
+    el = np.broadcast_to(np.asarray(el, float), (n,))
+    jp = np.broadcast_to(np.asarray(jet_pitch, float), (n,))
+    jr = np.broadcast_to(np.asarray(jet_roll, float), (n,))
+    heading = ea_to_xyz_v(el, az)
+    rel = _rot_v(_rot_v(heading, X, -jp), Z, jr)
+    rel_az = np.degrees(np.arctan2(rel[:, 0], -rel[:, 2]))
+    Yn, Xn = np.tile(Y, (n, 1)), np.tile(X, (n, 1))
+    up = _rot_v(_rot_v(Yn, Z, -jr), X, jp)
+    right = _rot_v(_rot_v(Xn, Z, -jr), X, jp)
+    cam = _rot_v(right, up, -rel_az)
+    real = _rot_v(Xn, Y, -az)
+    c = np.sum(cam * real, axis=-1) / (np.linalg.norm(cam, axis=-1) * np.linalg.norm(real, axis=-1))
+    ang = -np.degrees(np.arccos(np.clip(c, -1.0, 1.0)))
+    flip = np.sum(np.cross(cam, real) * heading, axis=-1) < 0
+    return np.where(flip, -ang, ang)
+
+
+def pod_horizon_v(el, az, jet_pitch) -> np.ndarray:
+    """Horizon angle (deg, CCW, image y up) in the RAW pod image, before derotation.
+
+    The pod head rolls about the jet's forward axis until the target lies in its pitch plane
+    (pod_pitch_roll: roll 0 = looking straight down), then the ball pitches toward it. The camera
+    behind the ball therefore has its image x axis along the ball's pitch axis, right = d x F, with
+    F the jet's forward axis (pitched up by jet_pitch, wings level: jet roll only splits the global
+    roll into pod roll + jet roll and does not change the camera's attitude) and d the unit
+    direction of the target projected on the plane normal to F. The world horizon direction in the
+    image is h = LOS x up(world); its angle from the image x axis is the raw horizon angle.
+    """
+    v = ea_to_xyz_v(el, az)
+    n = v.shape[0]
+    F = np.tile(np.array([0.0, 0.0, -1.0]), (n, 1))
+    F = _rot_v(F, X, np.broadcast_to(np.asarray(jet_pitch, float), (n,)))
+    d = v - np.sum(v * F, axis=-1, keepdims=True) * F
+    d = d / np.linalg.norm(d, axis=-1, keepdims=True)
+    r = np.cross(d, F)
+    r = r / np.linalg.norm(r, axis=-1, keepdims=True)
+    u = np.cross(r, v)
+    h = np.cross(v, np.tile(Y, (n, 1)))
+    h = h / np.linalg.norm(h, axis=-1, keepdims=True)
+    return np.degrees(np.arctan2(np.sum(h * u, axis=-1), np.sum(h * r, axis=-1)))
+
+
+def glare_angle_base_v(el, az, jet_pitch, jet_roll) -> np.ndarray:
+    """Displayed orientation (deg, CCW, image y up) of a glare fixed in the pod optics, up to one offset.
+
+    Sitrec's derotation model (docs/prior-work/sitrec.md, "ATFLIR pod, derotation and glare"):
+    the display rotates the raw pod image so the real horizon appears at the human horizon
+    (human_horizon: the horizon a camera level with the wings would show; the lab confirmed the
+    cloud motion runs along it, docs/reproductions/gimbal_turn_rate.md). The derotation is
+    therefore D = human_horizon - pod_horizon, and a glare fixed at angle g0 in the raw image is
+    displayed at g0 + D. g0 is Sitrec's glare start angle (par.glareStartAngle): the ONE free
+    offset, fitted by the scorer. The pod roll here is the ideal (geometric) roll, so the
+    predicted rotation is smooth: Sitrec obtains its steps only by driving the pod roll from the
+    measured glare angle (deroFromGlare), which cannot be used to test the glare reading.
+    """
+    return human_horizon_v(jet_pitch, jet_roll, az, el) - pod_horizon_v(el, az, jet_pitch)
+
+
+def pod_roll_deadband(global_roll: np.ndarray, pod_pitch: np.ndarray, threshold_deg: float,
+                      metric: str = "pointing", reflect: bool = False) -> tuple[np.ndarray, list]:
+    """Pod roll that holds still until the inner steering would exceed a threshold, then jumps.
+
+    NOT in Sitrec: the simplest controller that turns the smooth geometric roll into steps,
+    used only by the M3.5 step-timing diagnostic. metric "pointing": the inner optics must absorb
+    a pointing error of about sin(ball pitch) x roll error; "roll": the roll error itself. On a
+    jump the roll goes to the geometric roll (reflect=False) or past it by the threshold
+    (reflect=True, a bang-bang re-centring). Returns (roll per frame, frames where it jumped).
+    """
+    gr = np.asarray(global_roll, float)
+    s = np.sin(np.radians(np.asarray(pod_pitch, float))) if metric == "pointing" else np.ones(len(gr))
+    out = np.empty(len(gr))
+    out[0] = gr[0]
+    steps = []
+    thr = float(threshold_deg)
+    for i in range(1, len(gr)):
+        e = (gr[i] - out[i - 1] + 180.0) % 360.0 - 180.0
+        if thr > 0 and abs(s[i] * e) <= thr:
+            out[i] = out[i - 1]
+            continue
+        out[i] = gr[i] + (np.sign(e) * thr / max(s[i], 1e-6) if reflect and thr > 0 else 0.0)
+        if thr > 0:
+            steps.append(i)
+    return out, steps
