@@ -34,7 +34,7 @@ Evidence images: `artifacts/cp01/flir1_fields.png` (every text field from 8 fram
 | Bank (graphic) | horizon bars | analog | | Medium |
 | Object in image | bright target in the track brackets | pixel | | Medium; the glare shape rotates (Sitrec glare-angle table) |
 
-Not on screen: range (no RNG field anywhere in the clip), closure rate.
+Not on screen: closure rate. (The M0 line "no RNG field anywhere in the clip" was wrong: a `99.9 RNG 99` line appears from frame 973 on; see the M1 section below.)
 
 ## Inferred
 
@@ -52,3 +52,13 @@ Not on screen: range (no RNG field anywhere in the clip), closure rate.
 ## Verdict
 
 **Line of sight reconstructable with lower confidence; range not determined.** Both pod angles, altitude, speed and bank are on screen but small, so extraction needs care. With no range and an object held near the center of the frame, the clip constrains direction and angular motion only; distance, speed and size come out as functions of assumed range. Background motion is weak (featureless sky in much of the clip), which removes the parallax check that helps GIMBAL. Expected to be the weakest of the three Navy videos.
+
+## M1 reading (10/31/2026)
+
+Every frame read with `python -m extract.flir1_read` (extract/symbology.py with FLIR1 templates, cells upsampled 4x; method in the module docstrings), then `extract.merge` and `extract.transitions`. Outputs in `data/derived/flir1_navy/`: `symbology.csv`, `symbology_final.csv`, `symbology_summary.json`, `symbology_f4.csv`, `copy_alignment.csv`, `symbology_sitrec_check.json`, `transitions.csv`. Templates and labels: `extract/templates/flir1_navy/`.
+
+**Range line.** A `99.9 RNG 99` line sits right of center at rows 85 to 91 (x 221 to 279), absent in frames 0 to 972 and present, unchanged, in every frame from 973 to 2287 (1315 frames read as 99.9; the two glyphs after RNG match the 9 templates at NCC 0.99). It never shows any other value, so it reads as a placeholder (no laser range), not a measured range; range stays unknown. The only other transient text on the right is `,WA OK` after `HDG,BALT` (frames about 1125 to 1500 and 1875 to 2250, letters only) and the `B` after the altitude, which comes and goes.
+
+**FOV mode.** NAR except frames 2169 to 2220, where a 4-letter word (MFOV or WFOV) shows. The first letter is not resolvable at this size, and the word does not visibly change at Sitrec's MFOV to WFOV keyframe (2206); it is recorded as `xFOV`. Polarity reads WHT throughout.
+
+**Copies.** The 2007 copy maps onto the official one by a pure vertical scale (0.9091) and lags it by 0 to 3 frames (offset -1 from frame 1, -2 from 986, -3 from 1988). Sitrec's AZ, EL, Mode and FOV keyframes follow the 2007 copy's frame numbering: with that mapping, azimuth and elevation agree on 100% of frames.

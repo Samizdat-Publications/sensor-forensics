@@ -1,0 +1,230 @@
+{
+ "case": "flir1_navy",
+ "offset_convention": "sitrec_frame = our_frame + offset",
+ "fields": {
+  "azimuth": {
+   "source": "FLIR1 AZ.csv keyframes",
+   "best_offset": -2,
+   "frames_compared": 2286,
+   "agreement": 0.9969,
+   "disagreements": 7,
+   "max_abs_difference": 1.0,
+   "keyframe_timing": [
+    {
+     "value": 3.0,
+     "sitrec_frame": 256,
+     "our_change_frame": 257,
+     "diff": -1
+    },
+    {
+     "value": 4.0,
+     "sitrec_frame": 382,
+     "our_change_frame": 383,
+     "diff": -1
+    },
+    {
+     "value": 3.0,
+     "sitrec_frame": 412,
+     "our_change_frame": 413,
+     "diff": -1
+    },
+    {
+     "value": 2.0,
+     "sitrec_frame": 705,
+     "our_change_frame": 706,
+     "diff": -1
+    },
+    {
+     "value": 1.0,
+     "sitrec_frame": 963,
+     "our_change_frame": 964,
+     "diff": -1
+    },
+    {
+     "value": -1.0,
+     "sitrec_frame": 1037,
+     "our_change_frame": 1039,
+     "diff": -2
+    },
+    {
+     "value": 0.0,
+     "sitrec_frame": 1149,
+     "our_change_frame": 1151,
+     "diff": -2
+    },
+    {
+     "value": -1.0,
+     "sitrec_frame": 1335,
+     "our_change_frame": 1337,
+     "diff": -2
+    },
+    {
+     "value": -2.0,
+     "sitrec_frame": 1437,
+     "our_change_frame": 1439,
+     "diff": -2
+    },
+    {
+     "value": -3.0,
+     "sitrec_frame": 1593,
+     "our_change_frame": 1595,
+     "diff": -2
+    },
+    {
+     "value": -4.0,
+     "sitrec_frame": 1713,
+     "our_change_frame": 1715,
+     "diff": -2
+    },
+    {
+     "value": -5.0,
+     "sitrec_frame": 1839,
+     "our_change_frame": 1841,
+     "diff": -2
+    },
+    {
+     "value": -6.0,
+     "sitrec_frame": 1947,
+     "our_change_frame": 1949,
+     "diff": -2
+    },
+    {
+     "value": -7.0,
+     "sitrec_frame": 2043,
+     "our_change_frame": 2046,
+     "diff": -3
+    },
+    {
+     "value": -8.0,
+     "sitrec_frame": 2187,
+     "our_change_frame": 2190,
+     "diff": -3
+    }
+   ]
+  },
+  "elevation": {
+   "source": "FLIR1 EL.csv keyframes",
+   "best_offset": -1,
+   "frames_compared": 2287,
+   "agreement": 1.0,
+   "disagreements": 0,
+   "max_abs_difference": 0.0,
+   "keyframe_timing": [
+    {
+     "value": 5.0,
+     "sitrec_frame": 681,
+     "our_change_frame": 682,
+     "diff": -1
+    }
+   ]
+  },
+  "zoom": {
+   "source": "Flir1 FOV Data.csv keyframes",
+   "best_offset": -5,
+   "frames_compared": 2283,
+   "agreement": 0.9864,
+   "disagreements": 31,
+   "max_abs_difference": 1.0,
+   "keyframe_timing": [
+    {
+     "value": 2.0,
+     "sitrec_frame": 439,
+     "our_change_frame": 441,
+     "diff": -2
+    },
+    {
+     "value": 1.0,
+     "sitrec_frame": 542,
+     "our_change_frame": 533,
+     "diff": 9
+    },
+    {
+     "value": 2.0,
+     "sitrec_frame": 574,
+     "our_change_frame": 571,
+     "diff": 3
+    },
+    {
+     "value": 1.0,
+     "sitrec_frame": 1272,
+     "our_change_frame": 1278,
+     "diff": -6
+    },
+    {
+     "value": 2.0,
+     "sitrec_frame": 2084,
+     "our_change_frame": 2088,
+     "diff": -4
+    },
+    {
+     "value": 1.0,
+     "sitrec_frame": 2139,
+     "our_change_frame": 2145,
+     "diff": -6
+    },
+    {
+     "value": 2.0,
+     "sitrec_frame": 2155,
+     "our_change_frame": 2160,
+     "diff": -5
+    },
+    {
+     "value": 1.0,
+     "sitrec_frame": 2206,
+     "our_change_frame": 2213,
+     "diff": -7
+    },
+    {
+     "value": 2.0,
+     "sitrec_frame": 2234,
+     "our_change_frame": 2240,
+     "diff": -6
+    }
+   ]
+  },
+  "fov": {
+   "source": "Flir1 FOV Data.csv keyframes (codes: {\"NAR\": 0.0, \"MFOV\": 1.0, \"WFOV\": 1.0, \"xFOV\": 1.0})",
+   "best_offset": -3,
+   "frames_compared": 2285,
+   "agreement": 0.9961,
+   "disagreements": 9,
+   "max_abs_difference": 1.0,
+   "keyframe_timing": [
+    {
+     "value": 1.0,
+     "sitrec_frame": 2157,
+     "our_change_frame": 2169,
+     "diff": -12
+    },
+    {
+     "value": 0.0,
+     "sitrec_frame": 2219,
+     "our_change_frame": 2222,
+     "diff": -3
+    }
+   ]
+  },
+  "sensor": {
+   "source": "Flir1 Mode Data.csv keyframes (codes: {\"IR\": 0.0, \"IRW\": 0.0, \"TV\": 1.0})",
+   "best_offset": -2,
+   "frames_compared": 2286,
+   "agreement": 0.9991,
+   "disagreements": 2,
+   "max_abs_difference": 1.0,
+   "keyframe_timing": [
+    {
+     "value": 1.0,
+     "sitrec_frame": 536,
+     "our_change_frame": 538,
+     "diff": -2
+    },
+    {
+     "value": 0.0,
+     "sitrec_frame": 1236,
+     "our_change_frame": 1240,
+     "diff": -4
+    }
+   ]
+  }
+ }
+}

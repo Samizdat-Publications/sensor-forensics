@@ -1,4 +1,4 @@
-"""Per-frame reading of the ATFLIR on-screen symbology (GIMBAL, GOFAST).
+"""Per-frame reading of the ATFLIR on-screen symbology (GIMBAL, GOFAST, FLIR1).
 
 Method (M1.3):
     1. Every text field is split into fixed character cells. Cell centers and glyph rows are
@@ -27,6 +27,13 @@ Method (M1.3):
        recorded in symbology_ocr.csv and never overwrites a value (so method "ocr" is unused).
     6. sitrec_crosscheck compares with Sitrec's independent tables (cross-check only).
 
+Per-case reader parameters (M1, FLIR1): a layout may carry a `reader:` block (upsample factor,
+cell patch sizes, shift search, top-hat kernel, ink pixel count). The frame is upsampled
+(bicubic) before the top-hat, and every cell, word box and patch size is in upsampled pixels
+while the layout stays in native pixels. Without the block the defaults below apply, which are
+exactly the GIMBAL/GOFAST settings (their outputs are unchanged by this generalization).
+FLIR1-specific steps (2007-copy cross-check, copy alignment) live in extract/flir1_read.py.
+
 CLI:  python -m extract.symbology <case> [--no-ocr] [--build-library]
 Outputs: data/derived/<case>/symbology.csv (frame, field, value, raw, confidence, method)
          data/derived/<case>/symbology_summary.json (per field counts, cadence, change frames)
@@ -54,6 +61,45 @@ LARGE = (17, 13)
 SHIFT = 1          # +- px shift search during matching
 TOPHAT_K = 9
 
+
+@dataclass(frozen=True)
+class ReaderParams:
+    """Geometry of the reader for one case. Sizes are in upsampled pixels."""
+    upsample: int = 1
+    small: tuple[int, int] = SMALL
+    large: tuple[int, int] = LARGE
+    shift: int = SHIFT
+    pad: int = 1             # rows above the glyph top included in a cell patch
+    tophat_k: int = TOPHAT_K
+    ink_k: int = 12          # brightest pixels averaged by ink()
+    word_margin: int = 2
+
+
+DEFAULT_PARAMS = ReaderParams()
+
+# Layout file per case when it is not <case>.yaml (both FLIR1 copies use the FLIR1 layout).
+LAYOUT_ALIAS = {"flir1_navy": "flir1", "flir1_f4": "flir1"}
+
+
+def layout_path(case: str) -> Path:
+    p = ROOT / "extract" / "layouts" / f"{case}.yaml"
+    if not p.exists() and case in LAYOUT_ALIAS:
+        p = ROOT / "extract" / "layouts" / f"{LAYOUT_ALIAS[case]}.yaml"
+    return p
+
+
+_PARAMS_CACHE: dict[str, ReaderParams] = {}
+
+
+def case_params(case: str) -> ReaderParams:
+    if case not in _PARAMS_CACHE:
+        lay = yaml.safe_load(layout_path(case).read_text(encoding="utf-8"))
+        r = lay.get("reader") or {}
+        kw = {k: (tuple(v) if isinstance(v, list) else v) for k, v in r.items()}
+        _PARAMS_CACHE[case] = ReaderParams(**kw)
+    return _PARAMS_CACHE[case]
+
+
 # Role -> allowed labels. "_" is blank.
 ROLE_LABELS: dict[str, tuple[str, ...]] = {
     "d": tuple("0123456789"),
@@ -64,9 +110,10 @@ ROLE_LABELS: dict[str, tuple[str, ...]] = {
     "deg": ("°",),
     "LR": ("L", "R"),
     "A": ("A", "_"),
+    "B": ("B", "_"),
 }
-CONSTANT_ROLES = {"dot", "deg"}           # structural cells: read, but not value-bearing
-WORD_LABELS = {"sensor": ("IR", "TV"), "polarity": ("WHT", "BLK")}
+CONSTANT_ROLES = {"dot", "deg", "B"}      # structural cells: read, but not value-bearing
+WORD_LABELS = {"sensor": ("IR", "TV"), "polarity": ("WHT", "BLK"), "fov": ("NAR", "MFOV", "WFOV", "xFOV")}
 
 # Low-confidence threshold on the per-value confidence (relative NCC margin, 0..1).
 # Chosen from the data (both videos, raw reads before the temporal filter): a read is called
@@ -80,6 +127,11 @@ MAX_STEP = {
     "azimuth": 1, "elevation": 1, "range": 0.1, "closure": 10, "altitude": 10,
     "airspeed": 1, "mach": 0.01, "clock": 1, "zoom": 0.0,
 }
+# Per-case overrides (FLIR1's zoom ladder switches between 1.0 and 2.0).
+MAX_STEP_CASE = {"flir1_navy": {"zoom": 1.0}, "flir1_f4": {"zoom": 1.0}}
+# Longest repairable run per case (FLIR1: washed-out or smeared readouts last up to 3 frames,
+# e.g. elevation f588-590 and azimuth f2210-2212, visible as such in both copies).
+MAX_RUN_CASE = {"flir1_navy": 3, "flir1_f4": 3}
 
 
 # --------------------------------------------------------------------------- layout
@@ -90,6 +142,7 @@ class Cell:
     y0: int
     y1: int
     role: str
+    rp: ReaderParams = DEFAULT_PARAMS
 
     @property
     def large(self) -> bool:
@@ -97,7 +150,7 @@ class Cell:
 
     @property
     def hw(self) -> tuple[int, int]:
-        return LARGE if self.large else SMALL
+        return self.rp.large if self.large else self.rp.small
 
 
 @dataclass
@@ -105,38 +158,49 @@ class FieldSpec:
     name: str
     cells: list[Cell] = dfield(default_factory=list)
     word: tuple[int, int, int, int] | None = None
+    rp: ReaderParams = DEFAULT_PARAMS
 
 
 def load_layout(case: str) -> dict[str, FieldSpec]:
-    lay = yaml.safe_load((ROOT / "extract" / "layouts" / f"{case}.yaml").read_text(encoding="utf-8"))
+    lay = yaml.safe_load(layout_path(case).read_text(encoding="utf-8"))
+    rp = case_params(case)
     out: dict[str, FieldSpec] = {}
     for name, f in lay["fields"].items():
-        if f.get("kind") != "text":
+        if f.get("kind") != "text" or ("cells" not in f and "word" not in f):
             continue
-        spec = FieldSpec(name)
+        spec = FieldSpec(name, rp=rp)
         if "word" in f:
             spec.word = tuple(f["word"])
         else:
             c = f["cells"]
             for x, role in zip(c["x"], c["roles"]):
                 y0, y1 = (c["big_y"] if role == "dL" else c["y"])
-                spec.cells.append(Cell(float(x), int(y0), int(y1), role))
+                spec.cells.append(Cell(float(x), int(y0), int(y1), role, rp))
         out[name] = spec
     return out
 
 
 # --------------------------------------------------------------------------- image features
 
-def tophat(gray: np.ndarray) -> np.ndarray:
-    k = cv2.getStructuringElement(cv2.MORPH_RECT, (TOPHAT_K, TOPHAT_K))
-    return cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, k).astype(np.float32)
+def tophat(gray: np.ndarray, k: int = TOPHAT_K) -> np.ndarray:
+    se = cv2.getStructuringElement(cv2.MORPH_RECT, (k, k))
+    return cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, se).astype(np.float32)
 
 
-def cell_window(th: np.ndarray, cell: Cell, margin: int = SHIFT) -> np.ndarray:
+def prepare(gray: np.ndarray, rp: ReaderParams = DEFAULT_PARAMS) -> np.ndarray:
+    """Gray frame -> (upsampled) white top-hat in reader coordinates."""
+    if rp.upsample != 1:
+        gray = cv2.resize(gray, None, fx=rp.upsample, fy=rp.upsample, interpolation=cv2.INTER_CUBIC)
+    return tophat(gray, rp.tophat_k)
+
+
+def cell_window(th: np.ndarray, cell: Cell, margin: int | None = None) -> np.ndarray:
     """Patch of size hw + 2*margin around the cell (for shift search)."""
+    rp = cell.rp
+    margin = rp.shift if margin is None else margin
     h, w = cell.hw
-    x0 = int(round(cell.x - w / 2.0)) - margin
-    y0 = cell.y0 - 1 - margin
+    x0 = int(round(rp.upsample * cell.x - w / 2.0)) - margin
+    y0 = rp.upsample * cell.y0 - rp.pad - margin
     return th[y0:y0 + h + 2 * margin, x0:x0 + w + 2 * margin]
 
 
@@ -144,8 +208,10 @@ def cell_patch(th: np.ndarray, cell: Cell) -> np.ndarray:
     return cell_window(th, cell, 0)
 
 
-def word_window(th: np.ndarray, box, margin: int = 2) -> np.ndarray:
-    x0, y0, x1, y1 = box
+def word_window(th: np.ndarray, box, margin: int | None = 2, rp: ReaderParams = DEFAULT_PARAMS) -> np.ndarray:
+    u = rp.upsample
+    margin = rp.word_margin if margin is None else margin
+    x0, y0, x1, y1 = (u * v for v in box)
     return th[y0 - margin:y1 + margin, x0 - margin:x1 + margin]
 
 
@@ -174,11 +240,21 @@ def n_frames(case: str) -> int:
     return N_FRAMES_DEFAULT
 
 
-def read_tophat(case: str, i: int) -> np.ndarray:
+# Optional per-case frame loader override (FLIR1 2007 copy: resampled to the official geometry).
+FRAME_LOADERS: dict = {}
+
+
+def read_gray(case: str, i: int) -> np.ndarray:
+    if case in FRAME_LOADERS:
+        return FRAME_LOADERS[case](i)
     g = cv2.imread(str(frame_path(case, i)), cv2.IMREAD_GRAYSCALE)
     if g is None:
         raise FileNotFoundError(frame_path(case, i))
-    return tophat(g)
+    return g
+
+
+def read_tophat(case: str, i: int) -> np.ndarray:
+    return prepare(read_gray(case, i), case_params(case))
 
 
 # --------------------------------------------------------------------------- template library
@@ -257,7 +333,7 @@ def match_scores(window: np.ndarray, lib: Library, size: str, labels, with_templ
     return (out, best_t) if with_templates else out
 
 
-def relative_margin(margin: float, ta: np.ndarray, tb: np.ndarray) -> float:
+def relative_margin(margin: float, ta: np.ndarray, tb: np.ndarray, shift: int = SHIFT) -> float:
     """NCC margin divided by the largest margin this template pair can produce.
 
     For unit-norm zero-mean templates with correlation rho, a patch identical to ta scores
@@ -265,7 +341,7 @@ def relative_margin(margin: float, ta: np.ndarray, tb: np.ndarray) -> float:
     best-minus-second-best margin on a 0..1 scale that is comparable between similar glyph
     pairs (8 vs 9, rho about 0.85) and dissimilar ones (1 vs 0)."""
     if ta.shape == tb.shape:
-        pad = cv2.copyMakeBorder(ta.astype(np.float32), SHIFT, SHIFT, SHIFT, SHIFT, cv2.BORDER_CONSTANT, value=0)
+        pad = cv2.copyMakeBorder(ta.astype(np.float32), shift, shift, shift, shift, cv2.BORDER_CONSTANT, value=0)
         rho = float(cv2.matchTemplate(pad, tb.astype(np.float32), cv2.TM_CCOEFF_NORMED).max())
     else:
         rho = float(norm_vec(ta) @ norm_vec(tb))
@@ -278,8 +354,9 @@ BLANK_LO, BLANK_HI = 0.25, 0.45   # ink ratio: below LO surely blank, above HI s
 def classify_cell(window: np.ndarray, cell: Cell, lib: Library, ref_ink: float) -> CharRead:
     allowed = ROLE_LABELS[cell.role]
     h, w = cell.hw
-    core = window[SHIFT:SHIFT + h, SHIFT:SHIFT + w]
-    r = ink(core) / max(ref_ink, 1e-6)
+    sh = cell.rp.shift
+    core = window[sh:sh + h, sh:sh + w]
+    r = ink(core, cell.rp.ink_k) / max(ref_ink, 1e-6)
     blank_ok = "_" in allowed
     mid = 0.5 * (BLANK_LO + BLANK_HI)
     if blank_ok and r < mid:
@@ -293,7 +370,7 @@ def classify_cell(window: np.ndarray, cell: Cell, lib: Library, ref_ink: float) 
         return CharRead("?", 0.0, 0.0, r)
     best_lab, best = ranked[0]
     if len(ranked) > 1:
-        margin = relative_margin(best - ranked[1][1], bt[best_lab], bt[ranked[1][0]])
+        margin = relative_margin(best - ranked[1][1], bt[best_lab], bt[ranked[1][0]], cell.rp.shift)
     else:
         margin = best   # single-label role (structural cell): the score itself
     if blank_ok:
@@ -304,7 +381,7 @@ def classify_cell(window: np.ndarray, cell: Cell, lib: Library, ref_ink: float) 
     return CharRead(best_lab, best, float(margin), r)
 
 
-def classify_word(window: np.ndarray, name: str, lib: Library) -> CharRead:
+def classify_word(window: np.ndarray, name: str, lib: Library, shift: int = SHIFT) -> CharRead:
     labels = [lab for lab in WORD_LABELS[name] if lib.get(name, lab)]
     sc, bt = match_scores(window, lib, name, labels, with_templates=True)
     ranked = sorted(sc.items(), key=lambda kv: -kv[1])
@@ -312,7 +389,7 @@ def classify_word(window: np.ndarray, name: str, lib: Library) -> CharRead:
         return CharRead("?", 0.0, 0.0, 1.0)
     if len(ranked) == 1:
         return CharRead(ranked[0][0], ranked[0][1], ranked[0][1], 1.0)
-    m = relative_margin(ranked[0][1] - ranked[1][1], bt[ranked[0][0]], bt[ranked[1][0]])
+    m = relative_margin(ranked[0][1] - ranked[1][1], bt[ranked[0][0]], bt[ranked[1][0]], shift)
     return CharRead(ranked[0][0], ranked[0][1], m, 1.0)
 
 
@@ -322,7 +399,7 @@ def reference_ink(th: np.ndarray, layout: dict[str, FieldSpec]) -> float:
     for spec in layout.values():
         for c in spec.cells:
             if "_" not in ROLE_LABELS[c.role] and spec.name not in ("range", "closure"):
-                vals.append(ink(cell_patch(th, c)))
+                vals.append(ink(cell_patch(th, c), c.rp.ink_k))
     return float(np.median(vals)) if vals else 1.0
 
 
@@ -343,12 +420,15 @@ def compose_value(name: str, raw: str) -> str:
         return s.replace("°", "")          # e.g. "54L"
     if name == "elevation":
         return s.replace("°", "")          # e.g. "-2", "-22"
+    if name == "altitude":
+        return s.replace("B", "")          # FLIR1 "19990 B": the B suffix stays in raw only
     return s
 
 
 def read_field(th: np.ndarray, spec: FieldSpec, lib: Library, ref_ink: float) -> FieldRead:
     if spec.word is not None:
-        cr = classify_word(word_window(th, spec.word), spec.name, lib)
+        margin = 2 if spec.rp.upsample == 1 else None
+        cr = classify_word(word_window(th, spec.word, margin, spec.rp), spec.name, lib, spec.rp.shift)
         return FieldRead(cr.label, cr.label, round(cr.margin, 4), [cr])
     chars = [classify_cell(cell_window(th, c), c, lib, ref_ink) for c in spec.cells]
     raw = "".join(ch.label for ch in chars)
@@ -386,7 +466,7 @@ def numeric(name: str, value: str) -> float | None:
             if len(d) != 4:
                 return None
             return int(d[:2]) * 60 + int(d[2:])
-        if name in ("sensor", "polarity"):
+        if name in ("sensor", "polarity", "fov"):
             return None
         return float(value)
     except ValueError:
@@ -406,7 +486,7 @@ def run_is_impossible(name: str, left: str, run: list[str]) -> bool:
     """Whether a short run between two equal values cannot be a real display change."""
     if left == "blank" or any(v == "blank" for v in run):
         return True                       # a value flashing inside a blank stretch, or a dropout
-    if name in ("sensor", "polarity"):
+    if name in ("sensor", "polarity", "fov"):
         return True                       # a mode switched for 1 or 2 frames and back
     step = MAX_STEP.get(name)
     a = numeric(name, left)
@@ -420,7 +500,7 @@ def run_is_impossible(name: str, left: str, run: list[str]) -> bool:
 
 
 def temporal_filter(name: str, values: list[str], conf: list[float], max_run: int = 2,
-                    low_conf: float = LOW_CONF) -> Series:
+                    low_conf: float = LOW_CONF, max_step: dict | None = None) -> Series:
     """Repair isolated impossible jumps.
 
     A run of 1..max_run frames whose value differs from equal values on both sides is
@@ -430,6 +510,18 @@ def temporal_filter(name: str, values: list[str], conf: list[float], max_run: in
     display can dither between adjacent values). Every repair is marked in `method`
     ("template+temporal"), and its confidence is the lower of the two neighbors'.
     """
+    global MAX_STEP
+    saved = MAX_STEP
+    if max_step:
+        MAX_STEP = {**MAX_STEP, **max_step}
+    try:
+        return _temporal_filter(name, values, conf, max_run, low_conf)
+    finally:
+        MAX_STEP = saved
+
+
+def _temporal_filter(name: str, values: list[str], conf: list[float], max_run: int,
+                     low_conf: float) -> Series:
     vals = list(values)
     cf = [float(c) for c in conf]
     meth = ["blank" if v == "blank" else "template" for v in vals]
@@ -487,13 +579,13 @@ def collect_patches(case: str, frames, layout=None):
         ref = reference_ink(th, layout)
         for name, spec in layout.items():
             if spec.word is not None:
-                p = word_window(th, spec.word, 0)
+                p = word_window(th, spec.word, 0, spec.rp)
                 out.setdefault(name, []).append(p)
                 meta.setdefault(name, []).append((i, name, -1, 1.0))
                 continue
             for ci, c in enumerate(spec.cells):
                 p = cell_patch(th, c)
-                r = ink(p) / max(ref, 1e-6)
+                r = ink(p, c.rp.ink_k) / max(ref, 1e-6)
                 size = "L" if c.large else "s"
                 out.setdefault(size, []).append(p)
                 meta.setdefault(size, []).append((i, name, ci, r))
@@ -675,16 +767,25 @@ def ocr_engine():
 
 def ocr_crop(th: np.ndarray, spec: FieldSpec) -> np.ndarray:
     """Field text span (cells or word box), top-hat, contrast-stretched, inverted, 3x."""
+    u = spec.rp.upsample
     if spec.word is not None:
-        x0, y0, x1, y1 = spec.word
-    else:
+        x0, y0, x1, y1 = (u * v for v in spec.word)
+    elif u == 1:
         x0 = int(min(c.x for c in spec.cells)) - 7
         x1 = int(max(c.x for c in spec.cells)) + 7
         y0 = min(c.y0 for c in spec.cells) - 2
         y1 = max(c.y1 for c in spec.cells) + 3
+    else:
+        x0 = int(u * (min(c.x for c in spec.cells) - 4))
+        x1 = int(u * (max(c.x for c in spec.cells) + 4))
+        y0 = u * (min(c.y0 for c in spec.cells) - 1)
+        y1 = u * (max(c.y1 for c in spec.cells) + 2)
     c = th[y0:y1, x0:x1]
     c = np.clip(c / max(float(np.percentile(c, 99)), 1.0) * 255, 0, 255).astype(np.uint8)
-    c = 255 - cv2.resize(c, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
+    if u == 1:
+        c = 255 - cv2.resize(c, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
+    else:
+        c = 255 - cv2.resize(c, None, fx=3 / u, fy=3 / u, interpolation=cv2.INTER_AREA)
     return cv2.copyMakeBorder(c, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=255)
 
 
@@ -737,7 +838,9 @@ def read_case(case: str, lib: Library | None = None, frames=None, progress: bool
     return frames, reads
 
 
-def run_case(case: str, use_ocr: bool = True, progress: bool = True) -> dict:
+def run_case(case: str, use_ocr: bool = True, progress: bool = True, resolver=None) -> dict:
+    """Read every frame, filter, write outputs. `resolver(name, frames, series) -> series` is an
+    optional extra step after the temporal filter (FLIR1: 2007-copy cross-check, extract/flir1_read.py)."""
     layout = load_layout(case)
     frames, reads = read_case(case, progress=progress)
     out_dir = ROOT / "data" / "derived" / case
@@ -763,7 +866,9 @@ def run_case(case: str, use_ocr: bool = True, progress: bool = True) -> dict:
         fr = reads[name]
         vals = [r.value for r in fr]
         conf = [r.confidence for r in fr]
-        ser = temporal_filter(name, vals, conf)
+        ser = temporal_filter(name, vals, conf, max_run=MAX_RUN_CASE.get(case, 2), max_step=MAX_STEP_CASE.get(case))
+        if resolver is not None:
+            ser = resolver(name, frames, ser)
         # OCR second vote on low-confidence values (recorded, never used to overwrite)
         if use_ocr:
             for k, i in enumerate(frames):
@@ -800,6 +905,7 @@ def run_case(case: str, use_ocr: bool = True, progress: bool = True) -> dict:
             "low_confidence": len(low),
             "low_confidence_frac": round(len(low) / max(len(nonblank), 1), 4),
             "repaired_temporal": sum(1 for m in ser.method if m == "template+temporal"),
+            **({"resolved_f4copy": sum(1 for m in ser.method if m == "template+f4copy")} if resolver else {}),
             "first_value": ser.values[0], "last_value": ser.values[-1],
             "n_changes": len(changes),
             "update_gap_frames": ({"min": int(gaps.min()), "median": float(np.median(gaps)),
@@ -839,15 +945,24 @@ def sitrec_crosscheck(case: str, max_offset: int = 8) -> dict | None:
     down negative), expanded to per-frame step functions; frames where we read a blank are
     excluded."""
     ref = ROOT / "data" / "reference" / "sitrec" / "data" / case
+    if not ref.exists() and case in LAYOUT_ALIAS:
+        ref = ROOT / "data" / "reference" / "sitrec" / "data" / LAYOUT_ALIAS[case]
     sym = ROOT / "data" / "derived" / case / "symbology.csv"
     if not ref.exists() or not sym.exists():
         return None
     import pandas as pd
-    d = pd.read_csv(sym, dtype={"value": str})
+    d = pd.read_csv(sym, dtype={"value": str}, keep_default_na=False)
     ours: dict[str, dict[int, float]] = {}
     for name in ("azimuth", "elevation", "range"):
         g = d[d.field == name]
         ours[name] = {int(r.frame): numeric(name, r.value) for r in g.itertuples() if r.value != "blank"}
+    # categorical fields as codes (FLIR1): fov NAR 0, MFOV/WFOV/xFOV 1; sensor IR 0, TV 1
+    cat_codes = {"fov": {"NAR": 0.0, "MFOV": 1.0, "WFOV": 1.0, "xFOV": 1.0}, "sensor": {"IR": 0.0, "IRW": 0.0, "TV": 1.0}}
+    for name, codes in cat_codes.items():
+        g = d[d.field == name]
+        ours[name] = {int(r.frame): codes[r.value] for r in g.itertuples() if r.value in codes}
+    g = d[d.field == "zoom"]
+    ours["zoom"] = {int(r.frame): numeric("zoom", r.value) for r in g.itertuples() if r.value != "blank"}
     series: dict[str, tuple[str, dict[int, float]]] = {}
     if case == "gimbal":
         s = pd.read_csv(ref / "GimbalData.csv", encoding="utf-8-sig")
@@ -868,6 +983,36 @@ def sitrec_crosscheck(case: str, max_offset: int = 8) -> dict | None:
                 for f in range(f0, f1):
                     per[f] = v
             series[name] = (f"{fn} keyframes", per)
+    elif case == "flir1_navy":
+        nf = n_frames(case)
+        tables = (("azimuth", "FLIR1 AZ.csv", "Az", None), ("elevation", "FLIR1 EL.csv", "El", None),
+                  ("zoom", "Flir1 FOV Data.csv", "Zoom", None),
+                  ("fov", "Flir1 FOV Data.csv", "FOV", cat_codes["fov"]),
+                  ("sensor", "Flir1 Mode Data.csv", "Mode", cat_codes["sensor"]))
+        for name, fn, col, codes in tables:
+            p = ref / fn
+            if not p.exists():
+                continue
+            # csv module, not pandas: "FLIR1 AZ.csv" has a stray trailing comma on one row
+            with p.open(encoding="utf-8-sig", newline="") as fh:
+                rows_ = list(csv.reader(fh))
+            hdr = [h.strip() for h in rows_[0]]
+            ci = hdr.index(col)
+            kf = []
+            for row in rows_[1:]:
+                if len(row) <= ci:
+                    continue
+                f, v = row[0], row[ci]
+                v = str(v).strip().rstrip(",")
+                if str(f).strip() == "" or v == "":
+                    continue
+                kf.append((int(f), codes[v] if codes else float(v)))
+            per = {}
+            for j, (f0, v) in enumerate(kf):
+                f1 = kf[j + 1][0] if j + 1 < len(kf) else nf + max_offset
+                for f in range(f0, f1):
+                    per[f] = v
+            series[name] = (f"{fn} keyframes" + (" (codes: " + json.dumps(codes) + ")" if codes else ""), per)
     out = {"case": case, "offset_convention": "sitrec_frame = our_frame + offset", "fields": {}}
     for name, (src, ref_per) in series.items():
         best = None
@@ -882,7 +1027,7 @@ def sitrec_crosscheck(case: str, max_offset: int = 8) -> dict | None:
         entry = {"source": src, "best_offset": off, "frames_compared": n, "agreement": round(frac, 4),
                  "disagreements": len(dis),
                  "max_abs_difference": round(max((abs(a - b) for a, b in dis), default=0.0), 3)}
-        if case == "gofast":
+        if case in ("gofast", "flir1_navy"):
             # keyframe timing: Sitrec keyframe frame minus our change frame to the same value
             k = sorted({f for f in ref_per if f - 1 not in ref_per or ref_per[f - 1] != ref_per[f]})
             ourf = sorted(ours[name])

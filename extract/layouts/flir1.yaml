@@ -1,17 +1,37 @@
 # Field boxes for FLIR1 (NAVAIR 2020 copy, 352x264). x0, y0, x1, y1 in pixels.
 # First pass from visual inspection of frame 300 (M0 audit); refined in M1.
 # Glyphs are about 5 to 6 px tall in this copy.
+#
+# M1 (FLIR1): per-field character cells in native frame coordinates (x = cell centers, y = glyph
+# top and bottom rows), measured from column and row profiles of the mean white top-hat over
+# stretches where the value is constant (pitch about 5.15 px; the altitude thousands are drawn
+# larger, pitch about 6.7 px). The reader upsamples every frame 4x (bicubic) before the top-hat,
+# so `reader` sizes are in upsampled pixels (see extract/symbology.py, ReaderParams).
+# The 2007 copy (flir1_f4, 352x240) maps onto this geometry by a pure vertical scale
+# (y_f4 = 0.9091 y_navy, ECC fit on 3 frame pairs), so the same cells read both copies.
+# roles: d digit, dL large digit, dot, deg, LR, B (letter B or blank). word: read as a whole word.
+# range: the "99.9 RNG" line on the right (absent before frame 973; the M0 audit missed it).
 video: flir1
 size: [352, 264]
+reader:
+  upsample: 4
+  small: [36, 22]
+  large: [40, 28]
+  shift: 4
+  pad: 4
+  tophat_k: 25
+  ink_k: 48
+  word_margin: 8
 fields:
-  azimuth:   {box: [164, 24, 200, 35],  kind: text, format: "N° L|R"}
-  elevation: {box: [76, 119, 102, 133], kind: text, format: "N° (signed)"}
-  zoom:      {box: [62, 74, 88, 86],    kind: text, format: "N.N (zoom ladder)"}
-  altitude:  {box: [229, 230, 277, 245], kind: text, format: "NNNNN B (ft)"}
-  airspeed:  {box: [88, 225, 112, 237], kind: text, format: "NNN (kt, indicated)"}
-  mach:      {box: [80, 234, 114, 246], kind: text, format: "M N.NN"}
-  clock:     {box: [158, 241, 186, 253], kind: text, format: "MMSS"}
-  sensor:    {box: [163, 14, 184, 26],  kind: text, format: "IR|TV"}
-  fov:       {box: [80, 14, 112, 26],   kind: text, format: "NAR|MFOV|WFOV"}
-  polarity:  {box: [84, 242, 110, 253], kind: text, format: "WHT|BLK"}
+  azimuth:   {box: [164, 24, 200, 35],  kind: text, format: "N° L|R", cells: {y: [27, 33], x: [173.5, 178.5, 188.5], roles: [d, deg, LR]}}
+  elevation: {box: [76, 119, 102, 133], kind: text, format: "N° (signed)", cells: {y: [123, 129], x: [85.5, 90.75], roles: [d, deg]}}
+  zoom:      {box: [62, 74, 88, 86],    kind: text, format: "N.N (zoom ladder)", cells: {y: [77, 83], x: [69.75, 74.75, 80.0], roles: [d, dot, d]}}
+  altitude:  {box: [229, 230, 277, 245], kind: text, format: "NNNNN B (ft)", cells: {y: [234, 240], x: [235.75, 242.4, 250.0, 255.5, 260.8, 269.5], roles: [dL, dL, d, d, d, B], big_y: [233, 240]}}
+  airspeed:  {box: [88, 225, 112, 237], kind: text, format: "NNN (kt, indicated)", cells: {y: [230, 236], x: [94.5, 99.5, 104.5], roles: [d, d, d]}}
+  mach:      {box: [80, 234, 118, 246], kind: text, format: "M N.NN", cells: {y: [237, 243], x: [99.6, 104.6, 109.6, 114.6], roles: [d, dot, d, d]}}
+  clock:     {box: [158, 241, 186, 253], kind: text, format: "MMSS", cells: {y: [243, 249], x: [166.5, 171.7, 176.9, 182.1], roles: [d, d, d, d]}}
+  range:     {box: [218, 82, 244, 94],  kind: text, format: "NN.N RNG (nmi)", cells: {y: [85, 91], x: [223.5, 228.7, 233.9, 239.0], roles: [d, d, dot, d]}}
+  sensor:    {box: [163, 14, 184, 26],  kind: text, format: "IR|TV", word: [168, 17, 181, 25]}
+  fov:       {box: [80, 14, 112, 26],   kind: text, format: "NAR|MFOV|WFOV", word: [85, 17, 109, 25]}
+  polarity:  {box: [84, 242, 110, 253], kind: text, format: "WHT|BLK", word: [88, 242, 105, 250]}
   horizon:   {box: [122, 92, 228, 112], kind: graphic, format: "artificial horizon bars (bank)"}

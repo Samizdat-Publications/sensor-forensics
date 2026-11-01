@@ -60,7 +60,10 @@ def flag(case: str, frames_dir: Path | None = None, derived: Path | None = None,
          layout_path: Path | None = None) -> pd.DataFrame:
     frames_dir = frames_dir or ROOT / "data" / "frames" / case
     derived = derived or ROOT / "data" / "derived" / case
-    layout = yaml.safe_load((layout_path or ROOT / "extract" / "layouts" / f"{case}.yaml").read_text())
+    if layout_path is None:
+        from extract.symbology import layout_path as _layout_path  # resolves FLIR1 copies to flir1.yaml
+        layout_path = _layout_path(case)
+    layout = yaml.safe_load(layout_path.read_text(encoding="utf-8"))
     sym = pd.read_csv(derived / "symbology_final.csv", dtype=str)
     sym["frame"] = sym["frame"].astype(int)
     rows = []
