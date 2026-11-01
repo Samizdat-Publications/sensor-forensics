@@ -1,5 +1,6 @@
 # FLIR1 ("Tic Tac"), USS Nimitz group, 11/14/2004: public testimony constraints.
 # Generated and hand-checked for work item M3.3 on 10/31/2026. See README.md for the field list and SOURCES.md for the source list.
+# M3.3b (10/31/2026): claims T-T72 to T-T108 come from long-form interviews (Rogan, Lex Fridman, Merged, Weaponized, Tales From The Rabbit Hole, 60 Minutes video, Kevin Day and Gary Voorhis podcasts) read through YouTube auto-captions; location_in_source for those is the caption hh:mm:ss. Repeats of earlier claims are in each claim's also_in list. See README.md and SOURCES.md sections E and F.
 # No transcripts are copied; each claim is a paraphrase plus at most one quote under 15 words.
 # Time of first sighting is not stated by the aircrew; the leaked CVW-11 log (unverified) says 1430 local.
 
@@ -22,6 +23,17 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T41, T-T42, T-T58, T-T64, T-T71]
   notes: "Day (the radar supervisor) says the intercepted contact was at 28,000 ft and that he did not himself see anything at 80,000 ft. The 80,000 ft figure is relayed in both accounts."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:03:54"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: the Princeton controller said up to about a dozen objects came down from above 80,000 ft, dropped to about 20,000 ft, hung out and went straight back up after about three or four hours. Adds the hang duration (3 to 4 h) to the hours of the hearing."
+    - source: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions) (Lex Fridman Podcast (YouTube), 09/08/2020)"
+      url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      location_in_source: "02:12:03"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2020: objects came from above 80,000 ft (captions say eighty thousand), came straight down, hung at about 20,000 ft and went back up three or four hours later, relayed from the controller. Up to 10 at a time (02:12:43)."
 
 - id: T-T02
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -62,6 +74,22 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Useful for the weather ensemble check (ERA5 for 11/14/2004). Also in Lex Fridman 01:19:03 and 01:19:24."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:08:53"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Water perfectly calm, no whitecaps, a perfect San Diego day; the whitewater about the size of a 737."
+    - source: "Pilots & Witnesses; Systematic UAP Reporting for Pilots - with Alex Dietrich | Merged EP0114 (Merged Podcast (YouTube), 08/29/2023)"
+      url: "https://www.youtube.com/watch?v=Nc9_ZP36-AI"
+      location_in_source: "00:18:06"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Dietrich 2023: midday, clear blue skies, calm waters."
+    - source: "THE TIC TAC AT TWENTY - THE MOST CONSEQUENTIAL UFO OF ALL TIME? : WEAPONIZED : EPISODE #61 (Fravor interview segment) (Weaponized with Jeremy Corbell and George Knapp (YouTube), 11/08/2024)"
+      url: "https://www.youtube.com/watch?v=MHycTQC62WA"
+      location_in_source: "00:59:11"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2024: a perfect day, not a cloud in the sky, very light winds; he reasons from the ship needing to make its own wind to land."
 
 - id: T-T04
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -82,6 +110,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T27, T-T46]
   notes: "Said 'moving very abruptly over the water like a ping pong ball'. Dietrich says she had visual contact for only 8 to 10 seconds (see conflict)."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:09:36"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: a white tic-tac looking object just above the water, pointing north-south, moving radically forward, back, left, right at will around the disturbance; seen with eyes, not sensors (00:09:56)."
 
 - id: T-T05
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -102,6 +136,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Fravor also said the F/A-18F was unarmed and he never felt threatened (printed p. 42)."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:10:17"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "No rotor wash, no rotors, no tail rotor seen (the reasoning is that helicopters low over water kick up spray)."
 
 - id: T-T06
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -162,6 +202,22 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T32, T-T69]
   notes: "The CVW-11 log (unverified) puts closest point of approach at 4,000 to 5,000 ft (about 0.7 to 0.8 mile)."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:12:25"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: as he pulled his nose onto it and it crossed in front, it accelerated and was gone within about less than a second. At 00:30:27 he says he was within a half mile when it vanished."
+    - source: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions) (Lex Fridman Podcast (YouTube), 09/08/2020)"
+      url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      location_in_source: "01:25:28"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2020: about half a mile away when it accelerated and vanished, estimated at about 12,000 ft with the wingman at 20,000 ft (8,000 ft above)."
+    - source: "Cmdr. David Fravor: The True Story of a Pentagon-Verified UFO Encounter | Merged EP0111 (Merged Podcast (YouTube), 07/05/2023)"
+      url: "https://www.youtube.com/watch?v=KuX4GLHLRz8"
+      location_in_source: "00:28:19"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2023: as it accelerated it crossed the left quarter of his windscreen inside the glare shield (see T-T89)."
 
 - id: T-T09
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -181,6 +237,17 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "In answer to Burchett (printed p. 21) Fravor said no object was seen under the water, only the whitewater, and joked that the Tic Tac was communicating with it."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:13:09"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Turned back immediately: 'no white water, nothing, it's just blue'."
+    - source: "THE TIC TAC AT TWENTY - THE MOST CONSEQUENTIAL UFO OF ALL TIME? : WEAPONIZED : EPISODE #61 (Fravor interview segment) (Weaponized with Jeremy Corbell and George Knapp (YouTube), 11/08/2024)"
+      url: "https://www.youtube.com/watch?v=MHycTQC62WA"
+      location_in_source: "01:00:15"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2024: after the Tic Tac disappeared they turned to look and the whitewater was gone; he argues that the ocean is never flat and the water would have had to go deeper than wave height."
 
 - id: T-T10
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -201,6 +268,17 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T34, T-T35, T-T49, T-T65]
   notes: "The CAP point is a station the F/A-18s were to hold at (Fravor 2018: about 40 miles south of the ship). 60 Minutes (2021) and Lex Fridman (01:28:48) repeat 60 miles."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:13:30"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Controller: the thing is back at your CAP point; Fravor says about 60 miles away, maybe 30, 40 seconds (captions) to get there."
+    - source: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions) (Lex Fridman Podcast (YouTube), 09/08/2020)"
+      url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      location_in_source: "01:28:33"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Princeton controller: it showed back up at the CAP point, like 60 miles away. No time given."
 
 - id: T-T11
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -221,6 +299,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T50]
   notes: "Day says the E-2 Hawkeye 'did not have any radar on these things, only we did'. The transcript is garbled at that line, so treat the E-2 point as an open conflict."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:13:51"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Nothing on their own radars or sensors on two runs back at the area."
 
 - id: T-T12
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -241,6 +325,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T59]
   notes: "Underwood's own reported account (Corbell interview, via forum posts) mentions jamming cues on his radar tape and that Princeton and E-2 lost the contact when he lost FLIR track."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:14:56"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019 (relaying Underwood's crew): on lock the radar got signals back that it was being jammed (goes into a jam extrapolate), then the pod took a passive track. Also 00:26:32: 99.9 range on the pod display means the radar could not range the object."
 
 - id: T-T13
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -261,6 +351,17 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T42]
   notes: "This is a testable statement about the FLIR1 imagery: look for a plume or hot exhaust core. Fravor in the same answer says Underwood went through EO and IR modes."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:24:48"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Reading the released video: white hot (hotter than the sky), no plume visible in IR or in TV mode; repeated at 00:29:24."
+    - source: "The Man Who Filmed The TIC TAC UFO : WEAPONIZED : EPISODE #27 (Weaponized with Jeremy Corbell and George Knapp (YouTube), 07/25/2023)"
+      url: "https://www.youtube.com/watch?v=4opsdH4hY3s"
+      location_in_source: "00:29:19"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Underwood: no exhaust heat plume visible, floating in space; unlike an airliner whose exhaust shows in FLIR."
 
 - id: T-T14
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -280,6 +381,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T20, T-T28, T-T33, T-T66, T-T67]
   notes: "The affirmation was to the Congressman's wording ('in your words, a 40-foot'). In 60 Minutes (2021) he said it was about the size of his F/A-18F."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:09:56"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "About 40 feet long, estimated by comparison with a Hornet fuselage from years of air combat training."
 
 - id: T-T15
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -340,6 +447,22 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T53, T-T63]
   notes: "Four to ten minutes of recording is claimed by Weigelt and Voorhis (longer video exists)."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:27:58"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: the video is a minute and a half long; at 00:26:11 he says the public clip is the entire video, not 10 minutes."
+    - source: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions) (Lex Fridman Podcast (YouTube), 09/08/2020)"
+      url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      location_in_source: "01:42:17"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2020: the original is about a minute 30 seconds long; the released video is the entire video."
+    - source: "Cmdr. David Fravor: The True Story of a Pentagon-Verified UFO Encounter | Merged EP0111 (Merged Podcast (YouTube), 07/05/2023)"
+      url: "https://www.youtube.com/watch?v=KuX4GLHLRz8"
+      location_in_source: "00:31:49"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2023: that minute 30 seconds; not 10 minutes long; the pilot of the recording jet remembers it as uneventful."
 
 - id: T-T18
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -360,6 +483,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T52, T-T56]
   notes: "Fravor treats the video crew as observers, but Underwood says he did not see the object with his own eyes."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:20:36"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Six people total involved: the two who shot the video and the four who looked at it for five minutes."
 
 - id: T-T19
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -380,6 +509,22 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T27]
   notes: "Dietrich says her own visual contact was only 8 to 10 s. Both can be true if the five minutes spans Fravor's own descent."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:20:36"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Looked at it for five minutes with their eyes (repeated 00:33:59)."
+    - source: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions) (Lex Fridman Podcast (YouTube), 09/08/2020)"
+      url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      location_in_source: "01:24:47"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "This whole thing is like five minutes with four trained observers on a crystal clear day."
+    - source: "Navy pilots describe encounters with UFOs (60 Minutes full story, 13:48) (60 Minutes, CBS News (YouTube), 05/17/2021)"
+      url: "https://www.youtube.com/watch?v=ZBtMbBPzqHY"
+      location_in_source: "00:08:52"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "60 Minutes video: four of us in the airplanes literally watching this thing for roughly about five minutes."
 
 - id: T-T20
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -399,6 +544,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T14, T-T67]
   notes: "Same account has Princeton reacquiring it about 60 miles away 'seconds later'."
+  also_in:
+    - source: "Navy pilots describe encounters with UFOs (60 Minutes full story, 13:48) (60 Minutes, CBS News (YouTube), 05/17/2021)"
+      url: "https://www.youtube.com/watch?v=ZBtMbBPzqHY"
+      location_in_source: "00:08:26"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "60 Minutes video: about the size of his F-18 with no markings, no wings, no exhaust plumes."
 
 - id: T-T21
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -418,6 +569,17 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T70]
   notes: "Lex Fridman 01:20:20 to 01:21:48 gives the 15 to 20 ft depth reasoning and the cross shape."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:08:53"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Whitewater about the size of a 737, shaped like a cross with the long part east-west and pointing east; the object moved around it."
+    - source: "THE TIC TAC AT TWENTY - THE MOST CONSEQUENTIAL UFO OF ALL TIME? : WEAPONIZED : EPISODE #61 (Fravor interview segment) (Weaponized with Jeremy Corbell and George Knapp (YouTube), 11/08/2024)"
+      url: "https://www.youtube.com/watch?v=MHycTQC62WA"
+      location_in_source: "00:59:34"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2024: the whitewater was pointing to the east and looked like a 737 dropped 20 ft below the surface; they never saw anything under the water, only the whitewater, and the Tic Tac hopped around it."
 
 - id: T-T22
   witness: "Fravor and Dietrich (as reported by 60 Minutes)"
@@ -435,8 +597,14 @@
   value: "about 100 mi SW of San Diego; 80,000 ft in under 1 s (narration, not a witness quote)"
   uncertainty: "Location plus or minus 20 miles. The descent figure is network narration, not a quoted witness."
   applies_to: [FLIR1]
-  conflicts_with: [T-T42, T-T58]
+  conflicts_with: [T-T42, T-T58, T-T106]
   notes: "Descent in under a second from 80,000 ft is a speed of more than 50,000 ft/s, which exceeds orbital speeds in vertical direction. Compare with Day's own 0.78 s for 28,000 ft."
+  also_in:
+    - source: "Navy pilots recall 'unsettling' 2004 UAP sighting (60 Minutes segment, 6:45) (60 Minutes, CBS News (YouTube), 05/16/2021)"
+      url: "https://www.youtube.com/watch?v=ygB4EZ7ggig"
+      location_in_source: "00:01:35"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "The narrator (not a witness) says about 100 miles southwest of San Diego and operators logged contacts descending 80 thousand feet in less than a second. Fravor on Rogan says the exercise was about 60 miles off the coast between San Diego and Ensenada (00:02:30)."
 
 - id: T-T23
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -475,6 +643,17 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "(A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+  also_in:
+    - source: "Cmdr. David Fravor: The True Story of a Pentagon-Verified UFO Encounter | Merged EP0111 (Merged Podcast (YouTube), 07/05/2023)"
+      url: "https://www.youtube.com/watch?v=KuX4GLHLRz8"
+      location_in_source: "00:26:14"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "'I'm probably doing around 300 knots' on the descent, a good maneuvering speed."
+    - source: "THE TIC TAC AT TWENTY - THE MOST CONSEQUENTIAL UFO OF ALL TIME? : WEAPONIZED : EPISODE #61 (Fravor interview segment) (Weaponized with Jeremy Corbell and George Knapp (YouTube), 11/08/2024)"
+      url: "https://www.youtube.com/watch?v=MHycTQC62WA"
+      location_in_source: "00:36:21"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2024: probably around 300 knots coming down, and the object matched his speed almost instantaneously."
 
 - id: T-T25
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -494,6 +673,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Hearing: 'aligned it with my aircraft' (long axis)."
+  also_in:
+    - source: "Navy pilots recall 'unsettling' 2004 UAP sighting (60 Minutes segment, 6:45) (60 Minutes, CBS News (YouTube), 05/16/2021)"
+      url: "https://www.youtube.com/watch?v=ygB4EZ7ggig"
+      location_in_source: "00:02:41"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "60 Minutes video: Fravor says it pointed north-south, then turned abruptly and began mirroring him, climbing as he came down."
 
 - id: T-T26
   witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004)"
@@ -514,6 +699,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Metabunk posters argue her 2017-era account describes straight-line travel before Fravor engaged; that is an interpretation."
+  also_in:
+    - source: "Navy pilots recall 'unsettling' 2004 UAP sighting (60 Minutes segment, 6:45) (60 Minutes, CBS News (YouTube), 05/16/2021)"
+      url: "https://www.youtube.com/watch?v=ygB4EZ7ggig"
+      location_in_source: "00:02:20"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "60 Minutes video: Dietrich describes no predictable movement, no predictable trajectory, like a ping-pong ball, with very random acceleration (the CBS text paraphrase matches)."
 
 - id: T-T27
   witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004)"
@@ -534,6 +725,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T04, T-T19]
   notes: "The Metabunk compilation attributes an 8 to 10 s figure to the leaked 'Nimitz report' too (source unnamed in that report)."
+  also_in:
+    - source: "TFTRH #57 - Alex Dietrich: Clouds, Critical Thinking, and UFOs (Tales From The Rabbit Hole, Mick West (YouTube), 08/26/2023)"
+      url: "https://www.youtube.com/watch?v=lyDaYcCbtrs"
+      location_in_source: "00:52:46"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Dietrich 2023 on the 8 to 10 s versus 5 min gap: she was Dash 2, new, busy not hitting her lead, so her tally started later and ended sooner; four different timelines for the four observers. No new number."
 
 - id: T-T28
   witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004) (as the unnamed 'Source', per the forum paraphrase)"
@@ -572,6 +769,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T07, T-T30, T-T31]
   notes: "Mick West's geometric estimate (about 28 degrees for 3,000 ft over a mile) disagrees with 60 degrees; that is an analysis, not testimony."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:12:03"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: as he cut across the circle he was pry two to three thousand feet above it."
 
 - id: T-T30
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -589,8 +792,14 @@
   value: "object about 2,000 ft below; accelerated in about 2 s"
   uncertainty: "Plus or minus 1,000 ft."
   applies_to: [FLIR1]
-  conflicts_with: [T-T29, T-T31, T-T32]
+  conflicts_with: [T-T29, T-T31, T-T32, T-T93]
   notes: ""
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:12:03"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Same 2 to 3 thousand feet above the object when cutting across the circle."
 
 - id: T-T31
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -629,6 +838,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T08, T-T30]
   notes: "(A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:12:25"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019, read directly: within about less than a second (the earlier Rogan value was relayed through a forum). The 2020 Lex Fridman value is probably less than a half second (01:26:09)."
 
 - id: T-T33
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -667,6 +882,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T10]
   notes: "Fravor's own statements are not consistent on whether the 60 miles is the distance from the encounter site to the CAP point."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:06:25"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: the Nimitz at the center, his flight about 40 miles south of the ship, the red air about 100 miles south, about 60 miles between the two; the CAP point is 40 miles south of the ship (00:13:30)."
 
 - id: T-T35
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -684,8 +905,14 @@
   value: "30 to 40 s"
   uncertainty: "Plus or minus 15 s."
   applies_to: [FLIR1]
-  conflicts_with: [T-T10, T-T49]
+  conflicts_with: [T-T10, T-T49, T-T94]
   notes: "The distance divided by 30 to 40 s gives 5,400 to 7,200 mph for 60 miles."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:13:30"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "The 30 to 40 s figure is already in the 2019 Rogan episode (maybe 30, 40 seconds), not only recent."
 
 - id: T-T36
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -705,6 +932,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Lex Fridman 01:19:24 to 01:19:42 repeats unrestricted visibility with land visible at about 50 miles. A 40-ft object subtends only about 0.04 degrees at 10 miles, so the 10-mile claim is optimistic."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:30:27"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: the visibilities fifty miles; LEX122 01:18:54 says unrestricted visibility and 01:19:15 land visible about 50 miles."
 
 - id: T-T37
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -724,6 +957,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Compare 'CAP point about 40 miles south of the ship'. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:06:25"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Same geometry as T-T34: ship about 40 miles north of the CAP point. The 60 miles figure at 00:13:30 is the CAP-to-encounter distance."
 
 - id: T-T38
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -743,6 +982,22 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T42]
   notes: ""
+  also_in:
+    - source: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions) (Lex Fridman Podcast (YouTube), 09/08/2020)"
+      url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      location_in_source: "02:12:03"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Confirms the 80,000 ft figure: the captions read eighty thousand, so the earlier tool transcription 8000 was a mis-hearing. Still relayed from the controller."
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:43:33"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: coming from above 80,000 ft (he says that is about where the curvature of the Earth shows), straight down, stopping around 20,000 ft, hanging about three hours, then straight back up."
+    - source: "THE TIC TAC AT TWENTY - THE MOST CONSEQUENTIAL UFO OF ALL TIME? : WEAPONIZED : EPISODE #61 (Fravor interview segment) (Weaponized with Jeremy Corbell and George Knapp (YouTube), 11/08/2024)"
+      url: "https://www.youtube.com/watch?v=MHycTQC62WA"
+      location_in_source: "00:36:21"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2024: nothing we have can come from above 80,000 ft, hang out for 3 hours, and go straight back up."
 
 - id: T-T39
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -762,6 +1017,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Fravor calls the second pilot Chad."
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:14:34"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019: Underwood picked up the object on radar, tried to lock it and was jammed, then used the pod; the radar returns a little green square (LEX122 01:31:42)."
 
 - id: T-T40
   witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
@@ -781,6 +1042,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T33, T-T67]
   notes: ""
+  also_in:
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:09:56"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "About 40 feet long, about the size of a Hornet fuselage."
 
 - id: T-T41
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -819,8 +1086,24 @@
   value: "28,000 ft to sea surface in 0.78 s (about 36,000 ft/s, about 24,000 mph)"
   uncertainty: "The 0.78 s is a precise figure he says he found out the next day; the time resolution of a radar track is a few seconds per sweep, so the true bound is 'under a few seconds'. Altitude plus or minus 2,000 ft."
   applies_to: [FLIR1]
-  conflicts_with: [T-T01, T-T02, T-T07, T-T13, T-T22, T-T38, T-T58, T-T64]
+  conflicts_with: [T-T01, T-T02, T-T07, T-T13, T-T22, T-T38, T-T58, T-T64, T-T98, T-T105]
   notes: "Day himself says (04:00 onward) that the 80,000 ft figure came from the ballistic-missile-defense guys and was not on his own radar picture. A 0.78 s drop of 28,000 ft means an average vertical speed far above any aircraft."
+  also_in:
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:07:26"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: the object went from 28,000 ft to 50 ft above the water on radar, same track number; the caption reads 78 seconds, almost certainly 0.78 s mis-heard or mis-spoken, because he adds that there was no sonic boom and the first source (Mick West transcript) has 0.78 s."
+    - source: "Kevin Day - The Nimitz Tic Tac UFO Encounter (The Agenda Podcast UK (YouTube; upload dated 04/23/2026), 04/23/2026)"
+      url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+      location_in_source: "00:08:35"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2026: from about 20,000 ft (ftish) down to 50 ft above the water, found out the next day the duration; caption reads 78 seconds precisely, the same likely mis-hearing of 0.78 s. Starting altitude is 20,000 here and 28,000 in T-T42 and UAPS 00:07:26."
+    - source: "Kevin Day Recalls His Harrowing Encounter with the TIC TAC UFO (Total Disclosure Podcast (YouTube), 08/19/2023)"
+      url: "https://www.youtube.com/watch?v=VmQ5npTBaWE"
+      location_in_source: "00:14:37"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023, stated cleanly: using Fravor's 20,000 ft figure rather than his own earlier 28,000 ('we'll go with his number'), it dropped from 20,000 feet down to the surface of the water in 0.78 seconds, no sonic booms. The 0.78 s is therefore confirmed from the audio-derived captions, and the 78 seconds of AGD and UAPS is a caption or speech slip. Starting altitude here is 20,000 ft versus 28,000 ft in T-T42."
 
 - id: T-T43
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -841,6 +1124,17 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "This is the source of the '80,000 ft' number in the Day account. He did not see it himself."
+  also_in:
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:04:16"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: the objects first stopped at 80,000 ft and the ballistic missile defense team became aware of them, then dropped as a group to 28,000 ft off Catalina Island. Same relayed-altitude status as T-T43."
+    - source: "Kevin Day Recalls His Harrowing Encounter with the TIC TAC UFO (Total Disclosure Podcast (YouTube), 08/19/2023)"
+      url: "https://www.youtube.com/watch?v=VmQ5npTBaWE"
+      location_in_source: "00:13:31"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: his own job was tactical air defense below 30,000 ft; the ballistic-missile-defense team watched the objects drop from 80,000 ft to between 20,000 and 28,000 ft off Catalina; he did not see the 80,000 ft part and does not know how long it took."
 
 - id: T-T44
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -859,8 +1153,19 @@
   value: "28,000 ft; about 100 kt south; fixed relative positions"
   uncertainty: "Altitude plus or minus 2,000 ft; speed plus or minus 20 kt."
   applies_to: [FLIR1]
-  conflicts_with: [T-T16, T-T64]
+  conflicts_with: [T-T16, T-T64, T-T95, T-T96]
   notes: "'Always in groups ... almost like they were tied together' (15:08)."
+  also_in:
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:05:00"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: came through the operating area one by one at 28,000 ft going 100 knots, really slow for that altitude."
+    - source: "Kevin Day - The Nimitz Tic Tac UFO Encounter (The Agenda Podcast UK (YouTube; upload dated 04/23/2026), 04/23/2026)"
+      url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+      location_in_source: "00:04:23"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2026: the departing object flew above the strike group at about 100 miles an hour (mph, not knots as in T-T44 and UAPS 00:05:00); and held between 20,000 and 28,000 ft (see T-T95)."
 
 - id: T-T45
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -881,6 +1186,17 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T16, T-T57]
   notes: "Day also says the system gave the highest track quality for the entire time (13:06). 100 kt for 250 miles is about 2.5 h."
+  also_in:
+    - source: "Kevin Day - The Nimitz Tic Tac UFO Encounter (The Agenda Podcast UK (YouTube; upload dated 04/23/2026), 04/23/2026)"
+      url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+      location_in_source: "00:05:25"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2026: every object faded off the strike group radars at the same spot in the sky, about 60 miles north of Guadalupe Island; if I remember correctly."
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:05:20"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: every object disappeared off Guadalupe Island at the same point in the sky."
 
 - id: T-T46
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -899,8 +1215,19 @@
   value: "5 to 10 per group; about 100 total; about 60 before 11/14"
   uncertainty: "Counts are recalled; plus or minus 30 percent."
   applies_to: [FLIR1]
-  conflicts_with: [T-T04]
+  conflicts_with: [T-T04, T-T102]
   notes: "Fravor and Dietrich describe a single object at the site. Day says the only time a contact broke formation was when Fravor intercepted one (13:31)."
+  also_in:
+    - source: "Kevin Day - The Nimitz Tic Tac UFO Encounter (The Agenda Podcast UK (YouTube; upload dated 04/23/2026), 04/23/2026)"
+      url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+      location_in_source: "00:03:37"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2026: groups of five to ten at a time; counted up over 10 days, about 100 objects."
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:04:16"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: coming down in groups of 5 to 10 at a time."
 
 - id: T-T47
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -961,6 +1288,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T10, T-T35, T-T65]
   notes: "He also says Fravor was about five miles from the CAP point. Day returns to 28,000 ft and 100 kt afterwards, which is a strong, testable claim about track continuity."
+  also_in:
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:08:31"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: the object went from directly in front of Fast Eagle 01 to the CAP station exactly on the latitude and longitude and exactly at their altitude and sat there; no transit time given."
 
 - id: T-T50
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -1059,6 +1392,17 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "Day dismisses the glitch explanation because the contacts behaved like normal tracks in symbology."
+  also_in:
+    - source: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST (UAP Studies Podcast (YouTube), 12/17/2023)"
+      url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+      location_in_source: "00:07:26"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2023: the track number did not change on the intercepted object through the drop."
+    - source: "Kevin Day - The Nimitz Tic Tac UFO Encounter (The Agenda Podcast UK (YouTube; upload dated 04/23/2026), 04/23/2026)"
+      url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+      location_in_source: "00:12:28"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Day 2026: the track number never changed (he does not recall the number); the computer tracks these using track numbers on separate symbols (AGD 00:08:14)."
 
 - id: T-T55
   witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
@@ -1097,6 +1441,12 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T18, T-T52]
   notes: ""
+  also_in:
+    - source: "The Man Who Filmed The TIC TAC UFO : WEAPONIZED : EPISODE #27 (Weaponized with Jeremy Corbell and George Knapp (YouTube), 07/25/2023)"
+      url: "https://www.youtube.com/watch?v=4opsdH4hY3s"
+      location_in_source: "00:29:40"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Underwood 2023: it never got to that point with us (never within visual range of his jet); he saw it only on radar and in the pod."
 
 - id: T-T57
   witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
@@ -1155,6 +1505,17 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T12]
   notes: "Forum post 731 cites an estimated 15 nmi range for the object in this video (unverified)."
+  also_in:
+    - source: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell) (Jeremy Corbell (YouTube), 07/28/2021)"
+      url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+      location_in_source: "00:13:37"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Underwood 2021, first-person: radioed the Princeton and the E-2 controller; both said negative radar contact; he banked left to reacquire and found nothing. Also 00:10:47: jamming cues on both radar tape and FLIR tape. (01:15:20 shot off to the left, immediately vectored left, nothing.)"
+    - source: "The Man Who Filmed The TIC TAC UFO : WEAPONIZED : EPISODE #27 (Weaponized with Jeremy Corbell and George Knapp (YouTube), 07/25/2023)"
+      url: "https://www.youtube.com/watch?v=4opsdH4hY3s"
+      location_in_source: "00:34:36"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Underwood 2023: banked left, ran the short-range radar modes, then five or ten seconds with nothing on the scope before radioing the Princeton: negative radar contact."
 
 - id: T-T60
   witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
@@ -1174,6 +1535,12 @@
   applies_to: [FLIR1]
   conflicts_with: []
   notes: "No range is shown on screen in FLIR1."
+  also_in:
+    - source: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell) (Jeremy Corbell (YouTube), 07/28/2021)"
+      url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+      location_in_source: "00:16:27"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Underwood 2021, first-person: my estimation at this point is that it was about 10 to 15 miles off my nose when it left the field of view. Range now read directly: 10 to 15 miles, not only the forum's 15 nmi."
 
 - id: T-T61
   witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
@@ -1248,7 +1615,7 @@
   value: "100 kt; 25,000 ft; 1410L; 40 nm; 160 degrees"
   uncertainty: "Document authenticity unverified. Values agree roughly with Day's 100 kt and 28,000 ft."
   applies_to: [FLIR1]
-  conflicts_with: [T-T01, T-T42, T-T44, T-T70]
+  conflicts_with: [T-T01, T-T42, T-T44, T-T70, T-T86]
   notes: "The CVW-11 log says 1410L vectored and 1430L object sighting; 'late morning' (Kurth) and 'around noon' (Metabunk poster) disagree with a 1430 local sighting."
 
 - id: T-T65
@@ -1362,7 +1729,7 @@
   value: "50 to 100 m diameter; late morning"
   uncertainty: "Forum relay of a magazine piece; rank and details not verified."
   applies_to: [FLIR1]
-  conflicts_with: [T-T21, T-T64]
+  conflicts_with: [T-T21, T-T64, T-T91]
   notes: ""
 
 - id: T-T71
@@ -1383,3 +1750,710 @@
   applies_to: [FLIR1]
   conflicts_with: [T-T01, T-T55]
   notes: "Black Vault summary page: https://www.theblackvault.com/casefiles/the-vault-files-the-tic-tac-incident-november-14-2004/"
+
+- id: T-T72
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit view at the start of the intercept."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:10:37"
+  claim: "At the start of the visual phase Fravor's jet was at 20,000 ft with the object right down on the surface off the right side, a couple miles lateral."
+  quote: "right down on the surface"
+  quantity: "initial range/geometry; altitude"
+  value: "jet 20,000 ft; object at sea level; about 2 mi lateral"
+  uncertainty: "Memory 15 years later; maybe a couple miles is a rough band (1 to 4 mi)."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "If 2 mi is statute lateral and the height difference is 20,000 ft, the slant range is about 3.7 nmi (worker's arithmetic), at which a 40 ft object subtends about 0.1 degree."
+
+- id: T-T73
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit view and altimeter, remembered."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:11:42"
+  claim: "At the 12 o'clock position in the descending circle Fravor says he was at about 18,000 ft, a couple thousand feet below the other airplane, when the object turned and began to climb."
+  quantity: "jet altitude; wingman altitude; timing of the object's turn"
+  value: "Fravor about 18,000 ft; wingman about 20,000 ft"
+  uncertainty: "Estimate (I could guess probably about); plus or minus 2,000 ft."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "T-T07 and LEX122 01:25:12 put him at 14,000 to 15,000 ft at the closest approach, which is consistent with a continuing descent (18,000 at the turn, 15,000 later, 12,000 at the end per the object). The values are at different moments, so this is not listed as a conflict."
+
+- id: T-T74
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own view of the water and the object, from the left seat."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:09:15"
+  claim: "The whitewater was cross-shaped, pointing east with the long arm running east-west and shorter arms north-south, while the Tic Tac itself pointed north-south."
+  quantity: "shape and orientation of the whitewater; object heading"
+  value: "whitewater long axis east-west pointing east; object long axis north-south"
+  uncertainty: "Compass directions remembered from the cockpit, plus or minus 30 degrees."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "LEX122 01:23:03 adds that the object stayed over the southern half of the cross while moving around it."
+
+- id: T-T75
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Reading the displays of the released FLIR1 video, not his own aircraft."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:25:08"
+  claim: "The recording jet on the released video shows an altitude of about 20,000 ft (a readout he gives as 19,990 on the bottom right), autopilot altitude hold, and 250 knots."
+  quantity: "recording-jet altitude and speed (pod side)"
+  value: "about 20,000 ft; 250 kt; altitude hold"
+  uncertainty: "A display readout interpreted by Fravor; the caption of the number is garbled ($19,990 tude), so the 19,990 may be mis-heard. MRG111 00:32:10 also says the jet was on autopilot at 250 knots."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "The 250 kt is read at 00:27:36. Compare with the lab's own OCR of the FLIR1 frames. T-T13 quotes the 20,000 ft figure as the object's altitude; here it is the recording jet's altitude."
+
+- id: T-T76
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the recording crew and the video."
+  source:
+    title: "Cmdr. David Fravor: The True Story of a Pentagon-Verified UFO Encounter | Merged EP0111"
+    outlet: "Merged Podcast (YouTube)"
+    date: "07/05/2023"
+    url: "https://www.youtube.com/watch?v=KuX4GLHLRz8"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:32:10"
+  claim: "The jet that took the video was on autopilot doing 250 knots, and its pilot remembers the flight as uneventful and unremarkable."
+  quantity: "recording-jet speed; pilot's recollection"
+  value: "250 kt, autopilot"
+  uncertainty: "Recollection of a conversation; no independent display check beyond R1361 00:27:36."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T77
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Reading the released video's radar-range field."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:26:32"
+  claim: "A 99.9 in the range field of the pod display means the radar cannot range the object, which he interprets as active jamming;"
+  quantity: "sensor mode; radar range readout"
+  value: "range field 99.9 (no radar range)"
+  uncertainty: "Interpretation of a display field by a pilot who was not in the recording jet."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Testable directly: does the released FLIR1 clip show a range field of 99.9 and for how long. The same reading is agreed to by Underwood, see the Underwood claim at UWCORB 00:11:09."
+
+- id: T-T78
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radar tape and pod display."
+  source:
+    title: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell)"
+    outlet: "Jeremy Corbell (YouTube)"
+    date: "07/28/2021"
+    url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:11:09"
+  claim: "Agreeing to Corbell's description, Underwood says a range-to-target of 99.9 on the FLIR display means being jammed, and that the jamming cues (strobe lines) appeared on both his radar tape and the FLIR tape."
+  quantity: "sensor mode; jamming cues"
+  value: "99.9 range field; vertical strobe lines on radar"
+  uncertainty: "Answers a leading question; the jam strobes are on the unreleased radar tape (see UWCORB 00:07:36)."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "The 2009 executive summary says there were no jamming cues; Underwood says he was not consulted for it (UWCORB 00:10:26)."
+
+- id: T-T79
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radar scope and pod."
+  source:
+    title: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell)"
+    outlet: "Jeremy Corbell (YouTube)"
+    date: "07/28/2021"
+    url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:09:41"
+  claim: "Underwood acquired the object on his own radar first (vectored by the Princeton), took a lock, and only then slaved the pod to it; the erratic behavior and the jam strobe lines came after the radar lock."
+  quantity: "sensor sequence"
+  value: "radar contact, then lock, then pod; no range given"
+  uncertainty: "Qualitative; no ranges given in this interview."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Contrast T-T39 (Fravor: a little green square until a track file was built)."
+
+- id: T-T80
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radar tape and pod recorders."
+  source:
+    title: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell)"
+    outlet: "Jeremy Corbell (YouTube)"
+    date: "07/28/2021"
+    url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:07:15"
+  claim: "Two eight-millimeter tapes recorded the two cockpit displays (one for the right display, one for the left), so the radar page was recorded as well as the pod video; the radar tape has not been released."
+  quantity: "data availability"
+  value: "2 tapes (radar side and FLIR side); radar not public"
+  uncertainty: "Direct statement about the recording setup."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Relevant to D-011: the data that would settle the radar questions exists but is not public."
+
+- id: T-T81
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own pod display."
+  source:
+    title: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell)"
+    outlet: "Jeremy Corbell (YouTube)"
+    date: "07/28/2021"
+    url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:12:13"
+  claim: "The object's departure to the left of the pod screen was the object moving, not the pod: the tracking bars widened (loss of confidence) and then recentered, and the lock was maintained until the object left; he banked left to reacquire."
+  quantity: "FLIR tracker behavior; object departure"
+  value: "bars widened then recentered; track not dropped before departure"
+  uncertainty: "Interpretation by the operator; Mick West and others argue the tracker simply let go."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Testable on the frames: the tracking gate geometry before and after the final slew. WEAP27 00:31:26 says the same, and that the pod is built to hold a track through aspect and mode changes."
+
+- id: T-T82
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit, after the object left the field of view."
+  source:
+    title: "The Man Who Filmed The TIC TAC UFO : WEAPONIZED : EPISODE #27"
+    outlet: "Weaponized with Jeremy Corbell and George Knapp (YouTube)"
+    date: "07/25/2023"
+    url: "https://www.youtube.com/watch?v=4opsdH4hY3s"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:34:59"
+  claim: "After the object left the screen Underwood had five or ten seconds of no contact on the scope and the pod before he radioed the Princeton, who reported negative radar contact."
+  quantity: "duration; radar track behavior"
+  value: "5 to 10 s with no contact before the radio call"
+  uncertainty: "Memory of a short interval 19 years later; plus or minus 5 s."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T83
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own pod display and recorder."
+  source:
+    title: "The Man Who Filmed The TIC TAC UFO : WEAPONIZED : EPISODE #27"
+    outlet: "Weaponized with Jeremy Corbell and George Knapp (YouTube)"
+    date: "07/25/2023"
+    url: "https://www.youtube.com/watch?v=4opsdH4hY3s"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:29:19"
+  claim: "At the start of the recorded video the object was not moving much, just floating in space, with no exhaust plume, and Underwood never got within visual range."
+  quote: "floating in space"
+  quantity: "object motion at the start of the clip; plume"
+  value: "near-stationary at the start; no plume"
+  uncertainty: "Qualitative."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T84
+  witness: "Lt. Chad Underwood (F/A-18F WSO and ATFLIR operator, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own knowledge of the airspace schedule."
+  source:
+    title: "The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood interviewed by Jeremy Corbell)"
+    outlet: "Jeremy Corbell (YouTube)"
+    date: "07/28/2021"
+    url: "https://www.youtube.com/watch?v=dKbYwwwePTQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:11:30"
+  claim: "There was no other traffic at the CAP point during his intercept, no red air from the previous exercise, and the sector was a military warning area scheduled to keep other aircraft out."
+  quantity: "other aircraft in the sector"
+  value: "none (no civil or military traffic)"
+  uncertainty: "Underwood's statement from memory and from the scheduling process."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Relevant to the airliner and other-aircraft hypotheses."
+
+- id: T-T85
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the Princeton controller."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:03:54"
+  claim: "The Princeton controller told Fravor there had been up to about a dozen objects at a time; in the Lex Fridman interview he says up to 10 of these things."
+  quantity: "number of simultaneous objects"
+  value: "up to about 12 (2019); up to 10 (2020)"
+  uncertainty: "Relayed by memory; the two statements differ by a few objects."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Day (T-T46) says groups of 5 to 10, with about 100 contacts over 10 days. The numbers are of the same order."
+
+- id: T-T86
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radio traffic with the Princeton."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:16:29"
+  claim: "The controller counted down ranges as bearing-range-altitude calls; Fravor gives 270 30 20,000 as an example, that is bearing 270 degrees, 30 miles, 20,000 ft, and says they closed to merge plot at 20, 15, 10 miles."
+  quantity: "controller range calls; bearing; altitude of the contact"
+  value: "bearing 270; 30 mi at 20,000 ft (example); merge plot reached at a few miles"
+  uncertainty: "Example call, remembered 16 years later."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T64]
+  notes: "R1361 00:06:46 gives seven zero (likely 270 mis-heard) at about 60 miles. The CVW-11 log (T-T64) puts the contact at 25,000 ft and 160 degrees at 40 nm, a different bearing and altitude."
+
+- id: T-T87
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit view of the sea state."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:18:54"
+  claim: "The wind was five to ten knots, a perfect sailboat day, with no whitecaps."
+  quantity: "wind"
+  value: "5 to 10 kt"
+  uncertainty: "Judged from the sea surface, not measured."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Narrows the light winds of T-T03; compare ERA5 for 11/14/2004."
+
+- id: T-T88
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own view of the object relative to the whitewater."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:23:03"
+  claim: "The Tic Tac moved around and across the whitewater, biased toward the southern half of the cross, going up, down, left and right while still pointing north-south."
+  quantity: "object position relative to the whitewater"
+  value: "over the southern half of the cross, within it"
+  uncertainty: "Qualitative; from memory."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T89
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit view through the windscreen."
+  source:
+    title: "Cmdr. David Fravor: The True Story of a Pentagon-Verified UFO Encounter | Merged EP0111"
+    outlet: "Merged Podcast (YouTube)"
+    date: "07/05/2023"
+    url: "https://www.youtube.com/watch?v=KuX4GLHLRz8"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:28:19"
+  claim: "As the object accelerated away it crossed the left quarter of his windscreen inside the glare shield, and the whole sweep he could see was maybe a max of 12 inches on the canopy."
+  quote: "maybe a max of 12 inches"
+  quantity: "angular extent and duration of the acceleration"
+  value: "about 12 in on the canopy (not an angle)"
+  uncertainty: "No viewing distance given, so the angle cannot be computed from this alone; the figure is a gesture with a ruler."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "No viewing distance is given, so no angle is derived here."
+
+- id: T-T90
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Reading the released pod video in TV mode."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:44:42"
+  claim: "In TV mode the object, seen nearly co-altitude, shows two small things hanging under it like the antennas under a Cessna and nothing on top; there is no plume, no IR signature of propulsion."
+  quantity: "object shape detail"
+  value: "two small appendages on the underside"
+  uncertainty: "Fravor's description of a degraded video; not seen by eye (by eye there were no appendages, LEX122 02:00:41)."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Testable on the frames in the TV-mode segment."
+
+- id: T-T91
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit view at the start of the sortie."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:04:59"
+  claim: "The flight launched on one of the first cycles of the day, 'noon, one o'clock somewhere on there', on a normal 12-hour flying day of about noon to midnight."
+  quantity: "time of day"
+  value: "launch about 12:00 to 13:00 local"
+  uncertainty: "Memory; the encounter followed the launch by tens of minutes."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T70]
+  notes: "Kurth (T-T70) says late morning; the CVW-11 log header (flir1.yaml, line 4) says 1430 local. Dietrich on MRG114 00:18:06 says midday."
+
+- id: T-T92
+  witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit, as the Dash 2 wingman."
+  source:
+    title: "Pilots & Witnesses; Systematic UAP Reporting for Pilots - with Alex Dietrich | Merged EP0114"
+    outlet: "Merged Podcast (YouTube)"
+    date: "08/29/2023"
+    url: "https://www.youtube.com/watch?v=Nc9_ZP36-AI"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:22:19"
+  claim: "The cue that got all four to look was a disturbance in the water in an otherwise calm sea with no waves and no boats; she saw the whitewater roiling, then the object zip across."
+  quantity: "sighting sequence"
+  value: "whitewater first, object second"
+  uncertainty: "Memory 19 years later."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "On first seeing the whitewater she thought the contact had crashed and was sinking (MRG114 00:24:08)."
+
+- id: T-T93
+  witness: "Lt. Cmdr. Alex Dietrich (F/A-18F pilot, VFA-41, 2004)"
+  firsthand: true
+  firsthand_detail: "Own eyes, from high cover."
+  source:
+    title: "TFTRH #57 - Alex Dietrich: Clouds, Critical Thinking, and UFOs"
+    outlet: "Tales From The Rabbit Hole, Mick West (YouTube)"
+    date: "08/26/2023"
+    url: "https://www.youtube.com/watch?v=lyDaYcCbtrs"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:05:18"
+  claim: "At the end the object did not streak or move visibly: it was gone in a second, like trying to follow a bullet, rather than shooting off in a way she could track."
+  quote: "gone in a second"
+  quantity: "disappearance behavior; duration"
+  value: "gone in about 1 s; no visible streak"
+  uncertainty: "She declines to analyze it and calls her view short and early; she was pointed away at the lead."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T30]
+  notes: "Differs from Fravor's Fox figure of about 2 s (T-T30) and agrees with his under a second (R1361 00:12:25)."
+
+- id: T-T94
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radio traffic."
+  source:
+    title: "Navy pilots recall 'unsettling' 2004 UAP sighting (60 Minutes segment, 6:45)"
+    outlet: "60 Minutes, CBS News (YouTube)"
+    date: "05/16/2021"
+    url: "https://www.youtube.com/watch?v=ygB4EZ7ggig"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:03:31"
+  claim: "In the 60 Minutes video Fravor says the object reappeared at the CAP point 60 miles away in seconds."
+  quantity: "transit time to the CAP point"
+  value: "'seconds' for about 60 mi"
+  uncertainty: "Wording in a TV interview; the same person says 30 to 40 s in 2019 and less than a minute in 2023."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T35]
+  notes: "If 60 miles took 5 s the speed is about 43,000 mph; at 35 s it is about 6,200 mph; at 59 s it is about 3,700 mph. These conversions are the worker's, not Fravor's."
+
+- id: T-T95
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own CIC displays and recorded radar tracks."
+  source:
+    title: "Kevin Day - The Nimitz Tic Tac UFO Encounter"
+    outlet: "The Agenda Podcast UK (YouTube; upload dated 04/23/2026)"
+    date: "04/23/2026"
+    url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:04:00"
+  claim: "Each group dropped from 80,000 ft and stopped off the east coast of Catalina Island between 20,000 and 28,000 ft, sat still, then one object at a time left the group."
+  quantity: "hold altitude band; radar track behavior"
+  value: "stop and hold at 20,000 to 28,000 ft"
+  uncertainty: "Memory of radar tracks 22 years later; he gives a band rather than one altitude."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T44]
+  notes: "T-T44 and UAPS 00:05:00 say 28,000 ft only. The 80,000 ft part is relayed from the ballistic-missile-defense radars (T-T43)."
+
+- id: T-T96
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own CIC displays."
+  source:
+    title: "Kevin Day - The Nimitz Tic Tac UFO Encounter"
+    outlet: "The Agenda Podcast UK (YouTube; upload dated 04/23/2026)"
+    date: "04/23/2026"
+    url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:04:23"
+  claim: "A single object leaving a group flew over the strike group at about 100 miles an hour, and the strike group tracked it."
+  quantity: "ground speed of a departing contact"
+  value: "about 100 mph (about 87 kt)"
+  uncertainty: "He uses mph here and knots elsewhere; 100 mph is 87 kt, so this and 100 kt differ by 13 percent."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T44]
+  notes: "Probably the same observation as T-T44, with a unit slip."
+
+- id: T-T97
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own CIC display; no transponder return."
+  source:
+    title: "Kevin Day - The Nimitz Tic Tac UFO Encounter"
+    outlet: "The Agenda Podcast UK (YouTube; upload dated 04/23/2026)"
+    date: "04/23/2026"
+    url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:09:16"
+  claim: "The intercepted object, and the others, gave no IFF or squawk response; Day lacked any identification-friend-or-foe return."
+  quantity: "IFF/transponder"
+  value: "none"
+  uncertainty: "Direct statement about his system's interrogation; the electronic warfare team's collection is unknown to him."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "Voorhis says the same (VTV 00:08:29)."
+
+- id: T-T98
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own memory of the intercept geometry."
+  source:
+    title: "Kevin Day - The Nimitz Tic Tac UFO Encounter"
+    outlet: "The Agenda Podcast UK (YouTube; upload dated 04/23/2026)"
+    date: "04/23/2026"
+    url: "https://www.youtube.com/watch?v=I2BzoBGVfYM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:07:54"
+  claim: "Fravor was vectored to the closest object; Day remembers the radar altitude as 28,000 ft while Fravor remembers 20,000 ft, and says it does not matter."
+  quantity: "altitude of the intercepted contact"
+  value: "20,000 ft (Fravor's memory) or 28,000 ft (Day's memory)"
+  uncertainty: "Day flags the inconsistency himself."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T42]
+  notes: "This is the radar-side altitude, not the jet altitude."
+
+- id: T-T99
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radar room position and charts."
+  source:
+    title: "THE NIMITZ TIC-TAC ENCOUNTER WITH U.S.S. PRINCETON RADAR OPERATOR KEVIN DAY - UAP STUDIES PODCAST"
+    outlet: "UAP Studies Podcast (YouTube)"
+    date: "12/17/2023"
+    url: "https://www.youtube.com/watch?v=p9ShaTSo1g4"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:04:38"
+  claim: "The strike group was about 100 miles southwest of San Diego (AGD 00:01:48 says about 80 miles) in the Whiskey 291 warning area."
+  quantity: "location of the strike group"
+  value: "about 100 mi SW of San Diego (UAPS); about 80 mi off the coast (AGD)"
+  uncertainty: "Memory; two stated values."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T100]
+  notes: "The 60 Minutes narrator uses 100 miles southwest (T-T22)."
+
+- id: T-T100
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own navigation memory."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:02:30"
+  claim: "The encounter was about 60 miles off the coast on a line from San Diego to Ensenada, Mexico, on 11/14/2004 during work-ups."
+  quantity: "location"
+  value: "about 60 mi offshore on the San Diego to Ensenada line"
+  uncertainty: "Memory of a rough position; no coordinates."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T99]
+  notes: "Compare Day's 80 to 100 miles from the coast."
+
+- id: T-T101
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "Own SPY-1B display tracks he checked from the radar room."
+  source:
+    title: "UAP Navy Encounters | Gary Voorhis (Tim Ventura interview)"
+    outlet: "Tim Ventura (YouTube)"
+    date: "07/01/2022"
+    url: "https://www.youtube.com/watch?v=v4DfYUgdros"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:08:06"
+  claim: "The tracks before the intercept were flying about 100 knots at about 25,000 to 28,000 ft; the altitude changes and maneuvers started only at the intercept."
+  quantity: "altitude; speed"
+  value: "about 100 kt at 25,000 to 28,000 ft"
+  uncertainty: "Agrees with Day's 28,000 ft and 100 kt; Voorhis says they do believe these were the numbers."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "He never mentions 60,000 to 80,000 ft himself; the interviewer raised it (VTV 00:08:06)."
+
+- id: T-T102
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radar room watches."
+  source:
+    title: "UAP Navy Encounters | Gary Voorhis (Tim Ventura interview)"
+    outlet: "Tim Ventura (YouTube)"
+    date: "07/01/2022"
+    url: "https://www.youtube.com/watch?v=v4DfYUgdros"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:05:01"
+  claim: "The most tracks he ever saw at one time was three; he never saw the groups of five to ten himself."
+  quantity: "number of simultaneous objects"
+  value: "3 at most (his watches)"
+  uncertainty: "Limited to the watches he was in the radar room."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T46]
+  notes: "Fewer than Day reports, but not a contradiction of Day, who stood more watches in the room."
+
+- id: T-T103
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "Own eyes through heavily magnified binoculars, aimed using radar range and bearing."
+  source:
+    title: "UAP Navy Encounters | Gary Voorhis (Tim Ventura interview)"
+    outlet: "Tim Ventura (YouTube)"
+    date: "07/01/2022"
+    url: "https://www.youtube.com/watch?v=v4DfYUgdros"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:11:57"
+  claim: "He looked for the tracks at twilight and night with heavily magnified binoculars and saw an off-white light of uniform brightness all over with no variation, which at that distance he could not tell from a ship's mast light."
+  quantity: "visual appearance; time of day"
+  value: "uniform off-white light; twilight and night; ship-light-like at long range"
+  uncertainty: "He says that he could confirm something was there only when it moved; other occasions saw nothing."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T107]
+  notes: "Relevant to the distant-light and ship-light hypotheses; not the 11/14 intercept, which was in daylight."
+
+- id: T-T104
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "Own eyes and then the radar room."
+  source:
+    title: "UAP Navy Encounters | Gary Voorhis (Tim Ventura interview)"
+    outlet: "Tim Ventura (YouTube)"
+    date: "07/01/2022"
+    url: "https://www.youtube.com/watch?v=v4DfYUgdros"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:20:44"
+  claim: "On multiple occasions a light shot straight up too fast to perceive; it left a streak, and when he went down to combat the track was gone."
+  quantity: "sudden departure; direction"
+  value: "straight up; speed not perceivable"
+  uncertainty: "He gives no speed or time; faster than 60 frames a second is his own comparison, not a measurement."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: ""
+
+- id: T-T105
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying Day's account; the caption quality of this interview is poor."
+  source:
+    title: "Gary Voorhis - SCU 2004 Nimitz Strike Group Case Interview"
+    outlet: "Scientific Coalition for UAP Studies (YouTube; poor-quality captions)"
+    date: "04/04/2019"
+    url: "https://www.youtube.com/watch?v=l-_0wtAaKPo"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:12:26"
+  claim: "Voorhis says Day told him a contact dropped from 80,000 plus feet to about 20,000 ft in 2.78 seconds (caption), adding that it was 'wasn't even a second'."
+  quantity: "descent time; relayed altitude"
+  value: "2.78 s (caption) versus 'not even a second'; 80,000 to 20,000 ft"
+  uncertainty: "Auto-captions of this interview are badly garbled; the 2.78 may be 0.78 mis-heard, and the speaker's own next sentence says under a second."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T42]
+  notes: "Low weight. Listed only so the number is not lost."
+
+- id: T-T106
+  witness: "Senior Chief Kevin Day (USS Princeton air-defense radar supervisor, 2004)"
+  firsthand: true
+  firsthand_detail: "Own radar tracks and the after-action report he wrote."
+  source:
+    title: "Kevin Day Recalls His Harrowing Encounter with the TIC TAC UFO"
+    outlet: "Total Disclosure Podcast (YouTube)"
+    date: "08/19/2023"
+    url: "https://www.youtube.com/watch?v=VmQ5npTBaWE"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:12:50"
+  claim: "The interviewer's 0.3 s for the descent from 80,000 ft is not Day's: he says the 0.78 s applies to the intercepted object's drop from about 20,000 ft to the surface, he did not see the 80,000 ft descent himself, and he partly blames himself for the confusion."
+  quantity: "descent time and altitude span"
+  value: "0.78 s for about 20,000 ft to the surface; 80,000 ft part not his observation"
+  uncertainty: "Day corrects a widespread conflation: the often repeated 80,000 ft in under a second mixes a BMD-radar observation with his own surface-drop timing."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T22]
+  notes: "The 60 Minutes narration (T-T22) says 80,000 ft in under a second; Fravor's hearing statement (T-T01) relays 80,000 ft with no timing."
+
+- id: T-T107
+  witness: "Gary Voorhis (USS Princeton radar technician, 2004)"
+  firsthand: true
+  firsthand_detail: "Own eyes through the ship's fixed big binoculars."
+  source:
+    title: "Gary Voorhis, Navy Electronics Technician and Witness to Tic Tac FLIR Video on the USS Princeton"
+    outlet: "Opening Minds Files (YouTube)"
+    date: "04/03/2019"
+    url: "https://www.youtube.com/watch?v=qz2gdQaklBQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:07:29"
+  claim: "He saw a small bright off-white dot, no wings visible, through the ship-mounted big eyes binoculars at about 30 miles during the day (a call to combat gave the bearing); at night he tried once and could not see it."
+  quantity: "visual detection range; time of day"
+  value: "small off-white dot at about 30 mi, in daylight"
+  uncertainty: "Poor-quality memory of a day weeks or years before; he gives probably about 30 miles as an estimate from the radar bearing."
+  applies_to: [FLIR1]
+  conflicts_with: [T-T103]
+  notes: "Conflicts with the twilight and night account in the Tim Ventura interview (VTV 00:11:57). Compare with the visibility claim T-T36 (an object of Fravor's size is visible out to about ten miles)."
+
+- id: T-T108
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: true
+  firsthand_detail: "Own cockpit view at merge plot."
+  source:
+    title: "THE TIC TAC AT TWENTY - THE MOST CONSEQUENTIAL UFO OF ALL TIME? : WEAPONIZED : EPISODE #61 (Fravor interview segment)"
+    outlet: "Weaponized with Jeremy Corbell and George Knapp (YouTube)"
+    date: "11/08/2024"
+    url: "https://www.youtube.com/watch?v=MHycTQC62WA"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:59:11"
+  claim: "At merge plot the whitewater was off his right side and the other jet, Dietrich and her WSO, was stacked up on his left side."
+  quantity: "formation geometry"
+  value: "wingman on the left, slightly stacked; whitewater to the right"
+  uncertainty: "Memory; stacked up implies a vertical offset but gives no number."
+  applies_to: [FLIR1]
+  conflicts_with: []
+  notes: "R1361 00:08:31 puts the wingman off his left side and farther back; LEX122 01:23:46 says the wingman stayed about 8,000 ft above during the descent."

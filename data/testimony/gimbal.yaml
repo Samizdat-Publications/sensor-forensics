@@ -1,5 +1,6 @@
 # GIMBAL (January 2015, F/A-18F, ATFLIR): public testimony constraints.
 # Generated and hand-checked for work item M3.3 on 10/31/2026. See README.md and SOURCES.md.
+# M3.3b (10/31/2026): claims G-T24 to G-T41 come from long-form interviews read through YouTube auto-captions (text only); their location_in_source is the caption hh:mm:ss. Repeats of earlier claims are in each claim's also_in list. See README.md and SOURCES.md sections E and F.
 # Claims with applies_to listing GOFAST describe the East Coast class of objects and also bear on GOFAST (there is almost no GOFAST-specific testimony; see gofast.yaml).
 # No transcripts are copied; each claim is a paraphrase plus at most one quote under 15 words.
 
@@ -22,6 +23,17 @@
   applies_to: [GIMBAL]
   conflicts_with: []
   notes: "Graves also says 'I have one particular case' of multiple craft in formation: the GIMBAL event."
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:38:12"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: he watched the FLIR footage and the SA page together in the intelligence space; both are on one tape (see G-T31)."
+    - source: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308 (Lex Fridman Podcast (YouTube), 08/01/2022)"
+      url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+      location_in_source: "01:47:26"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: on the day the Gimbal was recorded he went to the intelligence debrief space and watched the FLIR film with others; the admiral came in and watched for five or six seconds and left."
 
 - id: G-T02
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -79,8 +91,19 @@
   value: "stationary over the ground in winds above about 115 kt (Category 4 = 113 to 136 mph sustained); bursts to Mach 1.1 to 1.2"
   uncertainty: "General statement about the whole East Coast class of contacts. Speeds are radar-derived and relayed by memory. Mismatch with GIMBAL's 120 kt wind is only suggestive."
   applies_to: [GIMBAL, GOFAST]
-  conflicts_with: [G-T05]
+  conflicts_with: [G-T05, G-T36]
   notes: "A stationary ground speed in a strong wind is the opposite of balloon-like downwind drift, so it is directly relevant to the parallax and balloon hypotheses (D-010). It describes the class of objects, not a specific frame range."
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:06:13"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: stationary up to about 120 knots of airspeed at altitude (130 to 140 mph); completely stationary with a 140 mile an hour wind."
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:22:20"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024: supersonic as well, 1.1 to 1.2 Mach, typically heading east; others stationary or 250 to 350 knots."
 
 - id: G-T05
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -118,8 +141,19 @@
   value: "5 to 15 ft diameter; cube inside a sphere; passed within 50 ft"
   uncertainty: "Second-hand, visual at very short range."
   applies_to: [GIMBAL]
-  conflicts_with: []
+  conflicts_with: [G-T37]
   notes: "Different event and different year from GIMBAL. Included only because the lab's size criterion may use class-level object size; do not apply it to the GIMBAL frames without a stated reason."
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:12:12"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: at the entrance to the working area one of the objects went right between the two aircraft of a VFA-11 flight; the lead crew saw it and the dash-2 crew did not. The object was a dark gray or black cube inside a clear translucent sphere with its corners touching the sphere (00:13:16)."
+    - source: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell (The Joe Rogan Experience (PowerfulJRE, YouTube), 10/05/2019)"
+      url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+      location_in_source: "00:35:46"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Fravor 2019 (relayed): one airplane went about 50 feet down the side of a floating cube inside the beach-ball sphere."
 
 - id: G-T07
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -137,8 +171,19 @@
   value: "5 to 6 other objects in a loose wedge"
   uncertainty: "Peings and von Rennenkampff paraphrase this as 4 to 6 objects. Counting from memory of a radar display years later: plus or minus 1."
   applies_to: [GIMBAL]
-  conflicts_with: []
+  conflicts_with: [G-T27]
   notes: ""
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:33:59"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: 'four to five, I might say six, I don't remember the exact number', in a wedge, like a triangle without a base."
+    - source: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308 (Lex Fridman Podcast (YouTube), 08/01/2022)"
+      url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+      location_in_source: "01:42:35"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: between four and six objects in a rough wedge, side by side but not stiff or mechanical."
 
 - id: G-T08
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -175,7 +220,7 @@
   value: "about 120 kt (ground speed near zero in a 120 kt wind); about 20,000 ft"
   uncertainty: "Altitude unsure (he says so): 15,000 to 25,000 ft. P&vR report the recording jet at about 25,000 ft."
   applies_to: [GIMBAL]
-  conflicts_with: []
+  conflicts_with: [G-T28]
   notes: "At 6 to 8 nmi and the on-screen elevation of about -2 degrees the geometry puts the object near 23,500 ft with the jet at about 25,000 ft (P&vR), so 20,000 ft is on the low side. The wording 'going like 120 knots, basically stationary' is ambiguous: it can mean airspeed of 120 kt (equal to the wind, so stationary over the ground). In the paper's reading it is the wind speed. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
 
 - id: G-T10
@@ -197,6 +242,12 @@
   applies_to: [GIMBAL]
   conflicts_with: []
   notes: "The 'tilted up' is the rotation visible in the clip, in Graves's reading. It places the stop on the SA display just before the clip's rotation (testable against the frame at about 22 s)."
+  also_in:
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:35:07"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024: the Gimbal object was proceeding behind the formation, then does its maneuver and trails in the opposite direction."
 
 - id: G-T11
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -214,8 +265,19 @@
   value: "180 degree reversal; zero turn radius for the Gimbal object"
   uncertainty: "Qualitative; relayed in the paper from interviews with Graves."
   applies_to: [GIMBAL]
-  conflicts_with: []
+  conflicts_with: [G-T25]
   notes: "The WSO's briefing (FOIA brief) also says the contact came from the east heading toward the ship and then headed back east."
+  also_in:
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:34:25"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024: the formation turned, got discombobulated and flowed back out into a clean formation after a 180 degree turn, and the Gimbal object changed direction at the moment it started to rotate in the clip."
+    - source: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308 (Lex Fridman Podcast (YouTube), 08/01/2022)"
+      url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+      location_in_source: "01:42:57"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: the formation turned pretty sharply but they still had a radius of turn, were scattered during the turn, and tightened up again after rolling out 180 degrees; the Gimbal object then went back the opposite way to follow (01:43:38)."
 
 - id: G-T12
   witness: "Unnamed weapon systems officer (WSO) who recorded GIMBAL (name withheld in the released documents) (relayed by Graves)"
@@ -254,6 +316,12 @@
   applies_to: [GIMBAL]
   conflicts_with: []
   notes: "This single range figure drives the paper's 'vertical U-turn' result. The lab should treat 6 to 8 nmi as a constraint with a stated uncertainty, not a measurement."
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:33:16"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: the aircrew got about six to eight miles away; six to eight is what the air crew told me. He says miles, not nautical miles. They did not close further because it was night and they could not see the object."
 
 - id: G-T14
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -292,6 +360,12 @@
   applies_to: [GIMBAL]
   conflicts_with: []
   notes: "Date is disputed: DoD says 01/21/2015, video metadata says 01/25/2015 02:29 UTC (01/24 21:29 EST), and an unclassified DoD email dates it 01/25."
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:33:37"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: it was night by then, they could not see the object, which is why they used only the IR mode."
 
 - id: G-T16
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -311,6 +385,12 @@
   applies_to: [GIMBAL, GOFAST]
   conflicts_with: []
   notes: "Mick West and others explain erratic aspect as radar glint on a distant aircraft; this claim is the aircrew side of that argument. (A short quote returned by the page-reading tool was dropped because it could not be verified verbatim.)"
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "01:18:06"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: pilots could fly to the 500 ft safety distance and see nothing while the FLIR still showed energy there."
 
 - id: G-T17
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
@@ -330,6 +410,12 @@
   applies_to: [GIMBAL, GOFAST]
   conflicts_with: []
   notes: ""
+  also_in:
+    - source: "Joe Rogan Experience #1883 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024), 10/18/2022)"
+      url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+      location_in_source: "00:02:36"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: the working area starts about 10 miles off the coast and runs out 100 to 250 miles; contacts only over water."
 
 - id: G-T18
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) and the WSO, as summarized by Peings and von Rennenkampff"
@@ -347,8 +433,14 @@
   value: "about 300 mi off Jacksonville; object heading west toward the ship"
   uncertainty: "Location plus or minus 100 mi."
   applies_to: [GIMBAL]
-  conflicts_with: [G-T08]
+  conflicts_with: [G-T08, G-T30]
   notes: ""
+  also_in:
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:35:07"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024: 'we're already 300 miles out there', east of the ship."
 
 - id: G-T19
   witness: "Unnamed weapon systems officer (WSO) who recorded GIMBAL (name withheld in the released documents)"
@@ -385,8 +477,19 @@
   value: "120 kt from the west (270 degrees)"
   uncertainty: "A spoken value, probably read from the jet's wind display; plus or minus 10 kt. The aircraft's altitude was about 25,000 ft."
   applies_to: [GIMBAL]
-  conflicts_with: []
+  conflicts_with: [G-T36]
   notes: "ERA5 for 01/24/2015 gives about 110 to 120 kt westerly near 25,000 ft per the paper. The lab should transcribe the audio itself."
+  also_in:
+    - source: "Navy pilots describe encounters with UFOs (60 Minutes full story, 13:48) (60 Minutes, CBS News (YouTube), 05/17/2021)"
+      url: "https://www.youtube.com/watch?v=ZBtMbBPzqHY"
+      location_in_source: "00:05:20"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "60 Minutes video (05/17/2021): the audio is played with the aircrew saying 'they're all going against the wind, the wind's 120 out of the west'."
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:30:50"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024 paraphrases the audio as going 120 knots against the wind."
 
 - id: G-T21
   witness: "GIMBAL cockpit crew (pilot and WSO, unnamed), speaking on the video's audio track"
@@ -444,3 +547,357 @@
   applies_to: [GIMBAL, GOFAST]
   conflicts_with: []
   notes: "Treat as a lead to follow, not a constraint, until the article is read."
+
+- id: G-T24
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Watched the recorded SA page and FLIR together on the tape at the debrief."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:33:59"
+  claim: "The Gimbal object was slightly behind the wedge formation and offset below it; the wedge made a left-hand turn, which broke up its formation, and rolled out 180 degrees reversed, while the Gimbal object kept going straight, then reversed to follow."
+  quantity: "relative position; turn direction; track behavior"
+  value: "behind and below the wedge; formation left turn about 180 degrees; Gimbal straight then reversal"
+  uncertainty: "Memory of a radar page seen about seven years before the interview; he calls the geometry from my recollection."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Adds the relative position and the left-hand turn to G-T10 and G-T11. G-T11 says the fleet turned with a radius and the Gimbal object had no radius; here the formation turned tighter than normal (R1883 00:34:19)."
+
+- id: G-T25
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Same recorded SA page."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:35:41"
+  claim: "Seen from the side, the Gimbal object's reversal was a vertical U-turn done within about 500 ft; he compares that with 4,000 to 6,000 ft for an F-18."
+  quantity: "turn radius; track behavior"
+  value: "vertical U-turn within about 500 ft"
+  uncertainty: "Order of magnitude from a radar-page recollection; not a measurement. He says I think an F-18 needs like 6,000 feet or 4,000 feet."
+  applies_to: [GIMBAL]
+  conflicts_with: [G-T11]
+  notes: "Differs from G-T11 (no radius of turn): this gives a finite and small radius. Matches the arXiv paper's vertical U-turn result; test with the lab's ranges (6 to 8 nmi)."
+  also_in:
+    - source: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308 (Lex Fridman Podcast (YouTube), 08/01/2022)"
+      url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+      location_in_source: "01:44:00"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: the object climbed during the maneuver, which is why it appeared to turn instantly; a turn done in the vertical. He contrasts it with a surveillance platform, which would not climb 500 feet every time it turns."
+
+- id: G-T26
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Same recorded SA page."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:34:25"
+  claim: "The fleet was four to six objects flying a V formation with the members all within about half a mile to a mile and a half of each other; it turned, got discombobulated, then flowed back into a clean formation after a 180 degree turn, as the Gimbal object trailed and then reversed."
+  quantity: "formation spacing; number of objects"
+  value: "4 to 6 objects; spacing 0.5 to 1.5 mi; V formation"
+  uncertainty: "Memory; the spacing is the first quantitative statement of it."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "R1883 00:33:59 gives 'four to five, I might say six, I don't remember the exact number'."
+
+- id: G-T27
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Same recorded SA page."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:35:07"
+  claim: "Counting the Gimbal fleet and the Go Fast group, he says there were maybe 10 to 12 objects operating east of the ship, already about 300 miles out."
+  quantity: "total number of objects in the area"
+  value: "10 to 12 (both events)"
+  uncertainty: "A rough sum; it merges two sub-groups."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T07]
+  notes: "Not a contradiction of 4 to 6 for the Gimbal fleet alone; the sum includes the Go Fast line abreast."
+
+- id: G-T28
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Reading the display of the public clip and relaying the crew."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:30:50"
+  claim: "On the audio the crew talk about the object going 120 knots against the wind, but in Graves's recollection the radar data had it at a relatively slow speed for a fighter aircraft, around 100 knots; the recording jet shows 242 knots on the bottom left of the display."
+  quantity: "object speed; recording-jet speed"
+  value: "object about 100 kt (radar, recalled); jet 242 kt (display)"
+  uncertainty: "Recalled radar speed; the 242 is a display number he reads off the public clip, and the around 100 knots is hedged (or so)."
+  applies_to: [GIMBAL]
+  conflicts_with: [G-T09]
+  notes: "G-T09 (The Debrief) says about 120 kt, basically stationary. Both could be airspeed or ground speed; the source does not say which."
+
+- id: G-T29
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own memory of the tape."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:27:58"
+  claim: "The Gimbal clip is in black-hot mode (darker objects are hotter), so the dark central object is putting out heat, and its apparent shape is a disc with a crown at top and bottom."
+  quantity: "sensor mode; polarity; apparent shape"
+  value: "black hot; IR; disc with a crown"
+  uncertainty: "Interpretation of a display by someone who was not the operator; the shape is the glare/IR signature, which he says (R1883 00:41:42) hides the true shape."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Testable on the frames: the polarity indicator and the hot/cold appearance."
+  also_in:
+    - source: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308 (Lex Fridman Podcast (YouTube), 08/01/2022)"
+      url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+      location_in_source: "01:40:49"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2022: the object looks like two plates together with a small funnel of IR energy at top and bottom; he says it was a very tight IR image, not glare, and it appears black or white depending on the moment; no exhaust or outgassing."
+
+- id: G-T30
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Relaying the aircrew who flew the mission."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:36:03"
+  claim: "The event was about 350 miles off the coast, around an aircraft carrier, with only fighter jets in the air."
+  quantity: "location"
+  value: "about 350 mi off the coast"
+  uncertainty: "A round number; elsewhere 300 miles (R2244 00:35:07, and G-T18)."
+  applies_to: [GIMBAL]
+  conflicts_with: [G-T18]
+  notes: "G-T18 and P&vR give 300 miles off Jacksonville. At 00:27:16 the caption says about 1500 miles south of Virginia Beach, which is probably a mis-hearing of 500."
+
+- id: G-T31
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Watched the combined tape at the debrief with about 15 people."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:37:50"
+  claim: "The FLIR and the SA page are recorded together on the same tape as standard procedure, and he watched them side by side in the intelligence space, so radar data for the event exists wherever the FLIR video does."
+  quantity: "data availability"
+  value: "FLIR plus SA page on one recording"
+  uncertainty: "Direct statement; the radar part is not public."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: []
+  notes: "R2244 00:26:15 repeats it: the two screens are stitched side by side in the briefing room. Relevant to D-011."
+
+- id: G-T32
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own flights; sensors slaved to a radar cursor."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:06:13"
+  claim: "The objects at altitude were completely stationary in winds of up to about 120 knots of airspeed (130 to 140 mph)."
+  quantity: "wind; object speed"
+  value: "stationary relative to the ground in up to 120 kt wind"
+  uncertainty: "Class statement, not a specific event; the number is the wind, not a measured object speed."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T36]
+  notes: "Compare the hearing's category four hurricane winds (G-T04) and Fravor's 70 and 90 kt (G-T36)."
+
+- id: G-T33
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own radar and ATFLIR use."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:22:00"
+  claim: "Across 2014 and 2015 the radar objects were sometimes stationary, sometimes meandering at around 250 to 350 knots, and sometimes supersonic at Mach 1.1 to 1.2, typically heading east."
+  quantity: "class of objects: speed"
+  value: "stationary; 250 to 350 kt; Mach 1.1 to 1.2 eastbound"
+  uncertainty: "General statement over many contacts."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T41]
+  notes: "G-T04 gives Mach 1.1 to 1.2 bursts; G-T05 gives up to Mach 2."
+
+- id: G-T34
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own sorties; helmet display cueing to a radar track."
+  source:
+    title: "Joe Rogan Experience #1883 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube; episode aired 10/18/2022, this YouTube upload is dated 06/27/2024)"
+    date: "10/18/2022"
+    url: "https://www.youtube.com/watch?v=muxP-2pDzH0"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:18:06"
+  claim: "Flying to within the 500 ft safety distance of a radar-tracked object, the pilots saw nothing, though the FLIR still showed the energy at that spot; he says the same in R2244 00:22:41."
+  quantity: "visual range limit"
+  value: "nothing visible at about 500 ft with FLIR still showing a source"
+  uncertainty: "General statement; no particular event."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: []
+  notes: "Qualifies G-T16's visual sightings were rare."
+
+- id: G-T35
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying the Gimbal crew (a friend of his), not his own sensor."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:38:56"
+  claim: "In the Gimbal event the pod looked at the bigger object while the radar showed about five smaller objects in a V formation ahead of it, which turned and went the other way."
+  quantity: "number of objects; formation"
+  value: "about 5 smaller objects in a V"
+  uncertainty: "Second-hand, from a friend; Lex Fridman 02:45:56 repeats 'I think it's five'."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Agrees with G-T07 (five or six). Corbell remarks on the show (R1361 00:39:17) that this formation had not been reported publicly."
+
+- id: G-T36
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying aircrew friends."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:36:06"
+  claim: "Fravor says the East Coast objects sit still with no effect from the wind: if you got 90 knots of wind; in the Lex Fridman interview 'balloons don't sit in 70 knots of wind'."
+  quantity: "wind; object speed"
+  value: "stationary in 90 kt (2019) or 70 kt (2020) of wind"
+  uncertainty: "Relayed from crew friends; the two interviews give different wind speeds."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T20, G-T04, G-T32]
+  notes: "Differs from the 120 kt audio (G-T20), the hearing's category four hurricane (G-T04) and Graves's 120 kt (R1883 00:06:13)."
+
+- id: G-T37
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying squadron mates' report."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "02:47:40"
+  claim: "A near midair with a cube-in-sphere object passed within about 100 feet of an airplane; in the Rogan interview he said about 50 feet down the side of the aircraft."
+  quantity: "miss distance"
+  value: "about 100 ft (2020); about 50 ft (2019)"
+  uncertainty: "Relayed, with two different distances from the same speaker."
+  applies_to: [GIMBAL]
+  conflicts_with: [G-T06]
+  notes: "G-T06 (Graves, hearing) says within 50 ft of the lead aircraft. R1883 00:12:12 says the object went right between the two jets and only the lead crew saw it."
+
+- id: G-T38
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying a crew member."
+  source:
+    title: "Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "10/05/2019"
+    url: "https://www.youtube.com/watch?v=Eco2s3-0zsQ"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:37:31"
+  claim: "About 60 to 70 people had seen these objects on radar off the East Coast; the notice to airmen and hazard reports went out because of them."
+  quantity: "number of observers"
+  value: "60 to 70 people (2019); 'at least 60' (2020)"
+  uncertainty: "Relayed; an unsourced head count."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: []
+  notes: "Graves (R1883 00:19:35) confirms a hazard report and a notice to airmen about the objects."
+
+- id: G-T39
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own flight; saw the film afterward in the intelligence space."
+  source:
+    title: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "08/01/2022"
+    url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:42:35"
+  claim: "In the SA page the 4 to 6 object wedge was offset to the north of the Gimbal object, which was moving left to right; as the formation turned up to the north and passed back, the Gimbal object turned back the opposite way to follow it."
+  quantity: "relative position; track behavior"
+  value: "wedge north of the Gimbal object; Gimbal moving left to right then reversed"
+  uncertainty: "Orientation from memory of a God's-eye display. North may mean up on the page, not true north."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "R1883 00:33:59 says the object was behind and below the wedge, which is a different frame (behind and below versus north). G-T19 has the object coming from the east heading west."
+
+- id: G-T40
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own flight in the same training mission; not the recording jet."
+  source:
+    title: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "08/01/2022"
+    url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:39:25"
+  claim: "Graves was airborne in the same air-to-air training mission as the Gimbal crew, in another aircraft; the recording WSO was a close friend who later became a pilot and whom he instructed. The Gimbal crew was returning to the ship when they saw the radar contacts and flew over to them."
+  quantity: "witness role; mission context"
+  value: "Graves airborne in the mission, in a different jet"
+  uncertainty: "Direct statement of his own role; his sensors' view of the contacts is not described."
+  applies_to: [GIMBAL]
+  conflicts_with: []
+  notes: "Adds to G-T02, which does not say he was airborne. Together with G-T06 (a different event) it clarifies when he was in the jet and when he was in the ready room."
+
+- id: G-T41
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: true
+  firsthand_detail: "Own radar and ATFLIR use over two years."
+  source:
+    title: "Ryan Graves: UFOs, Fighter Jets, and Aliens | Lex Fridman Podcast #308"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "08/01/2022"
+    url: "https://www.youtube.com/watch?v=qLDp-aYnR1Y"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "01:10:32"
+  claim: "Across his observations the objects flew racetrack or circular patterns or straight east, mostly at 0.6 to 0.8 Mach for extremely long periods, occasionally 1.1 to 1.2 Mach; he adds that a drone could hold position in the wind but not then fly 0.8 Mach for four hours."
+  quantity: "class of objects: speed; duration"
+  value: "Mach 0.6 to 0.8 sustained (about 4 hours); occasional Mach 1.1 to 1.2"
+  uncertainty: "Class statement; the 4-hour persistence is the key quantity and is not tied to Gimbal."
+  applies_to: [GIMBAL, GOFAST]
+  conflicts_with: [G-T33]
+  notes: "Differs from R2244 00:22:00 (stationary or 250 to 350 knots, which is about Mach 0.4 to 0.55 at altitude) and from G-T05 (up to Mach 2)."

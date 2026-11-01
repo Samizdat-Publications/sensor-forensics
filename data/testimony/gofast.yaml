@@ -1,5 +1,6 @@
 # GOFAST (January 2015, F/A-18F, ATFLIR, range on screen): public testimony constraints.
 # Generated and hand-checked for work item M3.3 on 10/31/2026. See README.md and SOURCES.md.
+# M3.3b (10/31/2026): claims F-T04 to F-T11 come from long-form interviews (Graves on Rogan #2244, Fravor on Lex Fridman #122) read through YouTube auto-captions; the earlier statement that GOFAST has almost no specific testimony still holds for aircrew who were on the flight (no one from the recording crew has been interviewed at length in the sources found). See README.md.
 # There is almost no GOFAST-specific aircrew testimony in public sources. The East Coast class-of-objects claims that also bear on GOFAST are in gimbal.yaml
 # (applies_to includes GOFAST): G-T04, G-T05, G-T16, G-T17, G-T22, G-T23.
 # No transcripts are copied; each claim is a paraphrase plus at most one quote under 15 words.
@@ -41,6 +42,12 @@
   applies_to: [GOFAST]
   conflicts_with: []
   notes: "If true, GOFAST and GIMBAL share a date, so the wind and ERA5 date question (01/21, 01/24 or 01/25/2015) must be resolved together. The DoD lists GOFAST as 01/21/2015; the GIMBAL metadata suggests 01/25 UTC."
+  also_in:
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:34:04"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024, read directly: the Gimbal and the Go Fast happened within minutes of each other (also 00:24:47: both recorded during the Roosevelt work-up cycle). The earlier forum relay is confirmed from the podcast itself."
 
 - id: F-T03
   witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015) (and two other speakers named in the thread)"
@@ -60,3 +67,161 @@
   applies_to: [GOFAST]
   conflicts_with: []
   notes: "The AARO appendix reads the RNG value as a tracker range. This claim matters because passive range from a flat-Earth angle model is itself a model output."
+  also_in:
+    - source: "Joe Rogan Experience #2244 - Ryan Graves (The Joe Rogan Experience (PowerfulJRE, YouTube), 12/17/2024)"
+      url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+      location_in_source: "00:28:23"
+      verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+      note: "Graves 2024, read directly: the range shown in the Go Fast video, range 3.4, comes from the ATFLIR sensor itself and is not a very reliable indicator of the range; the radar is the range sensor. So the on-screen range is a pod value."
+
+- id: F-T04
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Reading the displays of the public clip, not a firsthand sensor view."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:28:02"
+  claim: "The Go Fast aircraft was about 5 miles from the object, though the on-screen range reads 3.4 to 3.5 and ticks down; Graves says the true range was probably a little bit further."
+  quantity: "range"
+  value: "about 5 mi (stated); on-screen 3.4 to 3.5"
+  uncertainty: "He qualifies his own reading: the pod range is not reliable. About five miles or so is a rough value."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "The AARO analysis puts the range near the ATFLIR figure. The conflict between 5 and 3.4 is the lab's testable quantity."
+
+- id: F-T05
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Reading the display of the public clip."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:27:40"
+  claim: "The recording jet in the Go Fast clip was roughly 10,000 ft above the ocean (somewhere around 10,000 ft or so), which he says is not so close that background clutter would explain the failed lock."
+  quantity: "recording-jet altitude"
+  value: "about 10,000 ft"
+  uncertainty: "Rough answer to the interviewer's question how far off the ocean; the sentence is ambiguous about whether it is the jet or the object."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "AARO's analysis puts the jet near 13,000 ft (docs/prior-work/aaro-gofast.md)."
+
+- id: F-T06
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Reading the display of the public clip."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:28:44"
+  claim: "The number under the range in the Go Fast clip (170) is the relative velocity in knots, not the object's raw speed."
+  quantity: "readout meaning: relative (closing) velocity"
+  value: "170 kt relative (display)"
+  uncertainty: "His reading of an unlabeled display value; his own sentence has an inconsistent miles per hour or kilometers, it should be knots."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: ""
+
+- id: F-T07
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Reading the display of the public clip; he was not in the jet."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:26:58"
+  claim: "In the Go Fast clip the crew could not get an air-to-air lock, so they degraded to an air-to-surface manual lock, which is why the tracking box keeps growing and shrinking."
+  quantity: "sensor mode; tracker behavior"
+  value: "air-to-surface manual lock; box not capturing"
+  uncertainty: "His explanation of the display; the cause of the failed lock he says is unknown."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "Testable on the frames: tracker box size over time."
+
+- id: F-T08
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Seen on the combined tape and relayed from the crew."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:34:04"
+  claim: "In the Go Fast event there were multiple objects in a line abreast, about a mile apart, flying side by side (he says four), and the crew had trouble locking one before turning their attention to the Gimbal object."
+  quantity: "number of objects; spacing; formation"
+  value: "about 4 objects; about 1 mi apart; line abreast"
+  uncertainty: "A rough recollection stated in passing."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "F-T02 (Graves via forum) says many more objects."
+
+- id: F-T09
+  witness: "Lt. Ryan Graves (F/A-18F pilot, VFA-11, USS Theodore Roosevelt, 2014 to 2015)"
+  firsthand: false
+  firsthand_detail: "Reading the display of the public clip."
+  source:
+    title: "Joe Rogan Experience #2244 - Ryan Graves"
+    outlet: "The Joe Rogan Experience (PowerfulJRE, YouTube)"
+    date: "12/17/2024"
+    url: "https://www.youtube.com/watch?v=P4t8UgcjKfM"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "00:29:04"
+  claim: "The Go Fast object is shown at a polarity where it reads cooler than the surroundings, which he calls very bizarre for something moving that fast; his sentence on white-hot versus black-hot is internally inconsistent in the captions."
+  quantity: "sensor mode; apparent temperature"
+  value: "object cooler than background"
+  uncertainty: "Auto-captions garble the polarity sentence; treat the direction as uncertain."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "Fravor (LEX122 02:43:49) makes the same point relaying Corbell: black hot, white object colder than the ocean, so not a bird."
+
+- id: F-T10
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying a Jeremy Corbell remark about the clip."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "02:43:49"
+  claim: "In the Go Fast clip the pod is in black hot, so the white object is colder than the ocean, which a bird (as Mick West proposed) would not be."
+  quantity: "sensor mode; apparent temperature"
+  value: "white object in black-hot mode: colder than the ocean"
+  uncertainty: "Fravor relays a point made by Corbell; the polarity should be read from the frames."
+  applies_to: [GOFAST]
+  conflicts_with: []
+  notes: "Quotation of Fravor's logic, not a measurement."
+
+- id: F-T11
+  witness: "Cmdr. David Fravor (CO, VFA-41, lead F/A-18F pilot, 2004)"
+  firsthand: false
+  firsthand_detail: "Relaying a friend who works with the crew member."
+  source:
+    title: "Lex Fridman Podcast #122: David Fravor, UFOs, Aliens, Fighter Jets, and Aerospace Engineering (YouTube video captions)"
+    outlet: "Lex Fridman Podcast (YouTube)"
+    date: "09/08/2020"
+    url: "https://www.youtube.com/watch?v=aB8zcAttP1E"
+  verification: "read directly: YouTube auto-generated captions (en), fetched as text only on 10/31/2026; timestamps are caption times and the wording can be mis-heard"
+  location_in_source: "02:44:33"
+  claim: "Both the Go Fast and the Gimbal clips were shot by the same person (a back-seater who is his friend), and Fravor says the two jets carried the APG-79 radar."
+  quantity: "crew identity; radar type"
+  value: "same operator for both; APG-79 radar"
+  uncertainty: "Second-hand; Rogan 2019 (R1361 00:37:31) says 'I'm pretty sure it's the same backseater'."
+  applies_to: [GOFAST, GIMBAL]
+  conflicts_with: []
+  notes: "Relevant to whether the two videos are from one jet and day."

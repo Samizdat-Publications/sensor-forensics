@@ -1,5 +1,7 @@
 # Sources used for the testimony files (access date 10/31/2026 for all)
 
+Sections A to D are from work item M3.3. Section E (the long-form interviews read through YouTube auto-captions) and section F (episodes that could not be obtained) are from M3.3b and supersede the matching 'not reached' lines in section D.
+
 "Read directly" means this worker had the full text (or page images) of the document. "Through a tool" means a page-reading tool returned an extraction or summary and the raw page was not available to this worker. "Relayed" means the content was seen only as quoted in someone else's page. The claims carry the same labels in their `verification` field.
 
 ## A. Read directly (strongest)
@@ -40,9 +42,9 @@
 ## D. Sources I could not reach, or reached only in part
 
 - New York Times, 12/16/2017 and 05/26/2019 articles: the fetch tool refused nytimes.com. Only secondary summaries (ABC7, Gizmodo, P&vR citations) were used. Accoin's quote (G-T23) is unconfirmed for that reason.
-- 60 Minutes (05/16/2021) video and any full transcript: only the CBS text summary was found. Video timestamps for Fravor and Dietrich are therefore missing.
-- Joe Rogan Experience: Fravor (#1361, 10/05/2019), Graves (#1883, 10/18/2022 and #2244, 12/17/2024). No usable transcript was found (HappyScribe returned only an index; Podwise showed a chapter list with a sign-in wall). Rogan quotes appear only as relayed in Metabunk. Graves chapter markers from Podwise (#1883): Gimbal 27:39, cube-in-sphere 13:11 to 20:32, 44:47 shapes. A transcript or the audio is needed.
-- Lex Fridman #122: partial read (see 9). Fravor's account of the remainder (03:29 to 03:56) was not read.
+- 60 Minutes (05/16/2021) video and any full transcript: only the CBS text summary was found. Video timestamps for Fravor and Dietrich are therefore missing. (M3.3b: both 60 Minutes videos were obtained as captions, see E; claims now carry video timestamps.)
+- (Resolved in M3.3b, see E.) Joe Rogan Experience: Fravor (#1361, 10/05/2019), Graves (#1883, 10/18/2022 and #2244, 12/17/2024). No usable transcript was found (HappyScribe returned only an index; Podwise showed a chapter list with a sign-in wall). Rogan quotes appear only as relayed in Metabunk. Graves chapter markers from Podwise (#1883): Gimbal 27:39, cube-in-sphere 13:11 to 20:32, 44:47 shapes. A transcript or the audio is needed.
+- (Largely resolved in M3.3b, see E.) Lex Fridman #122: partial read (see 9). Fravor's account of the remainder (03:29 to 03:56) was not read.
 - History Channel "Unidentified" (Fravor, Dietrich, Hughes; season 2 episode 2 is cited in forums): not located.
 - The leaked 2009 "Executive Summary" (13 pages) itself, and the CVW-11 event summary and "Nimitz report" originals at thevault.tothestarsacademy.com: not found; only reporter and forum summaries.
 - Corbell/Underwood video, New York magazine's Underwood interview, Popular Mechanics original interviews (Voorhis, Day, Weigelt, Turner, Hughes), Tim Ventura and SCU interviews of Day and Voorhis: not opened.
@@ -54,3 +56,54 @@
 - AARO site: HTTP 403 (as in an earlier work item); a Black Vault copy was used.
 - No access to the Navy's radar data or the GIMBAL and GOFAST incident reports beyond the redacted OLA brief.
 - One request with a browser-like User-Agent header was attempted by mistake against several of these hosts and was blocked by the permission system before it ran; no request that disguises its identity was made.
+
+## E. Long-form interviews read through YouTube auto-captions (M3.3b, access date 10/31/2026)
+
+Obtained with `.venv/Scripts/python -m yt_dlp --skip-download --write-auto-subs --write-subs --sub-langs "en.*" --sub-format vtt -o "artifacts/tmp/captions/%(id)s.%(ext)s" <url>` (text only; no video or audio was downloaded; plain yt-dlp requests with no changed headers). Caption files and my cleaned text versions are in `artifacts/tmp/captions/` (gitignored). Timestamps in the claims are the caption cue times. Captions are machine speech recognition: numbers and names are sometimes wrong. "Read in full" below says how much of each transcript was read straight through; the rest was searched by keyword (feet, knots, miles, seconds, gimbal, go fast, wind, Princeton, whitewater, jam) and the hits read in context, so a claim in an unread stretch may have been missed.
+
+| Key used in notes | Title | Show | Date | URL | Read in full | Used for |
+|---|---|---|---|---|---|---|
+| R1361 | Joe Rogan Experience #1361 - Cmdr. David Fravor & Jeremy Corbell | The Joe Rogan Experience | 10/05/2019 | https://www.youtube.com/watch?v=Eco2s3-0zsQ | 00:00 to 00:45, 00:52 to 00:59, 01:44 to 01:48 | Fravor (FLIR1), Fravor relaying GIMBAL and GOFAST |
+| LEX122 | David Fravor: UFOs, Aliens, Fighter Jets, and Aerospace Engineering, Lex Fridman Podcast #122 | Lex Fridman Podcast | 09/08/2020 | https://www.youtube.com/watch?v=aB8zcAttP1E | 01:11 to 01:49, 01:59 to 02:03, 02:12, 02:40 to 02:49; 03:29 to 03:56 and the rest by keyword only | Fravor (FLIR1), Fravor on GIMBAL and GOFAST |
+| R1883 | Joe Rogan Experience #1883 - Ryan Graves (aired 10/18/2022; YouTube upload dated 06/27/2024) | The Joe Rogan Experience | 10/18/2022 | https://www.youtube.com/watch?v=muxP-2pDzH0 | 00:01 to 00:07, 00:11 to 00:14, 00:18 to 00:20, 00:25 to 00:42, 01:15 to 01:19 | Graves (GIMBAL, class of objects) |
+| R2244 | Joe Rogan Experience #2244 - Ryan Graves | The Joe Rogan Experience | 12/17/2024 | https://www.youtube.com/watch?v=P4t8UgcjKfM | 00:21 to 00:35, 01:13 | Graves (GIMBAL, GOFAST) |
+| LEX308 | Ryan Graves: UFOs, Fighter Jets, and Aliens, Lex Fridman Podcast #308 | Lex Fridman Podcast | 08/01/2022 (YouTube upload date) | https://www.youtube.com/watch?v=qLDp-aYnR1Y | 01:08 to 01:11, 01:38 to 01:49 | Graves (GIMBAL) |
+| MRG111 | Cmdr. David Fravor: The True Story of a Pentagon-Verified UFO Encounter, Merged EP0111 | Merged Podcast | 07/05/2023 | https://www.youtube.com/watch?v=KuX4GLHLRz8 | 00:18 to 00:35 | Fravor (FLIR1) |
+| MRG114 | Pilots & Witnesses; Systematic UAP Reporting for Pilots - with Alex Dietrich, Merged EP0114 | Merged Podcast | 08/29/2023 | https://www.youtube.com/watch?v=Nc9_ZP36-AI | 00:17 to 00:28 | Dietrich (FLIR1) |
+| TFTRH57 | TFTRH #57 - Alex Dietrich: Clouds, Critical Thinking, and UFOs | Tales From The Rabbit Hole (Mick West) | 08/26/2023 | https://www.youtube.com/watch?v=lyDaYcCbtrs | 00:50 to 01:07 | Dietrich (FLIR1) |
+| UWCORB | The man who FILMED the TIC TAC UFO speaks on camera for the first time (Chad Underwood and Jeremy Corbell) | Jeremy Corbell | 07/28/2021 | https://www.youtube.com/watch?v=dKbYwwwePTQ | whole video | Underwood (FLIR1) |
+| WEAP27 | The Man Who Filmed The TIC TAC UFO, Weaponized Episode 27 | Weaponized with Jeremy Corbell and George Knapp | 07/25/2023 | https://www.youtube.com/watch?v=4opsdH4hY3s | 00:19 to 00:47 | Underwood (FLIR1) |
+| WEAP61 | The Tic Tac at Twenty, Weaponized Episode 61 (Fravor segment) | Weaponized | 11/08/2024 | https://www.youtube.com/watch?v=MHycTQC62WA | 00:15, 00:35 to 00:41, 00:58 to 01:01 | Fravor (FLIR1) |
+| 60MIN | Navy pilots recall 'unsettling' 2004 UAP sighting (6:45) | 60 Minutes, CBS News | 05/16/2021 | https://www.youtube.com/watch?v=ygB4EZ7ggig | whole video | Fravor, Dietrich (FLIR1) |
+| 60MINX | Navy pilots describe encounters with UFOs (13:48) | 60 Minutes, CBS News | 05/17/2021 (YouTube upload date) | https://www.youtube.com/watch?v=ZBtMbBPzqHY | whole video | Graves and the GIMBAL audio; Fravor, Dietrich |
+| AGD | Kevin Day - The Nimitz Tic Tac UFO Encounter | The Agenda Podcast UK | 04/23/2026 (YouTube upload date) | https://www.youtube.com/watch?v=I2BzoBGVfYM | 00:00 to 00:22 | Day (FLIR1) |
+| UAPS | The Nimitz Tic-Tac Encounter with U.S.S. Princeton Radar Operator Kevin Day | UAP Studies Podcast | 12/17/2023 | https://www.youtube.com/watch?v=p9ShaTSo1g4 | 00:04 to 00:14 | Day (FLIR1) |
+| VMQ | Kevin Day Recalls His Harrowing Encounter with the TIC TAC UFO | Total Disclosure Podcast | 08/19/2023 | https://www.youtube.com/watch?v=VmQ5npTBaWE | 00:12 to 00:16 | Day (FLIR1), clean 0.78 s |
+| VTV | UAP Navy Encounters, Gary Voorhis | Tim Ventura | 07/01/2022 | https://www.youtube.com/watch?v=v4DfYUgdros | 00:04 to 00:23 | Voorhis (FLIR1) |
+| VSCU | Gary Voorhis - SCU 2004 Nimitz Strike Group Case Interview | Scientific Coalition for UAP Studies | 04/04/2019 | https://www.youtube.com/watch?v=l-_0wtAaKPo | 00:02 to 00:14 | Voorhis (FLIR1); captions badly garbled |
+| OPEN | Gary Voorhis, Navy Electronics Technician and Witness to Tic Tac FLIR Video on the USS Princeton | Opening Minds Files | 04/03/2019 | https://www.youtube.com/watch?v=qz2gdQaklBQ | 00:07 to 00:09 | Voorhis (FLIR1) |
+
+Sections A to C are unchanged. For FLIR1 claims from Fravor that were already taken from the Lex Fridman transcript at HappyScribe (T-T21, T-T24, T-T25, T-T31, T-T32, T-T37, T-T38, T-T39, T-T40), the YouTube caption timestamps agree with the HappyScribe ones to within a few seconds, so those claims were not duplicated; `also_in` entries were added only for Lex passages that were new.
+
+## F. Episodes sought but not obtained (M3.3b)
+
+Caption requests for these returned HTTP 429 (Too Many Requests) from YouTube on every attempt from the second batch onward (several tries spaced 25 to 40 seconds apart). No retry loop, header change or other workaround was used. They can be fetched later with the same command.
+
+| Video | URL | Why wanted |
+|---|---|---|
+| Alex Dietrich, Podcast UFO episode 781 (55:58) | https://www.youtube.com/watch?v=9dhwYCZqyrY | Dietrich's own account |
+| Kevin Day Q&A at UFO Congress 2019 (1:14:50) | https://www.youtube.com/watch?v=s4_X-bQKEVY | Day |
+| Kevin Day, Tim Ventura interview (26:15) | https://www.youtube.com/watch?v=3lSL_Huhi3o | Day |
+| Kevin Day interview, The Nimitz Encounters channel (37:31) | https://www.youtube.com/watch?v=_2zRabdvKnw | Day |
+| US Fighter Pilots Witness UFO, Ryan Graves with Jesse Michels (1:15:26) | https://www.youtube.com/watch?v=6WC4o2yY9Ws | Graves |
+
+Searched for and not found as a long-form YouTube episode, or not attempted:
+
+- Fravor on Theories of Everything: a YouTube search for 'Fravor Theories of Everything' returned only physics episodes. Not found.
+- Fravor with Ross Coulthart (Need to Know, NewsNation Reality Check) and American Alchemy: searches returned Coulthart's Grusch interview and a Jesse Michels episode with Graves (above), no Fravor episode. Not found.
+- Danny Accoin: only a 1:21 History Channel clip with Graves (https://www.youtube.com/watch?v=j1BJWpyTUUw) was found; no long-form interview. Not attempted.
+- Chad Underwood on other shows: only the two in E (Corbell, Weaponized 27). A Mick West video on Underwood (https://www.youtube.com/watch?v=Sqq4AsQch6g, 19:33) and a Lehto Files reaction video were found and not read.
+- Weaponized Episode 61 and Merged EP0111 contain Fravor's account but are mostly about post-2019 politics; only the Nimitz stretches were read.
+- Clips channels (JRE Clips, Lex Clips, JRE UFO) were deliberately skipped in favor of the full episodes.
+- The Rogan #1883 YouTube upload is dated 06/27/2024; the episode itself aired 10/18/2022 (the date used in the claims).
+- Radar and FLIR tapes themselves, the 2009 'executive summary', and Underwood's radar tape remain unpublished (Underwood says the radar tape exists and is unreleased: T-T80).
