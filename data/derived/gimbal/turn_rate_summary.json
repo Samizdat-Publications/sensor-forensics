@@ -1,0 +1,809 @@
+{
+ "work_item": "M2.5 GIMBAL turn rate from cloud motion",
+ "units": "deg/s, negative = left turn; lab frame numbering; 29.97 fps",
+ "placeholders": "jet heading 315 at f0, jet wind 120 kt from 270, cloud wind 17 kt from 240 (Sitrec)",
+ "scale": {
+  "picture_px": [
+   426.0,
+   428.0
+  ],
+  "fov_deg": 0.35,
+  "ppd_x": 1217.142857142857,
+  "ppd_y": 1222.857142857143,
+  "assumption": "0.35 deg spans the active picture (426 x 428 px), square field"
+ },
+ "cloud_geometry_nominal": {
+  "h_cloud_ft": 11740.0,
+  "texture_below_deck_horizon_deg": 0.04,
+  "dip_deg": 2.0397462490293545,
+  "texture_dist_h_km": 186.18856853556974,
+  "deck_horizon_km": 227.03305870724807,
+  "table": {
+   "8000ft_norefr": {
+    "deck_horizon_dip_deg": 2.3095922385475887,
+    "deck_horizon_km": 257.0528292036362,
+    "texture_dist_km": 213.2886396862326
+   },
+   "8000ft_refr": {
+    "deck_horizon_dip_deg": 2.0004304626844456,
+    "deck_horizon_km": 296.7897737461864,
+    "texture_dist_km": 242.93276473234644
+   },
+   "11740ft_norefr": {
+    "deck_horizon_dip_deg": 2.0397462490293545,
+    "deck_horizon_km": 227.03305870724807,
+    "texture_dist_km": 186.18856853556974
+   },
+   "11740ft_refr": {
+    "deck_horizon_dip_deg": 1.7667126041353869,
+    "deck_horizon_km": 262.1264193647194,
+    "texture_dist_km": 211.86907058086558
+   },
+   "18000ft_norefr": {
+    "deck_horizon_dip_deg": 1.4819807869188426,
+    "deck_horizon_km": 164.96767127652143,
+    "texture_dist_km": 130.7913161242118
+   },
+   "18000ft_refr": {
+    "deck_horizon_dip_deg": 1.2836157652733169,
+    "deck_horizon_km": 190.4637904787039,
+    "texture_dist_km": 148.44478718761687
+   }
+  }
+ },
+ "smoothing_frames": 91,
+ "core_frames": [
+  45,
+  985
+ ],
+ "n_mc": 300,
+ "comparison": {
+  "bank_lab": {
+   "rms_vs_cloud_lab_deg_s": 0.1062387141533967,
+   "mean_vs_cloud_lab_deg_s": -0.06032200349676569,
+   "max_abs_vs_cloud_lab_deg_s": 0.27467556991449804,
+   "segments_mean_diff_deg_s": {
+    "f45-300": 0.013915775811024295,
+    "f300-600": -0.06711833782415885,
+    "f600-870": -0.04324721144568682,
+    "f870-985": -0.24568344555762595
+   },
+   "fraction_core_frames_inside_band": 0.4729011689691817,
+   "heading_change_deg": -67.02507412877131
+  },
+  "bank_sitrec": {
+   "rms_vs_cloud_lab_deg_s": 0.08300127368365258,
+   "mean_vs_cloud_lab_deg_s": 0.0012337226697143767,
+   "max_abs_vs_cloud_lab_deg_s": 0.20061444230415937,
+   "segments_mean_diff_deg_s": {
+    "f45-300": 0.03929552485983527,
+    "f300-600": -0.007768407118290197,
+    "f600-870": 0.05040256219646539,
+    "f870-985": -0.17359996090185667
+   },
+   "fraction_core_frames_inside_band": 0.3645058448459086,
+   "heading_change_deg": -64.98905595516891
+  },
+  "cloud_sitrec": {
+   "rms_vs_cloud_lab_deg_s": 0.02927202485930102,
+   "mean_vs_cloud_lab_deg_s": 0.022907480657527846,
+   "max_abs_vs_cloud_lab_deg_s": 0.16696459157954613,
+   "segments_mean_diff_deg_s": {
+    "f45-300": 0.02590484120695141,
+    "f300-600": 0.024203598441586937,
+    "f600-870": 0.020365534529402828,
+    "f870-985": 0.018883025306433168
+   },
+   "fraction_core_frames_inside_band": 0.8352816153028693,
+   "heading_change_deg": -63.64780240855271
+  },
+  "bank_lab_vs_cloud_sitrec_rms_deg_s": 0.11870437141002955,
+  "bank_sitrec_vs_cloud_sitrec_rms_deg_s": 0.08428850288593488,
+  "bank_lab_vs_bank_sitrec_rms_deg_s": 0.06762715101151275,
+  "cloud_lab": {
+   "heading_change_deg": -64.95549858934898,
+   "heading_change_mc_2p5_50_97p5_deg": [
+    -65.8786699865919,
+    -65.0736983357856,
+    -64.5182006895318
+   ],
+   "heading_change_tile_deg": -64.8567233675075,
+   "band_halfwidth_core_median_deg_s": 0.04528012147707061
+  }
+ },
+ "data_space": {
+  "bank_lab": {
+   "rms_deg_s": 0.10623871415339668,
+   "rms_px_per_frame": 4.314566659197746
+  },
+  "bank_sitrec": {
+   "rms_deg_s": 0.08300127368365257,
+   "rms_px_per_frame": 3.370847726840498
+  },
+  "cloud_sitrec": {
+   "rms_deg_s": 0.029272024859301016,
+   "rms_px_per_frame": 1.188795473585933
+  },
+  "tile_vs_whole_picture_rms_deg_s": 0.0034350352137086163,
+  "measured_h_deg_s_at_frames": {
+   "45": 0.15703658138201826,
+   "300": 0.1349638717510762,
+   "600": 0.09324515828428763,
+   "900": 0.04252161981647556,
+   "985": 0.027940360688743282
+  },
+  "sitrec_keyed_cloud_speed_deg_s_at_frames": {
+   "45": 0.15017726502860113,
+   "300": 0.11139883704480696,
+   "600": 0.07316539087765692,
+   "900": 0.022861450042593184,
+   "985": 0.015322390089991342
+  },
+  "ratio_measured_over_sitrec_keyed_core_median": 1.279774873107727,
+  "integral_h_deg": 3.442549290222027,
+  "integral_h_in_fovs_0p35": 9.835855114920077,
+  "integral_p_deg": -0.6327782368545704,
+  "azimuth_change_deg": 60.880171062272396,
+  "perp_motion_rms_deg_s": 0.001402501890498515,
+  "rejected_frames_bg": 21
+ },
+ "tests": {
+  "bank_lab_scale_lag": {
+   "best_lag_frames": 27,
+   "best_scale": 0.97,
+   "rms_deg_s": 0.04774028251354851,
+   "scale_only_lag0": 0.975,
+   "rms_scale_only_deg_s": 0.08452144376872799,
+   "lag_only_scale1_frames": 24,
+   "rms_lag_only_deg_s": 0.08430544997044456
+  },
+  "bank_sitrec_scale_lag": {
+   "best_lag_frames": 24,
+   "best_scale": 1.0,
+   "rms_deg_s": 0.05034442485713146,
+   "scale_only_lag0": 1.0,
+   "rms_scale_only_deg_s": 0.08300127368365257,
+   "lag_only_scale1_frames": 24,
+   "rms_lag_only_deg_s": 0.05034442485713146
+  },
+  "bank_lab_tas_isa_plus_9.5": {
+   "heading_change_deg": -65.72932932020444,
+   "rms_vs_cloud_lab_deg_s": 0.08861929977164557
+  },
+  "bank_sitrec_tas_isa_plus_9.5": {
+   "heading_change_deg": -63.73267196176963,
+   "rms_vs_cloud_lab_deg_s": 0.0915071386265885
+  },
+  "body_frame_azimuth": {
+   "heading_change_deg": -61.328155124864566,
+   "rms_vs_bank_lab_deg_s": 0.36225931691156943,
+   "rms_vs_bank_sitrec_deg_s": 0.31598720305823985,
+   "rms_vs_level_cloud_lab_deg_s": 0.2785002158808147,
+   "level_minus_body_az_deg_start_end": [
+    -3.660379117212564,
+    -0.11349480109786914
+   ]
+  },
+  "scale_fit_no_lag": {
+   "bank_lab": {
+    "lag_frames": 0,
+    "ppd_x": 6053.881292862045,
+    "fov_deg_over_picture_width": 0.07036807948353467,
+    "k": 0.9299903173328229
+   },
+   "bank_sitrec": {
+    "lag_frames": 0,
+    "ppd_x": 2333.4249996851654,
+    "fov_deg_over_picture_width": 0.18256425642884497,
+    "k": 0.976944737961465
+   }
+  },
+  "scale_fit_with_best_lag": {
+   "bank_lab": {
+    "lag_frames": 24,
+    "ppd_x": 1717.1945477445836,
+    "fov_deg_over_picture_width": 0.24807905461819776,
+    "k": 0.9510130346524793
+   },
+   "bank_sitrec": {
+    "lag_frames": 24,
+    "ppd_x": 1190.6171589782998,
+    "fov_deg_over_picture_width": 0.35779763191516734,
+    "k": 0.9985699503327852
+   }
+  },
+  "readout_rounding": "'0' is held 19 frames between '-1' (17) and '1' (17): a 1-deg-wide zero interval, so the readout rounds (truncation toward zero would hold '0' about twice as long)",
+  "sensitivity": {
+   "h_cloud_8000ft": {
+    "heading_change_deg": -64.87560010981758,
+    "rms_vs_nominal_deg_s": 0.0030111530936242094,
+    "rms_bank_lab_minus_this_deg_s": 0.10664817561430943,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.027274384709643672,
+    "dist_h_km": 213.2886396862326,
+    "dip_deg": 2.3095922385475887
+   },
+   "h_cloud_18000ft": {
+    "heading_change_deg": -65.22079786409185,
+    "rms_vs_nominal_deg_s": 0.010019868231748006,
+    "rms_bank_lab_minus_this_deg_s": 0.10550578456380776,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.036914672319992355,
+    "dist_h_km": 130.7913161242118,
+    "dip_deg": 1.4819807869188426
+   },
+   "refraction": {
+    "heading_change_deg": -64.87928128476766,
+    "rms_vs_nominal_deg_s": 0.0028724851726948998,
+    "rms_bank_lab_minus_this_deg_s": 0.10662742456607369,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.027362337911632895,
+    "dist_h_km": 211.86907058086558,
+    "dip_deg": 1.7667126041353869
+   },
+   "no_cloud_wind": {
+    "heading_change_deg": -64.98422435731096,
+    "rms_vs_nominal_deg_s": 0.0008355094548582207,
+    "rms_bank_lab_minus_this_deg_s": 0.10579126607248854,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.02993610011387163,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   },
+   "no_jet_wind": {
+    "heading_change_deg": -65.08900606865797,
+    "rms_vs_nominal_deg_s": 0.003916874201372011,
+    "rms_bank_lab_minus_this_deg_s": 0.10390692850044737,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.03237153429256132,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   },
+   "literal_wind_from_090": {
+    "heading_change_deg": -65.22391675284462,
+    "rms_vs_nominal_deg_s": 0.007876341851869596,
+    "rms_bank_lab_minus_this_deg_s": 0.1016395561280474,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.03566541895038027,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   },
+   "scale_640px": {
+    "heading_change_deg": -63.81349111562627,
+    "rms_vs_nominal_deg_s": 0.03593856219638242,
+    "rms_bank_lab_minus_this_deg_s": 0.1233692855762865,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.022722863688776778,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   },
+   "aspect_1.05": {
+    "heading_change_deg": -64.99514267927515,
+    "rms_vs_nominal_deg_s": 0.001241736121192052,
+    "rms_bank_lab_minus_this_deg_s": 0.10565944861406401,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.03022494593363057,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   },
+   "theta_from_sitrec_bank": {
+    "heading_change_deg": -64.95555763426579,
+    "rms_vs_nominal_deg_s": 2.2850113720854998e-05,
+    "rms_bank_lab_minus_this_deg_s": 0.10623809202304457,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.02927516488018843,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   },
+   "cloud_tile": {
+    "heading_change_deg": -64.8567233675075,
+    "rms_vs_nominal_deg_s": 0.0034219617607045808,
+    "rms_bank_lab_minus_this_deg_s": 0.10777213659548064,
+    "rms_cloud_sitrec_minus_this_deg_s": 0.02672124573575597,
+    "dist_h_km": 186.18856853556974,
+    "dip_deg": 2.0397462490293545
+   }
+  }
+ },
+ "reruns": {
+  "A": {
+   "pvr_inputs_with_lab_cloud_rate": {
+    "end_range_nmi": 6.2440376390573595,
+    "ground_speed_min_frame": 660,
+    "ground_speed_min_kt": 31.08723086194273,
+    "air_velocity_reversal_frame": 870,
+    "air_speed_start_kt": 398.13916863852864,
+    "ground_speed_start_kt": 283.9202020303088,
+    "alt_change_ft": 383.4103946720697,
+    "jet_heading_change_deg": -63.89912910615652
+   },
+   "all_lab_with_lab_cloud_rate": {
+    "end_range_nmi": 6.274539391162764,
+    "ground_speed_min_frame": 650,
+    "ground_speed_min_kt": 31.108955722515528,
+    "air_velocity_reversal_frame": 860,
+    "air_speed_start_kt": 326.9116685787858,
+    "ground_speed_start_kt": 213.26752066618744,
+    "alt_change_ft": 344.18803141965697,
+    "jet_heading_change_deg": -64.94110059459976
+   },
+   "note": "turn rate re-derived from the lab cloud motion with each run's own azimuth series"
+  },
+  "B": {
+   "sitrec_inputs_with_lab_cloud_rate": {
+    "end_range_nmi": 32.514007527849444,
+    "range_min_max_nmi": [
+     31.986386293762685,
+     32.56088271583559
+    ],
+    "alt_start_ft": 19082.79434134915,
+    "alt_end_ft": 19088.570050029888,
+    "n_no_intersection_frames": 27,
+    "air_heading_span_deg": 45.14498693444858,
+    "ground_speed_kt_min_max": [
+     207.9753834254715,
+     291.8800072511538
+    ],
+    "straightness_top_view_good_frames": {
+     "max_dev_nmi": 0.09223828913572595,
+     "rms_dev_nmi": 0.02909879038653958,
+     "length_nmi": 2.5387415196065075,
+     "line_heading_deg": 53.4058439369373
+    },
+    "air_heading_start_end_deg": [
+     233.3587828700932,
+     235.68458788549964
+    ],
+    "jet_heading_change_deg": -64.34202236184643,
+    "max_dev_from_line_nmi": 0.09223828913572595
+   },
+   "all_lab_with_lab_cloud_rate": {
+    "end_range_nmi": 32.701429442311316,
+    "range_min_max_nmi": [
+     32.0,
+     32.701429442311316
+    ],
+    "alt_start_ft": 19116.718560598394,
+    "alt_end_ft": 19007.979253080266,
+    "n_no_intersection_frames": 0,
+    "air_heading_span_deg": 34.54388455536309,
+    "ground_speed_kt_min_max": [
+     258.0305036223565,
+     294.9374275317519
+    ],
+    "straightness_top_view_good_frames": {
+     "max_dev_nmi": 0.07631470565537085,
+     "rms_dev_nmi": 0.026893765930258617,
+     "length_nmi": 2.702586437195553,
+     "line_heading_deg": 53.43665736764777
+    },
+    "air_heading_start_end_deg": [
+     239.27653745753616,
+     238.3072012091204
+    ],
+    "jet_heading_change_deg": -64.95612450993062,
+    "max_dev_from_line_nmi": 0.07631470565537085
+   },
+   "note": "turn rate re-derived from the lab cloud motion with each run's own azimuth series"
+  },
+  "bank_lab_advanced_by_best_lag": {
+   "lag_frames": 24,
+   "A_all_lab": {
+    "end_range_nmi": 5.902364602976563,
+    "ground_speed_min_frame": 400,
+    "ground_speed_min_kt": 31.063099963891382,
+    "air_velocity_reversal_frame": 800,
+    "air_speed_start_kt": 356.25033521243745,
+    "ground_speed_start_kt": 242.3260649917059,
+    "alt_change_ft": 419.11590951947085,
+    "jet_heading_change_deg": -67.34285709094911
+   },
+   "B_all_lab": {
+    "end_range_nmi": 31.69743563440473,
+    "range_min_max_nmi": [
+     31.69743563440473,
+     32.34023208835197
+    ],
+    "alt_start_ft": 19116.718560598394,
+    "alt_end_ft": 19163.89154438345,
+    "n_no_intersection_frames": 241,
+    "air_heading_span_deg": 71.76369181106853,
+    "ground_speed_kt_min_max": [
+     271.17090271658174,
+     549.0149821319759
+    ],
+    "straightness_top_view_good_frames": {
+     "max_dev_nmi": 0.20424225485662714,
+     "rms_dev_nmi": 0.08614475898375934,
+     "length_nmi": 2.4358777513043446,
+     "line_heading_deg": 17.571707468598024
+    },
+    "air_heading_start_end_deg": [
+     243.1085777657539,
+     171.34488595468537
+    ],
+    "jet_heading_change_deg": -67.41896695337346,
+    "max_dev_from_line_nmi": 0.20424225485662714
+   }
+  },
+  "mc_40_histories_all_lab": {
+   "percentiles": [
+    0,
+    10,
+    50,
+    90,
+    100
+   ],
+   "A_ground_speed_min_frame": [
+    620.0,
+    629.0,
+    650.0,
+    660.0,
+    670.0
+   ],
+   "B_no_intersection_frames": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "B_max_dev_nmi_good_frames": [
+    0.059,
+    0.068,
+    0.076,
+    0.084,
+    0.095
+   ],
+   "B_air_heading_span_deg": [
+    25.535,
+    30.834,
+    35.221,
+    39.621,
+    41.798
+   ]
+  },
+  "reference": {
+   "A_pvr_bank_sitrec": {
+    "ground_speed_min_frame": 830,
+    "end_range_nmi": 6.6399505036615905
+   },
+   "A_pvr_cloud_sitrec_port": {
+    "ground_speed_min_frame": 690,
+    "end_range_nmi": 6.332591400310293
+   },
+   "A_all_lab_bank_lab": {
+    "ground_speed_min_frame": 400,
+    "end_range_nmi": 5.991913721890804
+   },
+   "B_all_lab_bank_lab": {
+    "n_no_intersection_frames": 286,
+    "end_range_nmi": 31.797689699058527,
+    "max_dev_from_line_nmi": 0.21057958872043445
+   }
+  },
+  "range_curves": {
+   "bank_lab": {
+    "best_range_nmi": 60.0,
+    "best_misfit_deg_rms": 0.34465061743902703,
+    "best_ground_speed_kt": 555.1051973185773,
+    "at_8nmi": {
+     "misfit_deg_rms": 1.2047025588543159,
+     "ground_speed_kt": 749.008246399101,
+     "ground_speed_1sigma_kt": [
+      470.2663611997996,
+      1029.1172392038218
+     ],
+     "air_speed_kt_placeholder_wind": 868.1471827615641,
+     "mean_alt_ft": 22838.9527024477
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.3516638963445621,
+     "ground_speed_kt": 905.8259758117804,
+     "ground_speed_1sigma_kt": [
+      830.635340240084,
+      981.2795610271677
+     ],
+     "air_speed_kt_placeholder_wind": 786.0507421255472,
+     "mean_alt_ft": 20309.16706137399
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.3472457843085406,
+     1.5210627100130776
+    ],
+    "interval_one_sigma_range_nmi": [
+     60.0,
+     60.0
+    ]
+   },
+   "cloud_lab": {
+    "best_range_nmi": 32.5,
+    "best_misfit_deg_rms": 0.31495352476981625,
+    "best_ground_speed_kt": 2073.8383264389568,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.7781539218388217,
+     "ground_speed_kt": 1308.7998721899576,
+     "ground_speed_1sigma_kt": [
+      1021.0456799728756,
+      1596.8936731457716
+     ],
+     "air_speed_kt_placeholder_wind": 1427.5255464052973,
+     "mean_alt_ft": 22338.697278119147
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.31503757224312184,
+     "ground_speed_kt": 1708.6163035844656,
+     "ground_speed_1sigma_kt": [
+      1518.1741019982742,
+      1899.177417043208
+     ],
+     "air_speed_kt_placeholder_wind": 1823.49699959936,
+     "mean_alt_ft": 18389.12773020542
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.31495352476981625,
+     1.0287376910992396
+    ],
+    "interval_one_sigma_range_nmi": [
+     31.5,
+     34.0
+    ]
+   },
+   "cloud_sitrec": {
+    "best_range_nmi": 27.0,
+    "best_misfit_deg_rms": 0.30057485494867797,
+    "best_ground_speed_kt": 445.9297668090558,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.8023611895716687,
+     "ground_speed_kt": 2855.9886463471094,
+     "ground_speed_1sigma_kt": [
+      2169.4447553859404,
+      3542.8515695694164
+     ],
+     "air_speed_kt_placeholder_wind": 2974.435459093656,
+     "mean_alt_ft": 21043.914973895793
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.30118045514928393,
+     "ground_speed_kt": 127.60865451263184,
+     "ground_speed_1sigma_kt": [
+      52.49528534462349,
+      296.52035395768115
+     ],
+     "air_speed_kt_placeholder_wind": 30.039131202432475,
+     "mean_alt_ft": 19695.9146109522
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.30057485494867797,
+     0.9521698477302019
+    ],
+    "interval_one_sigma_range_nmi": [
+     27.0,
+     27.5
+    ]
+   },
+   "bank_sitrec": {
+    "best_range_nmi": 60.0,
+    "best_misfit_deg_rms": 0.35174364889170534,
+    "best_ground_speed_kt": 3501.521507786874,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.8549207825666508,
+     "ground_speed_kt": 2304.818100194793,
+     "ground_speed_1sigma_kt": [
+      1745.763949881823,
+      2864.1984306772406
+     ],
+     "air_speed_kt_placeholder_wind": 2423.24630567342,
+     "mean_alt_ft": 21489.885446357315
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.35779851814479186,
+     "ground_speed_kt": 390.08536668539125,
+     "ground_speed_1sigma_kt": [
+      204.58545040649915,
+      581.7787994186408
+     ],
+     "air_speed_kt_placeholder_wind": 501.29029255804886,
+     "mean_alt_ft": 19322.011083484784
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.3534022913073648,
+     1.0311736663317104
+    ],
+    "interval_one_sigma_range_nmi": [
+     59.5,
+     60.0
+    ]
+   },
+   "bank_lab_interval": {
+    "best_range_nmi": 60.0,
+    "best_misfit_deg_rms": 0.3447470307403593,
+    "best_ground_speed_kt": 558.6810512288738,
+    "at_8nmi": {
+     "misfit_deg_rms": 1.2079282954394381,
+     "ground_speed_kt": 745.1530180015321,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 864.2397748364293,
+     "mean_alt_ft": 22842.42363537844
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.3517750117487908,
+     "ground_speed_kt": 933.4634392024826,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 813.7251405491395,
+     "mean_alt_ft": 20332.13623634464
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.34733737620949956,
+     1.5212321918035385
+    ],
+    "interval_one_sigma_range_nmi": [
+     55.5,
+     60.0
+    ]
+   },
+   "cloud_lab_interval": {
+    "best_range_nmi": 32.5,
+    "best_misfit_deg_rms": 0.31498260206312495,
+    "best_ground_speed_kt": 2127.4636209922573,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.7790252057312442,
+     "ground_speed_kt": 1421.1951370062786,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 1539.803128657009,
+     "mean_alt_ft": 22240.28167387216
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.3150702188928533,
+     "ground_speed_kt": 1759.9716235386454,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 1874.919114680162,
+     "mean_alt_ft": 18354.742799396463
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.31498260206312495,
+     1.0287699200878253
+    ],
+    "interval_one_sigma_range_nmi": [
+     27.0,
+     41.0
+    ]
+   },
+   "cloud_sitrec_interval": {
+    "best_range_nmi": 27.0,
+    "best_misfit_deg_rms": 0.30058634454104377,
+    "best_ground_speed_kt": 432.87836976209286,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.8023652621775728,
+     "ground_speed_kt": 2831.624997366413,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 2950.0777900555568,
+     "mean_alt_ft": 21063.319369598026
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.30118805966100326,
+     "ground_speed_kt": 113.70910980957102,
+     "ground_speed_1sigma_kt": [
+      NaN,
+      NaN
+     ],
+     "air_speed_kt_placeholder_wind": 34.337792438840154,
+     "mean_alt_ft": 19684.091429564643
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.30058634454104377,
+     0.9528294861701868
+    ],
+    "interval_one_sigma_range_nmi": [
+     25.0,
+     28.5
+    ]
+   },
+   "bank_lab_spline_az": {
+    "best_range_nmi": 60.0,
+    "best_misfit_deg_rms": 0.17351822992198257,
+    "best_ground_speed_kt": 1416.8318086520837,
+    "at_8nmi": {
+     "misfit_deg_rms": 1.2565670019010802,
+     "ground_speed_kt": 1075.9918244606647,
+     "ground_speed_1sigma_kt": [
+      692.4989794693793,
+      1460.5341433175088
+     ],
+     "air_speed_kt_placeholder_wind": 1194.7938533145923,
+     "mean_alt_ft": 22543.78497805955
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.17986386308074365,
+     "ground_speed_kt": 1478.8718823725742,
+     "ground_speed_1sigma_kt": [
+      1446.4692072995917,
+      1511.2828108304689
+     ],
+     "air_speed_kt_placeholder_wind": 1360.1441089598256,
+     "mean_alt_ft": 20790.61430555403
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.17516762761190585,
+     1.530818300657579
+    ],
+    "interval_one_sigma_range_nmi": [
+     58.5,
+     60.0
+    ]
+   },
+   "cloud_lab_spline_az": {
+    "best_range_nmi": 27.0,
+    "best_misfit_deg_rms": 0.034621046872407205,
+    "best_ground_speed_kt": 160.8854075780537,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.7932058759394738,
+     "ground_speed_kt": 1694.761045253527,
+     "ground_speed_1sigma_kt": [
+      1316.7656663448813,
+      2073.081120627911
+     ],
+     "air_speed_kt_placeholder_wind": 1813.331655290042,
+     "mean_alt_ft": 22003.528499179643
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.036879453299770736,
+     "ground_speed_kt": 477.62974112783655,
+     "ground_speed_1sigma_kt": [
+      459.0121047424185,
+      496.2799769475618
+     ],
+     "air_speed_kt_placeholder_wind": 588.5226431266195,
+     "mean_alt_ft": 19259.011183696915
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.034621046872407205,
+     1.02023301185
+    ],
+    "interval_one_sigma_range_nmi": [
+     27.0,
+     28.0
+    ]
+   },
+   "bank_sitrec_spline_az": {
+    "best_range_nmi": 57.5,
+    "best_misfit_deg_rms": 0.1916564170456597,
+    "best_ground_speed_kt": 958.5191681390617,
+    "at_8nmi": {
+     "misfit_deg_rms": 0.8635105443720532,
+     "ground_speed_kt": 3118.969482687019,
+     "ground_speed_1sigma_kt": [
+      2309.3113531216827,
+      3928.967445049869
+     ],
+     "air_speed_kt_placeholder_wind": 3237.2717575939323,
+     "mean_alt_ft": 20837.032035019663
+    },
+    "at_30nmi": {
+     "misfit_deg_rms": 0.20336212363284423,
+     "ground_speed_kt": 851.4978826708265,
+     "ground_speed_1sigma_kt": [
+      762.2827035987775,
+      940.7568946844721
+     ],
+     "air_speed_kt_placeholder_wind": 733.0781320241217,
+     "mean_alt_ft": 20274.921785387975
+    },
+    "misfit_5_to_40nmi_min_max": [
+     0.1935076665839882,
+     1.0124890354520433
+    ],
+    "interval_one_sigma_range_nmi": [
+     54.0,
+     60.0
+    ]
+   }
+  }
+ }
+}
