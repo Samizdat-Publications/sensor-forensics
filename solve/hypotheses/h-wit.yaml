@@ -1,0 +1,33 @@
+# Hypothesis file (data only; read by solve/score.py). Priors and sources written 10/31/2026 before any fit.
+# Redefined 10/31/2026 (orchestrator ruling, before any fit): H-WIT no longer takes its range from testimony,
+# because testimony is then scored for every hypothesis and would be counted twice (G-T12, G-T13). It is now the
+# unconstrained baseline: a free smooth path at a free range. Testimony acts on it exactly as on every other model.
+id: H-WIT
+label: Object on a free path (no physical model)
+description: >
+  An object with no physical model at all: a smooth path with no speed limit, at any range
+  from 0.5 to 60 nmi. It shows what the geometry alone requires, and what the aircrew's
+  statements (scored as testimony, the same way for every hypothesis) then add. Its
+  flexibility is charged by the complexity penalty like any other free parameter.
+model: spline_path
+model_options:
+  knots: 4
+applies_to: [GIMBAL, FLIR1]
+parameters:
+  range_ref_nmi:
+    prior: loguniform
+    bounds: [0.5, 60.0]
+    source: "Full range grid used for range curves (orchestrator ruling 10/31/2026): free range, no testimony input."
+parameter_groups:
+  - names: [knot_e, knot_n, knot_u]
+    count: 4
+    prior: uniform
+    bounds: [-20000.0, 20000.0]
+    source: "Displacement (m) of the path at each of 4 knots spread over the scored window, relative to the reference point; 20 km in 20 to 40 s allows over 1,000 kt, so speed is effectively free."
+checks:
+  - quantity: implied_size_upper_m
+    min: 0.0
+    max: 1000.0
+    source: "No physical model, so no size expectation; sizes claimed by witnesses are scored by the testimony criterion."
+sources:
+  S1: "Orchestrator ruling 10/31/2026 (H-WIT redefined as the unconstrained object); docs/design/scoring.md (splines charged by their degrees of freedom)."

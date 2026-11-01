@@ -1,0 +1,91 @@
+# Case configuration for M3 scoring: GOFAST (January 2015, F/A-18F, ATFLIR, IR, range on screen).
+# Read by solve/case_data.py. Case data only: nothing here names or favors a hypothesis.
+
+case: gofast
+label: GOFAST
+fps: 29.97002997002997          # 30000 / 1001
+n_frames: 1031
+
+files:
+  symbology: data/derived/gofast/symbology_final.csv
+  symbology_summary: data/derived/gofast/symbology_summary.json
+  image_track: data/derived/gofast/image_track.csv
+
+# Frames scored: those where the RNG readout is shown (f368 to f1030). Before f368 the pod is not
+# yet in a ranging track (the object is found on fewer than half the frames before f300 and the
+# background moves at 2 to 3 px/frame, i.e. the pod is not following the object), so the angle
+# readouts there are not known to be the object's line of sight.
+track_window:
+  rule: field_present
+  field: range
+
+readouts:
+  azimuth: {field: azimuth, step: 1.0, update: summary_phase}     # whole degrees, 6-frame cycle (23 of 23 changes on residue 5)
+  elevation: {field: elevation, step: 1.0, update: summary_phase} # 13 of 14 changes on residue 5
+  range: {field: range, step: 0.1, update: every_frame}          # nmi; changes fall on no fixed phase (best residue 55 percent)
+  closure: {field: closure, step: 10.0, update: every_frame}     # kt; "Vc", read as closing speed (F-T06)
+update_modulus: 6
+
+jet:
+  altitude_field: altitude      # ft, pressure altitude readout (25,000 / 25,010)
+  mach_field: mach              # 0.61 / 0.62
+  bank_column: bank_deg         # horizon-bar bank, image_track.csv (M1)
+  bank_smooth_frames: 31        # centered running mean (no lag); repro_gofast.py uses Sitrec's trailing 50
+  pitch_deg: 0.0
+  convention: level             # az from the nose in the level plane, el from the local horizontal (Sitrec)
+
+sensor:
+  fov_deg: 0.7                  # NAR at 1.0x (Sitrec SitGoFast.js:96; docs/audit/gofast.md); documentation conflicts with 0.35
+  picture_width_px: 426.0       # active picture width of our 640 x 480 copies
+  pixel_aspect_x: 1.036         # reticle ring measured 6.58 x 6.35 px: our frames are about 3.6 percent too wide
+
+image:
+  polarity_column: polarity
+  found_column: obj_found
+  size_column: obj_lo_major_px      # blob length (px), low threshold
+  brightness_column: obj_lo_integ   # integrated contrast (gray levels x px), low threshold
+  background_columns: [bg_dx, bg_dy]  # ocean texture motion, px/frame (+x right, +y down)
+  min_segment_frames: 20
+
+weather:
+  event: gofast
+  # GOFAST was recorded within minutes of GIMBAL (F-T02, Graves); the GIMBAL file metadata points to
+  # 01/25/2015 near 02 to 03 UTC, the DoD release lists 01/21/2015. Nominal time for ERA5:
+  time_utc: "2015-01-25T02:30"
+  wind_sigma_kt_era5: 5.0           # ERA5 upper-air wind error, about 2 to 3 m/s
+  placeholder:
+    # Used only while data/weather/era5_gimbal_gofast_profiles.csv is missing. FLAGGED in every output.
+    source: igra
+    file: data/weather/igra_USM00072206_gimbal_gofast.csv   # Jacksonville radiosonde, about 270 nmi west of the ERA5 box centre
+    time: "2015-01-25T00:00Z"
+    wind_sigma_kt: 20.0             # widened: wrong place, maybe wrong day
+
+criteria: [line_of_sight, range, closure, background_motion, size_trend, brightness_trend, testimony]
+
+# Shared nuisance parameters: identical for every hypothesis on this case.
+shared_parameters:
+  jet_heading_deg:
+    prior: uniform
+    bounds: [0.0, 360.0]
+    periodic: true
+    source: "Not on screen. Fitted jointly; constrained only through the wind (closure rate, apparent motion) and the ocean's image motion."
+  anchor_daz_deg:
+    prior: uniform
+    bounds: [-0.5, 0.5]
+    source: "The az readout at the reference frame is a whole degree; the true angle lies within +-0.5 deg of it."
+  anchor_del_deg:
+    prior: uniform
+    bounds: [-0.5, 0.5]
+    source: "As above for elevation."
+  wind_err_e_kt:
+    prior: normal
+    mean: 0.0
+    sd: environment.wind_sigma_kt
+    source: "Error of the modeled wind at the object's altitude (ERA5 about 5 kt; placeholder 20 kt)."
+  wind_err_n_kt:
+    prior: normal
+    mean: 0.0
+    sd: environment.wind_sigma_kt
+    source: "As above, north component."
+
+testimony_case: gofast

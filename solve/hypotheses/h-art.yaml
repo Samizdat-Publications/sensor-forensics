@@ -1,0 +1,36 @@
+# Hypothesis file (data only; read by solve/score.py). Priors and sources written 10/31/2026 before any fit.
+id: H-ART
+label: Sensor artifact (glare in the pod optics) on a target of any type
+description: >
+  What the camera shows is a glare in the pod's own optics; its orientation is set by the
+  pod's derotation and its size by its brightness. Behind the glare is a real target of
+  any type, at any range and speed, whose path the line of sight follows.
+model: glare_target
+applies_to: [GIMBAL, FLIR1]
+parameters:
+  range_ref_nmi:
+    prior: loguniform
+    bounds: [0.05, 60.0]
+    source: "Any range from very close to beyond the IR detection range of a jet (design: as H-AC, target of any type)."
+  airspeed_kt:
+    prior: uniform
+    bounds: [0.0, 600.0]
+    source: "Any subsonic target type, from a balloon to a fast jet (S1)."
+  heading_deg:
+    prior: uniform
+    bounds: [0.0, 360.0]
+    periodic: true
+    source: "Any heading."
+  vz_fpm:
+    prior: normal
+    mean: 0.0
+    sd: 1000.0
+    bounds: [-4000.0, 4000.0]
+    source: "As H-AC (S1)."
+checks:
+  - quantity: implied_size_upper_m
+    min: 0.0
+    max: 1000.0
+    source: "A glare's size says nothing about the target; not checked."
+sources:
+  S1: "As H-AC: 14 CFR 91.117; Boeing 737 airport planning document D6-58325-6; ISA conversions in solve/atmosphere.py."

@@ -1,0 +1,29 @@
+# Hypothesis file (data only; read by solve/score.py). Priors and sources written 10/31/2026 before any fit.
+id: H-BAL
+label: Balloon drifting with the wind
+description: >
+  A balloon (party, research or other) carried by the wind at its altitude. It has no
+  speed through the air of its own; it may rise or sink slowly. Its apparent speed in
+  the video is parallax: the jet's own motion against a nearly still object.
+model: wind_drifter
+applies_to: [GOFAST, GIMBAL]
+parameters:
+  range_ref_nmi:
+    prior: loguniform
+    bounds: [0.3, 25.0]
+    source: "Wide by design: any range the pod could plausibly track a small object at; the range readout, where shown, decides (design table: start range only)."
+  vz_fpm:
+    prior: normal
+    mean: 0.0
+    sd: 500.0
+    bounds: [-2000.0, 2000.0]
+    source: "S1, S2: a balloon at float holds altitude (0 ft/min); a free-lift radiosonde balloon rises about 1,000 ft/min (2 sd)."
+checks:
+  - quantity: implied_size_upper_m
+    min: 0.2
+    max: 3.0
+    source: "S3: party and small weather balloons are 0.3 to 2 m across; the blob length is an upper bound (it includes the optics' blur)."
+sources:
+  S1: "NOAA National Weather Service, Radiosonde Observations fact sheet (weather.gov/upperair/factsheet): balloons rise at about 1,000 ft per minute."
+  S2: "Superpressure and leaking latex or foil balloons settle at a float altitude and then move with the wind (NASA Balloon Program Office, balloon types, sites.wff.nasa.gov/code820)."
+  S3: "Common sizes: 11 in to 36 in latex party balloons; 100 g to 1,200 g radiosonde balloons about 1 to 2 m at launch (manufacturer data, e.g. Totex and Kaymont balloon specifications)."

@@ -1,0 +1,38 @@
+# Hypothesis file (data only; read by solve/score.py). Priors and sources written 10/31/2026 before any fit.
+id: H-AC
+label: Distant aircraft (engine exhaust seen as glare)
+description: >
+  An ordinary aircraft (airliner or military jet) at cruise altitude and speed, whose hot
+  engine exhaust saturates the infrared sensor. The blob is a glare: its size follows its
+  brightness rather than the range, and its orientation follows the pod's derotation.
+model: glare_target
+applies_to: [GIMBAL, FLIR1]
+parameters:
+  altitude_ref_ft:
+    prior: uniform
+    bounds: [15000.0, 45000.0]
+    source: "S1, S2: airliner cruise levels FL300 to FL410, climbs and descents through lower levels; design table 15,000 to 45,000 ft."
+  airspeed_kt:
+    prior: uniform
+    bounds: [250.0, 520.0]
+    source: "S1, S3: 250 kt is the US speed limit below 10,000 ft and a typical slow climb speed; cruise Mach 0.78 to 0.85 is about 450 to 500 kt true at FL350 (design table 250 to 520 kt)."
+  heading_deg:
+    prior: uniform
+    bounds: [0.0, 360.0]
+    periodic: true
+    source: "Any heading."
+  vz_fpm:
+    prior: normal
+    mean: 0.0
+    sd: 1000.0
+    bounds: [-4000.0, 4000.0]
+    source: "S2: airliners in cruise hold altitude; climbs and descents are typically 1,000 to 3,000 ft/min."
+checks:
+  - quantity: implied_size_upper_m
+    min: 0.0
+    max: 1000.0
+    source: "A glare's size says nothing about the airframe; not checked."
+sources:
+  S1: "US 14 CFR 91.117 (aircraft speed: 250 kt indicated below 10,000 ft MSL); FAA Aeronautical Information Manual, chapter 4."
+  S2: "Boeing, 737 Airplane Characteristics for Airport Planning (D6-58325-6): cruise Mach 0.785, ceiling 41,000 ft; Airbus A320 Aircraft Characteristics (ceiling 39,800 ft)."
+  S3: "International Standard Atmosphere: Mach 0.785 at 35,000 ft is about 452 kt true airspeed (solve/atmosphere.py)."

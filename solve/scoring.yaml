@@ -1,0 +1,48 @@
+# Scoring weights and measurement-noise settings for solve/score.py (M3, docs/design/scoring.md).
+# Written 10/31/2026 before any hypothesis was fitted, so the numbers cannot be tuned to a result.
+# Every hypothesis is scored with exactly these settings. The app may change the weights live;
+# results always carry the per-criterion log-likelihoods so any weighting can be re-applied.
+
+weights:
+  line_of_sight: 1.0        # az and el readouts (two rows share this weight)
+  range: 1.0
+  closure: 1.0
+  background_motion: 1.0
+  size_trend: 1.0
+  rotation: 1.0
+  brightness_trend: 1.0
+  testimony: 1.0            # D-011: high by default, equal to a physical criterion. 0 gives the physics-only total.
+
+noise:
+  # Smoothing noise for interval readouts (the readout step itself is the interval width).
+  angle_sigma_deg: 0.1      # pod pointing jitter plus one frame of latency at about 1 deg/s (0.03 deg); not fitted
+  range_sigma_nmi: 0.05     # half the 0.1 nmi display step; the pod's own range error is not published
+  # Closure: Gaussian with the display step's noise, sigma = step / sqrt(12) (design: "Gaussian with step-size noise").
+  closure_step_kt: 10.0
+  # Size, brightness and background motion: sigma is measured from the data itself, never chosen
+  # per hypothesis: the standard deviation of the series about a cubic fit (per polarity segment).
+  # (A MAD-based frame-to-frame sigma was tried on the loader before any fit and rejected: the
+  # series have heavy-tailed frames, so it understated the scatter by a factor of 2 to 3.)
+  background_model_frac: 0.10   # added in quadrature: 10 percent scale error of the predicted image motion (field of view)
+
+autocorrelation:
+  # n_eff for each criterion comes from the autocorrelation of the DATA about a cubic fit
+  # (not of a hypothesis's residuals), so every hypothesis gets the same n_eff on a case.
+  smooth_degree: 3
+
+complexity:
+  rule: bic                 # 0.5 k ln(n_eff_total); n_eff_total = sum of the physics criteria's n_eff on the case
+  # k counts every parameter with a uniform or log-uniform prior (including the case's shared
+  # nuisance parameters, the same for every hypothesis) and each spline control value.
+  # Parameters with a normal prior (wind error, vertical speed) are constrained by that prior:
+  # their log prior density enters a "prior" row instead of k.
+
+fit:
+  n_random: 400             # random points in the prior box, scored before local optimization
+  n_starts: 10              # best random points used as L-BFGS-B starts
+  seed: 20261031
+  maxiter: 400
+
+testimony:
+  firsthand_weight: 1.0
+  relayed_weight: 0.5
