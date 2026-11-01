@@ -296,6 +296,16 @@ With no range on screen, a constant-velocity object is fitted at each assumed ra
 | H-SLOW | 0 | 0 | 6 | 0 | 0 | 0 | 6 |
 | H-WIT | 0 | 0 | 6 | 0 | 0 | 0 | 6 |
 
-- Which hypotheses this data can separate in principle: no M3.4 recovery run for this setting.
+- Model recovery (M3.4, 0.7 deg, `docs/results/recovery.md`): synthetic data from each hypothesis, scored by the same path (physics-only total). Rows: the hypothesis that made the data; columns: how often each hypothesis won.
+
+| Data made by | H-AC | H-ART | H-BAL | H-CLOSE | H-SLOW | H-WIT | data sets |
+|---|---|---|---|---|---|---|---|
+| H-AC | 1 | 5 | 0 | 0 | 0 | 0 | 6 |
+| H-ART | 1 | 5 | 0 | 0 | 0 | 0 | 6 |
+| H-BAL | 0 | 0 | 6 | 0 | 0 | 0 | 6 |
+| H-CLOSE | 0 | 0 | 0 | 6 | 0 | 0 | 6 |
+| H-SLOW | 0 | 0 | 2 | 0 | 2 | 0 | 4 |
+| H-WIT | 0 | 0 | 6 | 0 | 0 | 0 | 6 |
+
 - Discriminators for the top pairs (M3.6) are not written yet.
 

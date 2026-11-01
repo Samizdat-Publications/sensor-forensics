@@ -77,6 +77,75 @@ In plain words:
 - Never recovered (another hypothesis always won on its data): H-SLOW and H-WIT.
 - Same physics on this case, different priors only (emitter physics counted only where a weighted criterion sees it; such models can differ only where a prior bound or constraint binds, or through the penalty for extra free parameters): H-AC and H-ART; H-CLOSE and H-SLOW.
 
+## GIMBAL, 0.7 deg field of view
+
+Generating parameter sets (mean range of each set, nmi): H-AC best 21.8, near 13.0, far 34.9; H-ART best 21.8, near 13.0, far 34.9; H-BAL best 12.5, near 7.5, far 20.0; H-CLOSE best 1.9, near 1.2, far 1.9; H-SLOW best 21.8, far 34.9; H-WIT best 59.1, near 35.8, far 58.5.
+
+Confusion matrix (counts of synthetic data sets; rows: the hypothesis that made the data; columns: the winner on the physics-only total; an exact or near tie goes to whichever fit came out ahead, so read ties from the margins below):
+
+| Data made by | H-AC | H-ART | H-BAL | H-CLOSE | H-SLOW | H-WIT | correct |
+|---|---|---|---|---|---|---|---|
+| H-AC | 1 | 5 | 0 | 0 | 0 | 0 | 1 of 6 |
+| H-ART | 1 | 5 | 0 | 0 | 0 | 0 | 5 of 6 |
+| H-BAL | 0 | 0 | 6 | 0 | 0 | 0 | 6 of 6 |
+| H-CLOSE | 0 | 0 | 0 | 6 | 0 | 0 | 6 of 6 |
+| H-SLOW | 0 | 0 | 2 | 0 | 2 | 0 | 2 of 4 |
+| H-WIT | 0 | 0 | 6 | 0 | 0 | 0 | 0 of 6 |
+
+| Data made by | Set | Trial | Winner | Runner-up | Winner's lead over the runner-up | The truth's deficit to the winner | Truth's own fit minus its total at the true parameters |
+|---|---|---|---|---|---|---|---|
+| H-AC | best | 0 | H-ART | H-AC | 0.0 | 0.0 | 0.1 |
+| H-AC | best | 1 | H-AC | H-ART | 0.0 | 0.0 | -4.1 |
+| H-AC | far | 0 | H-ART | H-AC | 0.0 | 0.0 | 0.0 |
+| H-AC | far | 1 | H-ART | H-AC | 0.0 | 0.0 | 0.2 |
+| H-AC | near | 0 | H-ART | H-AC | 0.1 | 0.1 | 0.5 |
+| H-AC | near | 1 | H-ART | H-AC | 0.1 | 0.1 | 0.4 |
+| H-ART | best | 0 | H-ART | H-AC | 0.0 | 0.0 | 0.4 |
+| H-ART | best | 1 | H-ART | H-AC | 0.0 | 0.0 | 0.2 |
+| H-ART | far | 0 | H-ART | H-AC | 0.0 | 0.0 | 0.1 |
+| H-ART | far | 1 | H-AC | H-ART | 0.0 | 0.0 | 0.2 |
+| H-ART | near | 0 | H-ART | H-AC | 0.1 | 0.0 | 0.6 |
+| H-ART | near | 1 | H-ART | H-AC | 0.2 | 0.0 | 0.6 |
+| H-BAL | best | 0 | H-BAL | H-SLOW | 14.5 | 0.0 | 0.2 |
+| H-BAL | best | 1 | H-BAL | H-SLOW | 13.8 | 0.0 | 0.1 |
+| H-BAL | far | 0 | H-BAL | H-SLOW | 3.3 | 0.0 | 3.1 |
+| H-BAL | far | 1 | H-BAL | H-SLOW | 4.1 | 0.0 | 3.5 |
+| H-BAL | near | 0 | H-BAL | H-WIT | 20.8 | 0.0 | 3.1 |
+| H-BAL | near | 1 | H-BAL | H-WIT | 21.3 | 0.0 | 4.0 |
+| H-CLOSE | best | 0 | H-CLOSE | H-WIT | 13.7 | 0.0 | 3.5 |
+| H-CLOSE | best | 1 | H-CLOSE | H-WIT | 16.7 | 0.0 | 6.5 |
+| H-CLOSE | far | 0 | H-CLOSE | H-WIT | 14.1 | 0.0 | 4.2 |
+| H-CLOSE | far | 1 | H-CLOSE | H-WIT | 15.5 | 0.0 | 6.2 |
+| H-CLOSE | near | 0 | H-CLOSE | H-WIT | 20.5 | 0.0 | -1.1 |
+| H-CLOSE | near | 1 | H-CLOSE | H-WIT | 124.6 | 0.0 | -15.7 |
+| H-SLOW | best | 0 | H-BAL | H-SLOW | 0.9 | 0.9 | 0.3 |
+| H-SLOW | best | 1 | H-BAL | H-SLOW | 2.3 | 2.3 | 0.4 |
+| H-SLOW | far | 0 | H-SLOW | H-BAL | 0.5 | 0.0 | 8.5 |
+| H-SLOW | far | 1 | H-SLOW | H-BAL | 0.4 | 0.0 | 8.6 |
+| H-WIT | best | 0 | H-BAL | H-SLOW | 11.6 | 21.9 | 0.5 |
+| H-WIT | best | 1 | H-BAL | H-SLOW | 11.0 | 21.7 | 0.3 |
+| H-WIT | far | 0 | H-BAL | H-SLOW | 9.5 | 21.6 | 0.3 |
+| H-WIT | far | 1 | H-BAL | H-SLOW | 11.3 | 21.6 | 0.1 |
+| H-WIT | near | 0 | H-BAL | H-SLOW | 12.2 | 22.1 | 0.2 |
+| H-WIT | near | 1 | H-BAL | H-SLOW | 12.5 | 22.2 | 0.2 |
+
+Optimizer check: in 3 of 34 data sets the generating model's own fit ended more than 1 log unit below its total at the true parameters (those cells understate the truth; read them as a lower bound on its score).
+
+In plain words:
+
+- Data made by H-AC: it wins 1 of 6 (lead over the runner-up 0.0 to 0.0); otherwise the winner is H-ART, with H-AC behind by 0.0 to 0.1.
+- Data made by H-ART: it wins 5 of 6 (lead over the runner-up 0.0 to 0.2); otherwise the winner is H-AC, with H-ART behind by 0.0 to 0.0.
+- Data made by H-BAL: it wins 6 of 6 (lead over the runner-up 3.3 to 21.3).
+- Data made by H-CLOSE: it wins 6 of 6 (lead over the runner-up 13.7 to 124.6).
+- Data made by H-SLOW: it wins 2 of 4 (lead over the runner-up 0.4 to 0.5); otherwise the winner is H-BAL, with H-SLOW behind by 0.9 to 2.3.
+- Data made by H-WIT: it wins 0 of 6; otherwise the winner is H-BAL, with H-WIT behind by 21.6 to 22.2.
+- At the best-fit parameter sets (the synthetic data that look most like the real video), the winner was: H-AC for data made by H-AC; H-ART for data made by H-AC and H-ART; H-BAL for data made by H-BAL, H-SLOW and H-WIT; H-CLOSE for data made by H-CLOSE. A hypothesis that wins on data made by several others cannot, by winning on the real data, tell them apart.
+
+- Not separated by this data (a wrong winner, or the true model winning by less than 2.3, a likelihood ratio of 10, at least once): H-AC and H-ART; H-BAL and H-SLOW; H-BAL and H-WIT.
+- Recovered every time, by a likelihood ratio of 10 or more over every other hypothesis: H-BAL and H-CLOSE. Data made by these are told apart from all the others here.
+- Never recovered (another hypothesis always won on its data): H-WIT.
+- Same physics on this case, different priors only (emitter physics counted only where a weighted criterion sees it; such models can differ only where a prior bound or constraint binds, or through the penalty for extra free parameters): H-AC and H-ART; H-CLOSE and H-SLOW.
+
 ## GOFAST
 
 Generating parameter sets (mean range of each set, nmi): H-AC best 3.2, near 1.9; H-ART best 3.8, near 2.3, far 6.2; H-BAL best 3.8, near 2.3, far 6.1; H-CLOSE best 2.0, near 1.2, far 2.0; H-SLOW best 3.8, near 2.3, far 6.1; H-WIT best 3.8, near 2.3, far 6.1.
