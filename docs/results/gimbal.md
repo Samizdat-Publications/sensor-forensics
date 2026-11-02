@@ -200,18 +200,27 @@ Excluded by the data-quality rules on this run: Apparent size trend (D-017: appa
 | H-BAL | physical | 17 (16 model + shared) | -346.4 | 0 | 2.84 | 3.66 | 17.9 | n/a |
 | H-CLOSE | physical | 17 (16 model + shared) | -350.7 | 0 | 2.84 | 3.68 | 18.0 | n/a |
 
-Rotation noise (REVIEW-M3 Rule N, data only): two-threshold disagreement 0.25 deg, frame-to-frame scatter 0.68 deg, so sigma = 0.68 deg (the earlier running-median value was 0.88 deg). The table rescores the rotation criterion at other sigmas at each fit's own best parameters (not refitted); only the rotation row changes.
+Rotation noise (REVIEW-M3 Rule N, data only): two-threshold disagreement 0.25 deg, frame-to-frame scatter 0.68 deg, so sigma = 0.68 deg (the earlier running-median value was 0.88 deg). The table rescores the rotation criterion at other sigmas at each fit's own best parameters (not refitted); only the rotation row changes. The grid brackets this case's own sigma by the same rule for every case (fixed 0.88, 1.3, 2.0, 3.0 deg; 0.5, 0.75, 1.1, 1.25, 1.5, 2.0 times the case sigma; smallest and largest held-out residual RMS).
 
-| Hypothesis | sigma 0.68: rotation / physics-only total | sigma 0.88: rotation / physics-only total | sigma 1.30: rotation / physics-only total | sigma 2.00: rotation / physics-only total | sigma 3.00: rotation / physics-only total |
-|---|---|---|---|---|---|
-| H-BAL | -346.4 / -355.6 | -214.8 / -224.0 | -117.0 / -126.2 | -74.8 / -84.0 | -62.8 / -72.0 |
-| H-SLOW | -346.3 / -359.3 | -214.8 / -227.7 | -117.0 / -130.0 | -74.8 / -87.7 | -62.8 / -75.8 |
-| H-ART | -339.0 / -360.2 | -210.4 / -231.6 | -115.1 / -136.3 | -73.9 / -95.1 | -62.5 / -83.7 |
-| H-AC | -339.0 / -360.2 | -210.4 / -231.6 | -115.1 / -136.3 | -73.9 / -95.1 | -62.5 / -83.7 |
-| H-WIT | -346.3 / -378.3 | -214.7 / -246.7 | -117.0 / -149.0 | -74.8 / -106.8 | -62.8 / -94.8 |
-| H-CLOSE | -350.6 / -14,831.6 | -217.2 / -14,698.2 | -118.2 / -14,599.2 | -75.2 / -14,556.3 | -63.0 / -14,544.1 |
+Physics-only total at each sigma (leaders of both totals on the right):
 
-Leader at each sigma (physics-only / testimony-weighted, rescored): 0.88 deg: H-BAL / H-BAL; 1.30 deg: H-BAL / H-BAL; 2.00 deg: H-BAL / H-BAL; 3.00 deg: H-BAL / H-BAL.
+| Sigma (deg) | H-BAL | H-SLOW | H-ART | H-AC | H-WIT | H-CLOSE | Leader, physics-only | Leader, testimony-weighted |
+|---|---|---|---|---|---|---|---|---|
+| 0.34 | -1,343.1 | -1,346.8 | -1,325.8 | -1,325.8 | -1,365.8 | -15,831.7 | H-AC | H-BAL |
+| 0.51 | -609.0 | -612.8 | -608.0 | -608.0 | -631.8 | -15,088.3 | H-AC | H-BAL |
+| 0.68 (main) | -355.6 | -359.3 | -360.2 | -360.2 | -378.3 | -14,831.6 | H-BAL | H-BAL |
+| 0.74 | -299.7 | -303.5 | -305.7 | -305.7 | -322.5 | -14,775.0 | H-BAL | H-BAL |
+| 0.84 | -240.3 | -244.0 | -247.6 | -247.6 | -263.0 | -14,714.8 | H-BAL | H-BAL |
+| 0.88 | -224.0 | -227.7 | -231.6 | -231.6 | -246.7 | -14,698.2 | H-BAL | H-BAL |
+| 1.01 | -179.0 | -182.8 | -187.7 | -187.7 | -201.8 | -14,652.7 | H-BAL | H-BAL |
+| 1.30 | -126.2 | -130.0 | -136.3 | -136.3 | -149.0 | -14,599.2 | H-BAL | H-BAL |
+| 1.35 | -120.5 | -124.3 | -130.7 | -130.7 | -143.3 | -14,593.4 | H-BAL | H-BAL |
+| 2.00 | -84.0 | -87.7 | -95.1 | -95.1 | -106.8 | -14,556.3 | H-BAL | H-BAL |
+| 3.00 | -72.0 | -75.8 | -83.7 | -83.7 | -94.8 | -14,544.1 | H-BAL | H-BAL |
+| 3.64 | -71.0 | -74.8 | -82.7 | -82.7 | -93.8 | -14,543.0 | H-BAL | H-BAL |
+| 3.68 | -71.0 | -74.8 | -82.8 | -82.8 | -93.8 | -14,543.0 | H-BAL | H-BAL |
+
+Where the leader changes (bisection on the same rescored totals, to 0.01 deg): the physics-only leader changes from H-AC to H-BAL at 0.53 deg; the testimony-weighted leader does not change between 0.34 and 3.68 deg.
 
 Measured steps (found from the orientation series alone, no model): f719 (9 deg), f818 (15 deg), f866 (22 deg), f891 (17 deg), f912 (16 deg), f981 (28 deg). The findings log lists window centres 728, 824, 877, 908 and 974 from the extraction's own step finder; f866 to f920 is a fast continuous turn rather than a clean step, which this finder splits.
 
@@ -234,7 +243,7 @@ Against the findings-log step frames (728, 824, 877, 908, 974): nearest predicte
 
 Best of each controller variant (any step count): pointing threshold 0.3: log-likelihood -339.2; pointing_reflect threshold 0.1: log-likelihood -346.9; roll threshold 1.0: log-likelihood -345.7; roll_reflect threshold 1.0: log-likelihood -352.7.
 
-**In plain words (0.35 deg):** Sitrec's glare model, the pod geometry with one fitted offset, reproduces the overall sweep of the image rotation (residual RMS 3.6 deg; fitted offset 56.7 deg, against Sitrec's own starting value of 57.7 deg). With the pod roll following the geometry its rotation is smooth, so it leaves residual jumps of up to 19 deg at the measured step frames. A physical object given a free smooth rotation fits with residual RMS 2.8 deg in-sample using 16 knots, but predicts held-out stretches with residual RMS 3.7 deg (the glare: 3.6 deg). Scored on held-out data, the glare derotation is better on this criterion by 3.5 log units at sigma 0.68 deg. Making the pod roll step (a deadband controller, one extra parameter, tuned to make about the measured number of steps) puts a predicted step within 10 frames of 4 of the 6 measured steps, with 8 predicted steps that have no measured counterpart, and changes the rotation score by -71.4 after its penalty. That is a likelihood ratio under 100, small next to the sigma sensitivity above: with held-out scoring the rotation does not clearly separate a glare fixed in the optics from a physical object. What the glare model gets right is the size and direction of the total turn and the fast turn near the azimuth crossing; what neither model captures is the step timing.
+**In plain words (0.35 deg):** Sitrec's glare model, the pod geometry with one fitted offset, reproduces the overall sweep of the image rotation (residual RMS 3.6 deg; fitted offset 56.7 deg, against Sitrec's own starting value of 57.7 deg). With the pod roll following the geometry its rotation is smooth, so it leaves residual jumps of up to 19 deg at the measured step frames. A physical object given a free smooth rotation fits with residual RMS 2.8 deg in-sample using 16 knots, but predicts held-out stretches with residual RMS 3.7 deg (the glare: 3.6 deg). Scored on held-out data, the glare derotation is better on this criterion by 3.5 log units at sigma 0.68 deg. That gap of 3.5 log units is computed at a sigma about 5 times smaller than the held-out residual RMS (3.7 deg), so the scorer treats the residuals as far less noisy than they are and the gap is not a clear separation: with held-out scoring the rotation does not clearly separate a glare fixed in the optics from a physical object. What the glare model gets right is the size and direction of the total turn and the fast turn near the azimuth crossing; what neither model captures is the step timing. Separately, making the pod roll step (a deadband controller, one extra parameter, tuned to make about the measured number of steps) puts a predicted step within 10 frames of 4 of the 6 measured steps, with 8 predicted steps that have no measured counterpart, and changes the glare model's rotation score by -71.4 after its penalty.
 
 ### 0.7 deg
 
@@ -247,18 +256,27 @@ Best of each controller variant (any step count): pointing threshold 0.3: log-li
 | H-BAL | physical | 17 (16 model + shared) | -346.4 | 0 | 2.84 | 3.66 | 17.9 | n/a |
 | H-CLOSE | physical | 17 (16 model + shared) | -351.0 | 0 | 2.84 | 3.69 | 18.0 | n/a |
 
-Rotation noise (REVIEW-M3 Rule N, data only): two-threshold disagreement 0.25 deg, frame-to-frame scatter 0.68 deg, so sigma = 0.68 deg (the earlier running-median value was 0.88 deg). The table rescores the rotation criterion at other sigmas at each fit's own best parameters (not refitted); only the rotation row changes.
+Rotation noise (REVIEW-M3 Rule N, data only): two-threshold disagreement 0.25 deg, frame-to-frame scatter 0.68 deg, so sigma = 0.68 deg (the earlier running-median value was 0.88 deg). The table rescores the rotation criterion at other sigmas at each fit's own best parameters (not refitted); only the rotation row changes. The grid brackets this case's own sigma by the same rule for every case (fixed 0.88, 1.3, 2.0, 3.0 deg; 0.5, 0.75, 1.1, 1.25, 1.5, 2.0 times the case sigma; smallest and largest held-out residual RMS).
 
-| Hypothesis | sigma 0.68: rotation / physics-only total | sigma 0.88: rotation / physics-only total | sigma 1.30: rotation / physics-only total | sigma 2.00: rotation / physics-only total | sigma 3.00: rotation / physics-only total |
-|---|---|---|---|---|---|
-| H-BAL | -346.4 / -356.2 | -214.8 / -224.7 | -117.0 / -126.9 | -74.8 / -84.7 | -62.8 / -72.7 |
-| H-ART | -339.2 / -360.5 | -210.5 / -231.8 | -115.1 / -136.4 | -73.9 / -95.2 | -62.5 / -83.7 |
-| H-AC | -339.2 / -360.5 | -210.5 / -231.8 | -115.1 / -136.4 | -73.9 / -95.2 | -62.5 / -83.7 |
-| H-SLOW | -346.3 / -367.5 | -214.7 / -236.0 | -117.0 / -138.3 | -74.8 / -96.0 | -62.8 / -84.1 |
-| H-WIT | -346.3 / -378.3 | -214.7 / -246.7 | -117.0 / -149.0 | -74.8 / -106.8 | -62.8 / -94.8 |
-| H-CLOSE | -351.0 / -11,648.5 | -217.5 / -11,515.0 | -118.3 / -11,415.8 | -75.3 / -11,372.9 | -63.1 / -11,360.6 |
+Physics-only total at each sigma (leaders of both totals on the right):
 
-Leader at each sigma (physics-only / testimony-weighted, rescored): 0.88 deg: H-BAL / H-BAL; 1.30 deg: H-BAL / H-BAL; 2.00 deg: H-BAL / H-BAL; 3.00 deg: H-BAL / H-BAL.
+| Sigma (deg) | H-BAL | H-ART | H-AC | H-SLOW | H-WIT | H-CLOSE | Leader, physics-only | Leader, testimony-weighted |
+|---|---|---|---|---|---|---|---|---|
+| 0.34 | -1,343.8 | -1,326.6 | -1,326.6 | -1,354.8 | -1,365.7 | -12,649.9 | H-AC | H-ART |
+| 0.51 | -609.7 | -608.4 | -608.4 | -621.0 | -631.8 | -11,905.6 | H-ART | H-ART |
+| 0.68 (main) | -356.2 | -360.5 | -360.5 | -367.5 | -378.3 | -11,648.5 | H-BAL | H-BAL |
+| 0.74 | -300.4 | -305.9 | -305.9 | -311.7 | -322.5 | -11,591.9 | H-BAL | H-BAL |
+| 0.84 | -240.9 | -247.7 | -247.7 | -252.3 | -263.0 | -11,531.6 | H-BAL | H-BAL |
+| 0.88 | -224.7 | -231.8 | -231.8 | -236.0 | -246.7 | -11,515.0 | H-BAL | H-BAL |
+| 1.01 | -179.7 | -187.9 | -187.9 | -191.0 | -201.8 | -11,469.4 | H-BAL | H-BAL |
+| 1.30 | -126.9 | -136.4 | -136.4 | -138.3 | -149.0 | -11,415.8 | H-BAL | H-BAL |
+| 1.35 | -121.2 | -130.8 | -130.8 | -132.6 | -143.3 | -11,410.1 | H-BAL | H-BAL |
+| 2.00 | -84.7 | -95.2 | -95.2 | -96.0 | -106.8 | -11,372.9 | H-BAL | H-BAL |
+| 3.00 | -72.7 | -83.7 | -83.7 | -84.1 | -94.8 | -11,360.6 | H-BAL | H-BAL |
+| 3.63 | -71.7 | -82.8 | -82.8 | -83.0 | -93.8 | -11,359.5 | H-BAL | H-BAL |
+| 3.69 | -71.7 | -82.8 | -82.8 | -83.0 | -93.8 | -11,359.5 | H-BAL | H-BAL |
+
+Where the leader changes (bisection on the same rescored totals, to 0.01 deg): the physics-only leader changes from H-AC to H-ART at 0.45 deg, then from H-ART to H-BAL at 0.54 deg; the testimony-weighted leader changes from H-ART to H-BAL at 0.66 deg.
 
 Measured steps (found from the orientation series alone, no model): f719 (9 deg), f818 (15 deg), f866 (22 deg), f891 (17 deg), f912 (16 deg), f981 (28 deg). The findings log lists window centres 728, 824, 877, 908 and 974 from the extraction's own step finder; f866 to f920 is a fast continuous turn rather than a clean step, which this finder splits.
 
@@ -281,7 +299,7 @@ Against the findings-log step frames (728, 824, 877, 908, 974): nearest predicte
 
 Best of each controller variant (any step count): pointing threshold 0.2: log-likelihood -338.7; pointing_reflect threshold 0.1: log-likelihood -343.7; roll threshold 1.0: log-likelihood -344.4; roll_reflect threshold 1.0: log-likelihood -350.5.
 
-**In plain words (0.7 deg):** Sitrec's glare model, the pod geometry with one fitted offset, reproduces the overall sweep of the image rotation (residual RMS 3.6 deg; fitted offset 56.7 deg, against Sitrec's own starting value of 57.7 deg). With the pod roll following the geometry its rotation is smooth, so it leaves residual jumps of up to 19 deg at the measured step frames. A physical object given a free smooth rotation fits with residual RMS 2.8 deg in-sample using 16 knots, but predicts held-out stretches with residual RMS 3.7 deg (the glare: 3.6 deg). Scored on held-out data, the glare derotation is better on this criterion by 5.0 log units at sigma 0.68 deg. Making the pod roll step (a deadband controller, one extra parameter, tuned to make about the measured number of steps) puts a predicted step within 10 frames of 5 of the 6 measured steps, with 7 predicted steps that have no measured counterpart, and changes the rotation score by -94.8 after its penalty. So on this criterion the pod geometry predicts the rotation better than a free rotation can on held-out stretches; the step timing is the part it does not capture.
+**In plain words (0.7 deg):** Sitrec's glare model, the pod geometry with one fitted offset, reproduces the overall sweep of the image rotation (residual RMS 3.6 deg; fitted offset 56.7 deg, against Sitrec's own starting value of 57.7 deg). With the pod roll following the geometry its rotation is smooth, so it leaves residual jumps of up to 19 deg at the measured step frames. A physical object given a free smooth rotation fits with residual RMS 2.8 deg in-sample using 16 knots, but predicts held-out stretches with residual RMS 3.7 deg (the glare: 3.6 deg). Scored on held-out data, the glare derotation is better on this criterion by 5.0 log units at sigma 0.68 deg. That gap of 5.0 log units is computed at a sigma about 5 times smaller than the held-out residual RMS (3.7 deg), so the scorer treats the residuals as far less noisy than they are and the gap is not a clear separation: with held-out scoring the rotation does not clearly separate a glare fixed in the optics from a physical object. What the glare model gets right is the size and direction of the total turn and the fast turn near the azimuth crossing; what neither model captures is the step timing. Separately, making the pod roll step (a deadband controller, one extra parameter, tuned to make about the measured number of steps) puts a predicted step within 10 frames of 5 of the 6 measured steps, with 7 predicted steps that have no measured counterpart, and changes the glare model's rotation score by -94.8 after its penalty.
 
 ![GIMBAL rotation: measured orientation and the best glare and physical fits](gimbal_rotation.png)
 
@@ -327,39 +345,47 @@ For each hypothesis, the range at the reference frame is held fixed on a grid an
 
 | Range (nmi) | H-AC | H-ART | H-BAL | H-CLOSE | H-SLOW | H-WIT |
 |---|---|---|---|---|---|---|
-| 0.5 | -441,935.0; 414 / 24,887 / 0.00 | -444,284.0; 282 / 24,889 / 0.00 | -5,053,190.0; 1 / 24,921 / 0.00 | -4,067,520.0; 80 / 24,921 / 0.00 | -6,370,590.0; 60 / 24,921 / 0.00 | -382.8; 4,642 / 23,483 / 48.41 |
-| 1.0 | -93,077.8; 255 / 24,804 / 0.00 | -93,075.6; 235 / 24,790 / 0.00 | -2,562,780.0; 4 / 24,842 / 0.00 | -1,167,520.0; 80 / 24,842 / 0.00 | -3,530,480.0; 60 / 24,842 / 0.00 | -379.5; 3,779 / 23,478 / 43.21 |
-| 2.0 | -16,969.1; 250 / 24,501 / 0.00 | -15,008.6; 88 / 24,678 / 0.00 | -47,802.5; 15 / 24,475 / 0.00 | -14,831.6; 80 / 24,684 / 0.00 | -2,014,840.0; 60 / 24,683 / 0.00 | -379.0; 2,700 / 23,714 / 29.17 |
-| 3.0 | -5,979.4; 250 / 24,360 / 0.00 | -4,062.9; 137 / 24,500 / 0.00 | -12,190.1; 15 / 24,214 / 0.00 | - | -2,004,180.0; 61 / 24,410 / 0.00 | -378.8; 2,030 / 23,599 / 20.11 |
-| 5.0 | -726.8; 395 / 23,950 / 0.00 | -721.8; 386 / 24,160 / 0.00 | -2,194.5; 12 / 23,782 / 0.00 | - | -2,001,030.0; 59 / 23,996 / 0.00 | -378.6; 1,994 / 23,286 / 21.71 |
-| 7.5 | -414.2; 520 / 23,534 / 0.00 | -407.4; 600 / 23,496 / 0.00 | -534.7; 5 / 23,356 / 0.00 | - | -2,000,460.0; 60 / 23,544 / 0.00 | -378.6; 326 / 23,448 / 6.25 |
-| 10.0 | -441.7; 250 / 22,609 / 0.00 | -380.8; 600 / 23,099 / 0.00 | -395.2; 1 / 22,937 / 0.00 | - | -2,000,390.0; 60 / 23,034 / 0.00 | -378.5; 327 / 22,962 / 6.06 |
-| 15.0 | -368.6; 504 / 21,675 / 0.00 | -367.0; 600 / 21,984 / 0.00 | -360.2; 0 / 21,910 / 0.00 | - | -1,210,080.0; 38 / 21,220 / 0.00 | -378.4; 303 / 22,013 / 5.72 |
+| 0.5 | -441,935.0; 414 / 24,887 / 0.00 | -444,284.0; 282 / 24,889 / 0.00 | -5,053,190.0 (outside the constraint); 1 / 24,921 / 0.00 | -4,067,520.0 (outside the constraint); 80 / 24,921 / 0.00 | -6,370,590.0 (outside the constraint); 60 / 24,921 / 0.00 | -382.8; 4,642 / 23,483 / 48.41 |
+| 1.0 | -93,077.8; 255 / 24,804 / 0.00 | -93,075.6; 235 / 24,790 / 0.00 | -2,562,780.0 (outside the constraint); 4 / 24,842 / 0.00 | -1,167,520.0 (outside the constraint); 80 / 24,842 / 0.00 | -3,530,480.0 (outside the constraint); 60 / 24,842 / 0.00 | -379.5; 3,779 / 23,478 / 43.21 |
+| 2.0 | -16,969.1; 250 / 24,501 / 0.00 | -15,008.6; 88 / 24,678 / 0.00 | -47,802.5; 15 / 24,475 / 0.00 | -14,831.6; 80 / 24,684 / 0.00 | -2,014,840.0 (outside the constraint); 60 / 24,683 / 0.00 | -379.0; 2,700 / 23,714 / 29.17 |
+| 3.0 | -5,979.4; 250 / 24,360 / 0.00 | -4,062.9; 137 / 24,500 / 0.00 | -12,190.1; 15 / 24,214 / 0.00 | - | -2,004,180.0 (outside the constraint); 61 / 24,410 / 0.00 | -378.8; 2,030 / 23,599 / 20.11 |
+| 5.0 | -726.8; 395 / 23,950 / 0.00 | -721.8; 386 / 24,160 / 0.00 | -2,194.5; 12 / 23,782 / 0.00 | - | -2,001,030.0 (outside the constraint); 59 / 23,996 / 0.00 | -378.6; 1,994 / 23,286 / 21.71 |
+| 7.5 | -414.2; 520 / 23,534 / 0.00 | -407.4; 600 / 23,496 / 0.00 | -534.7; 5 / 23,356 / 0.00 | - | -2,000,460.0 (outside the constraint); 60 / 23,544 / 0.00 | -378.6; 326 / 23,448 / 6.25 |
+| 10.0 | -441.7; 250 / 22,609 / 0.00 | -380.8; 600 / 23,099 / 0.00 | -395.2; 1 / 22,937 / 0.00 | - | -2,000,390.0 (outside the constraint); 60 / 23,034 / 0.00 | -378.5; 327 / 22,962 / 6.06 |
+| 15.0 | -368.6; 504 / 21,675 / 0.00 | -367.0; 600 / 21,984 / 0.00 | -360.2; 0 / 21,910 / 0.00 | - | -1,210,080.0 (outside the constraint); 38 / 21,220 / 0.00 | -378.4; 303 / 22,013 / 5.72 |
 | 20.0 | -366.8; 250 / 20,384 / 0.00 | -363.0; 600 / 20,800 / 0.00 | -355.9; 0 / 21,126 / 0.00 | - | -3,031.6; 19 / 20,052 / 0.00 | -378.4; 269 / 21,111 / 5.00 |
 | 30.0 | -360.8; 250 / 18,435 / 0.00 | -360.7; 119 / 18,376 / 0.00 | -356.9; 0 / 19,054 / 0.00 | - | -359.6; 60 / 19,175 / 0.00 | -378.3; 258 / 19,432 / 4.39 |
 | 45.0 | -360.2; 520 / 15,582 / 0.00 | -360.2; 525 / 15,580 / 0.00 | -361.6; 0 / 16,164 / 0.00 | - | -363.2; 60 / 16,235 / 0.00 | -378.3; 232 / 17,244 / 1.96 |
 | 60.0 | -363.2; 520 / 15,004 / 0.00 | -360.6; 600 / 13,227 / 0.00 | -365.3; 0 / 13,944 / 0.00 | - | -366.9; 60 / 13,944 / 0.00 | -378.3; 342 / 15,450 / 2.25 |
 
-Ranges within 2.3 log units of each hypothesis's best physics-only point on this grid: H-AC 30.0 to 45.0 nmi; H-ART 30.0 to 60.0 nmi; H-BAL 20.0 to 30.0 nmi; H-CLOSE 2.0 to 2.0 nmi; H-SLOW 30.0 to 30.0 nmi; H-WIT 1.0 to 60.0 nmi.
+Grid points within 2.3 log units of each hypothesis's best physics-only point: H-AC the points 30.00, 45.00 nmi; H-ART the points 30.00, 45.00, 60.00 nmi; H-BAL the points 20.00, 30.00 nmi; H-CLOSE only the 2.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-SLOW only the 30.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-WIT the points 1.00, 2.00, 3.00, 5.00, 7.50, 10.00, 15.00, 20.00, 30.00, 45.00, 60.00 nmi.
+
+Optimizer shortfall: some range-curve points score above the main fit even though they use fewer random starts, so those main fits stopped short of their optimum by up to 0.4 log units: H-ART testimony-weighted -399.5 at 15.00 nmi against -399.8 (+0.4). The main-fit totals in the tables above are as fitted. Taking the better of the two for every hypothesis, the physics-only leader stays H-BAL and the testimony-weighted leader stays H-BAL.
+
+Cells marked "outside the constraint" are dominated by a term at the likelihood floor (a hard constraint such as an altitude limit, or a readout far outside its interval); their size is the floor, not a likelihood.
 
 **0.7 deg**
 
 | Range (nmi) | H-AC | H-ART | H-BAL | H-CLOSE | H-SLOW | H-WIT |
 |---|---|---|---|---|---|---|
-| 0.5 | -460,898.0; 267 / 24,908 / 0.00 | -460,893.0; 270 / 24,898 / 0.00 | -5,033,940.0; 1 / 24,921 / 0.00 | -4,037,280.0; 80 / 24,921 / 0.00 | -6,344,400.0; 60 / 24,921 / 0.00 | -386.1; 4,450 / 23,463 / 47.79 |
-| 1.0 | -92,171.8; 250 / 24,782 / 0.00 | -92,150.8; 221 / 24,789 / 0.00 | -2,544,880.0; 4 / 24,842 / 0.00 | -1,138,250.0; 80 / 24,842 / 0.00 | -3,503,740.0; 60 / 24,842 / 0.00 | -381.5; 4,044 / 23,252 / 46.18 |
-| 2.0 | -15,673.9; 250 / 24,502 / 0.00 | -11,893.2; 74 / 24,685 / 0.00 | -32,852.6; 15 / 24,475 / 0.00 | -11,648.4; 70 / 24,683 / 0.00 | -2,011,650.0; 60 / 24,684 / 0.00 | -379.4; 1,325 / 24,208 / 11.87 |
-| 3.0 | -5,133.6; 250 / 24,360 / 0.00 | -2,431.2; 140 / 24,507 / 0.00 | -6,760.6; 15 / 24,214 / 0.00 | - | -2,002,540.0; 61 / 24,405 / 0.00 | -378.9; 1,627 / 23,868 / 16.18 |
-| 5.0 | -448.0; 450 / 24,197 / 0.00 | -451.0; 473 / 24,022 / 0.00 | -712.5; 11 / 23,818 / 0.00 | - | -2,000,560.0; 60 / 24,094 / 0.00 | -378.6; 491 / 24,053 / 7.15 |
-| 7.5 | -489.1; 250 / 23,208 / 0.00 | -373.7; 571 / 23,624 / 0.00 | -388.6; 1 / 23,532 / 0.00 | - | -2,000,380.0; 60 / 23,565 / 0.00 | -378.5; 258 / 23,572 / 4.94 |
-| 10.0 | -395.2; 250 / 22,609 / 0.00 | -366.6; 462 / 23,074 / 0.00 | -360.2; 0 / 23,036 / 0.00 | - | -2,000,360.0; 60 / 23,058 / 0.00 | -378.4; 168 / 23,013 / 3.43 |
-| 15.0 | -363.0; 250 / 21,646 / 0.00 | -362.0; 68 / 21,535 / 0.00 | -357.8; 0 / 21,852 / 0.00 | - | -1,210,070.0; 63 / 21,220 / 0.00 | -378.4; 187 / 22,057 / 3.56 |
+| 0.5 | -460,898.0; 267 / 24,908 / 0.00 | -460,893.0; 270 / 24,898 / 0.00 | -5,033,940.0 (outside the constraint); 1 / 24,921 / 0.00 | -4,037,280.0 (outside the constraint); 80 / 24,921 / 0.00 | -6,344,400.0 (outside the constraint); 60 / 24,921 / 0.00 | -386.1; 4,450 / 23,463 / 47.79 |
+| 1.0 | -92,171.8; 250 / 24,782 / 0.00 | -92,150.8; 221 / 24,789 / 0.00 | -2,544,880.0 (outside the constraint); 4 / 24,842 / 0.00 | -1,138,250.0 (outside the constraint); 80 / 24,842 / 0.00 | -3,503,740.0 (outside the constraint); 60 / 24,842 / 0.00 | -381.5; 4,044 / 23,252 / 46.18 |
+| 2.0 | -15,673.9; 250 / 24,502 / 0.00 | -11,893.2; 74 / 24,685 / 0.00 | -32,852.6; 15 / 24,475 / 0.00 | -11,648.4; 70 / 24,683 / 0.00 | -2,011,650.0 (outside the constraint); 60 / 24,684 / 0.00 | -379.4; 1,325 / 24,208 / 11.87 |
+| 3.0 | -5,133.6; 250 / 24,360 / 0.00 | -2,431.2; 140 / 24,507 / 0.00 | -6,760.6; 15 / 24,214 / 0.00 | - | -2,002,540.0 (outside the constraint); 61 / 24,405 / 0.00 | -378.9; 1,627 / 23,868 / 16.18 |
+| 5.0 | -448.0; 450 / 24,197 / 0.00 | -451.0; 473 / 24,022 / 0.00 | -712.5; 11 / 23,818 / 0.00 | - | -2,000,560.0 (outside the constraint); 60 / 24,094 / 0.00 | -378.6; 491 / 24,053 / 7.15 |
+| 7.5 | -489.1; 250 / 23,208 / 0.00 | -373.7; 571 / 23,624 / 0.00 | -388.6; 1 / 23,532 / 0.00 | - | -2,000,380.0 (outside the constraint); 60 / 23,565 / 0.00 | -378.5; 258 / 23,572 / 4.94 |
+| 10.0 | -395.2; 250 / 22,609 / 0.00 | -366.6; 462 / 23,074 / 0.00 | -360.2; 0 / 23,036 / 0.00 | - | -2,000,360.0 (outside the constraint); 60 / 23,058 / 0.00 | -378.4; 168 / 23,013 / 3.43 |
+| 15.0 | -363.0; 250 / 21,646 / 0.00 | -362.0; 68 / 21,535 / 0.00 | -357.8; 0 / 21,852 / 0.00 | - | -1,210,070.0 (outside the constraint); 63 / 21,220 / 0.00 | -378.4; 187 / 22,057 / 3.56 |
 | 20.0 | -360.6; 304 / 20,388 / 0.00 | -360.6; 326 / 20,387 / 0.00 | -365.6; 0 / 20,882 / 0.00 | - | -3,035.6; 60 / 20,052 / 0.00 | -378.3; 225 / 21,134 / 3.31 |
 | 30.0 | -361.8; 520 / 18,326 / 0.00 | -361.3; 600 / 18,338 / 0.00 | -407.6; 1 / 18,497 / 0.00 | - | -379.8; 60 / 18,733 / 0.00 | -378.3; 278 / 19,425 / 1.14 |
 | 45.0 | -369.1; 520 / 15,565 / 0.00 | -367.6; 600 / 15,567 / 0.00 | -517.2; 1 / 15,062 / 0.00 | - | -445.8; 60 / 15,338 / 0.00 | -378.3; 503 / 17,232 / 2.29 |
 | 60.0 | -380.8; 520 / 15,004 / 0.00 | -375.7; 600 / 13,202 / 0.00 | -613.9; 1 / 12,497 / 0.00 | - | -575.5; 60 / 13,210 / 0.00 | -378.3; 740 / 15,427 / 4.33 |
 
-Ranges within 2.3 log units of each hypothesis's best physics-only point on this grid: H-AC 20.0 to 30.0 nmi; H-ART 15.0 to 30.0 nmi; H-BAL 15.0 to 15.0 nmi; H-CLOSE 2.0 to 2.0 nmi; H-SLOW 30.0 to 30.0 nmi; H-WIT 2.0 to 60.0 nmi.
+Grid points within 2.3 log units of each hypothesis's best physics-only point: H-AC the points 20.00, 30.00 nmi; H-ART the points 15.00, 20.00, 30.00 nmi; H-BAL only the 15.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-CLOSE only the 2.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-SLOW only the 30.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-WIT the points 2.00, 3.00, 5.00, 7.50, 10.00, 15.00, 20.00, 30.00, 45.00, 60.00 nmi.
+
+Optimizer shortfall: some range-curve points score above the main fit even though they use fewer random starts, so those main fits stopped short of their optimum by up to 0.1 log units: H-CLOSE physics-only -11,648.4 at 2.00 nmi against -11,648.5 (+0.1); H-CLOSE testimony-weighted -11,674.2 at 2.00 nmi against -11,674.3 (+0.1). The main-fit totals in the tables above are as fitted. Taking the better of the two for every hypothesis, the physics-only leader stays H-BAL and the testimony-weighted leader stays H-BAL.
+
+Cells marked "outside the constraint" are dominated by a term at the likelihood floor (a hard constraint such as an altitude limit, or a readout far outside its interval); their size is the floor, not a likelihood.
 
 ![GIMBAL range curves](gimbal_range_curves.png)
 
@@ -389,7 +415,7 @@ With no range on screen, a constant-velocity object is fitted at each assumed ra
 - **Jet heading**: not on screen; fitted for every hypothesis. Testimony quantities that depend on direction (motion against the wind) inherit that freedom.
 - **Turn rate**: the lab's cloud-derived history and its Monte Carlo band (cloud deck height, texture distance, image scale, ERA5 winds and temperature over a 12-hour window, and the jet's initial heading inside it). The horizon-bar bank is used only for the image horizon and pod roll, where the cloud motion's direction confirms it.
 - **Jet pitch**: a shared nuisance (Sitrec's 3.6 deg, scaled by 1/cos(bank) as Sitrec does). Near the end of the clip the pod looks within a few degrees of its roll axis, so the predicted glare rotation there is sensitive to pitch and to the azimuth inside its whole-degree interval; both are fitted, the same way for every glare model.
-- **Rotation measurement**: the blob's major-axis angle at the high threshold, noise 0.68 deg from the data (Rule N; see the sweep in the rotation section for 0.88 to 3 deg); one shared offset allows a white-hot / black-hot bias. Pixel aspect (frames about 5 percent wide) slightly flattens measured angles and is not corrected (it changes the angles by under 2 deg at 45 deg).
+- **Rotation measurement**: the blob's major-axis angle at the high threshold, noise 0.68 deg from the data (Rule N; see the sweep in the rotation section, which brackets this value and reaches the held-out residual RMS); one shared offset allows a white-hot / black-hot bias. Pixel aspect (frames about 5 percent wide) slightly flattens measured angles and is not corrected (it changes the angles by under 2 deg at 45 deg).
 - **Brightness trend**: weight 0 at 0.35 deg, weight 0 at 0.7 deg (where weight 0: REVIEW-M3 Rule B: the blob is saturated, so its integrated contrast is not range-informative; see `docs/results/REVIEW-M3.md`).
 - **Apparent size**: weight 0 at 0.35 deg, weight 0 at 0.7 deg (where weight 0: D-016: the blob is not resolved against the point-spread width measured on this video (REVIEW-M3 item 4); D-017: the blob is resolved but saturated (Rule B1 saturation flag), so its size is clipped, not range-informative; see `docs/results/REVIEW-M3.md`).
 - **Testimony**: the binding Gaussian edge grows quadratically outside a claim's interval, so a single distant memory can dominate a total; the physics-only column is the reading without it.

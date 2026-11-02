@@ -137,12 +137,17 @@ For each hypothesis, the range at the reference frame is held fixed on a grid an
 
 | Range (nmi) | H-AC | H-ART | H-BAL | H-CLOSE | H-SLOW | H-WIT |
 |---|---|---|---|---|---|---|
-| 0.5 | -157,293.0; 319 / 23,464 / 0.00 | -157,521.0; 318 / 23,464 / 0.00 | -2,261,580.0; 5 / 23,468 / 0.00 | -1,562,690.0; 81 / 23,467 / 0.00 | -3,760,420.0; 60 / 23,468 / 0.00 | -124,451.0; 280 / 23,394 / 0.87 |
-| 1.0 | -102,530.0; 254 / 21,922 / 0.00 | -102,409.0; 258 / 21,922 / 0.00 | -655,842.0; 20 / 21,925 / 0.00 | -350,257.0; 82 / 21,925 / 0.00 | -2,445,560.0; 63 / 21,925 / 0.00 | -88,799.7; 239 / 21,876 / 0.62 |
+| 0.5 | -157,293.0; 319 / 23,464 / 0.00 | -157,521.0; 318 / 23,464 / 0.00 | -2,261,580.0 (outside the constraint); 5 / 23,468 / 0.00 | -1,562,690.0 (outside the constraint); 81 / 23,467 / 0.00 | -3,760,420.0 (outside the constraint); 60 / 23,468 / 0.00 | -124,451.0; 280 / 23,394 / 0.87 |
+| 1.0 | -102,530.0; 254 / 21,922 / 0.00 | -102,409.0; 258 / 21,922 / 0.00 | -655,842.0 (outside the constraint); 20 / 21,925 / 0.00 | -350,257.0; 82 / 21,925 / 0.00 | -2,445,560.0 (outside the constraint); 63 / 21,925 / 0.00 | -88,799.7; 239 / 21,876 / 0.62 |
 | 2.0 | -50,838.5; 251 / 18,842 / 0.00 | -39,114.4; 172 / 18,840 / 0.00 | -87,830.7; 20 / 18,843 / 0.00 | -46,490.1; 82 / 18,843 / 0.00 | -53,051.5; 63 / 18,843 / 0.00 | -37,025.6; 158 / 18,795 / 0.42 |
 | 3.0 | -23,284.7; 250 / 15,765 / 0.00 | -8,348.9; 90 / 15,762 / 0.00 | -10,823.8; 17 / 15,762 / 0.00 | - | -8,375.2; 63 / 15,762 / 0.00 | -8,063.1; 81 / 15,767 / 0.19 |
-| 5.0 | -2,027,080.0; 250 / 9,447 / 0.00 | -16,001.8; 81 / 9,609 / 0.00 | -17,972.9; 20 / 9,609 / 0.00 | - | -16,014.6; 63 / 9,607 / 0.00 | -15,588.3; 99 / 9,618 / 0.35 |
-| 7.5 | -2,154,320.0; 253 / 1,824 / 0.00 | -154,308.0; 234 / 1,820 / 0.00 | -176,178.0; 20 / 1,920 / 0.00 | - | -165,317.0; 63 / 1,920 / 0.00 | -149,934.0; 303 / 1,923 / 1.34 |
+| 3.5 | -619,750.0 (outside the constraint); 250 / 14,224 / 0.00 | -2,079.8; 51 / 14,224 / 0.00 | -2,104.5; 8 / 14,224 / 0.00 | - | -2,080.8; 51 / 14,224 / 0.00 | -2,078.1; 38 / 14,184 / 0.23 |
+| 3.7 | -1,230,710.0 (outside the constraint); 253 / 13,613 / 0.00 | -1,181.3; 13 / 13,608 / 0.00 | -1,177.4; 4 / 13,608 / 0.00 | - | -1,181.5; 13 / 13,608 / 0.00 | -1,212.9; 48 / 13,623 / 0.25 |
+| 3.9 | -1,637,670.0 (outside the constraint); 253 / 13,151 / 0.00 | -1,038.4; 10 / 13,147 / 0.00 | -1,032.5; 0 / 13,147 / 0.00 | - | -1,038.4; 10 / 13,147 / 0.00 | -1,086.1; 44 / 13,155 / 0.34 |
+| 4.0 | -2,017,780.0 (outside the constraint); 252 / 12,689 / 0.00 | -1,303.3; 17 / 12,685 / 0.00 | -1,300.5; 3 / 12,685 / 0.00 | - | -1,303.4; 17 / 12,685 / 0.00 | -1,340.3; 41 / 12,697 / 0.14 |
+| 4.5 | -2,023,100.0 (outside the constraint); 253 / 11,150 / 0.00 | -5,761.2; 49 / 11,147 / 0.00 | -6,143.9; 18 / 11,148 / 0.00 | - | -5,763.3; 49 / 11,147 / 0.00 | -5,684.7; 62 / 11,105 / 0.26 |
+| 5.0 | -2,027,080.0 (outside the constraint); 250 / 9,447 / 0.00 | -16,001.8; 81 / 9,609 / 0.00 | -17,972.9; 20 / 9,609 / 0.00 | - | -16,014.6; 63 / 9,607 / 0.00 | -15,588.3; 99 / 9,618 / 0.35 |
+| 7.5 | -2,154,320.0 (outside the constraint); 253 / 1,824 / 0.00 | -154,308.0; 234 / 1,820 / 0.00 | -176,178.0; 20 / 1,920 / 0.00 | - | -165,317.0; 63 / 1,920 / 0.00 | -149,934.0; 303 / 1,923 / 1.34 |
 | 10.0 | - | - | - | - | - | - |
 | 15.0 | - | - | - | - | - | - |
 | 20.0 | - | - | - | - | - | - |
@@ -150,7 +155,13 @@ For each hypothesis, the range at the reference frame is held fixed on a grid an
 | 45.0 | - | - | - | - | - | - |
 | 60.0 | - | - | - | - | - | - |
 
-Ranges within 2.3 log units of each hypothesis's best physics-only point on this grid: H-AC 3.0 to 3.0 nmi; H-ART 3.0 to 3.0 nmi; H-BAL 3.0 to 3.0 nmi; H-CLOSE 2.0 to 2.0 nmi; H-SLOW 3.0 to 3.0 nmi; H-WIT 3.0 to 3.0 nmi.
+Grid points within 2.3 log units of each hypothesis's best physics-only point: H-AC only the 3.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-ART only the 3.85 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-BAL only the 3.85 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-CLOSE only the 2.00 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-SLOW only the 3.85 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing); H-WIT only the 3.85 nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing).
+
+**What this curve can and cannot show.** The range is read on screen here, and the range readout dominates the curves: 4 of the 6 hypotheses peak at the same grid point (3.85 nmi; H-ART, H-BAL, H-SLOW, H-WIT), and a few tenths of a nautical mile away the totals fall by hundreds to thousands. So the curve confirms where the readout puts the object; it does not separate the hypotheses, which differ there only by the amounts in the main table.
+
+Optimizer shortfall: some range-curve points score above the main fit even though they use fewer random starts, so those main fits stopped short of their optimum by up to 2,308.9 log units: H-CLOSE physics-only -46,490.1 at 2.00 nmi against -48,799.0 (+2,308.9); H-CLOSE testimony-weighted -46,514.9 at 2.00 nmi against -48,823.8 (+2,308.9). The main-fit totals in the tables above are as fitted. Taking the better of the two for every hypothesis, the physics-only leader stays H-BAL and the testimony-weighted leader stays H-BAL.
+
+Cells marked "outside the constraint" are dominated by a term at the likelihood floor (a hard constraint such as an altitude limit, or a readout far outside its interval); their size is the floor, not a likelihood.
 
 ![GOFAST range curves](gofast_range_curves.png)
 

@@ -29,6 +29,19 @@ def _f(x, nd=1):
     return str(x)
 
 
+# Totals at or below this contain at least one term at the likelihood floor (likelihoods.LOG_FLOOR = -1e6): a
+# predicted quantity outside a hypothesis's hard constraint, or a readout far outside its interval. Their size is
+# the floor, not a likelihood, so they are labelled instead of read as numbers (CP-04 second check).
+FLOOR_TOTAL = -5e5
+
+
+def _ft(x, nd=1):
+    """A total, labelled when a floor term dominates it."""
+    if isinstance(x, (int, float)) and not isinstance(x, bool) and x <= FLOOR_TOTAL:
+        return f"{_f(x, nd)} (outside the constraint)"
+    return _f(x, nd)
+
+
 CRIT_NAMES = {
     "line_of_sight_az": "Azimuth readout",
     "line_of_sight_el": "Elevation readout",
@@ -176,8 +189,8 @@ def _both_ways_lines(o: dict, head: str = "") -> list:
     nxh = {h["hypothesis"]: h for h in o["no_exclusions"]["hypotheses"] if h["valid"]}
     for hid, h, g in sorted(bw["rows"], key=lambda r: r[1]["rank_testimony_weighted"]):
         g = nxh.get(hid)
-        L.append(f"| {hid} | {_f(h['total_testimony_weighted'])} ({h['rank_testimony_weighted']}) | {_f(h['total_physics_only'])} ({h['rank_physics_only']}) | "
-                 + (f"{_f(g['total_testimony_weighted'])} ({g['rank_testimony_weighted']}) | {_f(g['total_physics_only'])} ({g['rank_physics_only']}) |" if g else "invalid | invalid |"))
+        L.append(f"| {hid} | {_ft(h['total_testimony_weighted'])} ({h['rank_testimony_weighted']}) | {_ft(h['total_physics_only'])} ({h['rank_physics_only']}) | "
+                 + (f"{_ft(g['total_testimony_weighted'])} ({g['rank_testimony_weighted']}) | {_ft(g['total_physics_only'])} ({g['rank_physics_only']}) |" if g else "invalid | invalid |"))
     L.append("")
     txt = []
     for c in bw["changes"]:
@@ -202,26 +215,43 @@ def _sigma_sweep_lines(o: dict, head: str = "") -> list:
     L.append(f"{head}Rotation noise (REVIEW-M3 Rule N, data only): two-threshold disagreement {_f(rn.get('two_threshold_deg'), 2)} deg, "
              f"frame-to-frame scatter {_f(rn.get('frame_to_frame_deg'), 2)} deg, so sigma = {_f(rn.get('sigma_deg'), 2)} deg "
              f"(the earlier running-median value was {_f(rn.get('running_median_deg'), 2)} deg). The table rescores the rotation criterion at other sigmas "
-             "at each fit's own best parameters (not refitted); only the rotation row changes.")
+             "at each fit's own best parameters (not refitted); only the rotation row changes. "
+             f"The grid brackets this case's own sigma by the same rule for every case ({sw.get('grid_rule', 'fixed values')}).")
     L.append("")
     sig = sw["sigmas_deg"]
+    main = float(sw["main_sigma_deg"])
     hy = {h["hypothesis"]: h for h in o["hypotheses"] if h["valid"]}
     ids = sorted(sw["hypotheses"], key=lambda k: -hy[k]["total_physics_only"])
-    L.append("| Hypothesis | " + " | ".join(f"sigma {_f(x, 2)}: rotation / physics-only total" for x in [sw["main_sigma_deg"]] + sig) + " |")
-    L.append("|---|" + "---|" * (len(sig) + 1))
-    for k in ids:
-        cells = [f"{_f(hy[k]['criteria_physics_only_fit'].get('rotation'))} / {_f(hy[k]['total_physics_only'])}"]
-        for c in sw["hypotheses"][k]["physics_only"]:
-            cells.append(f"{_f(c['rotation'])} / {_f(c['total'])}")
-        L.append(f"| {k} | " + " | ".join(cells) + " |")
+    rows = [(main, None)] + [(x, i) for i, x in enumerate(sig)]
+    rows.sort(key=lambda r: r[0])
+    L.append("Physics-only total at each sigma (leaders of both totals on the right):")
     L.append("")
-    lead = []
-    for i, x in enumerate(sig):
-        best = max(ids, key=lambda k: sw["hypotheses"][k]["physics_only"][i]["total"])
-        bw_ = max(ids, key=lambda k: sw["hypotheses"][k]["testimony_weighted"][i]["total"])
-        lead.append(f"{_f(x, 2)} deg: {best} / {bw_}")
-    L.append("Leader at each sigma (physics-only / testimony-weighted, rescored): " + "; ".join(lead) + ".")
+    L.append("| Sigma (deg) | " + " | ".join(ids) + " | Leader, physics-only | Leader, testimony-weighted |")
+    L.append("|---|" + "---|" * (len(ids) + 2))
+    for x, i in rows:
+        if i is None:
+            vals_p = {k: hy[k]["total_physics_only"] for k in ids}
+            vals_w = {k: hy[k]["total_testimony_weighted"] for k in ids}
+            lab = f"{_f(x, 2)} (main)"
+        else:
+            vals_p = {k: sw["hypotheses"][k]["physics_only"][i]["total"] for k in ids}
+            vals_w = {k: sw["hypotheses"][k]["testimony_weighted"][i]["total"] for k in ids}
+            lab = _f(x, 2)
+        L.append(f"| {lab} | " + " | ".join(_ft(vals_p[k]) for k in ids) +
+                 f" | {max(vals_p, key=vals_p.get)} | {max(vals_w, key=vals_w.get)} |")
     L.append("")
+    co = sw.get("crossovers")
+    if co is not None:
+        txt = []
+        for tag, name in (("physics_only", "physics-only"), ("testimony_weighted", "testimony-weighted")):
+            cs = co.get(tag, [])
+            if not cs:
+                txt.append(f"the {name} leader does not change between {_f(min(sig + [main]), 2)} and {_f(max(sig + [main]), 2)} deg")
+            else:
+                txt.append(f"the {name} leader changes " + ", then ".join(
+                    f"from {c['leader_below']} to {c['leader_above']} at {_f(c['sigma_deg'], 2)} deg" for c in cs))
+        L.append("Where the leader changes (bisection on the same rescored totals, to 0.01 deg): " + "; ".join(txt) + ".")
+        L.append("")
     return L
 
 
@@ -252,19 +282,70 @@ def _range_curve_lines(case: str, fov_label=None) -> list:
                     cells.append("-")
                     continue
                 x = x.iloc[0]
-                cells.append(f"{_f(x['total_physics_only'])}; {_f(x['air_speed_kt_physics_only'], 0)} / {_f(x['altitude_ft_mean_physics_only'], 0)} / {_f(x['max_accel_g_physics_only'], 2)}")
+                cells.append(f"{_ft(x['total_physics_only'])}; {_f(x['air_speed_kt_physics_only'], 0)} / {_f(x['altitude_ft_mean_physics_only'], 0)} / {_f(x['max_accel_g_physics_only'], 2)}")
             L.append(f"| {_f(r, 1)} | " + " | ".join(cells) + " |")
         L.append("")
         best = []
         for h in hyps:
-            d = dv[(dv["hypothesis"] == h) & dv["total_physics_only"].notna()]
+            d = dv[(dv["hypothesis"] == h) & dv["total_physics_only"].notna()].sort_values("range_ref_nmi")
             if d.empty:
                 continue
             top = d["total_physics_only"].max()
-            ok = d[d["total_physics_only"] >= top - 2.3]["range_ref_nmi"]
-            best.append(f"{h} {_f(ok.min(), 1)} to {_f(ok.max(), 1)} nmi")
-        L.append("Ranges within 2.3 log units of each hypothesis's best physics-only point on this grid: " + "; ".join(best) + ".")
+            ok = list(d[d["total_physics_only"] >= top - 2.3]["range_ref_nmi"])
+            if len(ok) == 1:
+                best.append(f"{h} only the {_f(ok[0], 2)} nmi point (its neighbours on the grid are more than 2.3 lower, so the peak is narrower than the grid spacing)")
+            else:
+                best.append(f"{h} the points " + ", ".join(_f(x, 2) for x in ok) + " nmi")
+        L.append("Grid points within 2.3 log units of each hypothesis's best physics-only point: " + "; ".join(best) + ".")
         L.append("")
+        try:
+            has_rng = "range" in json.loads((derived_dir(case) / "results.json").read_text(encoding="utf-8")).get("criteria_n_eff", {})
+        except (OSError, ValueError):
+            has_rng = False
+        if has_rng:
+            peaks = {}
+            for h in hyps:
+                d = dv[(dv["hypothesis"] == h) & dv["total_physics_only"].notna()]
+                if not d.empty:
+                    peaks[h] = float(d.loc[d["total_physics_only"].idxmax(), "range_ref_nmi"])
+            common = max(set(peaks.values()), key=list(peaks.values()).count) if peaks else None
+            same = [h for h, r in peaks.items() if r == common]
+            L.append(f"**What this curve can and cannot show.** The range is read on screen here, and the range readout dominates the curves: {len(same)} of the {len(peaks)} hypotheses "
+                     f"peak at the same grid point ({_f(common, 2)} nmi; " + ", ".join(same) + "), and a few tenths of a nautical mile away the totals fall by hundreds to thousands. "
+                     "So the curve confirms where the readout puts the object; it does not separate the hypotheses, which differ there only by the amounts in the main table.")
+            L.append("")
+        try:
+            rj = json.loads((derived_dir(case) / "results.json").read_text(encoding="utf-8"))
+            ro = rj["variants"][v] if v and "variants" in rj else rj
+            main = {h["hypothesis"]: h for h in ro["hypotheses"] if h["valid"]}
+        except (OSError, KeyError, ValueError):
+            main = {}
+        short = []
+        adj = {col: {k: float(e[col]) for k, e in main.items()} for col in ("total_physics_only", "total_testimony_weighted")}
+        for h in hyps:
+            if h not in main:
+                continue
+            for col, name in (("total_physics_only", "physics-only"), ("total_testimony_weighted", "testimony-weighted")):
+                d = dv[(dv["hypothesis"] == h) & dv[col].notna()]
+                if d.empty:
+                    continue
+                x = d.loc[d[col].idxmax()]
+                gap = float(x[col]) - float(main[h][col])
+                if gap > 0.05:
+                    adj[col][h] = float(x[col])
+                    short.append(f"{h} {name} {_f(x[col])} at {_f(x['range_ref_nmi'], 2)} nmi against {_f(main[h][col])} (+{_f(gap)})")
+        if short:
+            L.append("Optimizer shortfall: some range-curve points score above the main fit even though they use fewer random starts, so those main fits stopped short of their optimum by up to "
+                     f"{_f(max(float(t.rsplit('+', 1)[1].rstrip(')').replace(',', '')) for t in short))} log units: " + "; ".join(short) + ". "
+                     "The main-fit totals in the tables above are as fitted. Taking the better of the two for every hypothesis, " + " and ".join(
+                         (f"the {nm} leader stays {max(main, key=lambda k: main[k][col])}"
+                          if max(adj[col], key=adj[col].get) == max(main, key=lambda k: main[k][col]) else
+                          f"the {nm} leader would change from {max(main, key=lambda k: main[k][col])} to {max(adj[col], key=adj[col].get)}")
+                         for col, nm in (("total_physics_only", "physics-only"), ("total_testimony_weighted", "testimony-weighted"))) + ".")
+            L.append("")
+        if (dv["total_physics_only"].dropna() <= FLOOR_TOTAL).any():
+            L.append('Cells marked "outside the constraint" are dominated by a term at the likelihood floor (a hard constraint such as an altitude limit, or a readout far outside its interval); their size is the floor, not a likelihood.')
+            L.append("")
     L.append(f"![{case.upper()} range curves]({case}_range_curves.png)")
     L.append("")
     return L
@@ -352,7 +433,7 @@ def build(case: str) -> str:
     L.append("|---|---|---|---|---|---|---|")
     for h in hyps:
         L.append(f"| {h['rank_testimony_weighted']} | {h['hypothesis']}: {h['label']} | {_f(h['in_design_set'])} | "
-                 f"{_f(h['total_testimony_weighted'])} | {_f(h['total_physics_only'])} | {h['rank_physics_only']} | {h['k']} |")
+                 f"{_ft(h['total_testimony_weighted'])} | {_ft(h['total_physics_only'])} | {h['rank_physics_only']} | {h['k']} |")
     L.append("")
     top = hyps[0]
     L.append("Gap to the leader (testimony-weighted, then physics-only): " + "; ".join(
@@ -617,8 +698,8 @@ def build_variants(case: str) -> str:
             h = next(x for x in V[v]["hypotheses"] if x["hypothesis"] == hid)
             lab = h["label"]
             if h["valid"]:
-                cells.append(f"{_f(h['total_testimony_weighted'])} ({h['rank_testimony_weighted']})")
-                cells.append(f"{_f(h['total_physics_only'])} ({h['rank_physics_only']})")
+                cells.append(f"{_ft(h['total_testimony_weighted'])} ({h['rank_testimony_weighted']})")
+                cells.append(f"{_ft(h['total_physics_only'])} ({h['rank_physics_only']})")
                 kk = str(h["k"])
             else:
                 cells += ["invalid", "invalid"]
@@ -774,6 +855,7 @@ def build_variants(case: str) -> str:
                 f"{k} threshold {_f(x['threshold'], 1)}: log-likelihood {_f(x['loglik_scaled'])}" for k, x in db["by_metric"].items()) + ".")
             L.append("")
         if bg and bp:
+            o_rs = (o.get("data_sigmas") or {}).get("rotation") or rs
             gnet, pnet = _net_rotation(bg[1], n_tot), _net_rotation(bp[1], n_tot)
             better = "the free physical rotation" if pnet > gnet else "the glare derotation"
             jmax = max(abs(x["jump_left_deg"] or 0.0) for x in bg[1]["steps"]) if bg[1]["steps"] else 0.0
@@ -782,17 +864,16 @@ def build_variants(case: str) -> str:
                    f"With the pod roll following the geometry its rotation is smooth, so it leaves residual jumps of up to {_f(jmax, 0)} deg at the measured step frames. "
                    f"A physical object given a free smooth rotation fits with residual RMS {_f(bp[1]['resid_rms_deg'], 1)} deg in-sample using {bp[1]['model_terms']} knots, "
                    f"but predicts held-out stretches with residual RMS {_f(bp[1].get('cv_resid_rms_deg'), 1)} deg (the glare: {_f(bg[1].get('cv_resid_rms_deg'), 1)} deg). "
-                   f"Scored on held-out data, {better} is better on this criterion by {_f(abs(pnet - gnet))} log units at sigma {_f(rs, 2)} deg.")
-            db = bg[1].get("deadband")
-            if db and db.get("best_coarse"):
-                cm = db["best_coarse_step_match"]
-                gain = db["best_coarse_gain_vs_smooth_after_one_parameter_penalty"]
-                txt += (f" Making the pod roll step (a deadband controller, one extra parameter, tuned to make about the measured number of steps) puts a predicted step within {cm['tolerance_frames']} frames of "
-                        f"{cm['n_matched']} of the {cm['n_measured']} measured steps, with {cm['n_predicted_unmatched']} predicted steps that have no measured counterpart, and changes the rotation score by "
-                        f"{_f(gain)} after its penalty" + ((", which does " + ("" if gnet + max(gain, 0.0) >= pnet else "not ") +
-                                                            "close the gap to the free physical rotation.") if pnet > gnet else "."))
-            if abs(pnet - gnet) < 4.6:
-                txt += (" That is a likelihood ratio under 100, small next to the sigma sensitivity above: with held-out scoring the rotation does not clearly separate"
+                   f"Scored on held-out data, {better} is better on this criterion by {_f(abs(pnet - gnet))} log units at sigma {_f(o_rs, 2)} deg.")
+            held = max(x for x in (bg[1].get("cv_resid_rms_deg"), bp[1].get("cv_resid_rms_deg"), 0.0) if x is not None)
+            ratio = held / o_rs if o_rs else 0.0
+            if ratio >= 2.0:
+                txt += (f" That gap of {_f(abs(pnet - gnet))} log units is computed at a sigma about {_f(ratio, 0)} times smaller than the held-out residual RMS ({_f(held, 1)} deg), "
+                        "so the scorer treats the residuals as far less noisy than they are and the gap is not a clear separation: with held-out scoring the rotation does not clearly separate"
+                        " a glare fixed in the optics from a physical object. What the glare model gets right is the size and direction of the total turn and the fast"
+                        " turn near the azimuth crossing; what neither model captures is the step timing.")
+            elif abs(pnet - gnet) < 4.6:
+                txt += (f" That gap of {_f(abs(pnet - gnet))} log units is a likelihood ratio under 100: with held-out scoring the rotation does not clearly separate"
                         " a glare fixed in the optics from a physical object. What the glare model gets right is the size and direction of the total turn and the fast"
                         " turn near the azimuth crossing; what neither model captures is the step timing.")
             elif pnet > gnet:
@@ -801,6 +882,14 @@ def build_variants(case: str) -> str:
             else:
                 txt += (" So on this criterion the pod geometry predicts the rotation better than a free rotation can on held-out stretches;"
                         " the step timing is the part it does not capture.")
+            db = bg[1].get("deadband")
+            if db and db.get("best_coarse"):
+                cm = db["best_coarse_step_match"]
+                gain = db["best_coarse_gain_vs_smooth_after_one_parameter_penalty"]
+                txt += (f" Separately, making the pod roll step (a deadband controller, one extra parameter, tuned to make about the measured number of steps) puts a predicted step within {cm['tolerance_frames']} frames of "
+                        f"{cm['n_matched']} of the {cm['n_measured']} measured steps, with {cm['n_predicted_unmatched']} predicted steps that have no measured counterpart, and changes the glare model's rotation score by "
+                        f"{_f(gain)} after its penalty" + ((", which does " + ("" if gnet + max(gain, 0.0) >= pnet else "not ") +
+                                                            "close the gap to the free physical rotation.") if pnet > gnet else "."))
             L.append(txt)
             L.append("")
     if img:
@@ -889,7 +978,7 @@ def build_variants(case: str) -> str:
     L.append("- **Jet heading**: not on screen; fitted for every hypothesis. Testimony quantities that depend on direction (motion against the wind) inherit that freedom.")
     L.append("- **Turn rate**: the lab's cloud-derived history and its Monte Carlo band (cloud deck height, texture distance, image scale, ERA5 winds and temperature over a 12-hour window, and the jet's initial heading inside it). The horizon-bar bank is used only for the image horizon and pod roll, where the cloud motion's direction confirms it.")
     L.append("- **Jet pitch**: a shared nuisance (Sitrec's 3.6 deg, scaled by 1/cos(bank) as Sitrec does). Near the end of the clip the pod looks within a few degrees of its roll axis, so the predicted glare rotation there is sensitive to pitch and to the azimuth inside its whole-degree interval; both are fitted, the same way for every glare model.")
-    L.append(f"- **Rotation measurement**: the blob's major-axis angle at the high threshold, noise {_f(rs, 2)} deg from the data (Rule N; see the sweep in the rotation section for 0.88 to 3 deg); one shared offset allows a white-hot / black-hot bias. Pixel aspect (frames about 5 percent wide) slightly flattens measured angles and is not corrected (it changes the angles by under 2 deg at 45 deg).")
+    L.append(f"- **Rotation measurement**: the blob's major-axis angle at the high threshold, noise {_f(rs, 2)} deg from the data (Rule N; see the sweep in the rotation section, which brackets this value and reaches the held-out residual RMS); one shared offset allows a white-hot / black-hot bias. Pixel aspect (frames about 5 percent wide) slightly flattens measured angles and is not corrected (it changes the angles by under 2 deg at 45 deg).")
     for c, txt in (("brightness_trend", "Brightness trend"), ("size_trend", "Apparent size")):
         st = [f"weight 0 at {_fov(V[v])}" if c in _zero(V[v]) else f"in the totals at {_fov(V[v])}" for v in names]
         why = list(dict.fromkeys(_why(c, V[v]) for v in names if c in _zero(V[v]))) or [WHY_ZERO[c]]

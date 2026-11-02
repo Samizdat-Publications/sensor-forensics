@@ -706,11 +706,17 @@ def rotation_check(case: CaseData, results: list) -> dict:
     return out
 
 
+def _heldout_rms(rc: dict) -> list:
+    """Every fit's held-out rotation residual RMS (deg), from the rotation diagnostic."""
+    return [h.get("cv_resid_rms_deg") for h in (rc or {}).get("hypotheses", {}).values() if h.get("cv_resid_rms_deg") is not None]
+
+
 def _fit_pair(task: tuple) -> tuple:
     """Both fits of one hypothesis (testimony-weighted, then physics-only). Loads the case itself, so it can
     run in a worker process; the same code path as a serial run."""
-    case_name, variant, exclusions, h = task
-    case = load_case(case_name, variant=variant or None, exclusions=exclusions)
+    case_name, variant, exclusions, h = task[:4]
+    rot_sigma = task[4] if len(task) > 4 else None   # case-level rotation sigma override (sensitivity refits)
+    case = load_case(case_name, variant=variant or None, exclusions=exclusions, rotation_sigma_deg=rot_sigma)
     w_t = _weights(case)["testimony"]
     res_w = fit(case, h, testimony_weight=w_t)
     testimony_active = res_w.get("valid") and len(res_w.get("testimony_rows", [])) > 0
@@ -731,6 +737,24 @@ def _fit_all(case: CaseData, case_name: str, hyps: list) -> list:
 
 
 SIGMA_SWEEP_DEG = (0.88, 1.3, 2.0, 3.0)
+# CP-04 second check: the sweep must bracket each case's own sigma, by the same rule for every case. Grid = the
+# fixed values above, these multiples of the case's data-only sigma, and the smallest and largest held-out
+# rotation residual RMS among the case's fits (a sigma that would make the held-out residuals pure noise).
+SIGMA_SWEEP_FACTORS = (0.5, 0.75, 1.1, 1.25, 1.5, 2.0)
+
+
+def sweep_sigmas(main_sigma: float, heldout_rms=()) -> list:
+    """The sweep grid for one case (sorted, duplicates within 0.01 deg dropped, the main sigma excluded)."""
+    vals = [float(x) for x in SIGMA_SWEEP_DEG] + [float(f) * float(main_sigma) for f in SIGMA_SWEEP_FACTORS]
+    hr = [float(x) for x in heldout_rms if x is not None and np.isfinite(x)]
+    if hr:
+        vals += [min(hr), max(hr)]
+    out = []
+    for v in sorted(vals):
+        if abs(v - float(main_sigma)) < 0.01 or (out and abs(v - out[-1]) < 0.01):
+            continue
+        out.append(round(v, 4))
+    return out
 
 
 def _replace_series(series, **kw):
@@ -738,35 +762,97 @@ def _replace_series(series, **kw):
     return dataclasses.replace(series, **kw)
 
 
-def rotation_sigma_sweep(case: CaseData, hyps: list, results: list, sigmas=SIGMA_SWEEP_DEG) -> dict:
+def _rescored_rotation(case: CaseData, pred: Prediction, sigma: float) -> float:
+    """The rotation criterion (scaled) of one prediction at another rotation sigma; nothing else changes."""
+    s = case.series["rotation"]
+    c2 = copy.copy(case)
+    c2.series = dict(case.series)
+    c2.series["rotation"] = _replace_series(s, sigma=float(sigma))
+    ll, _, _ = rotation_terms(c2, pred)
+    return float(L.scaled_sum(ll, s.n_eff))
+
+
+SWEEP_FITS = (("testimony_weighted", "params_testimony_weighted_fit", "total_testimony_weighted", "criteria"),
+              ("physics_only", "params_physics_only_fit", "total_physics_only", "criteria_physics_only_fit"))
+
+
+def leader_crossovers(total_at, ids: list, lo: float, hi: float, grid: list, tol: float = 0.01) -> list:
+    """Where the leader of a total changes as the sigma moves from lo to hi.
+
+    total_at(hid, sigma) -> rescored total. The leader is found on the grid; each grid interval whose two ends
+    have different leaders is bisected to `tol` deg. Returns [{sigma_deg, leader_below, leader_above, margin_*}].
+    Several changes inside one grid interval would show as one (the grid is the resolution).
+    """
+    def leader(sg):
+        vals = {h: total_at(h, sg) for h in ids}
+        return max(vals, key=vals.get)
+
+    pts = sorted({float(lo), float(hi), *[float(g) for g in grid if lo <= g <= hi]})
+    leads = [leader(x) for x in pts]
+    out = []
+    for (a, la), (b, lb) in zip(zip(pts, leads), zip(pts[1:], leads[1:])):
+        if la == lb:
+            continue
+        x0, x1 = a, b
+        while x1 - x0 > tol:
+            m = 0.5 * (x0 + x1)
+            if leader(m) == la:
+                x0 = m
+            else:
+                x1 = m
+        out.append({"sigma_deg": round(0.5 * (x0 + x1), 3), "leader_below": la, "leader_above": leader(x1),
+                    "between_grid_deg": [a, b]})
+    return out
+
+
+def rotation_sigma_sweep(case: CaseData, hyps: list, results: list, sigmas=None, heldout_rms=()) -> dict:
     """The rotation criterion and both totals rescored at other rotation sigmas (REVIEW-M3 Rule N sweep).
 
     At each run's own best-fit parameters (NOT refitted): only the rotation row changes, so
     total(sigma) = total - rotation(main sigma) + rotation(sigma). The same for every hypothesis.
+    The grid brackets the case's own sigma (sweep_sigmas); the sigma where each total's leader changes
+    is located by bisection on the same rescored totals.
     """
     s = case.series["rotation"]
     by_id = {h.id: h for h in hyps}
-    out = {"main_sigma_deg": s.sigma, "sigmas_deg": [float(x) for x in sigmas],
+    if sigmas is None:
+        sigmas = sweep_sigmas(s.sigma, heldout_rms)
+    sigmas = [float(x) for x in sigmas]
+    out = {"main_sigma_deg": s.sigma, "sigmas_deg": sigmas,
+           "grid_rule": "fixed " + ", ".join(str(x) for x in SIGMA_SWEEP_DEG) + " deg; " +
+                        ", ".join(str(f) for f in SIGMA_SWEEP_FACTORS) + " times the case sigma; smallest and largest held-out residual RMS",
+           "heldout_rms_deg": [float(x) for x in heldout_rms if x is not None],
            "note": "Rescored at each fit's best parameters, not refitted.", "hypotheses": {}}
+    preds, bases = {}, {}
     for entry, _ in results:
         if not entry.get("valid"):
             continue
         h = by_id[entry["hypothesis"]]
         row = {}
-        for tag, pkey, tkey, ckey in (("testimony_weighted", "params_testimony_weighted_fit", "total_testimony_weighted", "criteria"),
-                                      ("physics_only", "params_physics_only_fit", "total_physics_only", "criteria_physics_only_fit")):
+        for tag, pkey, tkey, ckey in SWEEP_FITS:
             pred = predict(case, h, entry[pkey])
-            base_rot = float(entry[ckey]["rotation"])
-            cells = []
+            base = float(entry[tkey]) - float(entry[ckey]["rotation"])
+            preds[(entry["hypothesis"], tag)] = pred
+            bases[(entry["hypothesis"], tag)] = base
+            row[tag] = []
             for sg in sigmas:
-                c2 = copy.copy(case)
-                c2.series = dict(case.series)
-                c2.series["rotation"] = _replace_series(s, sigma=float(sg))
-                ll, _, _ = rotation_terms(c2, pred)
-                r = float(L.scaled_sum(ll, s.n_eff))
-                cells.append({"sigma_deg": float(sg), "rotation": r, "total": float(entry[tkey]) - base_rot + r})
-            row[tag] = cells
+                r = _rescored_rotation(case, pred, sg)
+                row[tag].append({"sigma_deg": float(sg), "rotation": r, "total": base + r})
         out["hypotheses"][entry["hypothesis"]] = row
+    ids = list(out["hypotheses"])
+    grid_all = sorted(set(sigmas) | {float(s.sigma)})
+    out["leader_at_sigma"] = {}
+    out["crossovers"] = {}
+    for tag, _, tkey, _ in SWEEP_FITS:
+        if not ids:
+            break
+        out["leader_at_sigma"][tag] = [{"sigma_deg": c["sigma_deg"], "leader": max(
+            ids, key=lambda k: out["hypotheses"][k][tag][i]["total"])} for i, c in enumerate(out["hypotheses"][ids[0]][tag])]
+
+        def total_at(hid, sg, tag=tag):
+            return bases[(hid, tag)] + _rescored_rotation(case, preds[(hid, tag)], sg)
+
+        out["crossovers"][tag] = leader_crossovers(total_at, ids, grid_all[0], grid_all[-1], grid_all)
     return out
 
 
@@ -840,7 +926,7 @@ def _run_one(case: CaseData, case_name: str, hyps: list, with_range_curve: bool)
     if "rotation" in case.series:
         out["rotation_noise"] = dict(case.rotation_noise)
         out["rotation_check"] = rotation_check(case, results)
-        out["rotation_sigma_sweep"] = rotation_sigma_sweep(case, hyps, results)
+        out["rotation_sigma_sweep"] = rotation_sigma_sweep(case, hyps, results, heldout_rms=_heldout_rms(out["rotation_check"]))
     if case.turn_rate is not None:
         out["turn_rate"] = {"heading_change_deg": float(np.trapezoid(case.turn_rate, case.t)),
                             "sigma_median_deg_s": float(np.median(case.turn_rate_sigma))}
@@ -928,10 +1014,15 @@ def _write_variants(case_name: str, names: list) -> dict:
     rows = [pd.read_csv(d / f"scores_part_{v}.csv") for v in names]
     out = {"case": case_name, "label": outs[names[0]]["label"], "variant_names": names, "variants": outs}
     pd.concat(rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
+    nx_paths = [d / f"scores_no_exclusions_part_{v}.csv" for v in names]
+    _write_nx_rows(d, [pd.read_csv(p) for p in nx_paths if p.exists()])
     (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
     for v in names:
         (d / f"results_part_{v}.json").unlink()
         (d / f"scores_part_{v}.csv").unlink()
+    for p in nx_paths:
+        if p.exists():
+            p.unlink()
     return out
 
 
@@ -952,6 +1043,77 @@ def recheck_rotation(case_name: str) -> dict:
     return out
 
 
+def refit_at_rotation_sigma(case_name: str, sigmas, variant: str | None = None, procs: int = 1) -> dict:
+    """Full refits of every hypothesis (both totals, with the exclusions) with the rotation sigma overridden at the
+    case level (CP-04 second check). The same fit path as run_case (_fit_pair); the override is applied to the case,
+    so every hypothesis sees the same sigma. Unlike the sweep, nothing is held at the main fit's parameters."""
+    case0 = load_case(case_name, variant=variant)
+    # Scheduling only (results do not depend on it): the fits with the most parameters start first.
+    hyps = sorted(load_hypotheses(), key=lambda h: -len(param_specs(case0, h)))
+    tasks = [(case_name, variant, True, h, float(sg)) for h in hyps for sg in sigmas]
+    if procs > 1:
+        from multiprocessing import Pool
+        with Pool(min(procs, len(tasks))) as pool:
+            pairs = pool.map(_fit_pair, tasks, chunksize=1)
+    else:
+        pairs = [_fit_pair(t) for t in tasks]
+    label = str(case0.cfg.get("label", case_name)).upper()
+    out = {"case": case_name, "variant": variant, "sigma_from_data_deg": case0.series["rotation"].sigma,
+           "note": "Full refits through solve.score._fit_pair with a case-level rotation sigma override "
+                   "(load_case(rotation_sigma_deg=...)); identical for every hypothesis.", "runs": []}
+    for sg in sigmas:
+        rows = []
+        for (task, (res_w, res_p)) in zip(tasks, pairs):
+            if task[4] != float(sg):
+                continue
+            h = task[3]
+            e = {"hypothesis": h.id, "in_design_set": label in h.applies_to, "valid": bool(res_w.get("valid"))}
+            if e["valid"]:
+                e.update({"total_testimony_weighted": res_w["total_testimony_weighted"],
+                          "total_physics_only": res_p["total_physics_only"],
+                          "rotation_testimony_weighted_fit": float(res_w["scores"].set_index("criterion").loc["rotation", "loglik"]),
+                          "rotation_physics_only_fit": float(res_p["scores"].set_index("criterion").loc["rotation", "loglik"]),
+                          "k": res_w["k"], "params_testimony_weighted_fit": res_w["params"],
+                          "params_physics_only_fit": res_p["params"],
+                          "derived_testimony_weighted_fit": res_w["prediction"].scalars,
+                          "derived_physics_only_fit": res_p["prediction"].scalars,
+                          "params_at_bound_physics_only_fit": res_p["at_bound"]})
+            rows.append(e)
+        valid = [e for e in rows if e["valid"]]
+        for key, rk in (("total_testimony_weighted", "rank_testimony_weighted"), ("total_physics_only", "rank_physics_only")):
+            for i, e in enumerate(sorted(valid, key=lambda e: -e[key])):
+                e[rk] = i + 1
+        out["runs"].append({"sigma_deg": float(sg), "hypotheses": rows})
+    return out
+
+
+def resweep(case_name: str) -> dict:
+    """Recompute only the rotation sigma sweep (and its leader crossovers) from the stored best fits, for the run
+    with exclusions and, where present, the run without; rewrite results.json. No refitting."""
+    d = derived_dir(case_name)
+    out = json.loads((d / "results.json").read_text(encoding="utf-8"))
+    hyps = load_hypotheses()
+    by_id = {h.id: h for h in hyps}
+    for v, o in (out["variants"].items() if "variants" in out else [("", out)]):
+        if "rotation_sigma_sweep" not in o:
+            continue
+        runs = [(True, o)]
+        nx = o.get("no_exclusions") or {}
+        if not nx.get("identical") and nx.get("hypotheses"):
+            runs.append((False, nx))
+        for excl, blk in runs:
+            case = load_case(case_name, variant=v or None, exclusions=excl)
+            res = [(e, None) for e in blk["hypotheses"] if e.get("valid")]
+            rms = []
+            for e, _ in res:
+                det = rotation_terms(case, predict(case, by_id[e["hypothesis"]], e["params_testimony_weighted_fit"]))[2]
+                if det.get("cv_resid") is not None:
+                    rms.append(float(np.sqrt(np.mean(det["cv_resid"] ** 2))))
+            blk["rotation_sigma_sweep"] = rotation_sigma_sweep(case, hyps, res, heldout_rms=rms)
+    (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
+    return out
+
+
 def main(argv: list[str]) -> int:
     global PROCS
     if "--procs" in argv:
@@ -963,6 +1125,10 @@ def main(argv: list[str]) -> int:
         recheck_rotation(case)
         print("rotation diagnostic recomputed")
         return 0
+    if len(argv) > 2 and argv[2] == "--resweep":
+        resweep(case)
+        print("rotation sigma sweep recomputed")
+        return 0
     if len(argv) > 2 and argv[2] == "--merge":
         out = _write_variants(case, case_variants(case))
         print(f"merged {out['variant_names']}")
@@ -970,10 +1136,15 @@ def main(argv: list[str]) -> int:
     if len(argv) > 3 and argv[2] == "--part":
         # One sensor variant per process (run them in parallel), then `--merge`.
         v = argv[3]
-        o, rows, _nx = _run_both(case, v, load_hypotheses(), True)
+        o, rows, nx_rows = _run_both(case, v, load_hypotheses(), True)
         d = derived_dir(case)
         d.mkdir(parents=True, exist_ok=True)
         pd.concat(rows, ignore_index=True).to_csv(d / f"scores_part_{v}.csv", index=False, float_format="%.6g")
+        p_nx = d / f"scores_no_exclusions_part_{v}.csv"
+        if nx_rows:
+            pd.concat(nx_rows, ignore_index=True).to_csv(p_nx, index=False, float_format="%.6g")
+        elif p_nx.exists():
+            p_nx.unlink()
         (d / f"results_part_{v}.json").write_text(json.dumps(_jsonable(o), indent=1) + "\n", encoding="utf-8")
         out = {"variants": {v: o}}
     else:

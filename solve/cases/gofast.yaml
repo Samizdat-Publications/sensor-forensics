@@ -94,3 +94,8 @@ shared_parameters:
     source: "As above, north component."
 
 testimony_case: gofast
+
+# Per-hypothesis range curves (solve/range_curves.py, Rule K): extra fixed ranges around the on-screen range
+# (the RNG readout runs 4.4 to 3.3 nmi over the scored window; the main fits sit at 3.83 nmi at the reference frame), added after
+# the CP-04 second check because the shared grid had no point between 3 and 5 nmi. Same points for every hypothesis.
+range_curves_extra_nmi: [3.5, 3.7, 3.85, 4.0, 4.5]

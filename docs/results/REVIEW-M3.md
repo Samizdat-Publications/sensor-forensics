@@ -145,7 +145,7 @@ H-BAL, H-ART and H-SLOW fit the same path (3.85 nmi, 13,212 ft, about 53 kt over
 
 ## 7. CP-04 must-fix methods, stated before running (11/01/2026)
 
-The independent check on CP-04 (`artifacts/review/CP-04-review.md`) sent it back. The methods below were written into this file before any of them was computed on the real data; the results follow in section 8.
+The independent check on CP-04 (`artifacts/review/CP-04-review.md`) sent it back, and these rules answer what it asked for. The methods below were written into this file before the reruns, but git cannot confirm that order: this section, D-018 and every result were committed together in 69b5938. So read them as rules the review requested, not as a verified pre-registration. The results follow in section 8.
 
 ### Rule X (post-hoc exclusions reported both ways)
 
@@ -196,7 +196,7 @@ All three videos refitted through the single path (`python -m solve.score <case>
 
 **Rule C.** With cross-validation the physical rotation spline keeps 16 knots and its held-out residual RMS is 3.66 deg against 2.84 in-sample; the glare model's is 3.64 to 3.65 deg. On held-out data the glare derotation is ahead on this criterion by 3.5 (0.35 deg) and 5.0 (0.7 deg) log units. The earlier 72-unit physical advantage does not survive. A side effect worth stating: cross-validation charges flexibility roughly like AIC, more gently than BIC, so a free smooth rotation can mimic GIMBAL's smooth derotation curve; on synthetic pure-glare data the glare model now wins its own data by about 1.3 log units, not by more than 10 (`tests/test_score_gimbal.py`).
 
-**Rule G.** G-T25 now contributes 0 to every path that does not reverse; H-WIT (0.35 deg) and H-SLOW (0.7 deg) fits that do reverse score about -0.4 on it. The testimony-weighted GIMBAL leader moves from H-WIT to H-BAL at both fields of view.
+**Rule G.** G-T25 now contributes 0 to every path that does not reverse; H-WIT's testimony-weighted fit, the only one that reverses (at both fields of view; H-SLOW does not), scores about -0.4 on it. The testimony-weighted GIMBAL leader moves from H-WIT to H-BAL at both fields of view.
 
 **Rule X.** GIMBAL without exclusions: H-WIT leads both totals at both fields of view (0.35 deg: 35.3 physics-only, -22.6 testimony-weighted), H-ART and H-AC follow, H-BAL is fifth. With exclusions H-BAL leads. GOFAST without the size exclusion: H-ART leads (-904.6 physics-only against H-BAL -930.3). FLIR1: no exclusion applies, so both ways are identical.
 
@@ -205,3 +205,14 @@ All three videos refitted through the single path (`python -m solve.score <case>
 **FLIR1 pitch bound (review nice-to-fix).** `tools/pitch_check.py`: the glare fits sit at pitch 0 deg (prior 3.8 +- 1.5, bounds 0 to 8); with the bound lifted the best pitch is at the scan's edge (-8 deg) and gains 99 to 109 log units on rotation plus prior, against a 268-unit rotation gap. The rest of the gap does not depend on the bound.
 
 **Recovery and discriminators** were rerun for GIMBAL (both fields of view) and FLIR1 with the earlier generator parameter sets (`--reuse-sets`) and one noise draw; see `docs/results/recovery.md` and `discriminators.md`.
+
+## CP-04 second-check fix status (working notes, 11/02/2026)
+
+Review: `artifacts/review/CP-04-review-2.md`.
+
+- 1. FLIR1 rotation-sigma sensitivity: DONE. Case-relative grid (`score.sweep_sigmas`), crossover bisection (`score.leader_crossovers`), `--resweep`, case-level override `load_case(rotation_sigma_deg=...)`, refits by `tools/sigma_refit.py`. Rescored crossover H-WIT to H-ART at 12.75 deg (physics-only) and 12.96 deg (testimony-weighted). Refits: at 13.0 deg H-ART leads both totals (-2,686.6 / -2,595.4 against H-WIT -2,689.0 / -2,603.8); at 15.65 deg H-ART -2,668.6 / -2,578.6 against H-WIT -2,740.7 / -2,656.1. flir1.md "In short", sweep and refit sections and CP-04 updated.
+- 2. GOFAST range curve: DONE (3.5, 3.7, 3.85, 4.0, 4.5 nmi added via `range_curves_extra_nmi`; every top hypothesis peaks at 3.85 nmi; page says the curve cannot separate them because the range is read on screen; tick labels fixed).
+- 3. gimbal.md rotation wording: DONE (both FOVs read "no clear separation" by one rule, sigma about 5 times below the held-out RMS).
+- 4. CP-04 plain words 13.8 to 21.2 nmi: DONE.
+- 5. Pre-registration wording: DONE (CP-04, section 7, D-018).
+- Nice-to-fix: all DONE (GIMBAL resweep to 3.7 deg, a rescore; line 199; floor labels; optimizer shortfall; `--part`/`--merge` no-exclusion CSV; Q-008).

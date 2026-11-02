@@ -290,9 +290,12 @@ def _rotation_noise(rc: dict, cues: pd.DataFrame, fr: np.ndarray, y: np.ndarray,
 
 
 def load_case(name: str, env: Environment | None = None, variant: str | None = None,
-              exclusions: bool = True) -> CaseData:
+              exclusions: bool = True, rotation_sigma_deg: float | None = None) -> CaseData:
     """exclusions=False: every pre-registered criterion at its design weight (REVIEW-M3 Rule X); the
-    data-quality rules are still evaluated and listed in `exclusions`, but not applied."""
+    data-quality rules are still evaluated and listed in `exclusions`, but not applied.
+
+    rotation_sigma_deg: a case-level override of the rotation measurement sigma (the CP-04 second-check
+    sensitivity refit). It replaces the data-only value for the whole case, so every hypothesis sees it."""
     cfg = yaml.safe_load((CASE_DIR / f"{name}.yaml").read_text(encoding="utf-8"))
     cfg, variant_name = _apply_variant(cfg, variant)
     sc = scoring_config()
@@ -426,6 +429,10 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
             m = segs == sg
             resid[m] = L.smooth_residual(t[fr[m]], y[m], deg)
         rotation_noise = _rotation_noise(rc, cues, fr, y, segs)
+        if rotation_sigma_deg is not None:
+            rotation_noise["sigma_from_data_deg"] = rotation_noise["sigma_deg"]
+            rotation_noise["sigma_deg"] = float(rotation_sigma_deg)
+            rotation_noise["override"] = "case-level sensitivity override (same for every hypothesis)"
         n_eff_rot = L.n_eff_autocorr(resid)
         series["rotation"] = Series("rotation", fr, y, segs, rotation_noise["sigma_deg"], n_eff_rot)
         k = rc["physical_spline_knots"]

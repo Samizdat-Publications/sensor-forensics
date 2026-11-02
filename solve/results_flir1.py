@@ -16,7 +16,7 @@ import sys
 import numpy as np
 
 from .results_report import (CRIT_NAMES, ROOT, _added_back, _both_ways_lines, _bounds, _f, _lab, _range_curve_lines,
-                             _recovery_lines, _settle_lines, _sigma_sweep_lines, _zero, derived_dir)
+                             _ft, _recovery_lines, _settle_lines, _sigma_sweep_lines, _zero, derived_dir)
 
 CASE = "flir1"
 NAMES = dict(CRIT_NAMES, rotation="Image rotation")
@@ -39,6 +39,70 @@ def _seg_text(case) -> list:
         sel = sym[sym["frame"] == int(fr[0])].set_index("field")["value"]
         out.append(f"f{fr[0]} to f{fr[-1]} ({len(fr)} frames, {sel.get('sensor')}, zoom {sel.get('zoom')}, {sel.get('fov')})")
     return out
+
+
+def _sigma_refit() -> dict | None:
+    p = derived_dir(CASE) / "sigma_refit.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
+
+def _sigma_condition_lines(res: dict) -> list:
+    """The headline caveat: how the leader depends on the rotation sigma (CP-04 second check)."""
+    sw = res.get("rotation_sigma_sweep") or {}
+    rc = res.get("rotation_check") or {}
+    if not sw.get("crossovers"):
+        return []
+    main = float(sw["main_sigma_deg"])
+    phys = [r.get("cv_resid_rms_deg") for r in rc.get("hypotheses", {}).values() if r.get("kind") == "physical" and r.get("cv_resid_rms_deg")]
+    glare = [r.get("cv_resid_rms_deg") for r in rc.get("hypotheses", {}).values() if r.get("kind") == "glare" and r.get("cv_resid_rms_deg")]
+    co = []
+    for tag, name in (("physics_only", "physics-only"), ("testimony_weighted", "testimony-weighted")):
+        cs = [c for c in sw["crossovers"].get(tag, []) if c["sigma_deg"] > main]
+        if cs:
+            co.append(f"{name} at {_f(cs[0]['sigma_deg'], 1)} deg ({cs[0]['leader_below']} to {cs[0]['leader_above']})")
+    out = [f"- **This leader is conditional on the rotation sigma.** The data-only sigma is {_f(main, 2)} deg. Rescored at the same best fits, "
+           "the leader changes from the free-path object to a glare model a little above it: " + ("; ".join(co) if co else "no change found") + "."]
+    rf = _sigma_refit()
+    if rf:
+        parts = []
+        for run in rf["runs"]:
+            v = [e for e in run["hypotheses"] if e["valid"] and e["in_design_set"]]
+            tp = max(v, key=lambda e: e["total_physics_only"])
+            tw = max(v, key=lambda e: e["total_testimony_weighted"])
+            parts.append(f"at {_f(run['sigma_deg'], 2)} deg the physics-only leader is {tp['hypothesis']} and the testimony-weighted leader {tw['hypothesis']}")
+        out.append("  Refitted (every hypothesis, full fits, the sigma overridden for the whole case): " + "; ".join(parts) + ".")
+    if phys:
+        out.append(f"  The two-threshold estimate ({_f(main, 2)} deg) is larger than the physical fit's whole held-out residual RMS "
+                   f"({_f(min(phys), 1)} deg; the glare fits' is {_f(max(glare), 1) if glare else 'n/a'} deg). Measurement noise cannot exceed the total "
+                   "residual, so the assumption behind the estimate (the two thresholds' errors are equal and independent) is doubtful here, and so is "
+                   "any ranking that depends on the sigma's exact value. Between the two held-out residual RMS values "
+                   f"({_f(min(phys), 1)} and {_f(max(glare), 1) if glare else 'n/a'} deg) the leader changes, so the FLIR1 ranking of the free path against the glare "
+                   "models rests on which sigma is right, which this data does not settle.")
+    return out
+
+
+def _sigma_refit_lines(res: dict) -> list:
+    rf = _sigma_refit()
+    if not rf:
+        return ["The sweep above is rescored at fixed parameters; no refit at another sigma has been run (`tools/sigma_refit.py`).", ""]
+    hy = {h["hypothesis"]: h for h in res["hypotheses"] if h["valid"]}
+    L = [f"Refits at larger sigmas (`tools/sigma_refit.py`, `{(derived_dir(CASE) / 'sigma_refit.json').relative_to(ROOT).as_posix()}`): every hypothesis refitted "
+         "through the same fit path with the rotation sigma overridden for the whole case, so these are proper maxima, not rescored values. "
+         "Testimony-weighted / physics-only totals, rank in brackets (all hypotheses):", ""]
+    sigs = [run["sigma_deg"] for run in rf["runs"]]
+    L.append("| Hypothesis | Main sigma " + _f(float(rf["sigma_from_data_deg"]), 2) + " deg | " + " | ".join(f"Refit at {_f(s, 2)} deg" for s in sigs) + " |")
+    L.append("|---|---|" + "---|" * len(sigs))
+    by = [{e["hypothesis"]: e for e in run["hypotheses"]} for run in rf["runs"]]
+    for hid in sorted(hy, key=lambda k: -hy[k]["total_physics_only"]):
+        h = hy[hid]
+        cells = [f"{_ft(h['total_testimony_weighted'])} ({h['rank_testimony_weighted']}) / {_ft(h['total_physics_only'])} ({h['rank_physics_only']})"]
+        for b in by:
+            e = b.get(hid)
+            cells.append("invalid" if not e or not e["valid"] else
+                         f"{_ft(e['total_testimony_weighted'])} ({e['rank_testimony_weighted']}) / {_ft(e['total_physics_only'])} ({e['rank_physics_only']})")
+        L.append(f"| {hid} | " + " | ".join(cells) + " |")
+    L.append("")
+    return L
 
 
 def build() -> str:
@@ -88,6 +152,8 @@ def build() -> str:
         big = [f"{NAMES.get(c, c).lower()} {d:+,.0f}" for d, c in diffs if abs(d) >= 20][:4]
         A(f"- {top_w['hypothesis']} against {h['hypothesis']} (testimony-weighted fits, per criterion, positive favors "
           f"{top_w['hypothesis']}): " + (", ".join(big) if big else "no criterion differs by 20 or more") + ".")
+    for ln in _sigma_condition_lines(res):
+        A(ln)
     A("- No range is on screen (the `99.9 RNG` line is a constant placeholder and is not used), so every result below is a "
       "best fit along a family of ranges; the range curve near the end shows how speed and altitude trade with range.")
     A("- Totals are log-likelihoods after the complexity penalty: higher is better; a difference of 2.3 is a likelihood ratio of 10.")
@@ -155,8 +221,8 @@ def build() -> str:
     A("| Rank (testimony-weighted) | Hypothesis | Testimony-weighted total | Physics-only total | Rank (physics-only) | k | Best-fit range, weighted / physics (nmi) |")
     A("|---|---|---|---|---|---|---|")
     for h in design:
-        A(f"| {h['rank_testimony_weighted_design_set']} | {h['hypothesis']}: {h['label']} | {_f(h['total_testimony_weighted'])} | "
-          f"{_f(h['total_physics_only'])} | {h['rank_physics_only_design_set']} | {h['k']} | "
+        A(f"| {h['rank_testimony_weighted_design_set']} | {h['hypothesis']}: {h['label']} | {_ft(h['total_testimony_weighted'])} | "
+          f"{_ft(h['total_physics_only'])} | {h['rank_physics_only_design_set']} | {h['k']} | "
           f"{_f(h['derived']['range_nmi_mean'], 1)} / {_f(h['derived_physics_only_fit']['range_nmi_mean'], 1)} |")
     A("")
     A("Gap to the design-set leader (testimony-weighted / physics-only): " + "; ".join(
@@ -165,7 +231,7 @@ def build() -> str:
     A("")
     if others:
         A("Scored for completeness (not in FLIR1's design row): " + "; ".join(
-            f"{h['hypothesis']} ({h['label']}) {_f(h['total_testimony_weighted'])} / {_f(h['total_physics_only'])}, "
+            f"{h['hypothesis']} ({h['label']}) {_ft(h['total_testimony_weighted'])} / {_ft(h['total_physics_only'])}, "
             f"range {_f(h['derived']['range_nmi_mean'], 1)} nmi" for h in others) + ".")
         A("")
     # Sensitivity: size and brightness rows removed (both are in the totals by the rules, but rest on clipped TV frames).
@@ -251,6 +317,7 @@ def build() -> str:
               f"{_f(r['resid_rms_deg'])} / {_f(r.get('cv_resid_rms_deg'))} | {_f(span, 0)} |")
         A("")
         L.extend(_sigma_sweep_lines(res))
+        L.extend(_sigma_refit_lines(res))
         g = [k for k, r in rc["hypotheses"].items() if r["kind"] == "glare" and k in {h["hypothesis"] for h in design}]
         p = [k for k, r in rc["hypotheses"].items() if r["kind"] == "physical" and k in {h["hypothesis"] for h in design}]
         if g and p:

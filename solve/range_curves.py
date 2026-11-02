@@ -12,8 +12,12 @@ Fewer random starts than the main fits (RC_FIT below, the same for every hypothe
 point can sit slightly below what a full fit would reach; the main fits in results.json are the
 reference values.
 
+The grid is GRID_NMI plus the case's own `range_curves_extra_nmi` (case YAML; GOFAST adds points around its
+on-screen range), the same points for every hypothesis on the case.
+
 Usage: python -m solve.range_curves gimbal [--procs 6]
        python -m solve.range_curves gofast | flir1
+       python -m solve.range_curves gofast --missing [--procs 6]   (only grid points not yet in the CSV, merged)
 Writes data/derived/<case>/range_curves.csv and docs/results/<case>_range_curves.png.
 """
 
@@ -73,23 +77,41 @@ def _point(task: tuple) -> dict:
     return row
 
 
+def grid_for(case) -> list:
+    """GRID_NMI plus the case's own extra points (identical for every hypothesis on the case)."""
+    extra = [float(x) for x in (case.cfg.get("range_curves_extra_nmi") or [])]
+    return sorted(set(float(x) for x in GRID_NMI) | set(extra))
+
+
 def tasks_for(case_name: str) -> list:
     out = []
     for v in case_variants(case_name):
         case = load_case(case_name, variant=v or None)
+        grid = grid_for(case)
         for h in S.load_hypotheses():
             specs = {s.name: s for s in S.param_specs(case, h)}
             sp = specs.get("range_ref_nmi")
             if sp is None:
                 continue
-            for r in GRID_NMI:
+            for r in grid:
                 if sp.lo - 1e-9 <= r <= sp.hi + 1e-9:
                     out.append((case_name, v, h.id, r))
     return out
 
 
-def run(case_name: str, procs: int = 1) -> pd.DataFrame:
+def _read(case_name: str) -> pd.DataFrame:
+    df = pd.read_csv(derived_dir(case_name) / "range_curves.csv", keep_default_na=False, na_values=[""])
+    df["variant"] = df["variant"].astype(object).where(df["variant"].notna(), "").astype(str)
+    return df
+
+
+def run(case_name: str, procs: int = 1, missing_only: bool = False) -> pd.DataFrame:
     tasks = tasks_for(case_name)
+    old = None
+    if missing_only and (derived_dir(case_name) / "range_curves.csv").exists():
+        old = _read(case_name)
+        have = {(str(v), str(h), round(float(r), 6)) for v, h, r in zip(old["variant"], old["hypothesis"], old["range_ref_nmi"])}
+        tasks = [t for t in tasks if (str(t[1] or ""), t[2], round(float(t[3]), 6)) not in have]
     if procs > 1:
         from multiprocessing import Pool
         with Pool(procs) as pool:
@@ -99,7 +121,10 @@ def run(case_name: str, procs: int = 1) -> pd.DataFrame:
                 print(f"{len(rows)}/{len(tasks)} {r['variant']} {r['hypothesis']} {r['range_ref_nmi']}", flush=True)
     else:
         rows = [_point(t) for t in tasks]
-    df = pd.DataFrame(rows).sort_values(["variant", "hypothesis", "range_ref_nmi"]).reset_index(drop=True)
+    df = pd.DataFrame(rows)
+    if old is not None:
+        df = pd.concat([old, df], ignore_index=True) if len(df) else old
+    df = df.sort_values(["variant", "hypothesis", "range_ref_nmi"]).reset_index(drop=True)
     p = derived_dir(case_name) / "range_curves.csv"
     df.to_csv(p, index=False, float_format="%.6g")
     plot(case_name, df)
@@ -111,8 +136,10 @@ def plot(case_name: str, df: pd.DataFrame | None = None) -> Path:
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
+    from matplotlib.ticker import FixedLocator, NullFormatter, NullLocator
+
     if df is None:
-        df = pd.read_csv(derived_dir(case_name) / "range_curves.csv", keep_default_na=False, na_values=[""])
+        df = _read(case_name)
     df["variant"] = df["variant"].astype(object).where(df["variant"].notna(), "").astype(str)
     variants = list(dict.fromkeys(df["variant"]))
     panels = [("total_physics_only", "physics-only total"), ("total_testimony_weighted", "testimony-weighted total"),
@@ -130,11 +157,24 @@ def plot(case_name: str, df: pd.DataFrame | None = None) -> Path:
                 if col in d and d[col].notna().any():
                     ax.plot(d["range_ref_nmi"], d[col], marker="o", ms=3, lw=1.2, color=colors[h], label=h)
             ax.set_xscale("log")
+            # Labelled ticks at a fixed sparse set inside the plotted span (no minor labels), so labels never overlap.
+            xs = dv["range_ref_nmi"].astype(float)
+            lo_x, hi_x = float(xs.min()), float(xs.max())
+            ticks = [t for t in (0.5, 1, 2, 3, 5, 10, 20, 30, 60) if lo_x * 0.99 <= t <= hi_x * 1.01]
+            ax.xaxis.set_major_locator(FixedLocator(ticks))
+            ax.xaxis.set_minor_locator(NullLocator())
+            ax.xaxis.set_minor_formatter(NullFormatter())
+            ax.set_xticklabels([f"{t:g}" for t in ticks], fontsize=8)
             if col.startswith("total"):
                 vals = dv[col].dropna()
                 if len(vals):
                     top = vals.max()
-                    ax.set_ylim(top - max(150.0, 0.0), top + 10)
+                    # Show at least 150 below the best point, and enough to include the best hypothesis's next grid
+                    # point (a narrow peak, as where the range is read on screen, otherwise shows as one spike).
+                    lead = dv.loc[vals.idxmax(), "hypothesis"]
+                    lv = dv[(dv["hypothesis"] == lead)][col].dropna().sort_values(ascending=False)
+                    span = 150.0 if len(lv) < 2 else min(max(150.0, 1.15 * (top - lv.iloc[1])), 20000.0)
+                    ax.set_ylim(top - span, top + 0.05 * span)
             ax.set_xlabel("range at the reference frame (nmi)")
             ax.set_title(f"{case_name.upper()}{' ' + v if v else ''}: {title}", fontsize=9)
             ax.grid(alpha=0.3)
@@ -153,7 +193,7 @@ def main(argv: list[str]) -> int:
     if "--plot" in argv:
         print(plot(case_name))
         return 0
-    df = run(case_name, procs)
+    df = run(case_name, procs, missing_only="--missing" in argv)
     print(df.to_string(max_cols=12))
     return 0
 
