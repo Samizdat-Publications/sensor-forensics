@@ -219,6 +219,10 @@ def validate_mapping(mapping: Any, claims_by_case: dict[str, list[dict]]) -> dic
             if e["scorable"] and event not in by_id[cid]["applies_to"]:
                 raise TestimonyError(f"{where}: scored for {event} but the claim does not apply to it")
             for t in e.get("terms", []):
+                g = t.get("given")
+                if g is not None:
+                    if not isinstance(g, dict) or set(g) != {"quantity", "value"} or g["quantity"] not in vocab                             or vocab[g["quantity"]]["type"] != "bool" or not isinstance(g["value"], bool):
+                        raise TestimonyError(f"{where}: given must be {{quantity: <bool quantity>, value: true|false}}")
                 qs = t.get("quantity")
                 qlist = qs if isinstance(qs, list) else [qs]
                 if not qlist or any(q not in vocab for q in qlist):
@@ -383,11 +387,25 @@ def testimony_loglik(case: str, predicted: dict, missing: str = "skip") -> list[
         for t in e["terms"]:
             q = t["quantity"]
             qlist = q if isinstance(q, list) else [q]
-            absent = [x for x in qlist if x not in predicted]
+            g = t.get("given")
+            absent = [x for x in qlist + ([g["quantity"]] if g else []) if x not in predicted]
             if absent:
                 if missing == "raise":
                     raise TestimonyError(f"{cid}: predicted lacks {absent}")
                 continue
+            # A conditional term (REVIEW-M3 Rule G): it scores its quantity only where the condition holds and
+            # contributes 0 otherwise; with a probability p for the condition, log(p L + (1 - p)).
+            p_given = 1.0
+            if g:
+                gv = predicted[g["quantity"]]
+                p_true = (1.0 if gv else 0.0) if isinstance(gv, (bool, np.bool_)) else float(gv)
+                p_given = p_true if g["value"] else 1.0 - p_true
+                if p_given <= 0.0:
+                    rows.append({"claim_id": cid, "quantity": "|".join(qlist), "predicted_value": None,
+                                 "interval": {"lo": t.get("lo"), "hi": t.get("hi"), "given": dict(g),
+                                              "applies": False},
+                                 "loglik": 0.0, "weight": weight, "firsthand": firsthand, "weighted_loglik": 0.0})
+                    continue
             qtype = vocab[qlist[0]]["type"]
             if qtype == "number":
                 how = t.get("reduce", "median")
@@ -420,6 +438,10 @@ def testimony_loglik(case: str, predicted: dict, missing: str = "skip") -> list[
                 pv = predicted[qlist[0]]
                 ll = _categorical_loglik(pv, t["value"], eps)
                 interval = {"value": t["value"], "error_rate": eps}
+            if g:
+                interval = dict(interval, given=dict(g), applies=True)
+                if p_given < 1.0:
+                    ll = float(np.logaddexp(math.log(p_given) + ll, math.log(1.0 - p_given)))
             rows.append({
                 "claim_id": cid,
                 "quantity": "|".join(qlist),

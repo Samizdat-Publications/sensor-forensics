@@ -92,7 +92,10 @@ def test_pure_pod_roll_glare_series_is_recovered_by_the_glare_model(case):
     syn = _with_rotation(case, truth + rng.normal(scale=s.sigma, size=len(s.frames)))
     g_net, g_det = _rotation_net(syn, glare, p)
     p_net, _ = _rotation_net(syn, phys, _params_for(syn, phys))
-    assert g_net > p_net + 10.0
+    # REVIEW-M3 Rule C: with the free terms cross-validated (not charged 0.5 ln n apiece), a free smooth rotation can
+    # follow GIMBAL's smooth derotation curve almost as well on held-out blocks, so the glare model wins its own
+    # data by a small margin only. (Under BIC it won by more than 10; that margin came from the per-term charge.)
+    assert g_net > p_net
     assert g_det["coef"][0] == pytest.approx(57.6, abs=0.3)            # Sitrec's glare start angle, recovered
     assert np.sqrt(np.mean(g_det["resid"] ** 2)) == pytest.approx(s.sigma, rel=0.1)
 

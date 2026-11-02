@@ -31,20 +31,22 @@ Two totals, each at its own best fit: testimony-weighted (testimony weight 1.0) 
 
 Gap to the leader (testimony-weighted, then physics-only): H-ART -5.9 / -5.9; H-SLOW -5.9 / -5.9; H-WIT -36.9 / -36.8; H-AC -19,066.7 / -19,063.7; H-CLOSE -47,781.6 / -47,770.5.
 
-### Sensitivity: weight-0 criteria added back
+### With and without the data-quality exclusions (REVIEW-M3 Rule X)
 
-Criteria that fail a data-quality test are reported but kept out of every total. For transparency, this table adds each one back at weight 1 to the testimony-weighted fit's totals (the fit itself is not redone, so a refit could only raise these numbers).
+The exclusion rules were not decided blind (`docs/results/REVIEW-M3.md`, section 7), so every hypothesis is also refitted with every pre-registered criterion at its design weight.
 
-Apparent size trend: D-016: the blob is not resolved against the point-spread width measured on this video (REVIEW-M3 item 4).
+Excluded by the data-quality rules on this run: Apparent size trend (D-016: apparent-size criterion reported with weight 0 (blob major axis 6.4 px is under 3 x the point-spread width 5.5 px); resolution not established.). Without exclusions every criterion carries its design weight (1.0) and the BIC n is 1248 instead of 1070. Both runs are full refits through the same path.
 
-| Hypothesis | + Apparent size trend: weighted / physics | + all: weighted / physics |
-|---|---|---|
-| H-BAL | -943.7 / -930.0 | -943.7 / -930.0 |
-| H-ART | -917.8 / -904.1 | -917.8 / -904.1 |
-| H-SLOW | -949.5 / -935.9 | -949.5 / -935.9 |
-| H-WIT | -980.6 / -966.9 | -980.6 / -966.9 |
-| H-AC | -19,978.6 / -19,962.0 | -19,978.6 / -19,962.0 |
-| H-CLOSE | -48,731.4 / -48,706.6 | -48,731.4 / -48,706.6 |
+| Hypothesis | With exclusions: testimony-weighted | With exclusions: physics-only | Without exclusions: testimony-weighted | Without exclusions: physics-only |
+|---|---|---|---|---|
+| H-BAL | -1,042.2 (1) | -1,028.5 (1) | -944.0 (2) | -930.3 (2) |
+| H-ART | -1,048.1 (2) | -1,034.4 (2) | -918.3 (1) | -904.6 (1) |
+| H-SLOW | -1,048.1 (3) | -1,034.4 (3) | -950.0 (3) | -936.3 (3) |
+| H-WIT | -1,079.1 (4) | -1,065.3 (4) | -982.0 (4) | -968.0 (4) |
+| H-AC | -20,108.9 (5) | -20,092.2 (5) | -19,979.1 (5) | -19,962.5 (5) |
+| H-CLOSE | -48,823.8 (6) | -48,799.0 (6) | -48,731.8 (6) | -48,707.1 (6) |
+
+**In plain words:** the physics-only leader changes from H-BAL with the exclusions to H-ART without them (order H-BAL, H-ART, H-SLOW, H-WIT, H-AC, H-CLOSE becomes H-ART, H-BAL, H-SLOW, H-WIT, H-AC, H-CLOSE); the testimony-weighted leader changes from H-BAL with the exclusions to H-ART without them (order H-BAL, H-ART, H-SLOW, H-WIT, H-AC, H-CLOSE becomes H-ART, H-BAL, H-SLOW, H-WIT, H-AC, H-CLOSE).
 
 ## Best-fit object (testimony-weighted fit)
 
@@ -73,6 +75,21 @@ All fitted parameters (both fits) are in `results.json`.
 | Nuisance priors | 1.0 | -0.7 | -0.0 | -0.0 | -2.0 | -21.4 | -24.0 |
 | Complexity penalty | 1.0 | -14.0 | -20.9 | -20.9 | -55.8 | -20.9 | -20.9 |
 | Testimony (before weight) | 1.0 | -13.7 | -13.7 | -13.7 | -13.7 | -16.7 | -24.7 |
+
+## Per-criterion log-likelihoods (physics-only fit)
+
+| Criterion | Weight | H-BAL | H-ART | H-SLOW | H-WIT | H-AC | H-CLOSE |
+|---|---|---|---|---|---|---|---|
+| Azimuth readout | 1.0 | -11.1 | -10.4 | -10.4 | -6.0 | -10,229.5 | -7,040.6 |
+| Elevation readout | 1.0 | -5.1 | -5.0 | -5.0 | -5.0 | -961.6 | -1,996.8 |
+| Range readout | 1.0 | -29.4 | -29.4 | -29.4 | -29.3 | -3,636.2 | -36,262.2 |
+| Closure (Vc) readout | 1.0 | -292.4 | -293.0 | -293.0 | -291.9 | -1,474.5 | -596.3 |
+| Ocean motion in the image | 1.0 | -534.7 | -534.5 | -534.5 | -534.3 | -3,604.7 | -2,708.8 |
+| Apparent size trend (weight 0) | 0.0 | 98.5 | 130.2 | 98.5 | 98.5 | 130.2 | 92.4 |
+| Brightness trend | 1.0 | -141.3 | -141.3 | -141.3 | -141.2 | -143.5 | -149.3 |
+| Nuisance priors | 1.0 | -0.7 | -0.0 | -0.0 | -1.8 | -21.3 | -24.0 |
+| Complexity penalty | 1.0 | -14.0 | -20.9 | -20.9 | -55.8 | -20.9 | -20.9 |
+| Testimony (before weight) | 0.0 | -13.7 | -13.7 | -13.7 | -13.7 | -16.7 | -24.7 |
 
 - Apparent size trend: shown but weight 0 (D-016: the blob is not resolved against the point-spread width measured on this video (REVIEW-M3 item 4)).
 
@@ -114,6 +131,29 @@ If the range readout and Vc are set aside, the azimuth, elevation and ocean moti
 
 No solution at 12.0, 20.0 nmi: the sight line reaches the sea before that range.
 
+## Per-hypothesis curves over range
+
+For each hypothesis, the range at the reference frame is held fixed on a grid and every other parameter is refitted (both totals, with the exclusions, ERA5 winds; fewer random starts than the main fits, so a point can sit slightly below a full fit). Full table: `data/derived/gofast/range_curves.csv`; plot: `docs/results/gofast_range_curves.png`. Below: physics-only total, and the implied air speed (kt) / altitude (ft) / largest acceleration (g) at the physics-only fit; a dash outside the hypothesis's prior.
+
+| Range (nmi) | H-AC | H-ART | H-BAL | H-CLOSE | H-SLOW | H-WIT |
+|---|---|---|---|---|---|---|
+| 0.5 | -157,293.0; 319 / 23,464 / 0.00 | -157,521.0; 318 / 23,464 / 0.00 | -2,261,580.0; 5 / 23,468 / 0.00 | -1,562,690.0; 81 / 23,467 / 0.00 | -3,760,420.0; 60 / 23,468 / 0.00 | -124,451.0; 280 / 23,394 / 0.87 |
+| 1.0 | -102,530.0; 254 / 21,922 / 0.00 | -102,409.0; 258 / 21,922 / 0.00 | -655,842.0; 20 / 21,925 / 0.00 | -350,257.0; 82 / 21,925 / 0.00 | -2,445,560.0; 63 / 21,925 / 0.00 | -88,799.7; 239 / 21,876 / 0.62 |
+| 2.0 | -50,838.5; 251 / 18,842 / 0.00 | -39,114.4; 172 / 18,840 / 0.00 | -87,830.7; 20 / 18,843 / 0.00 | -46,490.1; 82 / 18,843 / 0.00 | -53,051.5; 63 / 18,843 / 0.00 | -37,025.6; 158 / 18,795 / 0.42 |
+| 3.0 | -23,284.7; 250 / 15,765 / 0.00 | -8,348.9; 90 / 15,762 / 0.00 | -10,823.8; 17 / 15,762 / 0.00 | - | -8,375.2; 63 / 15,762 / 0.00 | -8,063.1; 81 / 15,767 / 0.19 |
+| 5.0 | -2,027,080.0; 250 / 9,447 / 0.00 | -16,001.8; 81 / 9,609 / 0.00 | -17,972.9; 20 / 9,609 / 0.00 | - | -16,014.6; 63 / 9,607 / 0.00 | -15,588.3; 99 / 9,618 / 0.35 |
+| 7.5 | -2,154,320.0; 253 / 1,824 / 0.00 | -154,308.0; 234 / 1,820 / 0.00 | -176,178.0; 20 / 1,920 / 0.00 | - | -165,317.0; 63 / 1,920 / 0.00 | -149,934.0; 303 / 1,923 / 1.34 |
+| 10.0 | - | - | - | - | - | - |
+| 15.0 | - | - | - | - | - | - |
+| 20.0 | - | - | - | - | - | - |
+| 30.0 | - | - | - | - | - | - |
+| 45.0 | - | - | - | - | - | - |
+| 60.0 | - | - | - | - | - | - |
+
+Ranges within 2.3 log units of each hypothesis's best physics-only point on this grid: H-AC 3.0 to 3.0 nmi; H-ART 3.0 to 3.0 nmi; H-BAL 3.0 to 3.0 nmi; H-CLOSE 2.0 to 2.0 nmi; H-SLOW 3.0 to 3.0 nmi; H-WIT 3.0 to 3.0 nmi.
+
+![GOFAST range curves](gofast_range_curves.png)
+
 ## Checks reported, not scored
 
 Implied size is the blob's length times the range: an upper bound, because the blob includes the optics' blur.
@@ -148,10 +188,10 @@ Implied size is the blob's length times the range: an upper bound, because the b
 
 ## What would settle it
 
-Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`). In short:
+Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`; GOFAST fits did not change in the CP-04 fixes, so it was not rerun). In short:
 
 - The on-screen range already fixes position: every top hypothesis puts the object at 3.8 nmi and 13,200 ft at mid-clip, so range, closure, altitude and a second bearing cannot separate them.
 - **The wind at 13,200 ft is the discriminator.** A balloon's air speed is 0 to 2.7 kt; the slow flier allows 0 to 18.5 kt (best 9.6), the free path 11 to 30 kt (best 23). An independent wind good to 3.9 kt separates the balloon from the free path both ways (ERA5's 5 kt is just short). Against the slow flier it works one way only: a wind good to 3.2 kt rules out the balloon if the object really flies near 9.6 kt; nothing rules out the slow flier if it is a balloon.
 - **Pairs no measurement separates.** The slow flier and the glare-on-a-target model are the same physics on GOFAST; only a resolved image or the raw recording with known gain could tell them apart.
-
+- **The size exclusion.** Without the D-016 size exclusion the glare-on-a-target model leads instead of the balloon (results above); a resolved, unsaturated image of the object would settle whether that row belongs in the totals.
 

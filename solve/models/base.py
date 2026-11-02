@@ -149,17 +149,27 @@ def scalar_quantities(case, pred: Prediction, wind_xy: np.ndarray) -> dict:
     vv = pred.obj_vel[w]
     sp = np.linalg.norm(vv, axis=-1)
     kappa = np.linalg.norm(np.cross(vv, acc), axis=-1) / np.maximum(sp, 1e-6) ** 3
-    radius_ft = float(min(1e6, 1.0 / max(float(np.max(kappa)), 1e-30) / F.FT))
     lag = int(round(3.0 * case.fps))
-    stops = False
+    # stops_and_reverses (G-T11): at some frame the ground speed is under 20 kt and the ground-velocity direction
+    # 3 s before and 3 s after differs by at least 120 deg. reversal_radius_ft (G-T25, REVIEW-M3 Rule G): the
+    # tightest turn radius within 3 s of any frame where that test fires; undefined (nan) for a path that does
+    # not reverse, so no sentinel radius enters any total (G-T25 is conditional on the reversal).
+    rev_frames = []
     for i in np.flatnonzero(gs < 20 * F.KT):
         if i - lag < 0 or i + lag >= len(gs):
             continue
         a, b = gv[i - lag], gv[i + lag]
         na, nb = np.linalg.norm(a), np.linalg.norm(b)
         if na > 0 and nb > 0 and np.degrees(np.arccos(np.clip(a @ b / (na * nb), -1, 1))) >= 120:
-            stops = True
-            break
+            rev_frames.append(int(i))
+    stops = bool(rev_frames)
+    if stops:
+        near = np.zeros(len(gs), bool)
+        for i in rev_frames:
+            near[max(0, i - lag):i + lag + 1] = True
+        radius_ft = float(1.0 / max(float(np.max(kappa[near])), 1e-30) / F.FT)
+    else:
+        radius_ft = float("nan")
     wm = env_wind.mean(axis=0)
     if np.linalg.norm(wm) > 0:
         down = float(np.median(gv @ (wm / np.linalg.norm(wm)))) / F.KT

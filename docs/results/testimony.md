@@ -8,6 +8,7 @@ Nothing here is a finding about what any object was. It records which statements
 
 - A claim is **scored** only if it constrains a quantity the trajectory models predict for this object during this clip: range, object altitude, ground or air speed, length, the stop-and-reverse, motion against or with the wind, the range trend, the reversal radius.
 - Each scored term is an interval [lo, hi] with a Gaussian edge whose width is the claim's uncertainty band: flat inside, Gaussian tails outside. Categories (stop-and-reverse, motion vs wind, range trend) use a 10 percent chance that the recollection is wrong, the same for every claim.
+- A term can be conditional (11/01/2026, REVIEW-M3 Rule G): G-T25, the reversal radius, scores only a path that stops and reverses and contributes 0 otherwise; whether the object reversed is scored once, by G-T11. (Before CP-04 a path that never reversed was scored at a 1,000,000 ft sentinel radius, which cost every such path about 24.6 log units from one claim.)
 - Firsthand claims weigh 1.0, relayed claims 0.5. Conflicting claims each enter with their own interval. The same witness repeating the same value is scored once.
 - Class statements (all East Coast contacts over 2014 to 2015), counts of other objects, locations, other events and, for FLIR1, the state of the object during Fravor's merge an hour before the clip, are context and are not scored.
 - Claims about on-screen numbers (jet altitude and speed, range and closure fields, polarity, the clip's length) test memory against the record. They are reported in the witness-consistency tables below and **never change a hypothesis score**. Wind, time of day and visibility are environment, checked against ERA5 or ephemeris, not used to tell hypotheses apart.
@@ -25,7 +26,7 @@ Nothing here is a finding about what any object was. It records which statements
 | G-T13 | Graves (via P&vR) | no | range_nmi | 6 to 8 (2) |
 | G-T14 | Graves (via P&vR) | no | range_trend | decreasing |
 | G-T21 | cockpit crew on the tape | yes | motion_vs_wind | against |
-| G-T25 | Graves | yes | reversal_radius_ft | 50 to 500, log scale (0.5 dex) |
+| G-T25 | Graves | yes | reversal_radius_ft, only for a path that reverses (REVIEW-M3 Rule G) | 50 to 500, log scale (0.5 dex) |
 | G-T28 | Graves | no | ground or air speed (either) | 90 to 110 (20) |
 
 Not scored (33): 11 class statements, 6 counts of other objects, 5 locations or times, 3 duplicates of G-T11's reversal, 2 other events, 2 image content, 2 sensor or data, 2 roles. Environment: G-T20 (wind 120 kt from the west at about 25,000 ft) and G-T15 (after sunset).

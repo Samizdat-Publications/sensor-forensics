@@ -88,7 +88,7 @@ def test_mixture_term_uses_both_readings():
 # ----------------------------------------------------------------------------- weighting
 
 def test_firsthand_and_relayed_weights():
-    rows = T.testimony_loglik("gimbal", {"range_nmi": 7.0, "reversal_radius_ft": 300.0})
+    rows = T.testimony_loglik("gimbal", {"range_nmi": 7.0, "reversal_radius_ft": 300.0, "stops_and_reverses": True})
     by = {r["claim_id"]: r for r in rows}
     assert by["G-T13"]["firsthand"] is False and by["G-T13"]["weight"] == 0.5
     assert by["G-T25"]["firsthand"] is True and by["G-T25"]["weight"] == 1.0
@@ -298,3 +298,31 @@ def test_memory_floor_widens_tight_claims():
         if iv["scale"] == "linear":
             assert iv["sigma"] >= T.MEMORY_SIGMA_FLOOR * max(abs(iv["lo"]), abs(iv["hi"])) - 1e-12
             assert iv["sigma"] >= iv["sigma_claimed"]
+
+
+# ----------------------------------------------------------------------------- conditional terms (REVIEW-M3 Rule G)
+
+def test_reversal_radius_is_conditional_on_a_reversal():
+    """G-T25 scores the turn radius only for a path that reverses; G-T11 alone scores whether it reversed."""
+    rev = {r["claim_id"]: r for r in T.testimony_loglik(
+        "gimbal", {"reversal_radius_ft": 300.0, "stops_and_reverses": True})}
+    far = {r["claim_id"]: r for r in T.testimony_loglik(
+        "gimbal", {"reversal_radius_ft": 30000.0, "stops_and_reverses": True})}
+    none = {r["claim_id"]: r for r in T.testimony_loglik(
+        "gimbal", {"reversal_radius_ft": float("nan"), "stops_and_reverses": False})}
+    assert rev["G-T25"]["interval"]["applies"] is True and rev["G-T25"]["loglik"] > far["G-T25"]["loglik"]
+    assert none["G-T25"]["loglik"] == 0.0 and none["G-T25"]["interval"]["applies"] is False
+    # no sentinel: a non-reversing path pays only G-T11, once
+    assert none["G-T11"]["loglik"] == pytest.approx(math.log(0.1))
+    # a probability for the condition mixes the two cases
+    half = {r["claim_id"]: r for r in T.testimony_loglik(
+        "gimbal", {"reversal_radius_ft": 30000.0, "stops_and_reverses": 0.5})}
+    assert far["G-T25"]["loglik"] < half["G-T25"]["loglik"] < 0.0
+
+
+def test_conditional_term_validation():
+    import copy
+    m = copy.deepcopy(T.load_mapping())
+    m["cases"]["gimbal"]["claims"]["G-T25"]["terms"][0]["given"] = {"quantity": "range_nmi", "value": True}
+    with pytest.raises(T.TestimonyError):
+        T.validate_mapping(m, {k: T.load_claims(k) for k in T.CASES})

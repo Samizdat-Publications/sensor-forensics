@@ -1,0 +1,11 @@
+{
+  "case": "dow-uap-pr052",
+  "source_video": "data\\pursue\\raw\\R02\\video_2605_DOD_111719718_DOD_111719718.mp4",
+  "source_sha256": "16f265b140df62023c262f8157a8e3f496b422b6138aa267ee0a28019588b178",
+  "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "fps_nominal": 24.0,
+  "n_frames": 11893,
+  "n_pts": 11893,
+  "n_exact_duplicates": 56,
+  "frame_set_sha256": "4f5f092943e162196cb71e5849b6ba412a525750669f8155661620f38fc45443"
+}

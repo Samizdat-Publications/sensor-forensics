@@ -12,7 +12,8 @@
 #               visibility: checked against ERA5 or ephemeris, not a hypothesis discriminator), context (listed, not scored)
 #   kind        for claims that are not scored: count, class_statement, other_event, first_encounter, outside_clip,
 #               duplicate, image_content, location_or_time, sensor_or_data, role
-#   terms       hypothesis terms: quantity, interval [lo, hi] in the unit in the quantity's name, sigma (the claim's
+#   terms       hypothesis terms (optional given: {quantity: <bool>, value: ...} makes a term conditional; it then scores
+#               only where the condition holds and contributes 0 otherwise): quantity, interval [lo, hi] in the unit in the quantity's name, sigma (the claim's
 #               uncertainty band, same unit; in dex when scale is log), reduce (how a per-frame prediction is summarized:
 #               median by default, last for "when it left the field of view"), or value + error_rate for categories
 #   witness     on-screen comparisons: quantity, recalled interval [lo, hi] and tol (the rounding implied by the
@@ -51,7 +52,7 @@ quantities:
   air_speed_kt: {type: number, unit: kt, meaning: "object horizontal speed through the air, ground velocity minus the ERA5 wind (scalar or per-frame array)"}
   min_ground_speed_kt: {type: number, unit: kt, meaning: "minimum horizontal ground speed over the clip (scalar)"}
   size_ft: {type: number, unit: ft, meaning: "object length implied by its angular size at the predicted range (scalar or per-frame array)"}
-  reversal_radius_ft: {type: number, unit: ft, meaning: "radius of the tightest turn in the object's 3D path over the clip, capped at 1,000,000 ft for a straight path (scalar)"}
+  reversal_radius_ft: {type: number, unit: ft, meaning: "for a path that stops and reverses (the stops_and_reverses test fires), the radius of the tightest turn in its 3D path within 3 s of a frame where the test fires; undefined (not a number) for a path that does not reverse, so it is only scored by a term conditional on stops_and_reverses (REVIEW-M3 Rule G; the earlier 1,000,000 ft cap for a straight path is removed)"}
   stops_and_reverses: {type: bool, meaning: "true if at some frame the ground speed is below 20 kt and the ground-velocity direction 3 s before and 3 s after that frame differs by at least 120 degrees; a probability in [0, 1] is also accepted"}
   motion_vs_wind: {type: category, values: [against, with, neither], meaning: "against if the ground-velocity component along the downwind direction (median over the clip) is below -10 kt, with if above +10 kt, else neither (holding or crossing)"}
   range_trend: {type: category, values: [decreasing, increasing, constant], meaning: "decreasing if last-frame range is more than 1 percent below first-frame range, increasing if more than 1 percent above, else constant"}
@@ -154,9 +155,9 @@ cases:
         firsthand: true
         scorable: true
         use: [hypothesis]
-        why: "Vertical U-turn within about 500 ft: turn radius, scored in log space (order-of-magnitude memory, 0.5 dex edge) from 50 ft (effectively zero) to 500 ft."
+        why: "Vertical U-turn within about 500 ft: turn radius, scored in log space (order-of-magnitude memory, 0.5 dex edge) from 50 ft (effectively zero) to 500 ft. Conditional on a reversal (REVIEW-M3 Rule G, CP-04 review): whether the object reversed at all is G-T11's claim, from the same witness, scored once there; this term scores only how tight the turn was, for a path that does reverse, and contributes 0 for one that does not (P(reverses) x P(radius | reverses), so the maneuver is not scored twice and no sentinel radius enters a total)."
         terms:
-          - {quantity: reversal_radius_ft, lo: 50, hi: 500, sigma: 0.5, scale: log}
+          - {quantity: reversal_radius_ft, lo: 50, hi: 500, sigma: 0.5, scale: log, given: {quantity: stops_and_reverses, value: true}}
       G-T26: {firsthand: true, scorable: false, use: [context], kind: count, why: "Spacing and count of the other objects; not modeled."}
       G-T27: {firsthand: true, scorable: false, use: [context], kind: count, why: "Total objects over both events."}
       G-T28:

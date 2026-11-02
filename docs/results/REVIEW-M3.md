@@ -142,3 +142,66 @@ H-BAL, H-ART and H-SLOW fit the same path (3.85 nmi, 13,212 ft, about 53 kt over
 **GOFAST.** With size at weight 0 (D-016) and no rotation criterion, H-AC, H-ART, H-SLOW and H-CLOSE are the same point-target physics and differ only by priors. H-ART, with the widest airspeed prior (0 to 600 kt) and the same parameter count, wins most data sets made by the others, including all made by H-CLOSE and H-AC (by 11 to 19 when the fits converge; the BIC penalty counts parameters, not prior width). At the best-fit (real-data-like) sets, H-BAL won the data made by H-ART, H-BAL, H-SLOW and H-WIT. So GOFAST's range readout fixes where the object was (3.85 nmi, 13,200 ft), but the data cannot say whether it was a balloon, a slow flier or a glare on a slow target; H-BAL's 5.9 lead is a parsimony margin, not a discrimination. The optimizer check flags 8 GOFAST data sets where the true model's own fit stopped below its true-parameter total (mostly H-CLOSE at its 2 nmi bound and H-WIT's spline); those cells understate the truth.
 
 **Not run** (recorded as the next step, under the coordinator's resource limit for this machine): GIMBAL at 0.7 deg, where the resolved size criterion also counts.
+
+## 7. CP-04 must-fix methods, stated before running (11/01/2026)
+
+The independent check on CP-04 (`artifacts/review/CP-04-review.md`) sent it back. The methods below were written into this file before any of them was computed on the real data; the results follow in section 8.
+
+### Rule X (post-hoc exclusions reported both ways)
+
+The three data-quality exclusions (Rule B brightness audit, D-016 resolved size, D-017 saturated size) were not decided blind: D-017 was ruled with both 0.7 deg rankings visible, and the brightness and size reviews were prompted by provisional rankings. So every case is now fitted twice through the same path: once with the exclusions (the default, as before) and once with every pre-registered criterion at its design weight (scoring.yaml, all 1.0; the BIC n then counts those criteria's n_eff again). Both sets of totals, each at its own refitted best fit, are reported side by side in each results page and in results.json (`no_exclusions` block per run), with a plain sentence on which ranks change. Nothing else differs between the two runs. Other measurement-validity rules that are not weight changes (FLIR1's unresolved-FOV frames, the rotation quality rule) are kept in both runs.
+
+### Rule N (rotation measurement noise, from the data only)
+
+The rotation sigma is the measurement's own error, estimated without any model of the object:
+
+1. Two independent thresholdings of the same blob on the same frame (`obj_hi_angle_deg` and `obj_lo_angle_deg`) each measure the same axial orientation. Their difference, wrapped to plus or minus 90 deg, with its mean removed per scored segment (a constant per-segment bias is absorbed by the segment offset every model gets), has variance 2 sigma^2 if the two errors are independent and equal. So sigma_thr = SD(diff) / sqrt(2), over the criterion's own scored frames.
+2. The frame-to-frame scatter of the scored series, 1.4826 MAD(first differences) / sqrt(2) (`likelihoods.robust_sigma_from_diffs`), is the white part of the noise. A noise estimate cannot be below it.
+3. sigma = max(sigma_thr, sigma_ff). The two-threshold difference also contains slow, shape-dependent errors that a running median or a frame difference cannot see, which is why it is the primary estimate. The previous value (scatter about a 9-frame running median, 0.88 deg at GIMBAL) is kept and reported.
+
+The same rule, on the same columns, applies to GIMBAL and FLIR1 and to every hypothesis. The rotation criterion and all totals are refitted at this sigma. A sensitivity sweep at 0.88, 1.3, 2.0 and 3.0 deg rescored at each run's best-fit parameters (rotation criterion and both totals; not refitted, stated as such) is reported for both cases.
+
+### Rule C (complexity of fitted splines that BIC cannot count)
+
+BIC is not valid where a fit's free terms approach or exceed the sample size: the physical rotation spline (up to 33 terms) against a rotation n_eff of 23, and H-WIT's total k of 49 against a BIC n of 45. The rotation criterion's free terms (any model's: a glare's offset, a physical object's smooth spline, the shared segment offsets) are fitted by linear least squares, so they are now scored by blocked cross-validation instead of being counted in k:
+
+- the scored frames are cut into contiguous blocks of length ceil(n / n_eff) frames (the decorrelation length the data's own n_eff implies; GIMBAL about 45 frames), assigned to 5 folds in turn;
+- for each fold the free terms are fitted on the other folds and the held-out frames are predicted; the criterion's log-likelihood is the sum of the held-out Gaussian log densities, scaled by n_eff / n as before;
+- the physical spline's knot count is chosen from the same list by the largest cross-validated log-likelihood (no penalty term, since held-out data already charge flexibility);
+- these terms then count 0 in k. The parameters fitted by the nonlinear optimizer (ranges, speeds, headings, the shared nuisances and H-WIT's 12 path-knot values) stay in k exactly as before; with the rotation terms out of k, every model's k is below the BIC n (H-WIT: 16 against 45).
+
+The rule is identical for every model with a rotation criterion (glare and physical alike). It is a lab decision within the design's line "splines count their effective degrees of freedom": a held-out likelihood is the effective-degrees-of-freedom charge measured directly.
+
+### Rule G (G-T25, reversal radius)
+
+The vocabulary quantity `reversal_radius_ft` is now defined only for a path that stops and reverses (the `stops_and_reverses` definition used by G-T11): the radius of the tightest turn within 3 s of a frame where that test fires. For a path that does not reverse it is undefined, and G-T25 is conditional (`given: stops_and_reverses = true`): it scores the turn radius only for a path that reverses, and contributes 0 otherwise. Whether the object reversed at all is scored once, by G-T11. The likelihood factors as P(reverses) x P(radius | reverses), so the maneuver is not scored twice and no sentinel value enters any total. The 1,000,000 ft cap is removed.
+
+### Rule K (range curves)
+
+For every hypothesis that has a range parameter, at fixed reference ranges 0.5, 1, 2, 3, 5, 7.5, 10, 15, 20, 30, 45 and 60 nmi (inside its own prior only; H-CLOSE stops at 2 nmi), the remaining parameters are refitted (both totals, with the exclusions, ERA5 winds; fewer random starts than the main fit, stated in the CSV) and the implied mean air and ground speed, mean altitude and largest acceleration over the clip are recorded, with the no-exclusion physics-only total rescored at the same parameters. Output: `data/derived/<case>/range_curves.csv` and `docs/results/<case>_range_curves.png`.
+
+## CP-04 fix status (working notes, 11/01/2026 evening)
+
+- (a) Rule X, both ways: DONE in code (`load_case(exclusions=False)`, `score._run_both`, `no_exclusions` block in results.json, `scores_no_exclusions.csv`, tables in results pages). Reruns: all three done (section 8).
+- (b) Rule N sigma and Rule C cross-validation: DONE in code (`likelihoods.cv_folds`, `rotation_fit(folds=...)`, case YAMLs `noise_method: two_threshold`, `cv_folds: 5`; sweep in `rotation_sigma_sweep`). Rule N gives 0.675 deg at GIMBAL (two-threshold 0.25 deg, frame-to-frame 0.675 deg) and 11.9 deg at FLIR1. Results in section 8.
+- (c) Rule G, G-T25 conditional: DONE (`models/base.py`, `testimony.py` `given`, `scorable.yaml`, tests).
+- (d) Rule K, range curves: DONE for all three videos; CP-04 cites them.
+- DONE: recovery and discriminators reruns for GIMBAL, recovery for FLIR1, "What would settle it" text (kept in `data/discriminators/notes.yaml`, key `results_page_settle`), FLIR1 pitch-bound diagnostic (`tools/pitch_check.py`), CP-04.md. Gate: see CP-04.
+
+## 8. CP-04 must-fix results (11/01/2026)
+
+All three videos refitted through the single path (`python -m solve.score <case> --procs 6`), both ways.
+
+**Rule N.** GIMBAL: two-threshold disagreement 0.25 deg (the two thresholds see nearly the same contour, so their errors are correlated and this underestimates), frame-to-frame scatter 0.675 deg, so sigma = 0.675 deg, below the earlier 0.88 deg. FLIR1: two-threshold 11.86 deg, frame-to-frame 1.21 deg, sigma 11.86 deg (earlier 7.51). The rule was applied as written; the sweep (0.88 to 3 deg) is on the GIMBAL and FLIR1 pages.
+
+**Rule C.** With cross-validation the physical rotation spline keeps 16 knots and its held-out residual RMS is 3.66 deg against 2.84 in-sample; the glare model's is 3.64 to 3.65 deg. On held-out data the glare derotation is ahead on this criterion by 3.5 (0.35 deg) and 5.0 (0.7 deg) log units. The earlier 72-unit physical advantage does not survive. A side effect worth stating: cross-validation charges flexibility roughly like AIC, more gently than BIC, so a free smooth rotation can mimic GIMBAL's smooth derotation curve; on synthetic pure-glare data the glare model now wins its own data by about 1.3 log units, not by more than 10 (`tests/test_score_gimbal.py`).
+
+**Rule G.** G-T25 now contributes 0 to every path that does not reverse; H-WIT (0.35 deg) and H-SLOW (0.7 deg) fits that do reverse score about -0.4 on it. The testimony-weighted GIMBAL leader moves from H-WIT to H-BAL at both fields of view.
+
+**Rule X.** GIMBAL without exclusions: H-WIT leads both totals at both fields of view (0.35 deg: 35.3 physics-only, -22.6 testimony-weighted), H-ART and H-AC follow, H-BAL is fifth. With exclusions H-BAL leads. GOFAST without the size exclusion: H-ART leads (-904.6 physics-only against H-BAL -930.3). FLIR1: no exclusion applies, so both ways are identical.
+
+**Rule K.** `data/derived/<case>/range_curves.csv` and `docs/results/<case>_range_curves.png` for all three videos (12 ranges, both totals, fewer random starts than the main fits).
+
+**FLIR1 pitch bound (review nice-to-fix).** `tools/pitch_check.py`: the glare fits sit at pitch 0 deg (prior 3.8 +- 1.5, bounds 0 to 8); with the bound lifted the best pitch is at the scan's edge (-8 deg) and gains 99 to 109 log units on rotation plus prior, against a 268-unit rotation gap. The rest of the gap does not depend on the bound.
+
+**Recovery and discriminators** were rerun for GIMBAL (both fields of view) and FLIR1 with the earlier generator parameter sets (`--reuse-sets`) and one noise draw; see `docs/results/recovery.md` and `discriminators.md`.

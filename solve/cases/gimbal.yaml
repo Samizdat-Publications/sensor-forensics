@@ -90,6 +90,14 @@ image:
 rotation:
   orientation_column: obj_hi_angle_deg   # major-axis orientation, high threshold (matches Sitrec glare_angle to 0.99 deg)
   noise_window_frames: 9                 # measurement scatter about a 9-frame running median (about 0.9 deg)
+  # REVIEW-M3 Rule N (CP-04, 11/01/2026, stated before running): the noise is the two-threshold disagreement of the
+  # same blob's orientation (SD of the per-segment-demeaned difference / sqrt 2), floored by the frame-to-frame
+  # scatter. The running-median value above is kept and reported.
+  noise_method: two_threshold
+  second_orientation_column: obj_lo_angle_deg
+  # REVIEW-M3 Rule C: the free rotation terms (any model's) are scored by blocked cross-validation (blocks of
+  # n / n_eff frames, 5 folds) instead of being counted in k; the knot count is the best held-out choice.
+  cv_folds: 5
   # Free smooth rotation of a physical object: a natural cubic spline over the clip with evenly spaced knots,
   # the same for every non-glare model. The knot count is chosen from this list by the same penalized
   # likelihood as the totals (each knot counted in k: 0.5 ln(n_eff) apiece), so the data decide how

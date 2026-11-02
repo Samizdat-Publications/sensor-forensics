@@ -1,0 +1,193 @@
+{
+ "case": "flir1",
+ "prior": {
+  "mean": 3.8,
+  "sd": 1.5,
+  "bounds": [
+   0.0,
+   8.0
+  ]
+ },
+ "hypotheses": {
+  "H-AC": {
+   "testimony_weighted": {
+    "fitted_pitch_deg": 0.0,
+    "at_fit": {
+     "pitch_deg": 0.0,
+     "rotation": -1860.042647029319,
+     "rotation_plus_prior": -1863.2515359182078
+    },
+    "best_unbounded": {
+     "pitch_deg": -8.0,
+     "rotation": -1723.7896602023354,
+     "rotation_plus_prior": -1754.7318824245576
+    },
+    "gain_unbounded": 108.51965349365014
+   },
+   "physics_only": {
+    "fitted_pitch_deg": 0.0,
+    "at_fit": {
+     "pitch_deg": 0.0,
+     "rotation": -1854.8470571598375,
+     "rotation_plus_prior": -1858.0559460487264
+    },
+    "best_unbounded": {
+     "pitch_deg": -8.0,
+     "rotation": -1721.8636226916676,
+     "rotation_plus_prior": -1752.8058449138898
+    },
+    "gain_unbounded": 105.25010113483654
+   }
+  },
+  "H-ART": {
+   "testimony_weighted": {
+    "fitted_pitch_deg": 0.0,
+    "at_fit": {
+     "pitch_deg": 0.0,
+     "rotation": -1859.1716258994336,
+     "rotation_plus_prior": -1862.3805147883224
+    },
+    "best_unbounded": {
+     "pitch_deg": -8.0,
+     "rotation": -1723.3160761319657,
+     "rotation_plus_prior": -1754.258298354188
+    },
+    "gain_unbounded": 108.12221643413454
+   },
+   "physics_only": {
+    "fitted_pitch_deg": 0.0,
+    "at_fit": {
+     "pitch_deg": 0.0,
+     "rotation": -1843.756530589145,
+     "rotation_plus_prior": -1846.965419478034
+    },
+    "best_unbounded": {
+     "pitch_deg": -8.0,
+     "rotation": -1717.4406862364156,
+     "rotation_plus_prior": -1748.3829084586378
+    },
+    "gain_unbounded": 98.58251101939618
+   }
+  },
+  "H-BAL": {
+   "testimony_weighted": {
+    "fitted_pitch_deg": 3.8000769970415207,
+    "at_fit": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6463620705924,
+     "rotation_plus_prior": -1590.646917626148
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6463620705924,
+     "rotation_plus_prior": -1590.646917626148
+    },
+    "gain_unbounded": 0.0
+   },
+   "physics_only": {
+    "fitted_pitch_deg": 3.800108901640435,
+    "at_fit": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.646362200631,
+     "rotation_plus_prior": -1590.6469177561867
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.646362200631,
+     "rotation_plus_prior": -1590.6469177561867
+    },
+    "gain_unbounded": 0.0
+   }
+  },
+  "H-CLOSE": {
+   "testimony_weighted": {
+    "fitted_pitch_deg": 2.9873976782894354,
+    "at_fit": {
+     "pitch_deg": 3.0,
+     "rotation": -1590.6497511482992,
+     "rotation_plus_prior": -1590.7919733705214
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6495379561497,
+     "rotation_plus_prior": -1590.6500935117053
+    },
+    "gain_unbounded": 0.14187985881608256
+   },
+   "physics_only": {
+    "fitted_pitch_deg": 2.9645966929121745,
+    "at_fit": {
+     "pitch_deg": 3.0,
+     "rotation": -1590.6497511398866,
+     "rotation_plus_prior": -1590.7919733621088
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6495379463875,
+     "rotation_plus_prior": -1590.650093501943
+    },
+    "gain_unbounded": 0.1418798601657727
+   }
+  },
+  "H-SLOW": {
+   "testimony_weighted": {
+    "fitted_pitch_deg": 2.097258020680799,
+    "at_fit": {
+     "pitch_deg": 2.0,
+     "rotation": -1590.645773777557,
+     "rotation_plus_prior": -1591.365773777557
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6458006444777,
+     "rotation_plus_prior": -1590.6463562000333
+    },
+    "gain_unbounded": 0.7194175775237
+   },
+   "physics_only": {
+    "fitted_pitch_deg": 3.885015434046397,
+    "at_fit": {
+     "pitch_deg": 4.0,
+     "rotation": -1590.645772886457,
+     "rotation_plus_prior": -1590.6546617753459
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6458007391573,
+     "rotation_plus_prior": -1590.6463562947129
+    },
+    "gain_unbounded": 0.008305480632998297
+   }
+  },
+  "H-WIT": {
+   "testimony_weighted": {
+    "fitted_pitch_deg": 3.113963210097581,
+    "at_fit": {
+     "pitch_deg": 3.0,
+     "rotation": -1590.6463622932602,
+     "rotation_plus_prior": -1590.7885845154824
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6464727774965,
+     "rotation_plus_prior": -1590.647028333052
+    },
+    "gain_unbounded": 0.1415561824303495
+   },
+   "physics_only": {
+    "fitted_pitch_deg": 3.7718693877487595,
+    "at_fit": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6464762855817,
+     "rotation_plus_prior": -1590.6470318411373
+    },
+    "best_unbounded": {
+     "pitch_deg": 3.75,
+     "rotation": -1590.6464762855817,
+     "rotation_plus_prior": -1590.6470318411373
+    },
+    "gain_unbounded": 0.0
+   }
+  }
+ }
+}

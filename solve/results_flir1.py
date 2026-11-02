@@ -15,7 +15,8 @@ import sys
 
 import numpy as np
 
-from .results_report import CRIT_NAMES, ROOT, _added_back, _bounds, _f, _lab, _recovery_lines, _zero, derived_dir
+from .results_report import (CRIT_NAMES, ROOT, _added_back, _both_ways_lines, _bounds, _f, _lab, _range_curve_lines,
+                             _recovery_lines, _settle_lines, _sigma_sweep_lines, _zero, derived_dir)
 
 CASE = "flir1"
 NAMES = dict(CRIT_NAMES, rotation="Image rotation")
@@ -184,6 +185,9 @@ def build() -> str:
           f"{_f(tp - ws * cp.get('size_trend', 0))} | {_f(tp - ws * cp.get('size_trend', 0) - wb * cp.get('brightness_trend', 0))} |")
     A("")
     _added_back(L, {"": (res, design)}, {"": ""}, NAMES)
+    A("### With and without the data-quality exclusions (REVIEW-M3 Rule X)")
+    A("")
+    L.extend(_both_ways_lines(res))
 
     # ------------------------------------------------------------------ best fits
     for tag, key_d, key_p, key_b in (("testimony-weighted fit", "derived", "params_testimony_weighted_fit", "params_at_bound"),
@@ -226,12 +230,16 @@ def build() -> str:
         fr = np.asarray(rc["frames"])
         meas = np.asarray(rc["measured_deg"], float)
         tv = (fr >= 538) & (fr <= 1239)
+        rn = rc.get("noise", {})
         A(f"- Measured: the high-threshold blob's major-axis angle on {len(fr)} quality-gated frames (elongation at least 1.5, at "
-          f"least 6 px, SNR at least 8, rule stated before the angles were examined); noise {rc['sigma_deg']:.1f} deg about a "
-          f"9-frame median; one measurement offset per sensor. Over the TV stretch the measured angle stays within "
+          f"least 6 px, SNR at least 8, rule stated before the angles were examined); noise {rc['sigma_deg']:.1f} deg (REVIEW-M3 Rule N, "
+          f"data only: the larger of the two-threshold disagreement, {_f(rn.get('two_threshold_deg'))} deg, and the frame-to-frame scatter, "
+          f"{_f(rn.get('frame_to_frame_deg'))} deg; the earlier 9-frame running-median value was {_f(rn.get('running_median_deg'))} deg); "
+          f"one measurement offset per sensor. Free rotation terms are scored by blocked cross-validation (Rule C, blocks of "
+          f"{rc.get('cv_block_frames')} samples, 5 folds), not counted in k. Over the TV stretch the measured angle stays within "
           f"{np.percentile(meas[tv], 5):.0f} to {np.percentile(meas[tv], 95):.0f} deg (5 to 95 percent).")
         A("")
-        A("| Hypothesis | Kind | Free terms | Rotation log-likelihood | Net of its own terms' penalty | Residual rms (deg) | Predicted turn over the TV stretch (deg) |")
+        A("| Hypothesis | Kind | Fitted terms (knots) | Rotation log-likelihood (held-out) | Terms charged in k | Residual rms, in-sample / held-out (deg) | Predicted turn over the TV stretch (deg) |")
         A("|---|---|---|---|---|---|---|")
         for h in design:
             r = rc["hypotheses"].get(h["hypothesis"])
@@ -239,9 +247,10 @@ def build() -> str:
                 continue
             fit = np.asarray(r["fitted_deg"], float)
             span = float(np.ptp(fit[tv])) if tv.any() else float("nan")
-            A(f"| {h['hypothesis']} | {r['kind']} | {r['free_terms']} | {_f(r['loglik_scaled'])} | {_f(_net_rot(r, res['n_eff_total']))} | "
-              f"{_f(r['resid_rms_deg'])} | {_f(span, 0)} |")
+            A(f"| {h['hypothesis']} | {r['kind']} | {r.get('fitted_terms')} ({r['model_terms']}) | {_f(r['loglik_scaled'])} | {r['free_terms']} | "
+              f"{_f(r['resid_rms_deg'])} / {_f(r.get('cv_resid_rms_deg'))} | {_f(span, 0)} |")
         A("")
+        L.extend(_sigma_sweep_lines(res))
         g = [k for k, r in rc["hypotheses"].items() if r["kind"] == "glare" and k in {h["hypothesis"] for h in design}]
         p = [k for k, r in rc["hypotheses"].items() if r["kind"] == "physical" and k in {h["hypothesis"] for h in design}]
         if g and p:
@@ -251,12 +260,25 @@ def build() -> str:
             A(f"- Reading: the pod-derotation glare model (Sitrec's, one free offset) predicts that a glare fixed in the optics turns as the "
               f"azimuth passes through zero while the pod looks up (el +5 to +6); the best glare fit ({bg}) turns through "
               f"{_f(float(np.ptp(np.asarray(rc['hypotheses'][bg]['fitted_deg'])[tv])), 0)} deg over the TV stretch. The best physical "
-              f"fit ({bp}, free smooth rotation) is ahead on this criterion by {_f(d)} log units net of penalties "
+              f"fit ({bp}, free smooth rotation) is ahead on this criterion by {_f(d)} log units on held-out data "
               f"({'favors a physical object' if d > 0 else 'favors the glare'}).")
             db = rc["hypotheses"][bg].get("deadband")
             if db:
                 A(f"- Stepping pod-roll diagnostic (not in Sitrec, not in any total): the best deadband controller gains "
                   f"{_f(db['gain_vs_smooth_after_one_parameter_penalty'])} log units over the smooth derotation after one parameter's penalty.")
+        pcp = derived_dir(CASE) / "pitch_bound_check.json"
+        if pcp.exists() and g and p:
+            pc = json.loads(pcp.read_text(encoding="utf-8"))
+            cells = []
+            for k in g:
+                r = pc["hypotheses"].get(k, {}).get("testimony_weighted")
+                if r:
+                    cells.append(f"{k} fitted pitch {_f(r['fitted_pitch_deg'], 1)} deg; best with the bound lifted {_f(r['best_unbounded']['pitch_deg'], 2)} deg, "
+                                 f"gaining {_f(r['gain_unbounded'])} log units (rotation plus the pitch prior, other parameters held)")
+            A("- Jet-pitch bound (CP-04 review): the glare fits sit at the pitch prior's lower bound (0 deg; prior "
+              f"{pc['prior']['mean']} +- {pc['prior']['sd']} deg). Lifting the bound (`tools/pitch_check.py`, diagnostic, not in any total): "
+              + "; ".join(cells) + f". So the bound accounts for at most that much of the {_f(d)} rotation gap, and only at a pitch far below "
+              "the prior; the rest of the gap does not depend on it.")
         A("- Condition: the glare model is applied to the TV frames as well as the IR frames (a glare in the shared pod optics would derotate the "
           "same way in either camera; if the TV camera has separate optics, a glare there would not follow this model). This is an assumption.")
         A("- Sitrec's `FLIR1 Glare Angle.csv` (a reference only, not loaded by Sitrec's FLIR1 sitch): 0 deg to f1473, then 135 at f1500 and 245 at "
@@ -320,6 +342,11 @@ def build() -> str:
                 A(f"| {_f(r['range_nmi'])} | {_f(r['air_speed_kt'], 0)} | {_f(r['ground_speed_kt'], 0)} | {_f(r['altitude_ft_mean'], 0)} | "
                   f"{_f(r['vertical_speed_fpm'], 0)} | {_f(r['line_of_sight_loglik'])} |")
         A("")
+
+    # ------------------------------------------------------------------ per-hypothesis range curves
+    A("## Per-hypothesis curves over range")
+    A("")
+    L.extend(_range_curve_lines(CASE))
 
     # ------------------------------------------------------------------ checks
     A("## Checks reported, not scored")
@@ -390,8 +417,10 @@ def build() -> str:
     A("- The image-trend criteria have large n_eff (hundreds of frames) next to the line of sight (tens), so they move totals most; their rows are shown so any weighting can be re-applied.")
     raw = sorted(((h["total_physics_only"] - h["criteria_physics_only_fit"].get("complexity_penalty", 0.0), h["hypothesis"]) for h in design), reverse=True)
     A("- Physics-only fit before the complexity penalty: " + "; ".join(f"{n} {_f(v)}" for v, n in raw) + ".")
-    A("- Discriminators for the top pair (M3.6) are written separately.")
+    A("- BIC counts parameters, not prior width: a wide prior costs nothing extra.")
+    A("- Discriminators for the top pair (M3.6) are written separately (`docs/results/discriminators.md`).")
     A("")
+    L.extend(_settle_lines(CASE))
     text = "\n".join(L) + "\n"
     assert "—" not in text
     return text

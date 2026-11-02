@@ -18,8 +18,9 @@ solve/ (enforced by tests/test_equal_treatment.py).
 - rotation_loglik: the image-rotation criterion for every model (M3.5). The model supplies a
   predicted orientation up to fitted terms and its kind; the free terms (a glare's one offset,
   or a physical object's smooth rotation spline, plus a shared per-polarity-segment offset of
-  the measurement) are fitted here by linear least squares and returned as a count for the
-  complexity penalty, so the same code and the same rule serve every hypothesis.
+  the measurement) are fitted here by linear least squares. Since CP-04 (REVIEW-M3 Rule C) they
+  are scored by blocked cross-validation (held-out log-likelihood, not counted in k), so the
+  same code and the same rule serve every hypothesis.
 """
 
 from __future__ import annotations
@@ -148,8 +149,19 @@ def natural_spline_basis(t: np.ndarray, n_knots: int) -> np.ndarray:
     return _BASIS_CACHE[key]
 
 
+def cv_folds(n: int, n_eff: float, n_folds: int = 5) -> np.ndarray:
+    """Fold id per sample for blocked cross-validation (REVIEW-M3 Rule C).
+
+    Contiguous blocks of ceil(n / n_eff) samples (the decorrelation length implied by the data's own
+    n_eff), assigned to the folds in turn. Depends only on n and n_eff, never on a model.
+    """
+    b = max(1, int(np.ceil(n / max(float(n_eff), 1.0))))
+    return (np.arange(n) // b) % int(n_folds)
+
+
 def rotation_fit(obs: np.ndarray, base: np.ndarray, kind: str, segment: np.ndarray, t: np.ndarray,
-                 n_knots, penalty_per_term: float = 0.0, scale: float = 1.0, sigma: float = 1.0) -> dict:
+                 n_knots, penalty_per_term: float = 0.0, scale: float = 1.0, sigma: float = 1.0,
+                 folds: np.ndarray | None = None) -> dict:
     """Best fit of the free rotation terms for one model (shared by every hypothesis).
 
     obs: measured orientation (deg, unwrapped with period 180); base: the model's predicted
@@ -160,10 +172,13 @@ def rotation_fit(obs: np.ndarray, base: np.ndarray, kind: str, segment: np.ndarr
     the same for all). Orientations are axial, so base is unwrapped with period 180 and any
     whole multiple of 180 is absorbed by the offset or the spline's constant.
 
-    n_knots: an int, or a sequence of candidate knot counts for the physical spline; the count
-    is then chosen by the same penalized likelihood as the totals, scale * sum(loglik) -
-    penalty_per_term * (free terms), so the data decide how flexible the free rotation is and
-    pay for it. Returns residuals, fitted values and the number of free terms (counted in k).
+    folds: fold id per sample (cv_folds). When given (REVIEW-M3 Rule C), the free terms are scored
+    by blocked cross-validation: each fold's samples are predicted from a fit to the others, the
+    criterion is the held-out log-likelihood, the knot count is the one with the largest held-out
+    log-likelihood, and the free terms are NOT charged in k (dof 0). Without folds: the earlier
+    in-sample fit, the knot count chosen by scale * sum(loglik) - penalty_per_term * terms, dof = terms.
+    Returns residuals and fitted values of the full-data fit at the chosen knot count, the per-sample
+    log-likelihood (held-out when cross-validated) and the number of terms charged in k.
     """
     obs = np.asarray(obs, float)
     base = np.unwrap(np.asarray(base, float), period=180.0)
@@ -176,17 +191,46 @@ def rotation_fit(obs: np.ndarray, base: np.ndarray, kind: str, segment: np.ndarr
         ks = [int(n_knots)] if np.isscalar(n_knots) else [int(k) for k in n_knots]
     else:
         raise ValueError(f"unknown rotation kind {kind!r}")
+    t = np.asarray(t, float)
     best = None
     for k in ks:
-        A, A_pinv = _rotation_design(kind, k, np.asarray(t, float), segment)
+        A, A_pinv = _rotation_design(kind, k, t, segment)
         coef = A_pinv @ r
         fitted = A @ coef
         res = r - fitted
-        score = scale * float(np.sum(gaussian_loglik(res, sigma))) - penalty_per_term * A.shape[1]
+        if folds is None:
+            ll = gaussian_loglik(res, sigma)
+            score = scale * float(np.sum(ll)) - penalty_per_term * A.shape[1]
+            dof = int(A.shape[1])
+            cv_res = None
+        else:
+            cv_res = np.empty_like(r)
+            for fold, (m, P) in _cv_design(kind, k, t, segment, np.asarray(folds)).items():
+                cv_res[m] = r[m] - A[m] @ (P @ r[~m])
+            ll = gaussian_loglik(cv_res, sigma)
+            score = scale * float(np.sum(ll))
+            dof = 0
         if best is None or score > best["score"]:
-            best = {"resid": res, "fitted": base + fitted, "dof": int(A.shape[1]), "coef": coef, "score": score,
-                    "n_model_terms": int(k), "n_segment_terms": n_seg}
+            best = {"resid": res, "fitted": base + fitted, "dof": dof, "coef": coef, "score": score,
+                    "n_model_terms": int(k), "n_segment_terms": n_seg, "n_terms": int(A.shape[1]),
+                    "loglik": ll, "cv_resid": cv_res, "cross_validated": folds is not None}
     return best
+
+
+_CV_CACHE: dict = {}
+
+
+def _cv_design(kind: str, k: int, t: np.ndarray, segment: np.ndarray, folds: np.ndarray) -> dict:
+    """{fold: (held-out mask, pseudo-inverse of the training rows)} (cached: fixed per case)."""
+    key = (kind, k, t.tobytes(), segment.tobytes(), folds.tobytes())
+    if key not in _CV_CACHE:
+        A, _ = _rotation_design(kind, k, t, segment)
+        out = {}
+        for f in np.unique(folds):
+            m = folds == f
+            out[int(f)] = (m, np.linalg.pinv(A[~m]))
+        _CV_CACHE[key] = out
+    return _CV_CACHE[key]
 
 
 _DESIGN_CACHE: dict = {}
@@ -204,11 +248,12 @@ def _rotation_design(kind: str, k: int, t: np.ndarray, segment: np.ndarray) -> t
 
 
 def rotation_loglik(obs: np.ndarray, base: np.ndarray, kind: str, segment: np.ndarray, t: np.ndarray,
-                    sigma: float, n_knots, penalty_per_term: float = 0.0, scale: float = 1.0
-                    ) -> tuple[np.ndarray, int, dict]:
-    """Per-sample Gaussian log-likelihood of the measured orientation under the best-fit free terms.
+                    sigma: float, n_knots, penalty_per_term: float = 0.0, scale: float = 1.0,
+                    folds: np.ndarray | None = None) -> tuple[np.ndarray, int, dict]:
+    """Per-sample Gaussian log-likelihood of the measured orientation under the best-fit free terms
+    (held-out when `folds` is given, REVIEW-M3 Rule C).
 
     Returns (per-sample loglik, free-term count for the complexity penalty, fit details).
     """
-    fit = rotation_fit(obs, base, kind, segment, t, n_knots, penalty_per_term, scale, sigma)
-    return gaussian_loglik(fit["resid"], sigma), fit["dof"], fit
+    fit = rotation_fit(obs, base, kind, segment, t, n_knots, penalty_per_term, scale, sigma, folds)
+    return fit["loglik"], fit["dof"], fit

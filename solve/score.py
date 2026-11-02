@@ -265,7 +265,8 @@ def rotation_terms(case: CaseData, pred: Prediction) -> tuple[np.ndarray, int, d
     s = case.series["rotation"]
     return L.rotation_loglik(s.obs, pred.rotation_base[s.frames], pred.rotation_kind, s.segment,
                              case.t[s.frames], s.sigma, case.rotation_knots,
-                             penalty_per_term=L.bic_penalty(1, case.n_eff_total), scale=s.n_eff / len(s.frames))
+                             penalty_per_term=L.bic_penalty(1, case.n_eff_total), scale=s.n_eff / len(s.frames),
+                             folds=case.rotation_folds)
 
 
 def testimony_predicted(case: CaseData, pred: Prediction) -> dict:
@@ -623,7 +624,10 @@ def rotation_check(case: CaseData, results: list) -> dict:
     steps = measured_rotation_steps(case)
     n_scale = s.n_eff / len(s.frames)
     pen1 = L.bic_penalty(1, case.n_eff_total)
-    out = {"sigma_deg": s.sigma, "n_eff": s.n_eff, "measured_steps": steps, "hypotheses": {}}
+    out = {"sigma_deg": s.sigma, "n_eff": s.n_eff, "noise": dict(case.rotation_noise),
+           "cross_validated": case.rotation_folds is not None,
+           "cv_block_frames": None if case.rotation_folds is None else int(np.ceil(len(s.frames) / max(s.n_eff, 1.0))),
+           "measured_steps": steps, "hypotheses": {}}
     fr = s.frames
     for entry, res in results:
         if not entry.get("valid"):
@@ -641,7 +645,10 @@ def rotation_check(case: CaseData, results: list) -> dict:
                              "resid_after_deg": float(np.mean(post)) if len(post) else None,
                              "jump_left_deg": float(np.mean(post) - np.mean(pre)) if len(pre) and len(post) else None,
                              "rms_window_deg": float(np.sqrt(np.mean(win ** 2)))})
+        cvr = det.get("cv_resid")
         h = {"kind": pred.rotation_kind, "free_terms": dof, "model_terms": det["n_model_terms"],
+             "fitted_terms": det.get("n_terms"), "cross_validated": bool(det.get("cross_validated")),
+             "cv_resid_rms_deg": None if cvr is None else float(np.sqrt(np.mean(cvr ** 2))),
              "loglik_scaled": float(L.scaled_sum(ll, s.n_eff)), "resid_rms_deg": float(np.sqrt(np.mean(resid ** 2))),
              "resid_max_abs_deg": float(np.max(np.abs(resid))), "steps": per_step,
              "fitted_deg": det["fitted"], "offset_deg": float(det["coef"][0]) if pred.rotation_kind == "glare" else None}
@@ -657,7 +664,7 @@ def rotation_check(case: CaseData, results: list) -> dict:
                         ra, jumps = pod_roll_deadband(groll, ball_pitch, float(thr), metric, reflect)
                         dr = ((ra - groll + 180.0) % 360.0) - 180.0
                         llb, _, detb = L.rotation_loglik(s.obs, base_s - dr[fr], "glare", s.segment, case.t[fr], s.sigma,
-                                                         case.rotation_knots)
+                                                         case.rotation_knots, folds=case.rotation_folds)
                         scan.append({"metric": metric, "reflect": reflect, "threshold": float(thr),
                                      "loglik_scaled": float(L.scaled_sum(llb, s.n_eff)),
                                      "resid_rms_deg": float(np.sqrt(np.mean(detb["resid"] ** 2))),
@@ -699,15 +706,77 @@ def rotation_check(case: CaseData, results: list) -> dict:
     return out
 
 
+def _fit_pair(task: tuple) -> tuple:
+    """Both fits of one hypothesis (testimony-weighted, then physics-only). Loads the case itself, so it can
+    run in a worker process; the same code path as a serial run."""
+    case_name, variant, exclusions, h = task
+    case = load_case(case_name, variant=variant or None, exclusions=exclusions)
+    w_t = _weights(case)["testimony"]
+    res_w = fit(case, h, testimony_weight=w_t)
+    testimony_active = res_w.get("valid") and len(res_w.get("testimony_rows", [])) > 0
+    res_p = fit(case, h, testimony_weight=0.0) if testimony_active else res_w
+    return res_w, res_p
+
+
+PROCS = 1   # worker processes for the per-hypothesis fits (CLI --procs); results do not depend on it
+
+
+def _fit_all(case: CaseData, case_name: str, hyps: list) -> list:
+    tasks = [(case_name, case.variant, case.exclusions_applied, h) for h in hyps]
+    if PROCS > 1 and len(tasks) > 1:
+        from multiprocessing import Pool
+        with Pool(min(PROCS, len(tasks))) as pool:
+            return pool.map(_fit_pair, tasks)
+    return [_fit_pair(t) for t in tasks]
+
+
+SIGMA_SWEEP_DEG = (0.88, 1.3, 2.0, 3.0)
+
+
+def _replace_series(series, **kw):
+    import dataclasses
+    return dataclasses.replace(series, **kw)
+
+
+def rotation_sigma_sweep(case: CaseData, hyps: list, results: list, sigmas=SIGMA_SWEEP_DEG) -> dict:
+    """The rotation criterion and both totals rescored at other rotation sigmas (REVIEW-M3 Rule N sweep).
+
+    At each run's own best-fit parameters (NOT refitted): only the rotation row changes, so
+    total(sigma) = total - rotation(main sigma) + rotation(sigma). The same for every hypothesis.
+    """
+    s = case.series["rotation"]
+    by_id = {h.id: h for h in hyps}
+    out = {"main_sigma_deg": s.sigma, "sigmas_deg": [float(x) for x in sigmas],
+           "note": "Rescored at each fit's best parameters, not refitted.", "hypotheses": {}}
+    for entry, _ in results:
+        if not entry.get("valid"):
+            continue
+        h = by_id[entry["hypothesis"]]
+        row = {}
+        for tag, pkey, tkey, ckey in (("testimony_weighted", "params_testimony_weighted_fit", "total_testimony_weighted", "criteria"),
+                                      ("physics_only", "params_physics_only_fit", "total_physics_only", "criteria_physics_only_fit")):
+            pred = predict(case, h, entry[pkey])
+            base_rot = float(entry[ckey]["rotation"])
+            cells = []
+            for sg in sigmas:
+                c2 = copy.copy(case)
+                c2.series = dict(case.series)
+                c2.series["rotation"] = _replace_series(s, sigma=float(sg))
+                ll, _, _ = rotation_terms(c2, pred)
+                r = float(L.scaled_sum(ll, s.n_eff))
+                cells.append({"sigma_deg": float(sg), "rotation": r, "total": float(entry[tkey]) - base_rot + r})
+            row[tag] = cells
+        out["hypotheses"][entry["hypothesis"]] = row
+    return out
+
+
 def _run_one(case: CaseData, case_name: str, hyps: list, with_range_curve: bool) -> tuple[dict, list]:
     label = str(case.cfg.get("label", case_name)).upper()
     w_t = _weights(case)["testimony"]
     results = []
     score_rows = []
-    for h in hyps:
-        res_w = fit(case, h, testimony_weight=w_t)
-        testimony_active = res_w.get("valid") and len(res_w.get("testimony_rows", [])) > 0
-        res_p = fit(case, h, testimony_weight=0.0) if testimony_active else res_w
+    pairs = _fit_all(case, case_name, hyps)
+    for h, (res_w, res_p) in zip(hyps, pairs):
         entry = {"hypothesis": h.id, "label": h.label, "model": h.model, "in_design_set": label in h.applies_to,
                  "valid": bool(res_w.get("valid"))}
         if res_w.get("valid"):
@@ -766,8 +835,12 @@ def _run_one(case: CaseData, case_name: str, hyps: list, with_range_curve: bool)
         "hypotheses": [e for e, _ in results],
         "closure_check": closure_check(case, best[1]),
     }
+    out["exclusions"] = dict(case.exclusions)
+    out["exclusions_applied"] = bool(case.exclusions_applied)
     if "rotation" in case.series:
+        out["rotation_noise"] = dict(case.rotation_noise)
         out["rotation_check"] = rotation_check(case, results)
+        out["rotation_sigma_sweep"] = rotation_sigma_sweep(case, hyps, results)
     if case.turn_rate is not None:
         out["turn_rate"] = {"heading_change_deg": float(np.trapezoid(case.turn_rate, case.t)),
                             "sigma_median_deg_s": float(np.median(case.turn_rate_sigma))}
@@ -788,25 +861,64 @@ def run_case(case_name: str, hypotheses: list | None = None, write: bool = True,
     names = case_variants(case_name) if variants is None else list(variants)
     d = derived_dir(case_name)
     if names == [""]:
-        out, score_rows = _run_one(load_case(case_name), case_name, hyps, with_range_curve)
+        out, score_rows, nx_rows = _run_both(case_name, None, hyps, with_range_curve)
         if write:
             d.mkdir(parents=True, exist_ok=True)
             if score_rows:
                 pd.concat(score_rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
+            _write_nx_rows(d, nx_rows)
             (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
         return out
-    outs, rows = {}, []
+    outs, rows, nxr = {}, [], []
     for v in names:
-        o, r = _run_one(load_case(case_name, variant=v), case_name, hyps, with_range_curve)
+        o, r, nx = _run_both(case_name, v, hyps, with_range_curve)
         outs[v] = o
         rows += r
+        nxr += nx
     out = {"case": case_name, "label": next(iter(outs.values()))["label"], "variant_names": names, "variants": outs}
     if write:
         d.mkdir(parents=True, exist_ok=True)
         if rows:
             pd.concat(rows, ignore_index=True).to_csv(d / "scores.csv", index=False, float_format="%.6g")
+        _write_nx_rows(d, nxr)
         (d / "results.json").write_text(json.dumps(_jsonable(out), indent=1) + "\n", encoding="utf-8")
     return out
+
+
+NX_KEYS = ("hypothesis", "label", "valid", "in_design_set", "total_testimony_weighted", "total_physics_only",
+           "rank_testimony_weighted", "rank_physics_only", "rank_testimony_weighted_design_set",
+           "rank_physics_only_design_set", "k", "k_physics_only_fit", "criteria", "criteria_physics_only_fit",
+           "params_testimony_weighted_fit", "params_physics_only_fit", "derived", "derived_physics_only_fit",
+           "params_at_bound", "params_at_bound_physics_only_fit")
+
+
+def _run_both(case_name: str, variant: str | None, hyps: list, with_range_curve: bool) -> tuple[dict, list, list]:
+    """REVIEW-M3 Rule X: the run with the data-quality exclusions (the default outputs) and, when any exclusion
+    applies, a full refit with every criterion at its design weight, summarized in out["no_exclusions"]."""
+    case = load_case(case_name, variant=variant)
+    out, rows = _run_one(case, case_name, hyps, with_range_curve)
+    if not case.weight_overrides:
+        out["no_exclusions"] = {"identical": True, "note": "No data-quality exclusion applies on this run: the totals "
+                                "without exclusions are the totals above."}
+        return out, rows, []
+    case_nx = load_case(case_name, variant=variant, exclusions=False)
+    o2, rows2 = _run_one(case_nx, case_name, hyps, False)
+    out["no_exclusions"] = {"identical": False, "flags": o2["flags"], "weights": o2["weights"],
+                            "n_eff_total": o2["n_eff_total"],
+                            "hypotheses": [{k: e[k] for k in NX_KEYS if k in e} for e in o2["hypotheses"]]}
+    if "rotation_sigma_sweep" in o2:
+        out["no_exclusions"]["rotation_sigma_sweep"] = o2["rotation_sigma_sweep"]
+    for r in rows2:
+        r.insert(0, "exclusions", "none")
+    return out, rows, rows2
+
+
+def _write_nx_rows(d: Path, rows: list) -> None:
+    p = d / "scores_no_exclusions.csv"
+    if rows:
+        pd.concat(rows, ignore_index=True).to_csv(p, index=False, float_format="%.6g")
+    elif p.exists():
+        p.unlink()
 
 
 def _write_variants(case_name: str, names: list) -> dict:
@@ -841,6 +953,11 @@ def recheck_rotation(case_name: str) -> dict:
 
 
 def main(argv: list[str]) -> int:
+    global PROCS
+    if "--procs" in argv:
+        i = argv.index("--procs")
+        PROCS = int(argv[i + 1])
+        argv = argv[:i] + argv[i + 2:]
     case = argv[1] if len(argv) > 1 else "gofast"
     if len(argv) > 2 and argv[2] == "--recheck-rotation":
         recheck_rotation(case)
@@ -853,7 +970,7 @@ def main(argv: list[str]) -> int:
     if len(argv) > 3 and argv[2] == "--part":
         # One sensor variant per process (run them in parallel), then `--merge`.
         v = argv[3]
-        o, rows = _run_one(load_case(case, variant=v), case, load_hypotheses(), True)
+        o, rows, _nx = _run_both(case, v, load_hypotheses(), True)
         d = derived_dir(case)
         d.mkdir(parents=True, exist_ok=True)
         pd.concat(rows, ignore_index=True).to_csv(d / f"scores_part_{v}.csv", index=False, float_format="%.6g")

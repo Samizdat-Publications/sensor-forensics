@@ -101,6 +101,10 @@ class CaseData:
     turn_rate_sigma: np.ndarray | None = None # deg/s per frame, 1 sigma of that history (from its 95 percent band)
     weight_overrides: dict = field(default_factory=dict)  # case-level, e.g. D-016 (size not resolved: weight 0)
     rotation_knots: tuple = ()                # candidate knot counts of a physical object's free rotation spline
+    rotation_folds: np.ndarray | None = None  # blocked cross-validation fold per rotation sample (REVIEW-M3 Rule C)
+    rotation_noise: dict = field(default_factory=dict)  # how the rotation sigma was measured (REVIEW-M3 Rule N)
+    exclusions: dict = field(default_factory=dict)      # data-quality exclusions found: criterion -> reason (Rule X)
+    exclusions_applied: bool = True                     # False: every criterion at its design weight (Rule X)
 
     @property
     def n_eff_total(self) -> float:
@@ -253,7 +257,42 @@ def _running_median_sigma(y: np.ndarray, seg: np.ndarray, w: int) -> float:
     return float(np.sqrt(sum(k * v ** 2 for k, v in parts) / tot))
 
 
-def load_case(name: str, env: Environment | None = None, variant: str | None = None) -> CaseData:
+def _rotation_noise(rc: dict, cues: pd.DataFrame, fr: np.ndarray, y: np.ndarray, segs: np.ndarray) -> dict:
+    """Rotation measurement sigma from the data alone (REVIEW-M3 Rule N), plus the earlier estimate.
+
+    two_threshold: the same blob's orientation at a second threshold measures the same axial angle; the
+    difference (wrapped to +-90 deg, mean removed per segment) has variance 2 sigma^2, so sigma_thr = SD / sqrt(2).
+    The frame-to-frame scatter (white part) is a floor: sigma = max(sigma_thr, sigma_ff).
+    running_median (the pre-CP-04 rule): scatter about a noise_window_frames running median.
+    """
+    out = {"running_median_deg": _running_median_sigma(y, segs, int(rc["noise_window_frames"])),
+           "frame_to_frame_deg": L.robust_sigma_from_diffs(y)}
+    method = str(rc.get("noise_method", "running_median"))
+    out["method"] = method
+    if method == "two_threshold":
+        a = cues[rc["orientation_column"]].to_numpy(float)[fr]
+        b = cues[rc["second_orientation_column"]].to_numpy(float)[fr]
+        d = ((a - b + 90.0) % 180.0) - 90.0
+        ok = np.isfinite(d)
+        dd = d.copy()
+        for sg in np.unique(segs):
+            m = (segs == sg) & ok
+            if m.any():
+                dd[m] = d[m] - np.mean(d[m])
+        out["two_threshold_deg"] = float(np.std(dd[ok]) / np.sqrt(2.0))
+        out["two_threshold_n"] = int(ok.sum())
+        out["sigma_deg"] = float(max(out["two_threshold_deg"], out["frame_to_frame_deg"]))
+    elif method == "running_median":
+        out["sigma_deg"] = out["running_median_deg"]
+    else:
+        raise ValueError(f"unknown rotation noise_method {method!r}")
+    return out
+
+
+def load_case(name: str, env: Environment | None = None, variant: str | None = None,
+              exclusions: bool = True) -> CaseData:
+    """exclusions=False: every pre-registered criterion at its design weight (REVIEW-M3 Rule X); the
+    data-quality rules are still evaluated and listed in `exclusions`, but not applied."""
     cfg = yaml.safe_load((CASE_DIR / f"{name}.yaml").read_text(encoding="utf-8"))
     cfg, variant_name = _apply_variant(cfg, variant)
     sc = scoring_config()
@@ -362,6 +401,8 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
     # low-order fit is not a noise estimate); n_eff: the standard rule (autocorrelation about a cubic
     # per polarity segment), the same for every hypothesis.
     rotation_knots: tuple = ()
+    rotation_folds = None
+    rotation_noise: dict = {}
     if "rotation" in cfg["criteria"]:
         rc = cfg["rotation"]
         ok = found.copy()
@@ -384,10 +425,13 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
         for sg in np.unique(segs):
             m = segs == sg
             resid[m] = L.smooth_residual(t[fr[m]], y[m], deg)
-        sigma = _running_median_sigma(y, segs, int(rc["noise_window_frames"]))
-        series["rotation"] = Series("rotation", fr, y, segs, sigma, L.n_eff_autocorr(resid))
+        rotation_noise = _rotation_noise(rc, cues, fr, y, segs)
+        n_eff_rot = L.n_eff_autocorr(resid)
+        series["rotation"] = Series("rotation", fr, y, segs, rotation_noise["sigma_deg"], n_eff_rot)
         k = rc["physical_spline_knots"]
         rotation_knots = tuple(int(x) for x in (k if isinstance(k, list) else [k]))
+        if "cv_folds" in rc:
+            rotation_folds = L.cv_folds(len(fr), n_eff_rot, int(rc["cv_folds"]))
 
     sens = cfg["sensor"]
     ppd = float(sens["picture_width_px"]) / float(sens["fov_deg"])
@@ -452,10 +496,20 @@ def load_case(name: str, env: Environment | None = None, variant: str | None = N
                          f"gain and level explain {100 * ba['B2']['r2_adjusted_n_eff']:.0f} percent of its variance); "
                          "not range-informative.")
 
+    marker = {"size_trend": "apparent-size criterion reported with weight 0",
+              "brightness_trend": "brightness criterion reported with weight 0"}
+    found_exclusions = {c: next((f for f in flags if marker.get(c, "@@none@@") in f), f"{c} weight 0")
+                        for c in weight_overrides}
+    if not exclusions and weight_overrides:
+        flags = [f for f in flags if not any(f == r for r in found_exclusions.values())]
+        flags.append("REVIEW-M3 Rule X: NO-EXCLUSION RUN. Every pre-registered criterion at its design weight; the "
+                     "data-quality rules found but not applied here: " + "; ".join(found_exclusions.values()))
+        weight_overrides = {}
     flags += env.flags
     return CaseData(name=name, cfg=cfg, fps=fps, t=t, window=window, ref_frame=ref, az_read=az_all, el_read=el_all,
                     tas=tas, bank=bank, jet_alt=alt_m, ppd=ppd, readouts=readouts, series=series,
                     brightness_log_all=bright_log, size_px_all=size_px, env=env,
                     criteria=list(cfg["criteria"]), shared_parameters=dict(cfg["shared_parameters"]), flags=flags,
                     variant=variant_name, turn_rate=turn_rate, turn_rate_sigma=turn_sigma,
-                    weight_overrides=weight_overrides, rotation_knots=rotation_knots)
+                    weight_overrides=weight_overrides, rotation_knots=rotation_knots, rotation_folds=rotation_folds,
+                    rotation_noise=rotation_noise, exclusions=found_exclusions, exclusions_applied=bool(exclusions))

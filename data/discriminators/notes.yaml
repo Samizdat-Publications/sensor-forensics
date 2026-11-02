@@ -117,7 +117,7 @@ cases:
       A calibrated size would not help here: a 1 to 3 m object at 3.8 nmi is 5 to 15 px across at 0.7 deg, near the measured point-spread width (about 5.5 px), and a balloon, a bird and a small drone are all in that range.'
   flir1:
     title: FLIR1
-    stub: 'FLIR1 is being scored by another worker; this section will be filled when its results exist (same method, `python -m solve.discriminators` once FLIR1 is added to the CLI). Expected levers: the on-screen range field is a constant 99.9 placeholder, so range is unknown as in GIMBAL, and the ships'' radar (USS Princeton) and the E-2 tracks the witnesses describe are the data that would supply it.'
+    stub: 'FLIR1 results exist (`docs/results/flir1.md`), but the discriminator search has not been run on FLIR1 yet (the CLI covers GIMBAL and GOFAST). Expected levers: the on-screen range field is a constant 99.9 placeholder, so range is unknown as in GIMBAL, and the ships'' radar (USS Princeton) and the E-2 tracks the witnesses describe are the data that would supply it.'
 limits: '## Limits
 
 
@@ -130,3 +130,36 @@ limits: '## Limits
   - The likelihood ratio of 10 is per measurement. A measurement that separates two hypotheses says nothing about the others; read the whole table.
 
   '
+
+# The "What would settle it" summary on each results page (docs/results/<case>.md). solve/results_report.py and
+# solve/results_flir1.py copy it in, so regenerating a page keeps it. Numbers come from discriminators.json and
+# the results pages; update them when either is rerun.
+results_page_settle:
+  gimbal: 'Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`, rerun 11/02/2026 after the CP-04 fixes). In short:
+
+
+    - **Radar range near the end of the clip.** Fitted to the video alone, every physical model at 0.35 deg puts the object at 15 nmi or more at 34 s (balloon 15 to 30, slow flier 20 to 36, distant jet 18 to 55, glare on a target 18 to 61 nmi). A radar range of 10 nmi or less (the aircrew''s account), good to about 2 nmi, would rule out all four by a likelihood ratio of 10 or more. At 0.7 deg this does not hold: the balloon fits at 9.0 to 13.6 nmi. The aircrew say the radar page was taped with the FLIR; it has not been released.
+
+    - **Balloon or slow flier.** At 0.7 deg their ranges do not overlap (9.0 to 13.6 vs 19.2 to 22.1 nmi at the end), so a radar range good to 2.6 nmi separates them both ways. At 0.35 deg only a wind measurement at about 20,000 ft helps, and only one way (it can rule out the balloon, never the slow flier, which may fly at zero air speed).
+
+    - **Glare or physical object.** Since the rotation criterion is scored on held-out data (CP-04 fix), it no longer separates them, and the recovery test confirms it (glare-made data are often won by the balloon). A radar range or closure rate separates the glare models from the balloon one way only (the glare models'' bands are wide and reach their prior bounds).
+
+    - **Pairs no measurement separates.** The distant jet and the glare-on-a-target model are the same physics here. The free path (H-WIT) can sit at any range and speed; its discriminator bands in `discriminators.md` are degenerate (0 nmi) and are not used here.
+
+    - **Field of view.** It does not change the physics-only leader with the exclusions (the balloon at both), but changes its lead over the slow flier from 3.7 to 11.3 log units and moves the balloon''s end range in from 15 to 30 nmi to 9 to 14 nmi.
+
+    - **The exclusions.** Without the data-quality exclusions the free path leads at both fields of view and the balloon is fifth (results above), so any measurement that settles the size and brightness question (an unsaturated recording) also bears on the ranking.
+
+    '
+  gofast: 'Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`; GOFAST fits did not change in the CP-04 fixes, so it was not rerun). In short:
+
+
+    - The on-screen range already fixes position: every top hypothesis puts the object at 3.8 nmi and 13,200 ft at mid-clip, so range, closure, altitude and a second bearing cannot separate them.
+
+    - **The wind at 13,200 ft is the discriminator.** A balloon''s air speed is 0 to 2.7 kt; the slow flier allows 0 to 18.5 kt (best 9.6), the free path 11 to 30 kt (best 23). An independent wind good to 3.9 kt separates the balloon from the free path both ways (ERA5''s 5 kt is just short). Against the slow flier it works one way only: a wind good to 3.2 kt rules out the balloon if the object really flies near 9.6 kt; nothing rules out the slow flier if it is a balloon.
+
+    - **Pairs no measurement separates.** The slow flier and the glare-on-a-target model are the same physics on GOFAST; only a resolved image or the raw recording with known gain could tell them apart.
+
+    - **The size exclusion.** Without the D-016 size exclusion the glare-on-a-target model leads instead of the balloon (results above); a resolved, unsaturated image of the object would settle whether that row belongs in the totals.
+
+    '

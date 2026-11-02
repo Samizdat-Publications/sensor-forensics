@@ -130,3 +130,29 @@ def test_autocorrelation_scaling_applies():
     case.readouts["closure"].n_eff = 60.0
     ll2 = S.criterion_logliks(case, _shift(truth, closure_mps=truth.closure_mps + 5 * F.KT))["closure"][0]
     assert ll2 == pytest.approx(2 * ll1)
+
+
+
+# ----------------------------------------------------------------------------- blocked cross-validation (REVIEW-M3 Rule C)
+
+def test_cv_folds_blocks():
+    f = L.cv_folds(100, 10, 5)
+    assert len(f) == 100 and set(f) == set(range(5))
+    assert (f[:10] == 0).all() and (f[10:20] == 1).all() and (f[50:60] == 0).all()
+
+
+def test_rotation_cv_charges_flexibility_and_counts_zero_terms():
+    rng = np.random.default_rng(3)
+    n = 600
+    t = np.linspace(0, 20, n)
+    truth = 10 * np.sin(t / 4.0)
+    obs = truth + rng.normal(0, 1.0, n)
+    seg = np.zeros(n, int)
+    folds = L.cv_folds(n, 60, 5)
+    cv = L.rotation_fit(obs, np.zeros(n), "physical", seg, t, [4, 8, 128], sigma=1.0, folds=folds)
+    ins = L.rotation_fit(obs, np.zeros(n), "physical", seg, t, [4, 8, 128], sigma=1.0)
+    assert cv["dof"] == 0 and cv["cross_validated"] and ins["dof"] == ins["n_terms"]
+    assert cv["n_model_terms"] < 128          # held-out data reject the over-flexible spline
+    assert np.sum(cv["loglik"]) < np.sum(L.gaussian_loglik(cv["resid"], 1.0))   # held-out fits worse than in-sample
+    g = L.rotation_fit(obs, truth, "glare", seg, t, [4], sigma=1.0, folds=folds)
+    assert g["n_model_terms"] == 1 and g["dof"] == 0
