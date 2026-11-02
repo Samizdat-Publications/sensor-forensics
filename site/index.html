@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensor Forensics Lab</title>
+<meta name="description" content="The GIMBAL, GOFAST and FLIR1 Navy videos rebuilt frame by frame, and six explanations scored against the footage and the aircrew's testimony with the same geometry and the same math.">
+<meta property="og:title" content="Sensor Forensics Lab">
+<meta property="og:description" content="The GIMBAL, GOFAST and Tic Tac videos rebuilt frame by frame, and six explanations scored against them with the same math.">
+<meta property="og:image" content="media/og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#10151b">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="bar">
+  <a class="brand" href="#top"><span class="reticle" aria-hidden="true"></span>Sensor Forensics Lab</a>
+  <nav>
+    <a href="#views">The lab</a>
+    <a href="#found">What it found</a>
+    <a href="#checked">How it's checked</a>
+    <a href="#made">How it was made</a>
+    <a class="cta" href="lab/">Open the lab</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="pill"><span class="dot"></span>v1.0</p>
+    <h1>Sensor Forensics Lab</h1>
+    <p class="pitch">The GIMBAL, GOFAST and "Tic Tac" Navy videos, rebuilt frame by frame. Every number on the screen read and checked, the jet's turn and the camera's line of sight reconstructed, and six explanations scored against the footage and the aircrew's testimony with the same geometry and the same math.</p>
+    <p class="sub">It tests hypotheses. It does not set out to confirm any belief, and where the public data cannot decide, it says so and names the one measurement that would.</p>
+    <p class="buttons">
+      <a class="button primary" href="lab/">Open the lab</a>
+      <a class="button" href="https://github.com/Samizdat-Publications/sensor-forensics">Source on GitHub</a>
+      <a class="button quiet" href="https://samizdatpublications.com/">See my other projects</a>
+    </p>
+    <p class="fine">Free, in the browser. Best on a desktop screen in Chrome or Edge; the lab streams the footage frame by frame as you play it.</p>
+  </div>
+  <figure class="screen hero-screen">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="media/hero.jpg" width="1280" height="720" aria-label="The GIMBAL footage beside the lab's re-render of the balloon explanation, frame by frame, as the object appears to rotate">
+      <source src="media/hero.mp4" type="video/mp4">
+    </video>
+    <figcaption>GIMBAL, the last 11 seconds: the Navy footage (left) beside the re-render of one explanation (right), locked frame by frame.</figcaption>
+  </figure>
+</section>
+
+<section class="premise">
+  <p>Three short infrared videos, recorded by Navy fighter crews in 2004 and 2015 and officially released in 2020, are the most argued-over footage of unidentified objects there is. Most analyses of them pick an answer and defend it. This lab puts every candidate through <em>one</em> pipeline instead: the same reconstructed geometry, the same physics, the same evidence from the frames and the same scoring, and then asks which one the data actually favours, by how much, and what could change its mind.</p>
+</section>
+
+<section class="suspects" aria-labelledby="six">
+  <h2 id="six">Six explanations, one scorer</h2>
+  <ol class="six">
+    <li><b>H-BAL</b><span>A balloon drifting with the wind</span></li>
+    <li><b>H-SLOW</b><span>A slow flier: a bird or small drone</span></li>
+    <li><b>H-AC</b><span>A distant aircraft, its engine exhaust seen as glare</span></li>
+    <li><b>H-ART</b><span>Glare in the pod's own optics, on a target of any kind</span></li>
+    <li><b>H-CLOSE</b><span>A small object close to the jet</span></li>
+    <li><b>H-WIT</b><span>An object on a free path, with no physical model at all</span></li>
+  </ol>
+  <p class="note">No explanation gets its own rules. A test scans the scoring code and fails if anything in it branches on an explanation's name, and renaming or reordering the six changes no score.</p>
+</section>
+
+<div id="views">
+
+<section class="chapter">
+  <figure class="screen">
+    <img src="media/difference.jpg" width="1280" height="720" loading="lazy" alt="The Cockpit view: the original GIMBAL frame beside the re-render, with the frame-lock error readout above">
+  </figure>
+  <div class="copy">
+    <p class="kicker">1 · Cockpit</p>
+    <h2>The original beside the re-render</h2>
+    <p>Each explanation's fitted path is drawn back through the reconstructed camera, so you can hold the prediction against the real frame. Difference and Blink show what the re-render does not explain. Over GIMBAL the predicted horizon sits a median 2.5 pixels from the measured one.</p>
+    <p class="data">Data: the official NAVAIR copies of the videos (2020 FOIA release), hashed; every frame extracted.</p>
+  </div>
+</section>
+
+<section class="chapter flip">
+  <figure class="screen">
+    <video data-inview muted loop playsinline preload="none" poster="media/godseye.jpg" width="1280" height="800" aria-label="God's-eye view of GIMBAL as the assumed range is swept from 5 to 40 nautical miles">
+      <source src="media/godseye.mp4" type="video/mp4">
+    </video>
+  </figure>
+  <div class="copy">
+    <p class="kicker">2 · God's-eye</p>
+    <h2>The jet's turn and the fan of sight lines</h2>
+    <p>The jet's path comes from its own instruments: air speed, altitude and bank turned into a turn (for GIMBAL, refined by the motion of the clouds), with the wind from the ERA5 weather reanalysis. From it fans the pod's line of sight, one per frame. Each explanation's path for the object rides those lines; slide the range and watch them move.</p>
+    <p class="data">Data: on-screen speed, altitude and bank per frame; ERA5 winds and temperatures (Copernicus), checked against radiosonde soundings (NOAA IGRA).</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <figure class="screen">
+    <video data-inview muted loop playsinline preload="none" poster="media/range.jpg" width="1280" height="800" aria-label="Range explorer charts of air speed, altitude, acceleration and fit, with the assumed range sweeping">
+      <source src="media/range.mp4" type="video/mp4">
+    </video>
+  </figure>
+  <div class="copy">
+    <p class="kicker">3 · Range explorer</p>
+    <h2>When there is no range, the answer is a curve</h2>
+    <p>GIMBAL and FLIR1 show no distance to the object, so the same image fits a small thing close by or a big thing far away. For every assumed range, the lab shows how fast, how high and how hard-turning each explanation's object would have to be, against balloons, birds, airliners, Mach 1 and a fighter's 9 g. A single radar range would pick one point on every curve at once.</p>
+  </div>
+</section>
+
+<section class="chapter flip">
+  <figure class="screen">
+    <img src="media/compare.jpg" width="1280" height="800" loading="lazy" alt="Compare analyses view: published values beside the lab's reproductions of Peings and von Rennenkampff 2023 and Sitrec">
+  </figure>
+  <div class="copy">
+    <p class="kicker">4 · Compare analyses</p>
+    <h2>Prior work, rerun from its own inputs</h2>
+    <p>Before scoring anything, the lab reproduced earlier analyses. Mick West's Sitrec reproduces for GOFAST and GIMBAL, and the lab's port of its pod geometry gives Sitrec's own locked GIMBAL test value. The 2023 GIMBAL flight paths of Peings and von Rennenkampff reproduce only in part, and every difference is traced to an input.</p>
+    <p class="data">Sources: Sitrec (MIT licence); Peings and von Rennenkampff 2023 (arXiv 2306.08773); every disagreement in DISAGREEMENTS.md.</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <figure class="screen">
+    <video data-inview muted loop playsinline preload="none" poster="media/ledger.jpg" width="1280" height="800" aria-label="Evidence ledger with the testimony weight being swept from zero to two and the scores updating">
+      <source src="media/ledger.mp4" type="video/mp4">
+    </video>
+  </figure>
+  <div class="copy">
+    <p class="kicker">5 · Evidence ledger</p>
+    <h2>Every reading, and every weight</h2>
+    <p>9,279 readings off the GIMBAL screen alone, each with its frame, method and confidence; click one to jump to its frame. 160 sourced witness claims sit beside them, paraphrased with source and timestamp. Drag the weights and the scores recompute live; the physics-only total is always shown next to the one that counts testimony.</p>
+  </div>
+</section>
+
+</div>
+
+<section class="found" id="found">
+  <h2>What it found</h2>
+  <p class="lead">No Navy video has a decisive winner. A lead only counts as decisive here if it is 10 times more likely or better and survives three checks: a refit without the lab's after-the-fact data-quality rules, the rotation noise halved or doubled, and the model-recovery test. None does, and each case comes down to one missing measurement.</p>
+  <div class="cases">
+    <article class="case">
+      <figure class="screen"><img src="media/hero.jpg" width="1280" height="720" loading="lazy" alt="GIMBAL frame with the re-render"></figure>
+      <h3>GIMBAL <small>January 2015</small></h3>
+      <p>A balloon-like drifter leads by small margins; drop two data-quality rules and the free-path object leads instead, so both rankings are shown everywhere. At the documented 0.35° field of view, every leading physical explanation puts the object 15 nmi or more away by the end, while the aircrew report 6 to 8.</p>
+      <p class="settle"><b>Would settle it</b>A radar range good to about 2 nmi.</p>
+    </article>
+    <article class="case">
+      <figure class="screen"><video data-inview muted loop playsinline preload="none" poster="media/gofast.jpg" width="1280" height="800" aria-label="GOFAST footage beside its re-render, range counting down on screen"><source src="media/gofast.mp4" type="video/mp4"></video></figure>
+      <h3>GOFAST <small>January 2015</small></h3>
+      <p>The range is on screen, 4.4 down to 3.3 nmi, which puts the object near 13,200 ft. A balloon, a slow flier and a glare on a slow target all fit the same path, and this data cannot tell them apart.</p>
+      <p class="settle"><b>Would settle it</b>An independent wind at 13,200 ft, good to about 4 kt, separates some of them.</p>
+    </article>
+    <article class="case">
+      <figure class="screen"><video data-inview muted loop playsinline preload="none" poster="media/flir1.jpg" width="1280" height="800" aria-label="FLIR1 footage beside its re-render"><source src="media/flir1.mp4" type="video/mp4"></video></figure>
+      <h3>FLIR1 "Tic Tac" <small>November 2004</small></h3>
+      <p>The result hangs on one number, the noise in the shape's measured rotation. At the value measured from the video, 11.86°, the free-path object leads; allow 12.75° or more and a glare in the pod's optics leads instead.</p>
+      <p class="settle"><b>Would settle it</b>A radar closure rate near the end, good to about 17 kt.</p>
+    </article>
+    <article class="case text-only">
+      <h3>PURSUE <small>2026 release</small></h3>
+      <p>All 134 sensor videos released in 2026 were triaged. None can be fully rebuilt: no clip shows the pod's azimuth. Sixteen carry some scale, and the eight strongest give bounded size and speed. The "23M"-style tracker labels turn out to be the box width in metres, not a range; the 2026 paper's speed bound for PR149 reproduces; PR113's scale is a pitch ladder.</p>
+      <ul class="tally"><li><b>0</b>full</li><li><b>16</b>bounded</li><li><b>118</b>not viable</li></ul>
+    </article>
+  </div>
+</section>
+
+<section class="checked" id="checked">
+  <h2>How it's checked</h2>
+  <p class="lead">Every number in the lab is read off the frame or computed from cited data, and every step was checked by something other than the code that made it.</p>
+  <ul class="facts">
+    <li><b>1 in 800</b><span>digit fields wrong on 100 random GIMBAL frames read blind by a separate reviewer (0 in 1,000 on GOFAST)</span></li>
+    <li><b>7 of 7</b><span>milestones passed an independent reviewer that saw only the acceptance criteria and the evidence; four were sent back twice first</span></li>
+    <li><b>290</b><span>automated tests, none skipped; a skipped test counts as a failure</span></li>
+    <li><b>None</b><span>of the explanations is recovered every time from fake GOFAST footage made by each one: the model-recovery test shows what the data can tell apart even in principle</span></li>
+  </ul>
+  <p>The whole-degree readouts are treated as intervals, not exact values; frames that move together are counted as fewer independent samples; and the data-quality rules chosen after seeing results are flagged, with every total shown both with and without them.</p>
+</section>
+
+<section class="made" id="made">
+  <h2>How it was made</h2>
+  <div class="cols">
+    <div>
+      <h3>Read the frame</h3>
+      <p>The work began with an audit: what each video shows on screen, frame by frame, and how far it can be rebuilt. A template matcher then read every character of the symbology with a confidence score, a second OCR engine voted, and a correction tool handled the hard frames.</p>
+    </div>
+    <div>
+      <h3>Rebuild the geometry</h3>
+      <p>A spherical-Earth model, the ATFLIR pod's gimbal geometry ported from Sitrec v1, the jet's turn from its bank, speed and the drifting clouds, and real winds. Prior analyses were rerun from their inputs before any explanation was scored, so differences could be traced.</p>
+    </div>
+    <div>
+      <h3>Score, then show</h3>
+      <p>One scoring path for all six explanations, with interval likelihoods, a penalty for free parameters, and a sweep of the rotation noise that FLIR1's result hangs on. The browser lab (three.js, no framework) shows it frame-locked to the footage; this page's clips were filmed from it by a script.</p>
+    </div>
+  </div>
+  <p class="who">Designed and directed by Stewart Gregerson; built with Claude Code (Opus 5.5) over four days, in seven checked milestones. Python 3.12, NumPy, SciPy and OpenCV for the analysis; the cases are exported in an open case-file format with their sources and hashes.</p>
+</section>
+
+<section class="final">
+  <h2>Step through it frame by frame.</h2>
+  <p class="buttons">
+    <a class="button primary" href="lab/">Open the lab</a>
+    <a class="button" href="https://github.com/Samizdat-Publications/sensor-forensics">Source on GitHub</a>
+    <a class="button quiet" href="https://samizdatpublications.com/">See my other projects</a>
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <p>Sensor Forensics Lab, by Samizdat Publications. Code under the MIT licence. Footage: U.S. Navy (NAVAIR FOIA release, 2020) and the Department of War PURSUE releases (2026), U.S. government works. Pod geometry ported from Sitrec by Mick West (MIT); cloud-motion method from logicbear's uap_nb (MIT). Winds: ERA5, Copernicus Climate Change Service; IGRA radiosondes, NOAA. Prior work: Peings and von Rennenkampff 2023; Haqq-Misra and Kopparapu 2026. Witness accounts paraphrased from public interviews and testimony, sources in the repository. three.js (MIT). Fonts: Barlow and IBM Plex Mono (SIL OFL).</p>
+</footer>
+
+<script src="site.js" defer></script>
+</body>
+</html>

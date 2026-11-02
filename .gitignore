@@ -29,3 +29,7 @@ data/audio/
 data/weather/_part_*.nc
 data/weather/*_0p25_full*.nc
 data/weather/_cache/
+
+# landing site build (tools/build_site.py)
+site-dist/
+.wrangler/

@@ -1,5 +1,15 @@
 # Sensor Forensics Lab
 
+![Status: v1.0](https://img.shields.io/badge/status-v1.0-2ea043)
+
+The GIMBAL, GOFAST and Tic Tac videos rebuilt frame by frame, and six explanations scored against them with the same math.
+
+![GIMBAL: the Navy footage beside the lab's re-render, locked frame by frame](docs/media/hero.gif)
+
+**[Landing page](https://sensor-forensics.pages.dev)** · **[Open the lab](https://sensor-forensics.pages.dev/lab/)**
+
+## What it is
+
 A forensic reconstruction of what the sensors saw in four sets of military videos:
 
 - **GIMBAL** (January 2015, F/A-18F, ATFLIR pod, infrared)
@@ -9,7 +19,15 @@ A forensic reconstruction of what the sensors saw in four sets of military video
 
 For each video the lab reads every number on screen, frame by frame, rebuilds the jet's path and the camera's line of sight, and then scores six explanations against the footage and the witness testimony with the same geometry and the same scoring for all of them. It tests hypotheses; it does not set out to confirm any belief.
 
-The repository is private. Everything runs on this PC; nothing is uploaded.
+The lab runs in the browser at https://sensor-forensics.pages.dev/lab/, or on your own PC (see "Open the app" below).
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Cockpit: the original GIMBAL frame beside the re-render](docs/media/cockpit.jpg) | ![God's-eye: the jet's turn, the sight lines and each explanation's path](docs/media/godseye.jpg) |
+| ![Range explorer: speed, altitude and g at each assumed range](docs/media/range.jpg) | ![Evidence ledger: every reading, the weights and both totals](docs/media/ledger.jpg) |
+| ![Compare analyses: Sitrec and Peings and von Rennenkampff 2023 rerun from their own inputs](docs/media/compare.jpg) | ![GOFAST: the original beside the re-render, range on screen](docs/media/gofast.jpg) |
 
 ## What it found, in plain words
 
@@ -22,9 +40,23 @@ The full results, with every number and its source, are in `docs/results/` (one 
 
 Testimony carries high weight by the owner's ruling (D-011), and a physics-only total is always shown beside the testimony-weighted one.
 
+## How it was made
+
+Python 3.12 (NumPy, SciPy, OpenCV, pandas) for the analysis, and a browser lab in plain ES modules with three.js and no framework or bundler. The work ran in seven milestones, each checked by an independent reviewer that saw only the acceptance criteria and the evidence (reports in `checkpoints/`, reviews in `artifacts/review/`):
+
+1. **Audit:** the official NAVAIR copies, hashed; what each video shows on screen, frame by frame; all 134 PURSUE clips triaged.
+2. **Reading the frame:** a template matcher reads every character of the symbology with a confidence, a second OCR engine votes, and a correction tool handles the hard frames. A blind check on 100 random frames per video found 1 wrong digit field in 800 on GIMBAL and 0 in 1,000 on GOFAST.
+3. **Geometry:** a spherical Earth, the ATFLIR pod geometry ported from Sitrec v1, the jet's turn from its bank, speed and the cloud motion, ERA5 winds; prior analyses rerun from their own inputs.
+4. **Scoring:** one scoring path for every explanation, with a test that fails if the code branches on an explanation's name, and a model-recovery test showing what the data can separate even in principle.
+5. **The lab:** five views, frame-locked to the footage by image sequences instead of video seeking.
+6. **PURSUE:** the 8 strongest bounded clips analyzed.
+7. **Exports:** the cases in an open case-file format (`schemas/`), this README, and recordings made by script.
+
+The landing page (`site/`) is built with `tools/build_site.py`; its clips are cut from the app recordings by `tools/showcase_media.py`. Built with Claude Code (Opus 5.5), designed and directed by Stewart Gregerson.
+
 ## Open the app
 
-The app shows the original footage beside a 3D re-render of what each explanation predicts, frame by frame. Paste this into Windows PowerShell, then open http://127.0.0.1:8765/ in a browser:
+The app shows the original footage beside a 3D re-render of what each explanation predicts, frame by frame. It is live at https://sensor-forensics.pages.dev/lab/. To run it on your own PC instead, paste this into Windows PowerShell (after the rebuild steps below on a fresh clone, since the frame sequences are not in git), then open http://127.0.0.1:8765/ in a browser:
 
 ```powershell
 cd "C:\Users\stewa\Documents\Claude\Sensor forensics"; & "C:\Users\stewa\Documents\Claude\Sensor forensics\.venv\Scripts\python.exe" "C:\Users\stewa\Documents\Claude\Sensor forensics\tools\serve.py"
@@ -108,10 +140,20 @@ Decisions and their reasons are in `DECISIONS.md`; open questions with the defau
 
 ## Credits
 
-- Sitrec by Mick West (MIT license): the ATFLIR pod geometry here is an exact port of Sitrec v1 and reproduces its locked GIMBAL test value.
-- logicbear's `uap_nb` notebooks (MIT): the cloud-motion method for the GIMBAL turn rate.
-- Peings and von Rennenkampff 2023, "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP" (arXiv 2306.08773).
-- Haqq-Misra and Kopparapu 2026, "Limits on Kinematic Inference from the PURSUE Airborne Sensor Videos" (arXiv 2608.12445).
-- three.js (MIT), vendored in `app\vendor\three\`.
-- Winds from ERA5 (Copernicus Climate Change Service, through Google's public ARCO-ERA5 store) and IGRA radiosondes (NOAA).
-- Witness accounts from the aircrew's public interviews and testimony, listed with sources in `data\testimony\SOURCES.md`.
+| What | Who | Licence |
+|---|---|---|
+| GIMBAL, GOFAST and FLIR1 videos (NAVAIR FOIA release, 2020) | U.S. Navy | U.S. government work, public domain |
+| PURSUE sensor videos, Releases 01 to 06 (2026) | U.S. Department of War | U.S. government work, public domain |
+| ATFLIR pod geometry (an exact port of Sitrec v1; reproduces its locked GIMBAL test value) and the Sitrec data files in `data/reference/sitrec/` | [Sitrec](https://github.com/MickWest/sitrec) by Mick West | MIT (see `data/reference/sitrec/NOTICE.md`) |
+| Cloud-motion method for the GIMBAL turn rate | logicbear, [`uap_nb`](https://github.com/0x1beef/uap_nb) | MIT |
+| "Reconstruction of Potential Flight Paths for the January 2015 Gimbal UAP" (arXiv 2306.08773) | Yannick Peings and Marik von Rennenkampff, 2023 | Cited and reproduced, not copied |
+| "Limits on Kinematic Inference from the PURSUE Airborne Sensor Videos" (arXiv 2608.12445) | Jacob Haqq-Misra and Ravi Kopparapu, 2026 | Cited and reproduced, not copied |
+| ERA5 reanalysis winds and temperatures | Copernicus Climate Change Service, through Google's public ARCO-ERA5 store | Copernicus licence, with attribution |
+| IGRA radiosonde soundings | NOAA NCEI | U.S. government data, public domain |
+| three.js 0.170.0, vendored in `app\vendor\three\` | three.js authors | MIT |
+| Witness accounts | The aircrew's public interviews and testimony, paraphrased, sources in `data\testimony\SOURCES.md` | Paraphrased with source and timestamp |
+| Barlow and IBM Plex Mono fonts (landing page) | Jeremy Tribby; IBM, via Google Fonts | SIL OFL 1.1 |
+
+## Licence
+
+Code is MIT (see [LICENSE](LICENSE)). Third-party code, data and footage listed above keep their own terms.

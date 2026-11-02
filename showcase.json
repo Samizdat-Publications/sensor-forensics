@@ -1,0 +1,32 @@
+{
+  "name": "Sensor Forensics Lab",
+  "repo": "sensor-forensics",
+  "pitch": "The GIMBAL, GOFAST and Tic Tac videos rebuilt frame by frame, and six explanations scored against them with the same math.",
+  "status": "v1",
+  "version": "1.0.0",
+  "kind": "investigation",
+  "started": "2026-10-30",
+  "updated": "2026-11-02",
+  "tech": ["Python", "Three.js", "OpenCV", "ERA5 winds", "SciPy", "Playwright"],
+  "links": {
+    "landing": "https://sensor-forensics.pages.dev",
+    "play": "https://sensor-forensics.pages.dev/lab/",
+    "devlog": "https://github.com/Samizdat-Publications/sensor-forensics/tree/main/checkpoints"
+  },
+  "hero": {
+    "gif": "docs/media/hero.gif",
+    "poster": "site/media/hero.jpg",
+    "clip": "site/media/hero.mp4"
+  },
+  "credits": [
+    { "what": "Code, analysis, lab and tests", "who": "Claude Code, directed by Stewart Gregerson", "licence": "MIT" },
+    { "what": "GIMBAL, GOFAST and FLIR1 videos (NAVAIR FOIA release, 2020)", "who": "U.S. Navy", "licence": "U.S. government work, public domain" },
+    { "what": "PURSUE sensor videos, Releases 01 to 06 (2026)", "who": "U.S. Department of War", "licence": "U.S. government work, public domain" },
+    { "what": "ATFLIR pod geometry (ported) and published Sitrec inputs", "who": "Sitrec v1 by Mick West", "licence": "MIT" },
+    { "what": "Cloud-motion method for the GIMBAL turn rate", "who": "logicbear, uap_nb", "licence": "MIT" },
+    { "what": "ERA5 reanalysis winds and temperatures", "who": "Copernicus Climate Change Service, via Google's public ARCO-ERA5 store", "licence": "Copernicus licence, with attribution" },
+    { "what": "IGRA radiosonde soundings", "who": "NOAA NCEI", "licence": "U.S. government data, public domain" },
+    { "what": "three.js 0.170.0", "who": "three.js authors", "licence": "MIT" },
+    { "what": "Barlow and IBM Plex Mono fonts (landing page)", "who": "Jeremy Tribby; IBM, via Google Fonts", "licence": "SIL OFL 1.1" }
+  ]
+}
