@@ -18,7 +18,7 @@ The full results, with every number and its source, are in `docs/results/` (one 
 - **GOFAST:** the on-screen range puts the object near 13,200 ft and about 3.8 nmi away. A balloon drifting with the wind, a slow flier and a glare on a slow target all fit the same path, and the data cannot tell them apart. An independent wind measurement at 13,200 ft, good to about 4 kt, is the measurement that would.
 - **GIMBAL:** there is no range on screen, so every answer is a curve over assumed range. A drifter, a slow flier and the glare models fit about equally well, and which one leads depends on a data-quality choice (two criteria held at weight 0) that was not made blind; both ways are shown everywhere. Every physical model needs the object to be about 12 nmi away or more; the aircrew report 6 to 8 nmi. A radar range would settle it.
 - **FLIR1:** the object on a free path (no physical model) leads, and the glare models lose on how the shape rotates. No range is on screen; the "99.9 RNG" line is a constant placeholder.
-- **PURSUE:** none of the 134 clips can be fully reconstructed, because the pod angles, altitude and range are redacted. Seventeen carry some scale; the 8 strongest give bounded size and speed ranges (`docs/results/pursue.md`).
+- **PURSUE:** none of the 134 clips can be fully reconstructed: no clip shows the pod azimuth, and most also hide elevation, altitude and range. Sixteen carry some scale; the 8 strongest give bounded size and speed ranges (`docs/results/pursue.md`).
 
 Testimony carries high weight by the owner's ruling (D-011), and a physics-only total is always shown beside the testimony-weighted one.
 
