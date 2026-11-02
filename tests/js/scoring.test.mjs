@@ -9,7 +9,7 @@ import { dirname, join } from "node:path";
 import { hypothesisTotals, scoreVariant, fitWeightedTotal } from "../../app/js/scoring.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const CASES = { gimbal: "gimbal", gofast: "gofast" };
+const CASES = { gimbal: "gimbal", gofast: "gofast", flir1: "flir1_navy" };
 const TOL = 1e-6;
 const shortfalls = [];
 

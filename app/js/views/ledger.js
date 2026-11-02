@@ -216,17 +216,23 @@ function right() {
   </div></div>`;
   // both totals, both ways
   const now = scoreVariant(v, w, ov);
-  const back = scoreVariant(v, w, { ...ov, ...Object.fromEntries(excl.map((c) => [c, 1])) });
+  // The scorer's full refit with the exclusions lifted (CP-04 Rule X), exported under extras.no_exclusions:
+  // these are the "without exclusions" numbers of the results pages, not a rescore of the fits above.
+  const ne = v.extras?.no_exclusions;
+  const refit = ne && !ne.identical && Array.isArray(ne.hypotheses) ? ne.hypotheses : null;
+  const best = (k) => refit ? Math.max(...refit.filter((x) => x.valid !== false).map((x) => x[k])) : 0;
+  const bPO = best("total_physics_only"), bTW = best("total_testimony_weighted");
   const cell = (r, k) => `${num(r[k], 1)} <span class="gap">${r[k === "physicsOnly" ? "gapPO" : "gapTW"] === 0 ? "best" : signed(r[k === "physicsOnly" ? "gapPO" : "gapTW"], 1)}</span>`;
+  const rcell = (x, k, b) => x ? `${num(x[k], 1)} <span class="gap">${x[k] === b ? "best" : signed(x[k] - b, 1)}</span>` : "";
   h += `<div class="panel"><div class="panel-h"><h2>Both totals</h2><span class="src">testimony weight ${num(w, 2)}</span></div><div class="panel-b" style="overflow-x:auto">
-    <table class="data tot2"><thead><tr><th rowspan="2">Hypothesis</th><th colspan="2" class="grp">As weighted now</th>${excl.length ? `<th colspan="2" class="grp">Exclusions added back</th>` : ""}</tr>
-    <tr><th class="num p">Physics only</th><th class="num t">With testimony</th>${excl.length ? `<th class="num p">Physics only</th><th class="num t">With testimony</th>` : ""}</tr></thead><tbody>
-    ${now.map((r, k) => { const b2 = back.find((x) => x.h.id === r.h.id); return `<tr data-h="${esc(r.h.id)}" class="${r.h.id === (api.currentHyp()?.h.id) ? "cur" : ""}" style="cursor:pointer">
+    <table class="data tot2"><thead><tr><th rowspan="2">Hypothesis</th><th colspan="2" class="grp">As weighted now</th>${refit ? `<th colspan="2" class="grp">Refit without exclusions</th>` : ""}</tr>
+    <tr><th class="num p">Physics only</th><th class="num t">With testimony</th>${refit ? `<th class="num p">Physics only</th><th class="num t">With testimony ${num(ne.weights?.testimony ?? 1, 2)}</th>` : ""}</tr></thead><tbody>
+    ${now.map((r, k) => { const x = refit?.find((y) => y.hypothesis === r.h.id); return `<tr data-h="${esc(r.h.id)}" class="${r.h.id === (api.currentHyp()?.h.id) ? "cur" : ""}" style="cursor:pointer">
       <td><span class="sw" style="background:${hypColor(r.h.id, k)}"></span><span class="hid">${esc(r.h.id)}</span></td>
       <td class="num p">${cell(r, "physicsOnly")}</td><td class="num t">${cell(r, "testimonyWeighted")}</td>
-      ${excl.length ? `<td class="num p">${cell(b2, "physicsOnly")}</td><td class="num t">${cell(b2, "testimonyWeighted")}</td>` : ""}</tr>`; }).join("")}
+      ${refit ? `<td class="num p">${rcell(x, "total_physics_only", bPO)}</td><td class="num t">${rcell(x, "total_testimony_weighted", bTW)}</td>` : ""}</tr>`; }).join("")}
     </tbody></table>
-    <p class="note">${excl.length ? `"Added back" puts each excluded criterion in at weight 1 on the stored fits (no refit, so a refit could only raise those totals). ` : ""}Click a row to select a hypothesis.</p></div></div>`;
+    <p class="note">${refit ? `"Refit without exclusions" is the scorer's own refit with every criterion at weight 1 (fixed numbers; they do not follow the sliders). "Add excluded criteria back" above only rescores the stored fits, which a refit can only improve on. ` : ""}Click a row to select a hypothesis.</p></div></div>`;
   // per-criterion breakdown of the selected hypothesis
   const r = api.currentHyp();
   if (r) {
