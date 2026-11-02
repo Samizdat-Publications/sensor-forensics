@@ -66,19 +66,21 @@ function chart(box, o) {
   const yt = o.yTicks ? o.yTicks.filter((v) => v >= y0 && v <= y1) : o.log ? logTicks(y0, y1) : ticks(y0, y1, 5);
   const path = (pts) => pts.filter((p) => Number.isFinite(p.y) && (!o.log || p.y > 0)).map((p, i) => `${i ? "L" : "M"}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join("");
   const inX = (p) => p.x >= x0 && p.x <= x1;
+  const labels = []; // reference labels, drawn last (above the data) with a halo
   box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.title)} against assumed range">
     ${o.xBand ? `<rect class="hband" x="${X(Math.max(x0, o.xBand[0]))}" y="${m.t}" width="${Math.max(2, X(Math.min(x1, o.xBand[1])) - X(Math.max(x0, o.xBand[0])))}" height="${H - m.t - m.b}"><title>Range interval of the hypotheses' best fits</title></rect>` : ""}
     <g class="grid">${yt.map((v) => `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}"/>`).join("")}</g>
-    <g class="bands">${o.bands.filter((b) => b.y0 < y1).map((b) => { const ya = Y(Math.min(b.y1, y1)), yb = Y(Math.max(b.y0, y0)); return `<rect x="${m.l}" width="${W - m.l - m.r}" y="${ya}" height="${Math.max(1, yb - ya)}"/><text x="${W - m.r - 4}" y="${(ya + yb) / 2 + 4}" text-anchor="end">${esc(b.label)}</text>`; }).join("")}</g>
+    <g class="bands">${o.bands.filter((b) => b.y0 < y1).map((b) => { const ya = Y(Math.min(b.y1, y1)), yb = Y(Math.max(b.y0, y0)); labels.push(`<text x="${W - m.r - 4}" y="${(ya + yb) / 2 + 4}" text-anchor="end">${esc(b.label)}</text>`); return `<rect x="${m.l}" width="${W - m.l - m.r}" y="${ya}" height="${Math.max(1, yb - ya)}"/>`; }).join("")}</g>
     <g class="axis">${yt.map((v) => `<text x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">${o.fmtTick ? o.fmtTick(v) : num(v)}</text>`).join("")}
       ${ticks(x0, x1, 8).map((v) => `<text x="${X(v)}" y="${H - m.b + 15}" text-anchor="middle">${num(v)}</text>`).join("")}
       <text x="${W - m.r}" y="${H - 2}" text-anchor="end">assumed range, nmi</text>
       <line x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}"/></g>
-    <g class="thr">${o.lines.filter((l) => l.y >= y0 && l.y <= y1).map((l) => `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(l.y)}" y2="${Y(l.y)}"/><text x="${W - m.r - 4}" y="${Y(l.y) - 4}" text-anchor="end">${esc(l.label)}</text>`).join("")}
-      ${o.refCurve ? `<path class="ref" d="${path(o.refCurve.pts.filter(inX))}"/>${(() => { const ps = o.refCurve.pts.filter(inX); const q = ps[Math.floor(ps.length * 0.12)]; return q ? `<text x="${X(q.x)}" y="${Y(q.y) + 13}">${esc(o.refCurve.label)}</text>` : ""; })()}` : ""}</g>
+    <g class="thr">${o.lines.filter((l) => l.y >= y0 && l.y <= y1).map((l) => (labels.push(`<text x="${W - m.r - 4}" y="${Y(l.y) - 4}" text-anchor="end">${esc(l.label)}</text>`), `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(l.y)}" y2="${Y(l.y)}"/>`)).join("")}
+      ${o.refCurve ? `<path class="ref" d="${path(o.refCurve.pts.filter(inX))}"/>${(() => { const ps = o.refCurve.pts.filter(inX); const q = ps[Math.floor(ps.length * 0.12)]; if (q) labels.push(`<text x="${X(q.x)}" y="${Y(q.y) + 13}">${esc(o.refCurve.label)}</text>`); return ""; })()}` : ""}</g>
     ${o.series.map((s) => `<path class="curve" style="stroke:${s.color}${s.dash ? ";stroke-dasharray:5 4" : ""}" d="${path(s.pts.filter(inX))}"/>
       ${s.pts.filter(inX).map((p) => Number.isFinite(p.y) && (!o.log || p.y > 0) ? `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="2.4" fill="${s.color}"><title>${esc(s.label)}, ${esc(nmi(p.x))}: ${esc(o.fmt(p.y))}</title></circle>` : "").join("")}`).join("")}
     ${o.markers.filter((p) => inX(p) && Number.isFinite(p.y) && (!o.log || p.y > 0)).map((p) => `<g class="mk"><rect x="${X(p.x) - 5}" y="${Y(p.y) - 5}" width="10" height="10" transform="rotate(45 ${X(p.x)} ${Y(p.y)})" fill="${p.color}"/><title>${esc(p.label)}: ${esc(nmi(p.x))}, ${esc(o.fmt(p.y))}</title></g>`).join("")}
+    <g class="labels">${labels.join("")}</g>
     ${Number.isFinite(o.cursor) && o.cursor >= x0 && o.cursor <= x1 ? `<line class="cursor" x1="${X(o.cursor)}" x2="${X(o.cursor)}" y1="${m.t}" y2="${H - m.b}"/>` : ""}
   </svg>`;
 }

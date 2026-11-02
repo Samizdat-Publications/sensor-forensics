@@ -236,8 +236,8 @@ function draw() {
     stripEl.innerHTML = `<span class="lbl">Frame lock</span>
       <span><span class="sw" style="background:${hypColor(row.h.id)}"></span><b class="hid">${esc(row.h.id)}</b> <span class="note">${esc(row.h.label)}</span></span>
       <span class="metric"><span class="note">Horizon, median</span> <b class="num">${lk.horizon_px_median == null ? "n/a" : num(lk.horizon_px_median, 1) + " px"}</b> <span class="note">${lk.horizon_n ? `${num(lk.horizon_n)} frames, ${hsrc}` : hsrc}</span></span>
-      <span class="metric"><span class="note">Object position, median</span> <b class="num">${lk.object_px_median == null ? "n/a" : num(lk.object_px_median, 1) + " px"}</b> <span class="note">${num(lk.object_n)} frames</span></span>
-      <span class="metric"><span class="note">This frame: horizon</span> <b class="num">${err?.horizon_px == null ? "n/a" : num(err.horizon_px, 1) + " px"}</b><span class="note">, object</span> <b class="num">${err?.object_px == null ? "n/a" : num(err.object_px, 1) + " px"}</b></span>`;
+      <span class="metric"><span class="note" title="The re-render looks along each hypothesis's own sight line, so this does not test any hypothesis: it is how far the measured blob sits from the frame centre.">Object offset from frame centre (same for every hypothesis), median</span> <b class="num">${lk.object_px_median == null ? "n/a" : num(lk.object_px_median, 1) + " px"}</b> <span class="note">${num(lk.object_n)} frames</span></span>
+      <span class="metric"><span class="note">This frame: horizon</span> <b class="num">${err?.horizon_px == null ? "n/a" : num(err.horizon_px, 1) + " px"}</b><span class="note">, object offset</span> <b class="num">${err?.object_px == null ? "n/a" : num(err.object_px, 1) + " px"}</b></span>`;
   } else {
     stripEl.innerHTML = `<span class="lbl">Frame lock</span><span class="note">No fitted hypothesis with predictions for ${esc(d.meta.label)}; the re-render needs a scored case.</span>`;
   }

@@ -229,6 +229,8 @@ table.data tr.cur td:first-child { box-shadow: inset 2px 0 0 var(--cue); }
 .chart svg { width: 100%; height: 100%; display: block; }
 .chart .axis line, .chart .axis path { stroke: var(--rule-strong); }
 .chart text { fill: var(--text-3); font-family: var(--font-num); font-size: 11px; }
+/* reference labels keep a halo in the panel colour so data curves crossing them stay readable */
+.chart .labels text { fill: var(--text-2); paint-order: stroke; stroke: var(--ink-1); stroke-width: 6px; stroke-linejoin: round; }
 .chart .grid line { stroke: var(--rule); }
 .chart .curve { fill: none; stroke: var(--text); stroke-width: 1.6; }
 .chart .thr line { stroke-dasharray: 3 4; stroke: var(--text-3); }
