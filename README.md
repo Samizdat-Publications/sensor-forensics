@@ -37,7 +37,7 @@ Press Ctrl+C in that window to stop it. The keys 1 to 5 switch views, the left a
 1. **Cockpit:** the original frame on the left, the re-render on the right. Difference and Blink compare the two directly. The strip at the top gives the frame-lock error: how many pixels the predicted horizon and object position sit from the measured ones.
 2. **God's-eye:** the jet's path from above, the fan of sight lines from the pod, and each explanation's fitted path for the object. The range slider moves the object along the sight lines.
 3. **Range explorer:** for each assumed distance, how fast, how high and how hard-turning the object would have to be. See "How to read a range curve" below.
-4. **Compare analyses:** Mick West's Sitrec and the 2023 Peings and von Rennenkampff paper, each reproduced from its own inputs, beside this lab's numbers.
+4. **Compare analyses:** Mick West's Sitrec and the 2023 Peings and von Rennenkampff paper, each rerun from its own inputs, beside this lab's numbers. Sitrec reproduces; the paper's paths reproduce only in part, and `docs/prior-work/DISAGREEMENTS.md` says why.
 5. **Evidence ledger:** every number read off the screen, with its frame, method and confidence; click a row to jump to that frame. The weight sliders rescore the explanations live. "Physics only" is the total without testimony.
 
 The panel on the right is the same in every view: the score of each explanation. Higher is better, and a gap of 2.3 means one explanation makes the data 10 times more likely than the other. Scores are comparisons, not verdicts on what the object was.
@@ -98,7 +98,7 @@ cd "C:\Users\stewa\Documents\Claude\Sensor forensics"; & "C:\Users\stewa\Documen
 | `C:\Users\stewa\Documents\Claude\Sensor forensics\docs\results\` | The results page for each video, the model-recovery test (what the data can and cannot tell apart), the discriminators (the one measurement that would settle each close call), and the testimony scoring |
 | `C:\Users\stewa\Documents\Claude\Sensor forensics\docs\audit\` | What each video shows on screen, frame by frame, and how far it can be reconstructed |
 | `C:\Users\stewa\Documents\Claude\Sensor forensics\docs\prior-work\` | Summaries of Sitrec, the 2023 and 2026 papers, and every point where analyses disagree, with the reason |
-| `C:\Users\stewa\Documents\Claude\Sensor forensics\docs\reproductions\` | Prior results reproduced from their own inputs |
+| `C:\Users\stewa\Documents\Claude\Sensor forensics\docs\reproductions\` | Prior results rerun from their own inputs, with every difference attributed |
 | `C:\Users\stewa\Documents\Claude\Sensor forensics\checkpoints\` | One report per milestone, each checked by an independent reviewer |
 | `C:\Users\stewa\Documents\Claude\Sensor forensics\data\testimony\` | 160 sourced witness claims (paraphrased, with source and timestamp) |
 | `C:\Users\stewa\Documents\Claude\Sensor forensics\exports\cases\` | The cases in the UFO Case Files format (schema v0.1 in `schemas\`) |

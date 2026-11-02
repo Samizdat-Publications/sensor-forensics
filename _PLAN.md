@@ -308,16 +308,16 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 
 ## M6 Exports and wrap (ends at CP-07)
 
-- [ ] 1. **[me]** Case-file format:
+- [x] 1. **[me]** Case-file format:
    - `schemas/ufo-case-file.schema.json` v0.1 (JSON Schema 2020-12). Its contents: case, sources with hashes, platform and sensor, observables, hypotheses with scores, discriminators, range-curve links, provenance and commit.
    - It is built for the future Case Files project to adopt (Q-006). If that project's spec appears first, I align to it.
-- [ ] 2. **[W]** `tools/export_cases.py` writes the cases, and `tools/validate_cases.py` checks them with jsonschema.
-- [ ] 3. **[W]** A README for a non-programmer:
+- [x] 2. **[W]** `tools/export_cases.py` writes the cases, and `tools/validate_cases.py` checks them with jsonschema.
+- [x] 3. **[W]** A README for a non-programmer:
    - what each view shows and how to read a range curve;
    - one-line PowerShell 5.1 commands with full paths.
-- [ ] 4. **[bg]** A 2-minute highlight recording. Then **[V]**, then CP-07.
+- [x] 4. **[bg]** A 2-minute highlight recording. Then **[V]**, then CP-07.
 
-**CP-07 acceptance:** the exported cases validate against the case files schema; a 2-minute highlight recording.
+**CP-07: PASSED 11/02/2026 (second independent check; its one README line fixed before tagging), see checkpoints/CP-07.md.** CP-07 acceptance: the exported cases validate against the case files schema; a 2-minute highlight recording.
 
 ## Gaps in SPEC.md and ENGINE.md, with the default for each
 
