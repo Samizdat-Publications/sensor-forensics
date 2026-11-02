@@ -3,7 +3,7 @@
 ## Status (11/01/2026)
 
 Done: all eight D-013 clips analysed; label tests, range-size-speed curves (`data/derived/pursue/<clip>/curves.csv`), plots (`docs/results/pursue/<clip>.png`), per-clip `summary.json` and `data/derived/pursue/m5_summary.json`. Tests: `tests/test_pursue_m5.py`.
-Frame extraction (`extract/frames.py`, case = clip id lowercased, `frames.csv` under `data/derived/pursue/<clip>/`): finished for PR111, PR149 and PR113; PR059 (indexing), PR052, PR044, PR078 and PR089 were still extracting in background processes when this page was written (the gate-clip analysis read the same decoded frames straight from the official files, in the same order).
+Frame extraction (`extract/frames.py`, case = clip id lowercased, `frames.csv` and `frames_meta.json` under `data/derived/pursue/<clip>/`): finished for all eight clips (11/02/2026: PR044 9,360 frames, PR052 11,893, PR059 8,733, PR078 8,958, PR089 8,955, PR111 1,807, PR113 5,291, PR149 1,545). The gate-clip analysis read the same decoded frames straight from the official files, in the same order, before the PNG sets were complete.
 Open: an independent spot check (CP-06); PR113 pixel aspect (two indicators disagree, see below).
 
 ## How to read this page
