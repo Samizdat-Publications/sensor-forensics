@@ -33,7 +33,7 @@ export function mount(el, a) {
         <div class="rg-legend" id="rg-legend"></div>
       </div></div>
       <div class="rg-charts">
-        <div class="panel fill"><div class="panel-h"><h2>Air speed</h2><span class="src">kt, log scale (mph = kt x ${KT_TO_MPH.toFixed(3)})</span></div><div class="panel-b chart" id="rg-speed"></div></div>
+        <div class="panel fill"><div class="panel-h"><h2>Air speed</h2><span class="src">kt, log scale (mph = kt x ${KT_TO_MPH.toFixed(3)}); dotted: Mach 1 at the probe's altitude</span></div><div class="panel-b chart" id="rg-speed"></div></div>
         <div class="panel fill"><div class="panel-h"><h2>Altitude</h2><span class="src">ft</span></div><div class="panel-b chart" id="rg-alt"></div></div>
         <div class="panel fill"><div class="panel-h"><h2>Peak acceleration</h2><span class="src">g, log scale</span></div><div class="panel-b chart" id="rg-acc"></div></div>
         <div class="panel fill"><div class="panel-h"><h2>Sight-line misfit</h2><span class="src">log-likelihood below the best, log scale</span></div><div class="panel-b chart" id="rg-mis"></div></div>
@@ -75,7 +75,7 @@ function chart(box, o) {
       <text x="${W - m.r}" y="${H - 2}" text-anchor="end">assumed range, nmi</text>
       <line x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}"/></g>
     <g class="thr">${o.lines.filter((l) => l.y >= y0 && l.y <= y1).map((l) => `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(l.y)}" y2="${Y(l.y)}"/><text x="${W - m.r - 4}" y="${Y(l.y) - 4}" text-anchor="end">${esc(l.label)}</text>`).join("")}
-      ${o.refCurve ? `<path class="ref" d="${path(o.refCurve.pts.filter(inX))}"/>${(() => { const ps = o.refCurve.pts.filter(inX); const q = ps[Math.floor(ps.length * 0.55)]; return q ? `<text x="${X(q.x)}" y="${Y(q.y) + 13}">${esc(o.refCurve.label)}</text>` : ""; })()}` : ""}</g>
+      ${o.refCurve ? `<path class="ref" d="${path(o.refCurve.pts.filter(inX))}"/>${(() => { const ps = o.refCurve.pts.filter(inX); const q = ps[Math.floor(ps.length * 0.12)]; return q ? `<text x="${X(q.x)}" y="${Y(q.y) + 13}">${esc(o.refCurve.label)}</text>` : ""; })()}` : ""}</g>
     ${o.series.map((s) => `<path class="curve" style="stroke:${s.color}${s.dash ? ";stroke-dasharray:5 4" : ""}" d="${path(s.pts.filter(inX))}"/>
       ${s.pts.filter(inX).map((p) => Number.isFinite(p.y) && (!o.log || p.y > 0) ? `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="2.4" fill="${s.color}"><title>${esc(s.label)}, ${esc(nmi(p.x))}: ${esc(o.fmt(p.y))}</title></circle>` : "").join("")}`).join("")}
     ${o.markers.filter((p) => inX(p) && Number.isFinite(p.y) && (!o.log || p.y > 0)).map((p) => `<g class="mk"><rect x="${X(p.x) - 5}" y="${Y(p.y) - 5}" width="10" height="10" transform="rotate(45 ${X(p.x)} ${Y(p.y)})" fill="${p.color}"/><title>${esc(p.label)}: ${esc(nmi(p.x))}, ${esc(o.fmt(p.y))}</title></g>`).join("")}
@@ -94,12 +94,19 @@ function logTicks(a, b) {
 
 const fmtG = (v) => (v >= 1 ? num(v, v < 10 ? 1 : 0) : v >= 0.01 ? num(v, 2) : v.toExponential(0).replace("-", "−"));
 
+const FLOOR_TOTAL = -5e5; // the scorer's "outside the constraint" label threshold (results pages)
+
 function curves(s) {
   const v = api.currentVariant();
   const probe = (s.data.rangeCurve?.variants?.[v?.variant ?? ""] ?? []).filter((p) => p.valid !== false && Number.isFinite(p.range_nmi))
     .sort((a, b) => a.range_nmi - b.range_nmi);
-  const perH = s.data.rangeCurves?.variants?.[v?.variant ?? ""] ?? null;
-  return { probe, perH };
+  // Per-hypothesis grid points the scorer marked invalid, or whose total sits at the likelihood floor (outside a
+  // hypothesis's own constraint, for example below sea level), are not drawn: they are not solutions.
+  const raw = s.data.rangeCurves?.variants?.[v?.variant ?? ""] ?? null;
+  const ok = (p) => p.valid !== false && p.valid_physics_only !== false && Number.isFinite(p.range_nmi)
+    && Number.isFinite(p.total_physics_only) && p.total_physics_only > FLOOR_TOTAL;
+  const perH = raw ? Object.fromEntries(Object.entries(raw).map(([h, c]) => [h, c.filter(ok)]).filter(([, c]) => c.length)) : null;
+  return { probe, perH: perH && Object.keys(perH).length ? perH : null };
 }
 
 function render() {
@@ -131,11 +138,11 @@ function render() {
 
   const ser = (key, scale = 1) => {
     const out = [];
-    if (probe.length && probe.some((p) => Number.isFinite(p[key]))) out.push({ label: "angles-only probe", color: "#e8ecf0", pts: probe.map((p) => ({ x: p.range_nmi, y: p[key] * scale })) });
-    if (perH) rows.forEach((r, k) => { const c = perH[r.h.id]; if (c && c.some((p) => Number.isFinite(p[key]))) out.push({ label: r.h.id, color: hypColor(r.h.id, k), dash: true, pts: c.map((p) => ({ x: p.range_nmi, y: p[key] * scale })) }); });
+    if (probe.length && probe.some((p) => Number.isFinite(p[key]))) out.push({ label: "angles-only probe", color: "#e8ecf0", pts: probe.map((p) => ({ x: p.range_nmi, y: Number.isFinite(p[key]) ? p[key] * scale : NaN })) });
+    if (perH) rows.forEach((r, k) => { const c = perH[r.h.id]; if (c && c.some((p) => Number.isFinite(p[key]))) out.push({ label: r.h.id, color: hypColor(r.h.id, k), dash: true, pts: c.map((p) => ({ x: p.range_nmi, y: Number.isFinite(p[key]) ? p[key] * scale : NaN })) }); });
     return out;
   };
-  const mach = probe.length ? { label: "Mach 1 (ISA, at the probe's altitude)", pts: probe.map((p) => ({ x: p.range_nmi, y: soundSpeedKt(p.altitude_ft_mean) })) } : null;
+  const mach = probe.length ? { label: "Mach 1", pts: probe.map((p) => ({ x: p.range_nmi, y: soundSpeedKt(p.altitude_ft_mean) })) } : null;
   const common = { xDomain, cursor: cur, xBand };
   const clamp1 = (v) => (Number.isFinite(v) ? Math.max(1, v) : v);
   chart(charts[0], { ...common, title: "Air speed", series: ser("air_speed_kt").map((x) => ({ ...x, pts: x.pts.map((p) => ({ ...p, y: clamp1(p.y) })) })),

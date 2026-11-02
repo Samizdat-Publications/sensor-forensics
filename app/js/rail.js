@@ -60,7 +60,7 @@ function build(el, api) {
       Totals are recomputed here from each criterion's log-likelihood. Not a verdict on what the object was.</p>
     </section>
     <section>
-      <div class="sec-h"><h2>Read first</h2><span class="src">${readFirst(v).length} flags</span></div>
+      <div class="sec-h"><h2>Read first</h2><span class="src">${readFirst(v).length} flag${readFirst(v).length === 1 ? "" : "s"}</span></div>
       <ul class="flags">${readFirst(v).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
     </section>
     <section id="rail-readouts"></section>`;
