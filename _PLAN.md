@@ -317,7 +317,7 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
    - one-line PowerShell 5.1 commands with full paths.
 - [x] 4. **[bg]** A 2-minute highlight recording. Then **[V]**, then CP-07.
 
-**CP-07: PASSED 11/02/2026 (second independent check; its one README line fixed before tagging), see checkpoints/CP-07.md.** CP-07 acceptance: the exported cases validate against the case files schema; a 2-minute highlight recording.
+**CP-07: PASSED 11/02/2026 on the third independent check (sent back twice), see checkpoints/CP-07.md.** CP-07 acceptance: the exported cases validate against the case files schema; a 2-minute highlight recording.
 
 ## Gaps in SPEC.md and ENGINE.md, with the default for each
 
