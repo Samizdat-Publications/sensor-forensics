@@ -1,32 +1,32 @@
 {
   "project": "sensor-forensics",
   "title": "Sensor Forensics",
-  "updated": "2026-10-31T19:34:42-04:00",
-  "milestone": "M2",
-  "milestone_title": "Geometry solver",
+  "updated": "2026-11-02T12:00:00-05:00",
+  "milestone": "M6",
+  "milestone_title": "Exports and wrap",
   "progress": {
-    "done": 29,
+    "done": 52,
     "total": 58
   },
   "last_checkpoint": {
-    "id": "CP-02",
-    "title": "Symbology extraction",
-    "file": "checkpoints/CP-02.md"
+    "id": "CP-06",
+    "title": "PURSUE cases",
+    "file": "checkpoints/CP-06.md"
   },
-  "headline": "CP-02 passed on a fresh blind sample. M2 under way: GOFAST reproduction of Sitrec passes; GIMBAL reproductions, trajectory families, weather and testimony running.",
+  "headline": "CP-04 and CP-06 passed independent checks (third round each). App, 60 s GIMBAL recording, case files, README and 2-minute highlight recording done; CP-05 and CP-07 checks in progress.",
   "needs_stewart": [
     {
       "id": "Q-003",
       "text": "Publish results on the hub later?",
       "default": "Private",
-      "needed_by": "CP-07"
+      "needed_by": "Any time"
     }
   ],
   "blocked": false,
   "blocker": null,
   "highlights": [
-    "artifacts/cp01/gimbal_fields.png",
-    "artifacts/cp01/gimbal_horizon_object.png",
-    "artifacts/cp02/blind/adjudication.png"
+    "artifacts/movies/highlights_2min.mp4",
+    "artifacts/movies/gimbal_framelock_60s.mp4",
+    "artifacts/cp05/gimbal_cockpit_1920.png"
   ]
 }
