@@ -249,7 +249,7 @@ function draw() {
     rows.push(["Range", nmi(norm(rel) / 1852)], ["Object altitude", ft(pose.obj[2] / 0.3048)],
       ["Sight line (predicted)", `${num(Math.abs(fit.az_deg[i]), 2)}° ${fit.az_deg[i] < 0 ? "left" : "right"}, ${num(Math.abs(fit.el_deg[i]), 2)}° ${fit.el_deg[i] < 0 ? "below" : "above"} level`],
       ["Horizon", `${deg(fit.horizon_deg[i], 1)} predicted, ${Number.isFinite(mth) ? deg(mth, 1) + " measured" : "not measured"}`],
-      ["Rotation", Number.isFinite(fit.rotation_deg[i]) ? `${deg(fit.rotation_deg[i], 1)} predicted, ${deg(wrap90(cue(d, "obj_hi_angle_deg", i) ?? NaN), 1)} measured (${fit.rotation_kind === "glare" ? "glare in the optics" : "own rotation, smooth"})` : "not scored for this case"],
+      ["Rotation", Number.isFinite(fit.rotation_deg[i]) ? `${deg(fit.rotation_deg[i], 1)} predicted, ${deg(wrap90(cue(d, "obj_hi_angle_deg", i) ?? NaN), 1)} measured (${fit.rotation_kind === "glare" ? "glare in the optics" : "own rotation, smooth"})` : (fit.rotation_deg.some(Number.isFinite) ? "not scored at this frame" : "not scored for this case")],
       ["Size", `${num((Number.isFinite(fit.size_px[i]) ? fit.size_px[i] : NaN) * (v.fov_deg / (fovAt(v, i) || v.fov_deg)), 1)} px predicted, ${num(cue(d, "obj_lo_major_px", i), 1)} px measured`]);
   } else if (v) {
     rows.push(["Horizon from readouts", deg(v.readout_horizon_deg[i], 1)], ["Measured object", Number.isFinite(mx) ? `${num(mx, 1)}, ${num(my, 1)} px` : "not found"]);

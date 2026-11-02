@@ -19,7 +19,7 @@ Completed 10/31/2026. Index: `data/pursue/index.csv` (134 videos in the official
 
 Counts revised 11/02/2026 at the CP-06 check (D-019): PR107 moved from Bounded to Not viable, because an elevation readout alone gives no scale. At CP-01 they were 17 and 117.
 
-Why nothing is Full: in almost every military clip the numeric display fields are blacked out, leaving a crosshair, corner ticks and sometimes a north arrow. This matches Haqq-Misra and Kopparapu's observation, now checked clip by clip.
+Why nothing is Full: no clip shows the pod azimuth, which a per-frame line of sight needs. In almost every military clip the other numeric display fields are blacked out too, leaving a crosshair, corner ticks and sometimes a north arrow; PR111 is the exception, with elevation and a slant-range-like label but still no azimuth. This matches Haqq-Misra and Kopparapu's observation, now checked clip by clip.
 
 Bounded clips, grouped by what gives the scale:
 

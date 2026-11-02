@@ -1,6 +1,6 @@
 # REVIEW-M3: resolving the four review items on the provisional GIMBAL scoring
 
-Work item of 10/31/2026. Each fix below is justified by a data-quality test or by the pre-registered design (`docs/design/scoring.md`, binding), never by its effect on the ranking. The decision rules in section 0 were written into this file BEFORE any of the measurements they decide were made, and before any rerun of the totals.
+Work item of 10/31/2026. Each fix below is justified by a data-quality test or by the pre-registered design (`docs/design/scoring.md`, binding), never by its effect on the ranking. The decision rules in section 0 were written into this file before the measurements they decide and before any rerun of the totals, but git cannot confirm that order, because the rules and the results were committed together.
 
 ## 0. Decision rules, stated before measuring
 

@@ -59,9 +59,9 @@ def _sigma_condition_lines(res: dict) -> list:
     for tag, name in (("physics_only", "physics-only"), ("testimony_weighted", "testimony-weighted")):
         cs = [c for c in sw["crossovers"].get(tag, []) if c["sigma_deg"] > main]
         if cs:
-            co.append(f"{name} at {_f(cs[0]['sigma_deg'], 1)} deg ({cs[0]['leader_below']} to {cs[0]['leader_above']})")
+            co.append(f"{name} at {_f(cs[0]['sigma_deg'], 2)} deg ({cs[0]['leader_below']} to {cs[0]['leader_above']})")
     out = [f"- **This leader is conditional on the rotation sigma.** The data-only sigma is {_f(main, 2)} deg. Rescored at the same best fits, "
-           "the leader changes from the free-path object to a glare model a little above it: " + ("; ".join(co) if co else "no change found") + "."]
+           "the leader changes a little above it: " + ("; ".join(co) if co else "no change found") + "."]
     rf = _sigma_refit()
     if rf:
         parts = []

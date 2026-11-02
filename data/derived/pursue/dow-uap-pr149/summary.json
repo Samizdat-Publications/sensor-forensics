@@ -65,7 +65,7 @@
       132
     ]
   },
-  "geometry_note": "the object stays below the ship's waterline in the image, so for an object above the sea its line of sight meets the sea nearer than the ship: R_obj/R_ship < 1",
+  "geometry_note": "over frames 15 to 89 the object stays below the ship's waterline in the image, so for an object above the sea its line of sight meets the sea nearer than the ship: R_obj/R_ship < 1, and the ratio-1 speed is a maximum of the cross-line-of-sight component. In frames 90 to 97 this holds only if the waterline's tilt in the image is camera roll, not the ship's heading",
   "assumptions": [
     "ship seen near broadside (foreshortening only lowers the true m/px, so the bound holds)",
     "ship length 150 to 200 m (H&K, Handymax) or 120 to 200 m (lab: geared four-crane general cargo or bulk carrier, class not identified)",

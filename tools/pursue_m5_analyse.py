@@ -102,6 +102,10 @@ def gate_clip(clip: str, width_px: int, obj_ext_px: float | None, obj_speed: dic
               RATIOS * obj_ext_px * mpp_lo, RATIOS * obj_ext_px * mpp_hi)
         s["object_extent_px"] = obj_ext_px
         s["object_size_at_ratio1_m"] = [obj_ext_px * mpp_lo, obj_ext_px * mpp_hi]
+        if notes.get("object_extent_px_range"):
+            # full band: smallest extent at the smallest scale to largest extent at the largest scale
+            e_lo, e_hi = notes["object_extent_px_range"]
+            s["object_size_at_ratio1_m_full_extent_band"] = [e_lo * mpp_lo, e_hi * mpp_hi]
     if obj_speed:
         v = obj_speed["median"]
         c.add("object_speed_vs_ratio", "range_ratio_obj_to_gate", RATIOS, "transverse_speed_mps",
@@ -298,8 +302,10 @@ def pr149() -> dict:
          "v_rel_ship_px_s": v_rel, "object_extent_px": {"along_track": ext_along, "cross_track": ext_cross},
          "frames": [int(f[0]), int(f[-1])], "bands": out,
          "HK2026": {"v_px_per_frame": 20.2, "hull_px": 920, "bound_mps": [99, 132]},
-         "geometry_note": "the object stays below the ship's waterline in the image, so for an object above "
-                          "the sea its line of sight meets the sea nearer than the ship: R_obj/R_ship < 1",
+         "geometry_note": "over frames 15 to 89 the object stays below the ship's waterline in the image, so for an "
+                          "object above the sea its line of sight meets the sea nearer than the ship: R_obj/R_ship < 1, "
+                          "and the ratio-1 speed is a maximum of the cross-line-of-sight component. In frames 90 to 97 "
+                          "this holds only if the waterline's tilt in the image is camera roll, not the ship's heading",
          "assumptions": ["ship seen near broadside (foreshortening only lowers the true m/px, so the bound holds)",
                          "ship length 150 to 200 m (H&K, Handymax) or 120 to 200 m (lab: geared four-crane "
                          "general cargo or bulk carrier, class not identified)", "30 fps"]}
@@ -405,7 +411,7 @@ def analyse_all() -> dict:
         if cfg.get("track"):
             sp = object_speed_px_s(rd(clip, "object_track.csv"), cfg["fps"])
         out[clip] = gate_clip(clip, cfg["width_px"], cfg.get("object_extent_px"), sp,
-                              {"notes": cfg.get("notes", ""), "assumptions": cfg.get("assumptions", [])})
+                              {k: cfg[k] for k in ("notes", "assumptions", "object_extent_px_range", "size_note") if k in cfg})
     (DER / "m5_summary.json").write_text(json.dumps(out, indent=2, default=float) + "\n", encoding="utf-8")
     print("analysed:", ", ".join(out))
     return out
