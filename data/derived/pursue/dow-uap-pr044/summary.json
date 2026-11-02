@@ -12,7 +12,7 @@
     0.08333333333333333,
     0.1111111111111111
   ],
-  "notes": "Three gate sizes carry labels at fixed zoom: 23M on a 231 px gate (frame 6060), 33M on 304 px (6090), then the gate snaps to 108 px within 0.17 s and reads 12M; the 144 px box at 6030 has no label. Afterwards a fixed 108 px gate with the label stepping 12M, 11M, 10M, 9M over 60 s (63 of the 65 readings). Object: white speck circling near the gate, half-maximum extent 8 to 11 px.",
+  "notes": "Three gate sizes carry labels at fixed zoom: 23M on a 231 px gate (frame 6060), 33M on 304 px (6090), then the gate snaps to 108 px within 0.17 s and reads 12M once the label catches up (4 to 6 frames later); the 144 px box at 6030 has no label. Afterwards a fixed 108 px gate with the label stepping 12M, 11M, 10M, 9M over 60 s (63 of the 65 readings). Object: white speck circling near the gate, half-maximum extent 8 to 11 px.",
   "assumptions": [
     "object speed is image motion relative to the frame; the sensor holds the gate on a sea point, so the frame is close to sea-fixed"
   ],

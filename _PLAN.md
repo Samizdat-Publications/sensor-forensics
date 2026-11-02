@@ -226,29 +226,29 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 
 ## M3 Hypotheses and scoring (ends at CP-04)
 
-- [ ] 1. **[me]** `solve/score.py` is one scoring entry point for every hypothesis.
+- [x] 1. **[me]** `solve/score.py` is one scoring entry point for every hypothesis.
    - **Criteria:** line of sight (quantization-aware), angular rate, apparent size, rotation, brightness trend (relative only, since there is no radiometric calibration), background-motion consistency, and testimony.
    - Each criterion is a log-likelihood using the uncertainties measured in M1, scaled by an effective sample size (frames are autocorrelated).
    - A BIC penalty for free parameters, applied the same way to every hypothesis.
    - Weights live in `solve/scoring.yaml`. Testimony defaults to 1.0, high (D-011), and all weights are adjustable live in the app; results always show a physics-only total beside the testimony-weighted total.
-- [ ] 2. **[me spec, W+ build]** Physical models in `solve/models/` (point target, wind drifter, flapping bird, close small object, distant aircraft with exhaust glare, fast object at the reported range, sensor artifacts):
+- [x] 2. **[me spec, W+ build]** Physical models in `solve/models/` (point target, wind drifter, flapping bird, close small object, distant aircraft with exhaust glare, fast object at the reported range, sensor artifacts):
    - Glare rotation is locked to pod derotation. Size is independent of range for glare and scales as 1/range for real objects.
    - Hypotheses are YAML data in `solve/hypotheses/`, with parameter priors and cited sources.
-- [ ] 3. **[W]** Testimony (D-010, D-011): collect the public interviews and testimony of the aircrew and radar operators (Fravor, Dietrich, Underwood, Graves, Day, Voorhis and others: podcasts, documentaries, the 07/26/2023 House hearing), extract each factual claim with its source, timestamp or page, a short quote (under 15 words) and an uncertainty band into `data/testimony/*.yaml`. Constraints, weighted high by default (D-011), always shown separately from the physics scores.
-- [ ] 4. **[me] + [bg]** Model-recovery test:
+- [x] 3. **[W]** Testimony (D-010, D-011): collect the public interviews and testimony of the aircrew and radar operators (Fravor, Dietrich, Underwood, Graves, Day, Voorhis and others: podcasts, documentaries, the 07/26/2023 House hearing), extract each factual claim with its source, timestamp or page, a short quote (under 15 words) and an uncertainty band into `data/testimony/*.yaml`. Constraints, weighted high by default (D-011), always shown separately from the physics scores.
+- [x] 4. **[me] + [bg]** Model-recovery test:
    - Synthetic observations are generated from each hypothesis, with M1's real quantization and noise, and run through the full scorer.
    - The result is a confusion matrix showing which hypotheses this data can tell apart even in principle.
    - This is the honest answer to "the data can't decide".
-- [ ] 5. **[bg]** Runs for GOFAST, GIMBAL and FLIR1:
+- [x] 5. **[bg]** Runs for GOFAST, GIMBAL and FLIR1:
    - best-fit parameters and per-criterion scores;
    - range curves of speed, altitude and acceleration, with thresholds marked (balloon drift, birds, airliners, Mach 1).
-- [ ] 6. **[me]** Discriminators for each top pair: the single measurement and the precision that would separate them (for example, radar range at a given timestamp, to a given precision). Written to `docs/results/<video>.md`.
-- [ ] 7. **[me]** Equal-treatment tests:
+- [x] 6. **[me]** Discriminators for each top pair: the single measurement and the precision that would separate them (for example, radar range at a given timestamp, to a given precision). Written to `docs/results/<video>.md`.
+- [x] 7. **[me]** Equal-treatment tests:
    - an AST scan that fails if any `solve/` code branches on a hypothesis name;
    - a rename and permutation invariance test;
    - a single scoring path.
 
-**CP-04 acceptance:** a results table per video with per-criterion scores and range curves; the verifier checks that the hypotheses are treated equally.
+**CP-04: PASSED 11/02/2026 on the third independent check (sent back twice), see checkpoints/CP-04.md.** CP-04 acceptance: a results table per video with per-criterion scores and range curves; the verifier checks that the hypotheses are treated equally.
 
 **How I prove it:** the results tables and plots, the confusion matrix, and the equal-treatment test output. The verifier gets the code paths and tests, not my narrative.
 
@@ -292,12 +292,12 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 ## M5 PURSUE cases (ends at CP-06)
 
 - [x] 1. **[me]** PURSUE scope frozen 10/31/2026 (D-013): 134 clips triaged; M5 works only on PR044, PR052, PR059, PR078, PR089, PR111, PR113, PR149.
-- [ ] 2. **[me]** One layout and sensor data file per sensor family. Where a sensor's FOV is unpublished, FOV becomes a parameter in the curves.
-- [ ] 3. **[W] x up to 5 in parallel**, one per Full-tier clip: run the same extract, solve and score pipeline and write a case folder. I review each one.
-- [ ] 4. **[W]** Bounded-tier clips get range-size-speed degeneracy curves from the same range-explorer code (the Haqq-Misra and Kopparapu style). For PR113, the depression-angle assumption is tested against the horizon.
-- [ ] 5. **[V]** A spot check, then CP-06.
+- [x] 2. **[me]** One layout and sensor data file per sensor family. Where a sensor's FOV is unpublished, FOV becomes a parameter in the curves.
+- [x] 3. **[W] x up to 5 in parallel**, one per Full-tier clip: run the same extract, solve and score pipeline and write a case folder. I review each one.
+- [x] 4. **[W]** Bounded-tier clips get range-size-speed degeneracy curves from the same range-explorer code (the Haqq-Misra and Kopparapu style). For PR113, the depression-angle assumption is tested against the horizon.
+- [x] 5. **[V]** A spot check, then CP-06.
 
-**CP-06 acceptance:**
+**CP-06: PASSED 11/02/2026 on the third independent check (sent back twice), see checkpoints/CP-06.md. Steps 2 and 3 became the bounded analysis of the 8 frozen clips, since no clip is Full (D-013).** CP-06 acceptance:
 - a results table for each viable clip;
 - a list of the clips that are not viable, each with its reason;
 - a table of the Bounded-tier clips (an addition to the original criteria).
