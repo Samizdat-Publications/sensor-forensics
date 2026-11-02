@@ -1,19 +1,19 @@
 {
   "project": "sensor-forensics",
   "title": "Sensor Forensics",
-  "updated": "2026-11-02T12:00:00-05:00",
+  "updated": "2026-11-02T14:00:00-05:00",
   "milestone": "M6",
-  "milestone_title": "Exports and wrap",
+  "milestone_title": "Exports and wrap (complete)",
   "progress": {
-    "done": 52,
+    "done": 58,
     "total": 58
   },
   "last_checkpoint": {
-    "id": "CP-06",
-    "title": "PURSUE cases",
-    "file": "checkpoints/CP-06.md"
+    "id": "CP-07",
+    "title": "Exports and wrap",
+    "file": "checkpoints/CP-07.md"
   },
-  "headline": "CP-04 and CP-06 passed independent checks (third round each). App, 60 s GIMBAL recording, case files, README and 2-minute highlight recording done; CP-05 and CP-07 checks in progress.",
+  "headline": "Plan complete: CP-01 to CP-07 passed independent checks and are tagged. No Navy video has a decisive leader; GIMBAL needs a radar range, FLIR1 a radar closure rate, GOFAST an independent wind.",
   "needs_stewart": [
     {
       "id": "Q-003",
