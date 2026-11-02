@@ -60,13 +60,35 @@ function build(el, api) {
       Totals are recomputed here from each criterion's log-likelihood. Not a verdict on what the object was.</p>
     </section>
     <section>
-      <div class="sec-h"><h2>Read first</h2><span class="src">${v.flags.length} flags</span></div>
-      <ul class="flags">${v.flags.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
+      <div class="sec-h"><h2>Read first</h2><span class="src">${readFirst(v).length} flags</span></div>
+      <ul class="flags">${readFirst(v).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
     </section>
     <section id="rail-readouts"></section>`;
   const input = el.querySelector("#wT");
   input.addEventListener("input", () => api.set({ wT: +input.value }));
   el.querySelector("#wT-reset").addEventListener("click", () => api.set({ wT: w0 }));
+}
+
+// The scorer's flags plus the sensitivities that can change the leader (the same rule as tools/export_cases.py):
+// a full refit without the post-hoc exclusions, and the nearest rotation-noise crossover on each side of the
+// data-only value, within a factor of 2.
+function readFirst(v) {
+  const out = [...v.flags];
+  const ne = v.extras?.no_exclusions;
+  if (ne && !ne.identical && Array.isArray(ne.hypotheses)) {
+    const ok = ne.hypotheses.filter((h) => h.valid !== false).sort((a, b) => b.total_physics_only - a.total_physics_only);
+    const now = v.hypotheses.filter((h) => h.valid).map((h) => [h.id, h.python_totals.physics_only]).sort((a, b) => b[1] - a[1]);
+    if (ok.length && now.length && ok[0].hypothesis !== now[0][0])
+      out.push(`CP-04 Rule X: refitted without the post-hoc exclusions, ${ok[0].hypothesis} leads physics-only instead of ${now[0][0]}.`);
+  }
+  const sw = v.extras?.rotation_sigma_sweep;
+  const main = sw?.main_sigma_deg;
+  const cs = (sw?.crossovers?.physics_only ?? []).filter((c) => c.sigma_deg >= 0.5 * main && c.sigma_deg <= 2 * main);
+  const lo = cs.filter((c) => c.sigma_deg < main).sort((a, b) => b.sigma_deg - a.sigma_deg)[0];
+  const hi = cs.filter((c) => c.sigma_deg >= main).sort((a, b) => a.sigma_deg - b.sigma_deg)[0];
+  if (lo) out.push(`Rotation noise: below ${lo.sigma_deg.toFixed(2)} deg (data-only value ${main.toFixed(2)} deg) ${lo.leader_below} leads physics-only instead.`);
+  if (hi) out.push(`Rotation noise: above ${hi.sigma_deg.toFixed(2)} deg (data-only value ${main.toFixed(2)} deg) ${hi.leader_above} leads physics-only instead.`);
+  return out;
 }
 
 function scores(el, api) {

@@ -66,6 +66,8 @@ CASES: dict[str, dict] = {
         "place_note": "No position is shown on screen; the lab holds no coordinates for this clip.",
         "platform": "F/A-18F Super Hornet",
         "variant_primary": "",
+        "range_note": "Range is read on screen (RNG, 4.4 down to 3.3 nmi in 0.1 nmi steps) and enters the fit as an "
+                      "interval measurement, so every hypothesis sits near the same range.",
     },
     "flir1": {
         "title": "FLIR1 \"Tic Tac\" (F/A-18F, ATFLIR, USS Nimitz group, November 2004)",
@@ -377,32 +379,87 @@ def post_hoc(flags: list[str]) -> list[dict]:
     return out
 
 
-def build_verdict(hyps: list[dict], primary: str, flags: list[str], case_label: str, has_excl_totals: bool) -> dict:
+def verdict_evidence(res: dict, view: dict, primary: str, derived: str) -> dict:
+    """What the verdict rule needs besides the totals, read from the scorer's own outputs (the same for every case):
+    the leader with the post-hoc exclusions lifted (a full refit), the rotation-noise crossovers near the data-only
+    sigma, and the model-recovery test (which generators' data the leader also wins)."""
+    ev = {"no_exclusions": None, "crossovers": [], "main_sigma_deg": None, "recovery": {}}
+    ne = view.get("no_exclusions") or res.get("no_exclusions")
+    if isinstance(ne, dict):
+        if ne.get("identical"):
+            ev["no_exclusions"] = "identical"
+        else:
+            pool = [h for h in ne.get("hypotheses") or [] if h.get("valid") is not False]
+            pool.sort(key=lambda h: h["total_physics_only"], reverse=True)
+            if len(pool) >= 2:
+                ev["no_exclusions"] = {"leader": pool[0]["hypothesis"], "label": pool[0].get("label", pool[0]["hypothesis"]),
+                                       "margin": pool[0]["total_physics_only"] - pool[1]["total_physics_only"]}
+    sw = view.get("rotation_sigma_sweep") or {}
+    main = sw.get("main_sigma_deg")
+    if main:
+        ev["main_sigma_deg"] = float(main)
+        for c in (sw.get("crossovers") or {}).get("physics_only", []):
+            if 0.5 * main <= c["sigma_deg"] <= 2.0 * main:
+                ev["crossovers"].append(c)
+    for f in sorted((DERIVED / derived).glob("recovery*.csv")):
+        with open(f, encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                if r.get("winner") == "True" and (r.get("variant") or "") == primary:
+                    ev["recovery"].setdefault(r["fitted"], set()).add(r["generator"])
+    return ev
+
+
+def build_verdict(hyps: list[dict], primary: str, flags: list[str], case_label: str, has_excl_totals: bool,
+                  ev: dict | None = None, range_note: str | None = None) -> dict:
     pool = [h for h in hyps if h["variant"] == primary and h.get("valid") is not False
             and isinstance(h.get("total_physics_only"), (int, float))]
     pool.sort(key=lambda h: h["total_physics_only"], reverse=True)
+    ev = ev or {"no_exclusions": None, "crossovers": [], "main_sigma_deg": None, "recovery": {}}
     conditions = [
-        "Range is not measured in this clip; conclusions hold over the stated range support (0.5 to 60 nmi), not at one range.",
+        range_note or "Range is not measured in this clip; conclusions hold over the stated range support (0.5 to 60 nmi), not at one range.",
         "Scores are log-likelihoods under the lab's noise model; a gap of 2.3 is a likelihood ratio of 10.",
         MODELS_NOTE,
     ]
     conditions += flags
-    if not has_excl_totals:
+    if ev["no_exclusions"] == "identical":
+        conditions.append("No data-quality exclusion applies to this case; every criterion carries its full weight.")
+    elif ev["no_exclusions"] is None and post_hoc(flags):
         conditions.append("Some data-quality rules (zero weight for saturated or unresolved size and brightness) were "
-                          "not decided blind; totals without them are not yet in these outputs.")
+                          "not decided blind; totals without them are not in these outputs.")
     if len(pool) < 2:
         return {"text": f"{case_label}: fewer than two scored hypotheses; no ranking is stated.",
                 "conditions": conditions, "decisive": False, "leader_physics_only": None, "margin_log_likelihood": None}
     lead, nxt = pool[0], pool[1]
     margin = lead["total_physics_only"] - nxt["total_physics_only"]
     tied = [h["id"] for h in pool[1:] if lead["total_physics_only"] - h["total_physics_only"] < LR10]
-    # Not decisive while post-hoc exclusions exist and totals without them are not reported (CP-04 review).
-    pending = bool(post_hoc(flags)) and not has_excl_totals
-    decisive = margin >= LR10 and not pending
-    if margin >= LR10 and pending:
+    # Not decisive when the lead rests on something the data cannot settle (same rule for every case):
+    reasons = []
+    pending = bool(post_hoc(flags)) and ev["no_exclusions"] is None
+    if pending:
+        reasons.append("the lead depends on data-quality rules applied after results were seen, and totals without them are not reported")
+    ne = ev["no_exclusions"]
+    if isinstance(ne, dict) and ne["leader"] != lead["id"]:
+        reasons.append(f"without the post-hoc data-quality exclusions (a full refit) {ne['label']} leads instead")
+    main = ev["main_sigma_deg"]
+    below = [c for c in ev["crossovers"] if c["sigma_deg"] < main]
+    above = [c for c in ev["crossovers"] if c["sigma_deg"] >= main]
+    if below:  # nearest crossover on each side of the data-only rotation noise
+        c = max(below, key=lambda c: c["sigma_deg"])
+        reasons.append(f"with a rotation noise below {c['sigma_deg']:.2f} deg (the data-only value is {main:.2f} deg) "
+                       f"{c['leader_below']} leads instead")
+    if above:
+        c = min(above, key=lambda c: c["sigma_deg"])
+        reasons.append(f"with a rotation noise above {c['sigma_deg']:.2f} deg (the data-only value is {main:.2f} deg) "
+                       f"{c['leader_above']} leads instead")
+    won = sorted(g for g in ev["recovery"].get(lead["id"], set()) if g != lead["id"])
+    if won:
+        reasons.append(f"in the model-recovery test, data made by {', '.join(won)} were also won by {lead['id']}, "
+                       "so this data cannot tell those explanations apart")
+    conditions += [f"Sensitivity: {r}." for r in reasons]
+    decisive = margin >= LR10 and not reasons
+    if margin >= LR10 and reasons:
         text = (f"On the video alone (physics-only), {lead['label']} scores highest, ahead of the next explanation "
-                f"by {margin:.1f} log units, but this is not called decisive: the lead depends on data-quality rules "
-                "applied after results were seen, and totals without them are not yet reported.")
+                f"by {margin:.1f} log units, but this is not called decisive: " + "; ".join(reasons) + ".")
     elif decisive:
         text = (f"On the video alone (physics-only), {lead['label']} scores highest, ahead of the next "
                 f"explanation by {margin:.1f} log units (a likelihood ratio above 10). That is the conditional "
@@ -447,7 +504,8 @@ def build_video_case(case_id: str, cfg: dict) -> dict | None:
                     "file": None, "url": "https://cloud.google.com/storage/docs/public-datasets/era5", "sha256": None,
                     "provenance": (pv.get("environment") or {}).get("source", "ERA5")})
     sig_kt = (pv.get("environment") or {}).get("wind_sigma_kt")
-    verdict = build_verdict(hyps, primary, flags, cfg["title"], has_excl)
+    verdict = build_verdict(hyps, primary, flags, cfg["title"], has_excl,
+                            verdict_evidence(res, pv, primary, cfg["derived"]), cfg.get("range_note"))
     return {
         "schema_version": "0.1", "case_id": case_id, "kind": "video_case", "title": cfg["title"],
         "summary": (f"Forensic reconstruction of {cfg['title']}: the jet path, line of sight and field of view per "
