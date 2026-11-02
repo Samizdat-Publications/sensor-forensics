@@ -24,7 +24,7 @@ Method (the same for every hypothesis; nothing here branches on a hypothesis):
    that could plausibly have measured it (data/discriminators/notes.yaml, stated assumptions).
 
 CLI:
-    python -m solve.discriminators gimbal|gofast|all [--procs N] [--variant fov070]   # writes data/derived/<case>/discriminators.json
+    python -m solve.discriminators gimbal|gofast|flir1|all [--procs N] [--variant fov070]   # writes data/derived/<case>/discriminators.json
     python -m solve.discriminators --report                          # writes docs/results/discriminators.md
 """
 
@@ -43,7 +43,7 @@ from scipy.optimize import minimize
 
 from . import frames as F
 from . import score as S
-from .case_data import load_case
+from .case_data import derived_dir, load_case
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTES = ROOT / "data" / "discriminators" / "notes.yaml"
@@ -352,7 +352,7 @@ def hypothesis_bands(task: dict) -> dict:
 
 
 def _fitted(case_name: str, variant: str) -> list:
-    r = json.loads((ROOT / "data" / "derived" / case_name / "results.json").read_text(encoding="utf-8"))
+    r = json.loads((derived_dir(case_name) / "results.json").read_text(encoding="utf-8"))
     hs = r["variants"][variant]["hypotheses"] if variant else r["hypotheses"]
     return [h for h in hs if h.get("valid", True)]
 
@@ -368,7 +368,7 @@ def top_ids(fitted: list, n: int = 3) -> list:
 
 def recovery_pairs(case_name: str, variant: str, margin: float = math.log(LR_TARGET)) -> list:
     """Pairs the model-recovery test could not separate (same rule as solve.recovery's report)."""
-    p = ROOT / "data" / "derived" / case_name / "recovery.csv"
+    p = derived_dir(case_name) / "recovery.csv"
     if not p.exists():
         return []
     df = pd.read_csv(p, keep_default_na=False, na_values=[""])
@@ -434,7 +434,7 @@ def evaluate_pairs(pairs: list, bands: dict, catalog: dict, t_of: dict) -> list:
 
 def fov_conditioning(case_name: str, pairs: list) -> list:
     """GIMBAL: each pair's total difference at both fields of view (the FOV as a measurement)."""
-    r = json.loads((ROOT / "data" / "derived" / case_name / "results.json").read_text(encoding="utf-8"))
+    r = json.loads((derived_dir(case_name) / "results.json").read_text(encoding="utf-8"))
     if "variants" not in r:
         return []
     tab = {v: {h["hypothesis"]: h for h in d["hypotheses"]} for v, d in r["variants"].items()}
@@ -454,12 +454,12 @@ def fov_conditioning(case_name: str, pairs: list) -> list:
 def run_case(case_name: str, procs: int = 4, only_variant: str | None = None) -> dict:
     from concurrent.futures import ProcessPoolExecutor
     _below_normal()
-    r = json.loads((ROOT / "data" / "derived" / case_name / "results.json").read_text(encoding="utf-8"))
+    r = json.loads((derived_dir(case_name) / "results.json").read_text(encoding="utf-8"))
     variants = list(r["variants"]) if "variants" in r else [""]
     cat = notes()["measurements"]
     result = {"case": case_name, "band_delta": BAND_DELTA, "lr_target": LR_TARGET,
               "second_sensor_offset_nmi": SECOND_SENSOR_OFFSET_NMI, "variants": {}}
-    out = ROOT / "data" / "derived" / case_name / "discriminators.json"
+    out = derived_dir(case_name) / "discriminators.json"
     if only_variant is not None:
         # Recompute one variant and keep the others from the existing file.
         old = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
@@ -579,7 +579,7 @@ def write_report() -> Path:
         sec = nt["cases"].get(case_name, {})
         L.append(f"## {sec.get('title', case_name.upper())}")
         L.append("")
-        p = ROOT / "data" / "derived" / case_name / "discriminators.json"
+        p = derived_dir(case_name) / "discriminators.json"
         if not p.exists():
             L += [ln.rstrip() for ln in str(sec.get("stub", "Not computed yet.")).strip().splitlines()]
             L.append("")
@@ -623,8 +623,8 @@ def main(argv: list[str]) -> int:
     if "--procs" in argv:
         procs = int(argv[argv.index("--procs") + 1])
     only = argv[argv.index("--variant") + 1] if "--variant" in argv else None
-    names = [a for a in argv if a in ("gimbal", "gofast", "all")]
-    for n in (["gimbal", "gofast"] if "all" in names else names):
+    names = [a for a in argv if a in ("gimbal", "gofast", "flir1", "all")]
+    for n in (["gimbal", "gofast", "flir1"] if "all" in names else names):
         d = run_case(n, procs=procs, only_variant=only)
         for v, vv in d["variants"].items():
             for p in vv["pairs"]:

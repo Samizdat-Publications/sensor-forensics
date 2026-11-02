@@ -346,7 +346,77 @@ A calibrated size would not help here: a 1 to 3 m object at 3.8 nmi is 5 to 15 p
 
 ## FLIR1
 
-FLIR1 results exist (`docs/results/flir1.md`), but the discriminator search has not been run on FLIR1 yet (the CLI covers GIMBAL and GOFAST). Expected levers: the on-screen range field is a constant 99.9 placeholder, so range is unknown as in GIMBAL, and the ships' radar (USS Princeton) and the E-2 tracks the witnesses describe are the data that would supply it.
+Top hypotheses (top three by either total): H-WIT, H-ART, H-AC. Pairs the recovery test could not separate: H-AC and H-ART; H-CLOSE and H-WIT.
+
+| To tell | from | measure | when | to within | first predicts | second predicts | works if | does that data exist? |
+|---|---|---|---|---|---|---|---|---|
+| H-AC | H-ART | Air speed (object ground velocity minus an independent wind measurement at its altitude) | whole clip | none suffices | 347 (331 to 352) [band reaches a prior bound] kt | 340 (313 to 348) [band reaches a prior bound] kt | no precision works |  |
+| H-AC | H-WIT | Closure rate (radar Vc or range rate) | frame 2287 (76.3 s) | 20.3 kt | -11.7 (-13.5 to 4.86) [band reaches a prior bound] kt | 52.3 (48.4 to 122) [band reaches a prior bound] kt | either is true |  |
+| H-ART | H-WIT | Closure rate (radar Vc or range rate) | frame 2287 (76.3 s) | 17.0 kt | -9.09 (-16.5 to 12.0) [band reaches a prior bound] kt | 52.3 (48.4 to 122) [band reaches a prior bound] kt | either is true |  |
+| H-CLOSE | H-WIT | IR intensity ratio, last frame over first, with known gain and no saturation | whole clip | 40.10 (ratio) | 89.28 (89.10 to 89.46) [band reaches a prior bound] (ratio) | 2.36 (1.89 to 3.04) [band reaches a prior bound] (ratio) | either is true |  |
+
+Feasibility is the required precision divided by a typical precision for that kind of data (at least 1 means an existing instrument class could do it). Every candidate per pair:
+
+| Pair | Measurement | When | First predicts | Second predicts | Gap between bands | Needed (both ways / one way) | Typical | Feasibility |
+|---|---|---|---|---|---|---|---|---|
+| H-AC vs H-ART | Air speed (object ground velocity minus an independent wind measurement at its altitude) | whole clip | 347 (331 to 352) [band reaches a prior bound] | 340 (313 to 348) [band reaches a prior bound] | overlap | none kt | 5.00 | 0.00 |
+| H-AC vs H-ART | Object altitude | frame 2287 (76.3 s) | 20,538 (20,508 to 20,843) [band reaches a prior bound] | 20,573 (20,489 to 20,894) [band reaches a prior bound] | overlap | none ft | 500 | 0.00 |
+| H-AC vs H-ART | Object altitude | frame 1145 (38.2 s) | 20,547 (20,500 to 21,011) [band reaches a prior bound] | 20,603 (20,448 to 21,128) [band reaches a prior bound] | overlap | none ft | 500 | 0.00 |
+| H-AC vs H-ART | Object altitude | frame 0 (0.0 s) | 20,555 (20,493 to 21,203) [band reaches a prior bound] | 20,632 (20,405 to 21,362) [band reaches a prior bound] | overlap | none ft | 500 | 0.00 |
+| H-AC vs H-ART | Closure rate (radar Vc or range rate) | frame 2287 (76.3 s) | -11.7 (-13.5 to 4.86) [band reaches a prior bound] | -9.09 (-16.5 to 12.0) [band reaches a prior bound] | overlap | none kt | 5.00 | 0.00 |
+| H-AC vs H-ART | Closure rate (radar Vc or range rate) | frame 1145 (38.2 s) | -16.2 (-18.1 to 1.23) [band reaches a prior bound] | -13.5 (-21.2 to 8.58) [band reaches a prior bound] | overlap | none kt | 5.00 | 0.00 |
+| H-AC vs H-ART | Closure rate (radar Vc or range rate) | frame 0 (0.0 s) | -9.86 (-11.8 to 7.94) [band reaches a prior bound] | -7.11 (-14.9 to 15.4) [band reaches a prior bound] | overlap | none kt | 5.00 | 0.00 |
+| H-AC vs H-ART | IR intensity ratio, last frame over first, with known gain and no saturation | whole clip | 0.54 (0.47 to 1.09) [band reaches a prior bound] | 0.64 (0.37 to 1.26) [band reaches a prior bound] | overlap | none (ratio) | 0.10 | 0.00 |
+| H-AC vs H-ART | Radar range | frame 2287 (76.3 s) | 1.12 (1.05 to 1.73) [band reaches a prior bound] | 1.19 (0.98 to 1.87) [band reaches a prior bound] | overlap | none nmi | 0.10 | 0.00 |
+| H-AC vs H-ART | Radar range | frame 1145 (38.2 s) | 0.96 (0.87 to 1.75) [band reaches a prior bound] | 1.05 (0.78 to 1.96) [band reaches a prior bound] | overlap | none nmi | 0.10 | 0.00 |
+| H-AC vs H-ART | Radar range | frame 0 (0.0 s) | 0.82 (0.72 to 1.81) [band reaches a prior bound] | 0.95 (0.61 to 2.10) [band reaches a prior bound] | overlap | none nmi | 0.10 | 0.00 |
+| H-AC vs H-ART | Bearing from a second aircraft 2 nmi abeam | frame 1145 (38.2 s) | 64.6 (48.9 to 66.6) [band reaches a prior bound] | 62.3 (45.7 to 68.7) [band reaches a prior bound] | overlap | none deg | 0.30 | 0.00 |
+| H-AC vs H-WIT | Closure rate (radar Vc or range rate) | frame 2287 (76.3 s) | -11.7 (-13.5 to 4.86) [band reaches a prior bound] | 52.3 (48.4 to 122) [band reaches a prior bound] | 43.6 | both 20.3 kt | 5.00 | 4.06 |
+| H-AC vs H-WIT | IR intensity ratio, last frame over first, with known gain and no saturation | whole clip | 0.54 (0.47 to 1.09) [band reaches a prior bound] | 2.36 (1.89 to 3.04) [band reaches a prior bound] | 0.80 | both 0.37 (ratio) | 0.10 | 3.74 |
+| H-AC vs H-WIT | Closure rate (radar Vc or range rate) | frame 0 (0.0 s) | -9.86 (-11.8 to 7.94) [band reaches a prior bound] | 27.6 (17.6 to 75.5) [band reaches a prior bound] | 9.64 | both 4.49 kt | 5.00 | 0.90 |
+| H-AC vs H-WIT | Air speed (object ground velocity minus an independent wind measurement at its altitude) | whole clip | 347 (331 to 352) [band reaches a prior bound] | 322 (298 to 326) [band reaches a prior bound] | 5.38 | both 2.51 kt | 5.00 | 0.50 |
+| H-AC vs H-WIT | Radar range | frame 2287 (76.3 s) | 1.12 (1.05 to 1.73) [band reaches a prior bound] | 0.72 (0.65 to 1.54) [band reaches a prior bound] | overlap | one way 0.15 nmi | 0.10 | 1.53 |
+| H-AC vs H-WIT | Bearing from a second aircraft 2 nmi abeam | frame 1145 (38.2 s) | 64.6 (48.9 to 66.6) [band reaches a prior bound] | 63.7 (42.6 to 63.8) [band reaches a prior bound] | overlap | one way 0.38 deg | 0.30 | 1.26 |
+| H-AC vs H-WIT | Radar range | frame 0 (0.0 s) | 0.82 (0.72 to 1.81) [band reaches a prior bound] | 1.11 (1.07 to 2.52) [band reaches a prior bound] | overlap | one way 0.11 nmi | 0.10 | 1.13 |
+| H-AC vs H-WIT | Radar range | frame 1145 (38.2 s) | 0.96 (0.87 to 1.75) [band reaches a prior bound] | 0.99 (0.99 to 2.18) [band reaches a prior bound] | overlap | one way 0.02 nmi | 0.10 | 0.16 |
+| H-AC vs H-WIT | Object altitude | frame 0 (0.0 s) | 20,555 (20,493 to 21,203) [band reaches a prior bound] | 20,733 (20,704 to 21,690) [band reaches a prior bound] | overlap | one way 70 ft | 500 | 0.14 |
+| H-AC vs H-WIT | Object altitude | frame 2287 (76.3 s) | 20,538 (20,508 to 20,843) [band reaches a prior bound] | 20,395 (20,359 to 20,856) [band reaches a prior bound] | overlap | one way 53 ft | 500 | 0.11 |
+| H-AC vs H-WIT | Object altitude | frame 1145 (38.2 s) | 20,547 (20,500 to 21,011) [band reaches a prior bound] | 20,518 (20,516 to 21,141) [band reaches a prior bound] | overlap | none ft | 500 | 0.00 |
+| H-AC vs H-WIT | Closure rate (radar Vc or range rate) | frame 1145 (38.2 s) | -16.2 (-18.1 to 1.23) [band reaches a prior bound] | -7.61 (-17.3 to -2.13) [band reaches a prior bound] | overlap | none kt | 5.00 | 0.00 |
+| H-ART vs H-WIT | Closure rate (radar Vc or range rate) | frame 2287 (76.3 s) | -9.09 (-16.5 to 12.0) [band reaches a prior bound] | 52.3 (48.4 to 122) [band reaches a prior bound] | 36.5 | both 17.0 kt | 5.00 | 3.40 |
+| H-ART vs H-WIT | IR intensity ratio, last frame over first, with known gain and no saturation | whole clip | 0.64 (0.37 to 1.26) [band reaches a prior bound] | 2.36 (1.89 to 3.04) [band reaches a prior bound] | 0.63 | both 0.29 (ratio) | 0.10 | 2.93 |
+| H-ART vs H-WIT | Closure rate (radar Vc or range rate) | frame 0 (0.0 s) | -7.11 (-14.9 to 15.4) [band reaches a prior bound] | 27.6 (17.6 to 75.5) [band reaches a prior bound] | 2.20 | both 1.03 kt | 5.00 | 0.21 |
+| H-ART vs H-WIT | Air speed (object ground velocity minus an independent wind measurement at its altitude) | whole clip | 340 (313 to 348) [band reaches a prior bound] | 322 (298 to 326) [band reaches a prior bound] | overlap | one way 6.66 kt | 5.00 | 1.33 |
+| H-ART vs H-WIT | Radar range | frame 2287 (76.3 s) | 1.19 (0.98 to 1.87) [band reaches a prior bound] | 0.72 (0.65 to 1.54) [band reaches a prior bound] | overlap | one way 0.12 nmi | 0.10 | 1.22 |
+| H-ART vs H-WIT | Radar range | frame 0 (0.0 s) | 0.95 (0.61 to 2.10) [band reaches a prior bound] | 1.11 (1.07 to 2.52) [band reaches a prior bound] | overlap | one way 0.05 nmi | 0.10 | 0.54 |
+| H-ART vs H-WIT | Object altitude | frame 2287 (76.3 s) | 20,573 (20,489 to 20,894) [band reaches a prior bound] | 20,395 (20,359 to 20,856) [band reaches a prior bound] | overlap | one way 44 ft | 500 | 0.09 |
+| H-ART vs H-WIT | Object altitude | frame 0 (0.0 s) | 20,632 (20,405 to 21,362) [band reaches a prior bound] | 20,733 (20,704 to 21,690) [band reaches a prior bound] | overlap | one way 34 ft | 500 | 0.07 |
+| H-ART vs H-WIT | Object altitude | frame 1145 (38.2 s) | 20,603 (20,448 to 21,128) [band reaches a prior bound] | 20,518 (20,516 to 21,141) [band reaches a prior bound] | overlap | none ft | 500 | 0.00 |
+| H-ART vs H-WIT | Closure rate (radar Vc or range rate) | frame 1145 (38.2 s) | -13.5 (-21.2 to 8.58) [band reaches a prior bound] | -7.61 (-17.3 to -2.13) [band reaches a prior bound] | overlap | none kt | 5.00 | 0.00 |
+| H-ART vs H-WIT | Radar range | frame 1145 (38.2 s) | 1.05 (0.78 to 1.96) [band reaches a prior bound] | 0.99 (0.99 to 2.18) [band reaches a prior bound] | overlap | none nmi | 0.10 | 0.00 |
+| H-ART vs H-WIT | Bearing from a second aircraft 2 nmi abeam | frame 1145 (38.2 s) | 62.3 (45.7 to 68.7) [band reaches a prior bound] | 63.7 (42.6 to 63.8) [band reaches a prior bound] | overlap | none deg | 0.30 | 0.00 |
+| H-CLOSE vs H-WIT | IR intensity ratio, last frame over first, with known gain and no saturation | whole clip | 89.28 (89.10 to 89.46) [band reaches a prior bound] | 2.36 (1.89 to 3.04) [band reaches a prior bound] | 86.06 | both 40.10 (ratio) | 0.10 | 401.03 |
+| H-CLOSE vs H-WIT | Closure rate (radar Vc or range rate) | frame 2287 (76.3 s) | -190 (-190 to -190) [band reaches a prior bound] | 52.3 (48.4 to 122) [band reaches a prior bound] | 238 | both 111 kt | 5.00 | 22.18 |
+| H-CLOSE vs H-WIT | Closure rate (radar Vc or range rate) | frame 1145 (38.2 s) | 220 (220 to 220) [band reaches a prior bound] | -7.61 (-17.3 to -2.13) [band reaches a prior bound] | 222 | both 103 kt | 5.00 | 20.69 |
+| H-CLOSE vs H-WIT | Air speed (object ground velocity minus an independent wind measurement at its altitude) | whole clip | 82.2 (82.2 to 82.2) [band reaches a prior bound] | 322 (298 to 326) [band reaches a prior bound] | 216 | both 100 kt | 5.00 | 20.09 |
+| H-CLOSE vs H-WIT | Closure rate (radar Vc or range rate) | frame 0 (0.0 s) | 227 (227 to 227) [band reaches a prior bound] | 27.6 (17.6 to 75.5) [band reaches a prior bound] | 151 | both 70.6 kt | 5.00 | 14.11 |
+| H-CLOSE vs H-WIT | Radar range | frame 0 (0.0 s) | 4.38 (4.38 to 4.38) [band reaches a prior bound] | 1.11 (1.07 to 2.52) [band reaches a prior bound] | 1.85 | both 0.86 nmi | 0.10 | 8.64 |
+| H-CLOSE vs H-WIT | Radar range | frame 2287 (76.3 s) | 0.46 (0.46 to 0.46) [band reaches a prior bound] | 0.72 (0.65 to 1.54) [band reaches a prior bound] | 0.19 | both 0.09 nmi | 0.10 | 0.87 |
+| H-CLOSE vs H-WIT | Object altitude | frame 0 (0.0 s) | 22,393 (22,393 to 22,393) [band reaches a prior bound] | 20,733 (20,704 to 21,690) [band reaches a prior bound] | 703 | both 328 ft | 500 | 0.66 |
+| H-CLOSE vs H-WIT | Object altitude | frame 2287 (76.3 s) | 19,947 (19,947 to 19,947) [band reaches a prior bound] | 20,395 (20,359 to 20,856) [band reaches a prior bound] | 412 | both 192 ft | 500 | 0.38 |
+| H-CLOSE vs H-WIT | Object altitude | frame 1145 (38.2 s) | 21,168 (21,168 to 21,168) [band reaches a prior bound] | 20,518 (20,516 to 21,141) [band reaches a prior bound] | 27 | both 13 ft | 500 | 0.03 |
+| H-CLOSE vs H-WIT | Bearing from a second aircraft 2 nmi abeam | frame 1145 (38.2 s) | 45.1 (45.1 to 45.1) [band reaches a prior bound] | 63.7 (42.6 to 63.8) [band reaches a prior bound] | overlap | one way 8.65 deg | 0.30 | 28.83 |
+| H-CLOSE vs H-WIT | Radar range | frame 1145 (38.2 s) | 2.00 (2.00 to 2.00) [band reaches a prior bound] | 0.99 (0.99 to 2.18) [band reaches a prior bound] | overlap | one way 0.47 nmi | 0.10 | 4.69 |
+
+### What would settle FLIR1
+
+**The radar closure rate at the end of the clip (76 s).** Fitted to the video alone, the glare models need the object to be holding its distance (closure rate: distant jet -14 to +5 kt, glare on a target -17 to +12 kt), while the free path needs it to be closing at 48 to 122 kt. A closure rate good to about 17 kt would separate the glare models from the free path both ways, by a likelihood ratio of 10 or more; a fire-control radar typically measures closure to about 5 kt (the lab's assumption, `notes.yaml`). This measurement does not depend on the rotation noise, which is what decides the FLIR1 leader on the video alone (the leader changes at 12.75 deg, just above the 11.86 deg measured from the data). The witnesses describe tracks from USS Princeton's radar and an E-2; neither has been released.
+
+**Pairs no measurement separates.** The distant jet and the glare-on-a-target model are the same physics here: their air-speed bands overlap (331 to 352 kt against 313 to 348 kt) and no kinematic quantity splits them.
+
+**A pair the recovery test confused but the real data already separate.** The close small object was confused with the free path only on synthetic data made from its own very poor fit; on the real video it trails by about 1.7 million log units (almost all of it on the azimuth readouts, which it cannot follow within its 2 nmi range limit). The search's top lever for that pair, the brightness ratio end over start, would need the raw recording with known gain.
+
+Band edges reached the bound of the anchor-azimuth parameter in these searches, so the bands may be slightly narrow (see Limits).
 
 ## Limits
 

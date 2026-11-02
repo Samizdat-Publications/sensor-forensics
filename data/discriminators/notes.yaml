@@ -117,7 +117,19 @@ cases:
       A calibrated size would not help here: a 1 to 3 m object at 3.8 nmi is 5 to 15 px across at 0.7 deg, near the measured point-spread width (about 5.5 px), and a balloon, a bird and a small drone are all in that range.'
   flir1:
     title: FLIR1
-    stub: 'FLIR1 results exist (`docs/results/flir1.md`), but the discriminator search has not been run on FLIR1 yet (the CLI covers GIMBAL and GOFAST). Expected levers: the on-screen range field is a constant 99.9 placeholder, so range is unknown as in GIMBAL, and the ships'' radar (USS Princeton) and the E-2 tracks the witnesses describe are the data that would supply it.'
+    settle: '### What would settle FLIR1
+
+
+      **The radar closure rate at the end of the clip (76 s).** Fitted to the video alone, the glare models need the object to be holding its distance (closure rate: distant jet -14 to +5 kt, glare on a target -17 to +12 kt), while the free path needs it to be closing at 48 to 122 kt. A closure rate good to about 17 kt would separate the glare models from the free path both ways, by a likelihood ratio of 10 or more; a fire-control radar typically measures closure to about 5 kt (the lab''s assumption, `notes.yaml`). This measurement does not depend on the rotation noise, which is what decides the FLIR1 leader on the video alone (the leader changes at 12.75 deg, just above the 11.86 deg measured from the data). The witnesses describe tracks from USS Princeton''s radar and an E-2; neither has been released.
+
+
+      **Pairs no measurement separates.** The distant jet and the glare-on-a-target model are the same physics here: their air-speed bands overlap (331 to 352 kt against 313 to 348 kt) and no kinematic quantity splits them.
+
+
+      **A pair the recovery test confused but the real data already separate.** The close small object was confused with the free path only on synthetic data made from its own very poor fit; on the real video it trails by about 1.7 million log units (almost all of it on the azimuth readouts, which it cannot follow within its 2 nmi range limit). The search''s top lever for that pair, the brightness ratio end over start, would need the raw recording with known gain.
+
+
+      Band edges reached the bound of the anchor-azimuth parameter in these searches, so the bands may be slightly narrow (see Limits).'
 limits: '## Limits
 
 
@@ -135,6 +147,16 @@ limits: '## Limits
 # solve/results_flir1.py copy it in, so regenerating a page keeps it. Numbers come from discriminators.json and
 # the results pages; update them when either is rerun.
 results_page_settle:
+  flir1: 'Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators flir1`, run 11/02/2026). In short:
+
+
+    - **The radar closure rate at the end of the clip.** The glare models need the object to hold its distance (about -17 to +12 kt); the free path needs it closing at 48 to 122 kt. A radar closure rate good to about 17 kt would separate them both ways, independent of the rotation noise that decides the leader on the video alone. The ship and E-2 radar tracks the witnesses describe have not been released.
+
+    - **Pairs no measurement separates.** The distant jet and the glare-on-a-target model are the same physics here.
+
+    - **The close small object** trails by about 1.7 million log units on the real video; the recovery confusion with the free path concerns synthetic data only.
+
+    '
   gimbal: 'Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators`, rerun 11/02/2026 after the CP-04 fixes). In short:
 
 

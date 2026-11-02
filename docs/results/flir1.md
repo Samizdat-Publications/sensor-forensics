@@ -296,3 +296,11 @@ Implied size is the blob's length (px at NAR 1.0x) times the range: an upper bou
 - BIC counts parameters, not prior width: a wide prior costs nothing extra.
 - Discriminators for the top pair (M3.6) are written separately (`docs/results/discriminators.md`).
 
+## What would settle it
+
+Full tables, method and data availability: [`discriminators.md`](discriminators.md) (M3.6, `python -m solve.discriminators flir1`, run 11/02/2026). In short:
+
+- **The radar closure rate at the end of the clip.** The glare models need the object to hold its distance (about -17 to +12 kt); the free path needs it closing at 48 to 122 kt. A radar closure rate good to about 17 kt would separate them both ways, independent of the rotation noise that decides the leader on the video alone. The ship and E-2 radar tracks the witnesses describe have not been released.
+- **Pairs no measurement separates.** The distant jet and the glare-on-a-target model are the same physics here.
+- **The close small object** trails by about 1.7 million log units on the real video; the recovery confusion with the free path concerns synthetic data only.
+

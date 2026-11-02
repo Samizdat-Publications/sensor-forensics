@@ -17,8 +17,8 @@
    "title": "Hand-built clip-by-clip triage table",
    "file": "data/pursue/triage.csv",
    "url": null,
-   "sha256": "62f3ee2247918c6991a6c38d5b385a27acfccb373357efe62fc199484b41f28f",
-   "bytes": 68734,
+   "sha256": "4f539b728f42f1f2b6e50bd735503ca0d7e797f66c408e5f0d40fd4a193af120",
+   "bytes": 69011,
    "official_copy": false,
    "provenance": "Built by the lab from the released videos; see data/pursue/ for the index checks."
   }
@@ -26,8 +26,8 @@
  "triage": {
   "clips_total": 134,
   "by_tier": {
-   "Not viable": 117,
-   "Bounded": 17
+   "Not viable": 118,
+   "Bounded": 16
   },
   "by_release": {
    "R01": 27,
@@ -911,7 +911,7 @@
    {
     "clip_id": "DOW-UAP-PR107",
     "release": "R04",
-    "tier": "Bounded",
+    "tier": "Not viable",
     "reason": "A legible elevation readout (about -3 deg stepping to -9 deg, then -11 deg) and a bank-style horizon bracket are visible, but there is no azimuth, altitude or range; with the sea surface this gives a line of sight angle only.",
     "sensor_guess": "IR",
     "resolution": "1920x1080",
@@ -1381,7 +1381,7 @@
   ]
  },
  "verdict": {
-  "text": "Of 134 PURSUE sensor videos triaged, 17 support at most a bounded reconstruction and 117 are not viable (most on-screen data is redacted and there is no known scale). No clip in this triage is claimed to identify its object.",
+  "text": "Of 134 PURSUE sensor videos triaged, 16 support at most a bounded reconstruction and 118 are not viable (most on-screen data is redacted and there is no known scale). No clip in this triage is claimed to identify its object.",
   "decisive": false,
   "conditions": [
    "Tiers are about what the data could support, not about what the objects are.",
@@ -1392,10 +1392,10 @@
  },
  "provenance": {
   "repo": "https://github.com/Samizdat-Publications/sensor-forensics",
-  "commit": "59b402ec6c7905befb0ba2ca9e79b4cb0765c311",
+  "commit": "1453f1045210f4820795b6734230f3a03ae2f7bc",
   "working_tree_clean": false,
   "lab_version": "0.1.0",
-  "generated": "2026-11-01T22:00:23Z",
+  "generated": "2026-11-02T06:56:31Z",
   "generator": "tools/export_cases.py",
   "inputs": [
    "data/pursue/triage.csv"

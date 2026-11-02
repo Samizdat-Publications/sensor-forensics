@@ -637,7 +637,7 @@
     "against_wind": false,
     "wind_at_object_kt": 43.597124027171226,
     "implied_size_upper_m": 1.098852238411999,
-    "reversal_radius_ft": 1000000.0,
+    "reversal_radius_ft": null,
     "stops_and_reverses": false,
     "motion_vs_wind": "with",
     "range_trend": "decreasing"
@@ -651,8 +651,7 @@
     "ground_speed_mps": 146.30239870615426,
     "min_ground_speed_mps": 146.30239870615426,
     "vertical_speed_mps": -0.15204177986179437,
-    "wind_at_object_mps": 22.428298249533643,
-    "reversal_radius_m": 304800.0
+    "wind_at_object_mps": 22.428298249533643
    },
    "checks": [
     {
@@ -754,7 +753,7 @@
     "against_wind": true,
     "wind_at_object_kt": 55.12132333886971,
     "implied_size_upper_m": 1.2949510780675852,
-    "reversal_radius_ft": 1000000.0,
+    "reversal_radius_ft": null,
     "stops_and_reverses": false,
     "motion_vs_wind": "with",
     "range_trend": "decreasing"
@@ -768,8 +767,7 @@
     "ground_speed_mps": 27.626289682672372,
     "min_ground_speed_mps": 27.62628968267237,
     "vertical_speed_mps": 0.5813107893311865,
-    "wind_at_object_mps": 28.35685856210742,
-    "reversal_radius_m": 304800.0
+    "wind_at_object_mps": 28.35685856210742
    },
    "checks": [
     {
@@ -867,7 +865,7 @@
     "against_wind": null,
     "wind_at_object_kt": 52.9489262993262,
     "implied_size_upper_m": 1.2949696711867116,
-    "reversal_radius_ft": 1000000.0,
+    "reversal_radius_ft": null,
     "stops_and_reverses": false,
     "motion_vs_wind": "with",
     "range_trend": "decreasing"
@@ -881,8 +879,7 @@
     "ground_speed_mps": 27.2392809739867,
     "min_ground_speed_mps": 27.239280973986705,
     "vertical_speed_mps": 0.422760421613679,
-    "wind_at_object_mps": 27.239280973986705,
-    "reversal_radius_m": 304800.0
+    "wind_at_object_mps": 27.239280973986705
    },
    "checks": [
     {
@@ -992,7 +989,7 @@
     "against_wind": true,
     "wind_at_object_kt": 57.88735575285679,
     "implied_size_upper_m": 0.6767938335700614,
-    "reversal_radius_ft": 1000000.0,
+    "reversal_radius_ft": null,
     "stops_and_reverses": false,
     "motion_vs_wind": "against",
     "range_trend": "decreasing"
@@ -1006,8 +1003,7 @@
     "ground_speed_mps": 15.447888887111823,
     "min_ground_speed_mps": 15.447888887111825,
     "vertical_speed_mps": 10.145390094927304,
-    "wind_at_object_mps": 29.77982857063633,
-    "reversal_radius_m": 304800.0
+    "wind_at_object_mps": 29.77982857063633
    },
    "checks": [
     {
@@ -1109,7 +1105,7 @@
     "against_wind": true,
     "wind_at_object_kt": 55.14061216885243,
     "implied_size_upper_m": 1.2949677827029555,
-    "reversal_radius_ft": 1000000.0,
+    "reversal_radius_ft": null,
     "stops_and_reverses": false,
     "motion_vs_wind": "with",
     "range_trend": "decreasing"
@@ -1123,8 +1119,7 @@
     "ground_speed_mps": 27.624784122523177,
     "min_ground_speed_mps": 27.624784122523174,
     "vertical_speed_mps": 0.5617803444399107,
-    "wind_at_object_mps": 28.36678159353186,
-    "reversal_radius_m": 304800.0
+    "wind_at_object_mps": 28.36678159353186
    },
    "checks": [
     {
@@ -1244,7 +1239,7 @@
     "against_wind": false,
     "wind_at_object_kt": 55.17781938178681,
     "implied_size_upper_m": 1.293765335277276,
-    "reversal_radius_ft": 2881.0207172224045,
+    "reversal_radius_ft": null,
     "stops_and_reverses": false,
     "motion_vs_wind": "with",
     "range_trend": "decreasing"
@@ -1258,8 +1253,7 @@
     "ground_speed_mps": 32.40308017157103,
     "min_ground_speed_mps": 27.07910288402901,
     "vertical_speed_mps": 0.14149948882456437,
-    "wind_at_object_mps": 28.38592263751922,
-    "reversal_radius_m": 878.1351146093889
+    "wind_at_object_mps": 28.38592263751922
    },
    "checks": [
     {
@@ -1550,13 +1544,14 @@
   }
  },
  "verdict": {
-  "text": "On the video alone (physics-only), Balloon drifting with the wind scores highest, ahead of the next explanation by 5.9 log units, but this is not called decisive: the lead depends on data-quality rules applied after results were seen, and totals without them are not yet reported.",
+  "text": "On the video alone (physics-only), Balloon drifting with the wind scores highest, ahead of the next explanation by 5.9 log units, but this is not called decisive: without the post-hoc data-quality exclusions (a full refit) Sensor artifact (glare in the pod optics) on a target of any type leads instead; in the model-recovery test, data made by H-ART, H-SLOW, H-WIT were also won by H-BAL, so this data cannot tell those explanations apart.",
   "conditions": [
-   "Range is not measured in this clip; conclusions hold over the stated range support (0.5 to 60 nmi), not at one range.",
+   "Range is read on screen (RNG, 4.4 down to 3.3 nmi in 0.1 nmi steps) and enters the fit as an interval measurement, so every hypothesis sits near the same range.",
    "Scores are log-likelihoods under the lab's noise model; a gap of 2.3 is a likelihood ratio of 10.",
    "Every hypothesis is fitted by the same code against the same observables with the same noise model and weights; hypotheses differ only in their physical model and priors.",
    "D-016: apparent-size criterion reported with weight 0 (blob major axis 6.4 px is under 3 x the point-spread width 5.5 px); resolution not established.",
-   "Some data-quality rules (zero weight for saturated or unresolved size and brightness) were not decided blind; totals without them are not yet in these outputs."
+   "Sensitivity: without the post-hoc data-quality exclusions (a full refit) Sensor artifact (glare in the pod optics) on a target of any type leads instead.",
+   "Sensitivity: in the model-recovery test, data made by H-ART, H-SLOW, H-WIT were also won by H-BAL, so this data cannot tell those explanations apart."
   ],
   "decisive": false,
   "leader_physics_only": "H-BAL",
@@ -1564,10 +1559,10 @@
  },
  "provenance": {
   "repo": "https://github.com/Samizdat-Publications/sensor-forensics",
-  "commit": "59b402ec6c7905befb0ba2ca9e79b4cb0765c311",
+  "commit": "1453f1045210f4820795b6734230f3a03ae2f7bc",
   "working_tree_clean": false,
   "lab_version": "0.1.0",
-  "generated": "2026-11-01T22:00:23Z",
+  "generated": "2026-11-02T06:56:30Z",
   "generator": "tools/export_cases.py",
   "inputs": [
    "data/derived/gofast/results.json",
