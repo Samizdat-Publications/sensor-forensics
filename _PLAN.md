@@ -259,30 +259,30 @@ Every deliverable path is printed and checked to start with `C:\Users\stewa\Docu
 
 ## M4 App (ends at CP-05)
 
-- [ ] 1. **[me]** Design pass:
+- [x] 1. **[me]** Design pass:
    - Claude Design through the DesignSync tool if it is available, otherwise the frontend-design skill.
    - A sober instrument-panel look.
    - Mockups go in `docs/design/`, and I review them myself.
-- [ ] 2. **[W]** App shell:
+- [x] 2. **[W]** App shell:
    - three.js vendored and pinned in `app/vendor/three/`, with its LICENSE;
    - ES modules and no bundler;
    - a view router;
    - `tools/build_app_data.py` (JSON exports plus JPEG frame sequences) and `tools/serve.py`.
-- [ ] 3. **[W]** Cockpit view:
+- [x] 3. **[W]** Cockpit view:
    - an image-sequence player keyed by frame index, so it locks frame-accurately (no `<video>` seeking);
    - the three.js re-render placed beside it, with a difference overlay.
-- [ ] 4. **[W]** God's-eye view: the jet, the line-of-sight fan, and the paths for each hypothesis, with a range slider.
-- [ ] 5. **[W]** Range explorer:
+- [x] 4. **[W]** God's-eye view: the jet, the line-of-sight fan, and the paths for each hypothesis, with a range slider.
+- [x] 5. **[W]** Range explorer:
    - SVG charts interpolated from the Python range grid;
    - a node parity test against the Python numbers.
-- [ ] 6. **[W]** Compare-analyses view: Sitrec, Peings and von Rennenkampff, and the lab, side by side.
-- [ ] 7. **[W]** Evidence ledger: every number with its source frame, method and confidence. Clicking a row opens the frame. Live weight sliders re-score from the per-criterion log-likelihoods.
-- [ ] 8. **[bg]** Playwright screenshots of every view, with headed off-screen Chrome as the fallback.
+- [x] 6. **[W]** Compare-analyses view: Sitrec, Peings and von Rennenkampff, and the lab, side by side.
+- [x] 7. **[W]** Evidence ledger: every number with its source frame, method and confidence. Clicking a row opens the frame. Live weight sliders re-score from the per-criterion log-likelihoods.
+- [x] 8. **[bg]** Playwright screenshots of every view, with headed off-screen Chrome as the fallback.
    - A frame-stepped capture is assembled into a 60-second GIMBAL recording: one real-time pass plus a half-speed pass.
    - A frame-lock metric reports the median pixel error between the re-render and the original (horizon and object position).
-- [ ] 9. **[me]** I look at every screenshot myself and fix problems. Then **[V]**, then CP-05.
+- [x] 9. **[me]** I look at every screenshot myself and fix problems. Then **[V]**, then CP-05.
 
-**CP-05 acceptance:** screenshots of every view; a 60-second recording of GIMBAL with the synthetic re-render locked to the original.
+**CP-05: PASSED 11/02/2026 on the third independent check (sent back twice), see checkpoints/CP-05.md.** CP-05 acceptance: screenshots of every view; a 60-second recording of GIMBAL with the synthetic re-render locked to the original.
 
 **Risks and fallbacks:**
 - **No GPU in headless mode:** headed off-screen Chrome.
