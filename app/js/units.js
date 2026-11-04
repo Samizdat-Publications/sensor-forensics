@@ -67,5 +67,7 @@ const HYP_COLORS = { "H-AC": "#e89f6b", "H-ART": "#9aa6b2", "H-BAL": "#6fcfb5", 
 const SPARE = ["#d6c38f", "#a98fd6", "#8fc7d6", "#d68f8f"];
 export function hypColor(id, i = 0) { return HYP_COLORS[id] ?? SPARE[i % SPARE.length]; }
 
+export const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
 export const mi = (vNmi) => vNmi * NMI_TO_MI;
 export const mph = (vKt) => vKt * KT_TO_MPH;

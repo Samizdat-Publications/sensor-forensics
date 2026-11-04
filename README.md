@@ -62,17 +62,19 @@ The app shows the original footage beside a 3D re-render of what each explanatio
 cd "C:\Users\stewa\Documents\Claude\Sensor forensics"; & "C:\Users\stewa\Documents\Claude\Sensor forensics\.venv\Scripts\python.exe" "C:\Users\stewa\Documents\Claude\Sensor forensics\tools\serve.py"
 ```
 
-Press Ctrl+C in that window to stop it. The keys 1 to 5 switch views, the left and right arrows step one frame (hold Shift for 10), and the space bar plays.
+Press Ctrl+C in that window to stop it.
+
+On a first visit a welcome card offers a two-minute guided tour of each video; the **Tour** button at the top restarts it. The lab opens in plain mode: explanations by plain name, and score gaps as "times less likely". **All numbers** shows every log-likelihood and every flag as the scorer wrote it. The **?** next to a label (or the **?** key) explains the term. The keys 1 to 5 switch views, the left and right arrows step one frame (hold Shift for 10), and the space bar plays, at 1/4, 1/2, 1 or 2 times real speed. While playing, the footage itself drives the clock, so the original and the re-render stay on the same frame.
 
 ### The five views
 
 1. **Cockpit:** the original frame on the left, the re-render on the right. Difference and Blink compare the two directly. The strip at the top gives the frame-lock error: how many pixels the predicted horizon and object position sit from the measured ones.
-2. **God's-eye:** the jet's path from above, the fan of sight lines from the pod, and each explanation's fitted path for the object. The range slider moves the object along the sight lines.
+2. **God's-eye:** the scene from above for one explanation at a time: the jet's path, the fan of sight lines from the pod, and where the explanation puts the object, with the clip so far drawn bright. "Show every explanation" draws all of them, each with its own jet (each fits its own wind and heading). Every fit is turned so its jet's nose points up the screen at the first scored frame, which puts every fit's sight lines where the pod pointed them. The range slider moves the object along the sight lines; it stays put while the clip plays.
 3. **Range explorer:** for each assumed distance, how fast, how high and how hard-turning the object would have to be. See "How to read a range curve" below.
 4. **Compare analyses:** Mick West's Sitrec and the 2023 Peings and von Rennenkampff paper, each rerun from its own inputs, beside this lab's numbers. Sitrec's GOFAST and GIMBAL results reproduce (its documented "From Bank and Speed" alternative for GIMBAL does not, as specified); the paper's paths reproduce only in part, and `docs/prior-work/DISAGREEMENTS.md` says why.
 5. **Evidence ledger:** every number read off the screen, with its frame, method and confidence; click a row to jump to that frame. The weight sliders rescore the explanations live. "Physics only" is the total without testimony.
 
-The panel on the right is the same in every view: the score of each explanation. Higher is better, and a gap of 2.3 means one explanation makes the data 10 times more likely than the other. Scores are comparisons, not verdicts on what the object was.
+The panel on the right is the same in every view: what the lab found for this video (the case file's verdict and the one measurement that would settle it), then the score of each explanation, on the video alone and with the aircrew's accounts. Higher is better, and a gap of 2.3 means one explanation makes the data 10 times more likely than the other. Scores are comparisons, not verdicts on what the object was.
 
 ### How to read a range curve
 

@@ -4,24 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sensor Forensics Lab</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/app.css">
+<link rel="modulepreload" href="js/main.js">
+<link rel="preload" href="data/index.json" as="fetch" crossorigin>
 <script type="importmap">
 { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
 </script>
 </head>
 <body>
+<div class="boot" id="boot" role="status">
+  <div class="boot-box">
+    <div class="boot-mark" aria-hidden="true"><span></span></div>
+    <b>Sensor Forensics Lab</b>
+    <p class="boot-msg"><span>Loading the lab</span></p>
+    <p class="boot-note">Three Navy infrared videos, rebuilt frame by frame. The first visit downloads a few megabytes; after that the lab opens from your browser's cache.</p>
+  </div>
+</div>
 <div class="app" id="app">
   <header class="head">
     <div class="brand"><b>Sensor Forensics Lab</b><span>Reconstruction from public footage</span></div>
     <div class="cases" role="group" aria-label="Case" id="cases"></div>
-    <div class="variant" id="variant" hidden><span>Field of view</span><div class="seg" role="group" aria-label="Field of view" id="variant-seg"></div></div>
+    <div class="variant" id="variant" hidden><span>Field of view <button type="button" class="q" data-g="fov" aria-label="What is the field of view?">?</button></span><div class="seg" role="group" aria-label="Field of view" id="variant-seg"></div></div>
     <nav class="views" aria-label="Views" id="views">
       <a class="view-tab" href="#" data-view="cockpit"><kbd>1</kbd>Cockpit</a>
       <a class="view-tab" href="#" data-view="godseye"><kbd>2</kbd>God's-eye</a>
-      <a class="view-tab" href="#" data-view="range"><kbd>3</kbd>Range explorer</a>
-      <a class="view-tab" href="#" data-view="compare"><kbd>4</kbd>Compare analyses</a>
-      <a class="view-tab" href="#" data-view="ledger"><kbd>5</kbd>Evidence ledger</a>
+      <a class="view-tab" href="#" data-view="range"><kbd>3</kbd>Range<span class="long">&nbsp;explorer</span></a>
+      <a class="view-tab" href="#" data-view="compare"><kbd>4</kbd>Compare<span class="long">&nbsp;analyses</span></a>
+      <a class="view-tab" href="#" data-view="ledger"><kbd>5</kbd><span class="long">Evidence ledger</span><span class="short">Ledger</span></a>
     </nav>
+    <div class="tools">
+      <button type="button" class="tool" id="t-tour" title="A guided tour of this video">Tour</button>
+      <button type="button" class="tool" id="t-about" title="What this view shows" aria-label="About this view" aria-pressed="true">i</button>
+      <button type="button" class="tool" id="t-gloss" title="What every term means (press ?)" aria-label="Glossary">?</button>
+      <div class="seg" role="group" aria-label="How much to show" id="mode-seg"><button data-m="plain" aria-pressed="true" title="Plain words; every number is still one click away">Plain</button><button data-m="all" aria-pressed="false" title="Every score as a log-likelihood, every flag as the scorer wrote it">All numbers</button></div>
+    </div>
   </header>
 
   <main class="main" id="main">
@@ -36,6 +53,8 @@
 
   <footer class="tape" id="tape" aria-label="Timeline"></footer>
 </div>
+<div class="narrow-note" role="note">The lab is built for a desktop screen. On a phone, the <a href="../">project page</a> shows the findings and short clips.</div>
+<div id="vid-holder" aria-hidden="true"></div>
 <div class="sr" aria-live="polite" id="live"></div>
 <script type="module" src="js/main.js"></script>
 </body>

@@ -6,11 +6,11 @@
 // exclusions added back; the selected hypothesis's per-criterion log-likelihoods for both fits; and anything
 // else the scorer exported (sensitivity runs and the like) under "More from the scorer".
 
-import { num, conf, LOW_CONF, FIELDS, FIELD_ORDER, signed, timecode, hypColor } from "../units.js";
-import { esc } from "../rail.js";
+import { num, conf, LOW_CONF, FIELDS, FIELD_ORDER, signed, timecode, hypColor, esc } from "../units.js";
+import { plainName, q } from "../glossary.js";
 import { fitPhysicsTotal, fitTestimony, scoreVariant } from "../scoring.js";
 
-let api, root, tab = "read", rowsIdx = [], scroller, body, filt = { field: "all", low: false };
+let api, root, tab = "read", rowsIdx = [], scroller, body, filt = { field: "all", low: false }, sliding = false;
 const ROW_H = 26;
 const KNOWN_EXTRAS = new Set(["display_rounding", "criteria_n_eff", "data_sigmas"]);
 const HYP_EXTRA_SKIP = new Set(["n_eff_total", "n_eval", "params_at_bound", "params_at_bound_physics_only_fit", "k_physics_only_fit",
@@ -23,14 +23,15 @@ export function mount(el, a) {
       <div class="panel fill">
         <div class="panel-h"><div class="seg" role="tablist" aria-label="Ledger" id="lg-tabs">
           <button data-t="read" aria-pressed="true" role="tab">Readings</button><button data-t="testi" aria-pressed="false" role="tab">Testimony claims</button></div>
-          <span class="src" id="lg-src"></span></div>
+          ${q("confidence")}</div>
+        <div class="lg-srcline note" id="lg-src"></div>
         <div class="lg-filter" id="lg-filter">
           <label>Field <select id="lg-field"></select></label>
           <label><input type="checkbox" id="lg-low"> Only below ${LOW_CONF.toFixed(2)} confidence</label>
           <button class="reset" id="lg-goto">Go to frame</button>
           <span class="note" id="lg-count"></span>
         </div>
-        <div class="lg-head" id="lg-head"><span class="c-f">Frame</span><span class="c-t">Time</span><span class="c-n">Field</span><span class="c-v">Value as read</span><span class="c-c">Confidence</span><span class="c-m">Method</span></div>
+        <div class="lg-head" id="lg-head"><span class="c-f">Frame</span><span class="c-n">Field</span><span class="c-v">Value as read</span><span class="c-c">Confidence</span><span class="c-m">Method</span></div>
         <div class="panel-b lg-scroll" id="lg-scroll" tabindex="0" aria-label="Readings, one row per frame and field"><div id="lg-body" class="lg-body"></div></div>
       </div>
       <div class="lg-right" id="lg-right"></div>
@@ -90,9 +91,12 @@ function paint() {
     const v = F.value[i], c = F.confidence[i];
     const low = Number.isFinite(c) && c < LOW_CONF;
     const fmt = FIELDS[f]?.fmt;
-    const shown = v == null ? '<span class="note">blank</span>' : esc(v) + (fmt && fmt(v) !== v ? ` <span class="note">${esc(fmt(v))}</span>` : "");
-    html += `<div class="lg-row${i === s.frame ? " cur" : ""}" data-f="${i}" style="top:${j * ROW_H}px" title="Open frame ${i} in the cockpit view">
-      <span class="c-f num">${i}</span><span class="c-t num">${timecode(t[i])}</span><span class="c-n">${esc(FIELDS[f]?.label ?? f)}</span>
+    const ph = F.placeholder && v === F.placeholder.value ? F.placeholder.note : null;
+    const extra = ph ?? (v != null && fmt && fmt(v) !== v ? fmt(v) : "");
+    const shown = v == null ? '<span class="note">blank</span>' : esc(v) + (extra ? ` <span class="note">${esc(extra)}</span>` : "");
+    const full = v == null ? "blank" : `${v}${extra ? ` (${extra})` : ""}`;
+    html += `<div class="lg-row${i === s.frame ? " cur" : ""}" data-f="${i}" style="top:${j * ROW_H}px" title="Frame ${i}, ${timecode(t[i])}: ${esc(FIELDS[f]?.label ?? f)} read as ${esc(full)}. Click to open this frame in the cockpit view">
+      <span class="c-f num">${i}</span><span class="c-n">${esc(FIELDS[f]?.label ?? f)}</span>
       <span class="c-v num">${shown}</span><span class="c-c num${low ? " low" : ""}">${conf(c)}${low ? " low" : ""}</span><span class="c-m">${esc(F.method[i] ?? "")}</span></div>`;
   }
   body.innerHTML = html;
@@ -128,7 +132,11 @@ function testimony() {
   const T = s.data.testimony;
   root.querySelector("#lg-src").textContent = T?.source ?? "";
   body.style.height = "auto";
-  if (!T?.claims?.length) { body.innerHTML = `<div class="empty"><div><b>No testimony claims for ${esc(s.data.meta.label)}.</b></div></div>`; return; }
+  if (!T?.claims?.length) {
+    body.innerHTML = s.data.pending.has("testimony") ? `<div class="empty"><div><b>Loading the testimony claims...</b></div></div>`
+      : `<div class="empty"><div><b>No testimony claims for ${esc(s.data.meta.label)}.</b></div></div>`;
+    return;
+  }
   const sel = api.currentHyp();
   const rowsBy = {};
   for (const r of sel?.h.testimony_rows ?? []) (rowsBy[r.claim_id] ??= []).push(r);
@@ -168,10 +176,17 @@ function onWeight(e) {
   const ov = { ...s.overrides };
   const w = +inp.value;
   if (Math.abs(w - c.weight) < 1e-9) delete ov[c.name]; else ov[c.name] = w;
+  const o = inp.nextElementSibling;
+  o.textContent = num(w, 2);
+  o.classList.toggle("chg", w !== c.weight);
+  sliding = true;
   api.set({ overrides: ov });
+  sliding = false;
 }
 
 function onClick(e) {
+  const tr = e.target.closest("tr[data-h]");
+  if (tr) { api.set({ hyp: tr.dataset.h }); return; }
   const b = e.target.closest("button[data-act]");
   if (!b) return;
   const s = api.getState();
@@ -187,11 +202,9 @@ function onClick(e) {
     for (const c of v.excluded_criteria ?? []) delete ov[c];
     api.set({ overrides: ov });
   }
-  const tr = e.target.closest("tr[data-h]");
-  if (tr) api.set({ hyp: tr.dataset.h });
 }
 
-function right() {
+function right({ keepWeights = false } = {}) {
   const s = api.getState();
   const box = root?.querySelector("#lg-right");
   if (!box || !s.data) return;
@@ -202,7 +215,7 @@ function right() {
   const excl = v.excluded_criteria ?? [];
   const ov = s.overrides ?? {};
   const addedBack = excl.length && excl.every((c) => ov[c] === 1);
-  let h = `<div class="panel"><div class="panel-h"><h2>Weights</h2><span class="src">the same for every hypothesis</span></div><div class="panel-b">
+  let h = `<div class="panel" id="lg-wpanel"><div class="panel-h"><h2>Weights</h2><span class="src">the same for every hypothesis</span></div><div class="panel-b">
     <div class="wgrid">${crit.map((c) => {
       const val = ov[c.name] ?? c.weight;
       const isEx = excl.includes(c.name);
@@ -224,11 +237,13 @@ function right() {
   const bPO = best("total_physics_only"), bTW = best("total_testimony_weighted");
   const cell = (r, k) => `${num(r[k], 1)} <span class="gap">${r[k === "physicsOnly" ? "gapPO" : "gapTW"] === 0 ? "best" : signed(r[k === "physicsOnly" ? "gapPO" : "gapTW"], 1)}</span>`;
   const rcell = (x, k, b) => x ? `${num(x[k], 1)} <span class="gap">${x[k] === b ? "best" : signed(x[k] - b, 1)}</span>` : "";
+  const weightsHTML = h;
+  h = "";
   h += `<div class="panel"><div class="panel-h"><h2>Both totals</h2><span class="src">testimony weight ${num(w, 2)}</span></div><div class="panel-b" style="overflow-x:auto">
     <table class="data tot2"><thead><tr><th rowspan="2">Hypothesis</th><th colspan="2" class="grp">As weighted now</th>${refit ? `<th colspan="2" class="grp">Refit without exclusions</th>` : ""}</tr>
     <tr><th class="num p">Physics only</th><th class="num t">With testimony</th>${refit ? `<th class="num p">Physics only</th><th class="num t">With testimony ${num(ne.weights?.testimony ?? 1, 2)}</th>` : ""}</tr></thead><tbody>
     ${now.map((r, k) => { const x = refit?.find((y) => y.hypothesis === r.h.id); return `<tr data-h="${esc(r.h.id)}" class="${r.h.id === (api.currentHyp()?.h.id) ? "cur" : ""}" style="cursor:pointer">
-      <td><span class="sw" style="background:${hypColor(r.h.id, k)}"></span><span class="hid">${esc(r.h.id)}</span></td>
+      <td title="${esc(plainName(r.h.id))}: ${esc(r.h.label)}"><span class="sw" style="background:${hypColor(r.h.id, k)}"></span><span class="hid">${esc(r.h.id)}</span></td>
       <td class="num p">${cell(r, "physicsOnly")}</td><td class="num t">${cell(r, "testimonyWeighted")}</td>
       ${refit ? `<td class="num p">${rcell(x, "total_physics_only", bPO)}</td><td class="num t">${rcell(x, "total_testimony_weighted", bTW)}</td>` : ""}</tr>`; }).join("")}
     </tbody></table>
@@ -259,13 +274,27 @@ function right() {
       ${ex.map(([k, x]) => `<details><summary>${esc(k.replace(/_/g, " "))}</summary>${kvTable(x)}</details>`).join("")}
       ${hx.map(([k, x]) => `<details><summary>${esc(r.h.id)}: ${esc(k.replace(/_/g, " "))}</summary>${kvTable(x)}</details>`).join("")}</div></div>`;
   }
-  box.innerHTML = h;
+  const wp = box.querySelector("#lg-wpanel");
+  if (keepWeights && wp) {
+    const rb = wp.querySelector("button[data-act=reset]");
+    if (rb) rb.disabled = !Object.keys(ov).length;
+    for (const el of [...box.children]) if (el !== wp) el.remove();
+    wp.insertAdjacentHTML("afterend", h);
+  } else box.innerHTML = weightsHTML + h;
 }
 
 function kvTable(x, depth = 0) {
   if (x === null || typeof x !== "object") return `<span class="num">${esc(typeof x === "number" ? num(x, Math.abs(x) < 10 ? 3 : 1) : String(x))}</span>`;
   if (Array.isArray(x)) {
-    if (x.length > 12 || depth > 1) return `<pre class="kvpre">${esc(JSON.stringify(x).slice(0, 600))}${JSON.stringify(x).length > 600 ? " ..." : ""}</pre>`;
+    const recs = x.length && x.every((y) => y && typeof y === "object" && !Array.isArray(y));
+    if (recs) {
+      const cols = [...new Set(x.flatMap((y) => Object.keys(y)))].filter((k) => x.every((y) => y[k] === null || y[k] === undefined || typeof y[k] !== "object"));
+      const shown = x.slice(0, 40);
+      return `<div class="kvwrap"><table class="data kvt"><thead><tr>${cols.map((k) => `<th>${esc(k.replace(/_/g, " "))}</th>`).join("")}</tr></thead><tbody>${shown.map((y) => `<tr>${cols.map((k) => `<td>${y[k] === undefined ? "" : kvTable(y[k], depth + 1)}</td>`).join("")}</tr>`).join("")}</tbody></table>${x.length > shown.length ? `<p class="note">First ${shown.length} of ${x.length} rows.</p>` : ""}</div>`;
+    }
+    const nums = x.filter((y) => typeof y === "number");
+    if (x.length > 12 && nums.length === x.filter((y) => y !== null).length) return `<span class="note">${num(x.length)} values, ${num(Math.min(...nums), 3)} to ${num(Math.max(...nums), 3)}</span>`;
+    if (x.length > 12) return `<span class="note">${num(x.length)} items: ${esc(x.slice(0, 6).map((y) => (typeof y === "object" ? "..." : String(y))).join(", "))}, ...</span>`;
     return `<ol class="kvl">${x.map((y) => `<li>${kvTable(y, depth + 1)}</li>`).join("")}</ol>`;
   }
   return `<table class="data kvt"><tbody>${Object.entries(x).map(([k, y]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td>${kvTable(y, depth + 1)}</td></tr>`).join("")}</tbody></table>`;
@@ -282,5 +311,5 @@ export function update(s, ch) {
     else paint();
   }
   if (tab === "testi" && (ch.has("hyp") || ch.has("wT"))) testimony();
-  if (["data", "variant", "wT", "hyp", "overrides"].some((k) => ch.has(k))) right();
+  if (["data", "variant", "wT", "hyp", "overrides", "expert"].some((k) => ch.has(k))) right({ keepWeights: sliding && !ch.has("data") && !ch.has("variant") });
 }

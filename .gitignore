@@ -33,3 +33,4 @@ data/weather/_cache/
 # landing site build (tools/build_site.py)
 site-dist/
 .wrangler/
+app/data/video/

@@ -4,10 +4,10 @@
 // per frame from predictions.json, prior work at the frames it states), and the lab's best fit per hypothesis
 // at the live weight. Disagreements are explained in docs/prior-work/DISAGREEMENTS.md.
 
-import { num, kt, ft, nmi, deg, variantLabel, hypColor, timecode } from "../units.js";
-import { esc } from "../rail.js";
-import { fitPredictions } from "../data.js";
-import { ticks, NMI_M, FT_M } from "../geom.js";
+import { num, kt, ft, nmi, deg, variantLabel, hypColor, timecode, esc } from "../units.js";
+import { fitPredictions, partState } from "../data.js";
+import { ticks, NMI_M, FT_M, altitudeM } from "../geom.js";
+import { plainName } from "../glossary.js";
 
 let api, root;
 
@@ -42,12 +42,16 @@ function render() {
         return `<td class="num">${esc(fmtUnit(x.published, r.unit)) || '<span class="note">not stated</span>'}</td><td class="num">${esc(fmtUnit(x.reproduced, r.unit)) || '<span class="note">n/a</span>'}</td>`;
       }).join("")}</tr>`).join("")}</tbody></table>
       <p class="note">Each source's own inputs were used for its reproduction. Where the lab and a source disagree, the reason is in docs/prior-work/DISAGREEMENTS.md. "Not stated": the source did not publish that number.</p></div></div>`;
+  } else if (partState(s.data, "compare") === "loading") {
+    html += `<div class="panel"><div class="panel-b"><div class="pending"><b>Loading the prior work...</b></div></div></div>`;
+  } else if (partState(s.data, "compare") === "failed") {
+    html += `<div class="panel"><div class="panel-b"><div class="pending"><b>The prior work did not load.</b> Reload the page to try again.</div></div></div>`;
   } else {
     html += `<div class="panel"><div class="panel-b"><div class="pending"><b>No reproduction of prior work for ${esc(s.data.meta.label)}.</b> Sitrec and the 2023 paper analyse GIMBAL (and Sitrec and AARO GOFAST); the lab's own fits are below.</div></div></div>`;
   }
   html += `<div class="cmp-charts">
       <div class="panel fill"><div class="panel-h"><h2>Range over the clip</h2><span class="src">nmi</span></div><div class="panel-b chart" id="cmp-range"></div></div>
-      <div class="panel fill"><div class="panel-h"><h2>Altitude over the clip</h2><span class="src">ft</span></div><div class="panel-b chart" id="cmp-alt"></div></div>
+      <div class="panel fill"><div class="panel-h"><h2>Altitude over the clip</h2><span class="src">ft above sea level</span></div><div class="panel-b chart" id="cmp-alt"></div></div>
     </div><div class="cmp-legend" id="cmp-legend"></div>`;
   const rows = api.currentScores();
   if (rows) {
@@ -56,7 +60,7 @@ function render() {
       ${rows.map((r, k) => {
         const f = r.h.fits.find((x) => x.fit === r.testimonyFit) || r.h.fits[0];
         const d = f.derived;
-        return `<tr><td><span class="sw" style="background:${hypColor(r.h.id, k)}"></span><span class="hid">${esc(r.h.id)}</span> <span class="note">${esc(r.h.label)}</span></td><td class="num">${esc(nmi(d.range_nmi_mean))}</td><td class="num">${esc(ft(d.altitude_ft_mean))}</td><td class="num">${esc(kt(d.air_speed_kt))}</td><td class="num">${esc(kt(d.ground_speed_kt))}</td><td class="num">${esc(num(d.vertical_speed_fpm))} ft/min</td><td>${esc(d.motion_vs_wind ?? "")}</td></tr>`;
+        return `<tr><td><span class="sw" style="background:${hypColor(r.h.id, k)}"></span><span class="hid">${esc(r.h.id)}</span> <span class="note">${esc(s.expert ? r.h.label : plainName(r.h.id, r.h.label))}</span></td><td class="num">${esc(nmi(d.range_nmi_mean))}</td><td class="num">${esc(ft(d.altitude_ft_mean))}</td><td class="num">${esc(kt(d.air_speed_kt))}</td><td class="num">${esc(kt(d.ground_speed_kt))}</td><td class="num">${esc(num(d.vertical_speed_fpm))} ft/min</td><td>${esc(d.motion_vs_wind ?? "")}</td></tr>`;
       }).join("")}</tbody></table></div></div>`;
   }
   html += `</div>`;
@@ -67,10 +71,11 @@ function render() {
 function lineChart(box, o) {
   if (!box) return;
   const r = box.getBoundingClientRect();
+  if (!r.width) return;
   const W = Math.max(260, r.width - 24), H = Math.max(170, r.height - 20);
   const m = { l: 66, r: 14, t: 10, b: 30 };
   const ys = [...o.series.flatMap((x) => x.pts.map((p) => p.y)), ...o.points.map((p) => p.y)].filter(Number.isFinite);
-  if (!ys.length) { box.innerHTML = `<div class="empty"><div><b>Nothing to draw.</b></div></div>`; return; }
+  if (!ys.length) { box.innerHTML = `<div class="empty"><div><b>${esc(o.empty ?? "Nothing to draw.")}</b></div></div>`; return; }
   let y0 = Math.min(...ys), y1 = Math.max(...ys);
   const pad = (y1 - y0) * 0.08 || Math.abs(y1) * 0.05 || 1;
   y0 -= pad; y1 += pad;
@@ -110,13 +115,15 @@ function drawCharts() {
     if (!f) return;
     const step = Math.max(1, Math.floor(n / 400));
     const ptsR = [], ptsA = [];
-    for (let i = 0; i < n; i += step) { ptsR.push({ x: i / fps, y: f.range_m[i] / NMI_M }); ptsA.push({ x: i / fps, y: f.obj_u[i] / FT_M }); }
+    // altitude above sea level on the curved Earth, as the scorer and the table below report it
+    for (let i = 0; i < n; i += step) { ptsR.push({ x: i / fps, y: f.range_m[i] / NMI_M }); ptsA.push({ x: i / fps, y: altitudeM(f.obj_e[i], f.obj_n[i], f.obj_u[i]) / FT_M }); }
     const sel = r.h.id === (api.currentHyp()?.h.id);
     sR.push({ label: `${r.h.id} (lab)`, color: hypColor(r.h.id, k), pts: ptsR, w: sel ? 2.4 : 1.4 });
     sA.push({ label: `${r.h.id} (lab)`, color: hypColor(r.h.id, k), pts: ptsA, w: sel ? 2.4 : 1.4 });
   });
-  // the range readout on screen (GOFAST), where present
-  const rf = s.data.readings?.fields?.range;
+  // the range readout on screen (GOFAST), where present; never a placeholder (FLIR1's constant 99.9)
+  const rf0 = s.data.readings?.fields?.range;
+  const rf = rf0 && !rf0.placeholder ? rf0 : null;
   if (rf) {
     const pts = [];
     for (let i = 0; i < n; i += 3) { const x = parseFloat(rf.value[i]); if (Number.isFinite(x)) pts.push({ x: i / fps, y: x }); }
@@ -136,8 +143,10 @@ function drawCharts() {
   };
   const pr = ptsOf("range_nmi"), pa = ptsOf("altitude_ft");
   const cursor = s.frame / fps;
-  lineChart(root.querySelector("#cmp-range"), { title: "Range over the clip", series: sR, points: pr.out, links: pr.links, xDomain, fmt: (v) => nmi(v), dec: 0, zero: true, cursor });
-  lineChart(root.querySelector("#cmp-alt"), { title: "Altitude over the clip", series: sA, points: pa.out, links: pa.links, xDomain, fmt: ft, cursor });
+  const pst = partState(s.data, "predictions", s.variant);
+  const emptyMsg = pst === "loading" ? "Loading the lab's fits..." : "Nothing to draw.";
+  lineChart(root.querySelector("#cmp-range"), { title: "Range over the clip", series: sR, points: pr.out, links: pr.links, xDomain, fmt: (v) => nmi(v), dec: 0, zero: true, cursor, empty: emptyMsg });
+  lineChart(root.querySelector("#cmp-alt"), { title: "Altitude over the clip", series: sA, points: pa.out, links: pa.links, xDomain, fmt: ft, cursor, empty: emptyMsg });
   const srcs = s.data.compare?.sources ?? [];
   root.querySelector("#cmp-legend").innerHTML = [
     ...rows.map((r, k) => `<span><i class="ln" style="background:${hypColor(r.h.id, k)}"></i>${esc(r.h.id)}</span>`),
@@ -147,8 +156,10 @@ function drawCharts() {
   ].join("");
 }
 
+export function show() { render(); }
+
 export function update(s, ch) {
-  if (ch.has("data") || ch.has("variant") || ch.has("wT") || ch.has("overrides") || ch.has("hyp")) render();
+  if (ch.has("data") || ch.has("variant") || ch.has("wT") || ch.has("overrides") || ch.has("hyp") || ch.has("expert")) render();
   else if (ch.has("frame")) drawCharts();
 }
 

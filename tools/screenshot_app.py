@@ -24,7 +24,7 @@ SIZES = {"1440": (1440, 900), "1920": (1920, 1080)}
 VIEWS = ["cockpit", "godseye", "range", "compare", "ledger"]
 
 
-MIME = {".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css",
+MIME = {".mp4": "video/mp4", ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css",
         ".json": "application/json", ".jpg": "image/jpeg", ".png": "image/png", ".svg": "image/svg+xml"}
 HOST = "http://lab.localhost/"
 
@@ -43,6 +43,9 @@ def route_files(page, directory: Path) -> None:
         route.fulfill(status=200, body=f.read_bytes(), headers={"Content-Type": MIME.get(f.suffix, "application/octet-stream")})
 
     page.route(HOST + "**", handle)
+    # Captures show the lab as a returning visitor sees it: no welcome card, the views' introductions closed.
+    page.add_init_script("""try { localStorage.setItem('sfl.welcomed', '1');
+      for (const v of ['cockpit', 'godseye', 'range', 'compare', 'ledger']) localStorage.setItem('sfl.intro.' + v, '0'); } catch (e) {}""")
 
 
 def launch(p):

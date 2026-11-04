@@ -25,6 +25,7 @@ export function createTape(root, api) {
         <button id="t-play" aria-label="Play (Space)" title="Play or pause (Space)">${ICON.play}</button>
         <button id="t-fwd" aria-label="Forward one frame (Right arrow; Shift for 10)" title="Forward one frame (Right; Shift for 10)">${ICON.fwd}</button>
       </div>
+      <div class="spd"><span class="u2">Speed</span><div class="seg speed" role="group" aria-label="Playback speed" id="t-speed">${[0.25, 0.5, 1, 2].map((x) => `<button data-x="${x}" aria-pressed="${x === 1}" title="Play at ${x} times real time">${x === 0.25 ? "¼" : x === 0.5 ? "½" : x}×</button>`).join("")}</div><span class="buf" id="t-buf" hidden>Buffering</span></div>
     </div>
     <div class="tracks" id="tracks" tabindex="0" role="slider" aria-label="Frame" aria-valuemin="0">
       <div class="playhead" id="playhead"></div>
@@ -36,6 +37,7 @@ export function createTape(root, api) {
   root.querySelector("#t-back").onclick = (e) => api.set({ frame: Math.max(0, s0().frame - (e.shiftKey ? 10 : 1)), playing: false });
   root.querySelector("#t-fwd").onclick = (e) => api.set({ frame: Math.min(s0().data.meta.n_frames - 1, s0().frame + (e.shiftKey ? 10 : 1)), playing: false });
   root.querySelector("#t-play").onclick = () => api.set({ playing: !s0().playing });
+  for (const sb of root.querySelectorAll("#t-speed button")) sb.onclick = () => api.set({ speed: +sb.dataset.x }, { route: false });
 
   let lanes = [];
   const geom = () => {
@@ -166,6 +168,8 @@ export function createTape(root, api) {
         tracks.setAttribute("aria-valuetext", `frame ${s.frame}, ${timecode(s.data.meta.t_s[s.frame])}`);
         placeHead();
       }
+      if (ch.has("speed")) for (const sb of root.querySelectorAll("#t-speed button")) sb.setAttribute("aria-pressed", String(+sb.dataset.x === s.speed));
+      if (ch.has("buffering") || ch.has("playing")) root.querySelector("#t-buf").hidden = !(s.buffering && s.playing);
       if (ch.has("playing")) {
         const b = root.querySelector("#t-play");
         b.innerHTML = s.playing ? ICON.pause : ICON.play;

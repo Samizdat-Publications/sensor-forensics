@@ -21,9 +21,12 @@ Reads only data/derived/ and data/frames/ (never writes there). Writes:
                                              forward model (tools/app_predictions.py): sight line, image
                                              horizon, rotation, size, image position, object and jet paths,
                                              frame-lock errors; plus the measured references
+    app/data/<case>/predictions_<variant>.json   the same per field of view, without the test-only image positions:
+                                             what the app loads (only the field of view on screen)
     app/data/<case>/testimony.json           every testimony claim with its source and how it is used
     app/data/<case>/range_curves.json        per-hypothesis curves over range (range_curves.csv), when present
     app/data/frames/<case>/f000000.jpg ...   gitignored, regenerated
+    app/data/video/<case>.mp4                the same frames as an H.264 video for playback, gitignored
 
 All values stay in SI or the units the derived files use; the app converts for display.
 """
@@ -50,8 +53,12 @@ OUT = ROOT / "app" / "data"
 CASES = {
     "gimbal": {"label": "GIMBAL", "folder": "gimbal", "date": "01/21/2015", "platform": "F/A-18F, ATFLIR"},
     "gofast": {"label": "GOFAST", "folder": "gofast", "date": "01/2015", "platform": "F/A-18F, ATFLIR"},
-    "flir1": {"label": "FLIR1", "folder": "flir1_navy", "date": "11/14/2004", "platform": "F/A-18F, ATFLIR (Nimitz group)"},
+    "flir1": {"label": "FLIR1", "folder": "flir1_navy", "date": "11/14/2004", "platform": "F/A-18F, ATFLIR (Nimitz group)",
+              # docs/audit/flir1.md: the "99.9 RNG" line never changes, so it is a placeholder, not a range
+              "placeholders": {"range": {"value": "99.9", "note": "placeholder, no range on screen"}}},
 }
+EXPORTS = ROOT / "exports" / "cases"
+NOTES = ROOT / "data" / "discriminators" / "notes.yaml"
 
 CUE_COLUMNS = [
     "bank_deg", "bank_sigma_deg", "obj_found", "obj_snr", "obj_hi_cx", "obj_hi_cy",
@@ -314,9 +321,26 @@ def export_case(cid: str, spec: dict, frames: bool, force_frames: bool, predicti
         steps = [s["frame"] for s in rc.get("measured_steps", []) if "frame" in s]
 
     res_obj = json.loads(res_path.read_text(encoding="utf-8")) if res_path.exists() else None
+    pred_files: dict = {}
     if predictions:
-        _write(out / "predictions.json", {"case": cid, **AP.case_predictions(spec["folder"], res_obj)})
+        pred = {"case": cid, **AP.case_predictions(spec["folder"], res_obj)}
+        _write(out / "predictions.json", pred)
         files.append("predictions.json")
+    elif (out / "predictions.json").exists():
+        pred = json.loads((out / "predictions.json").read_text(encoding="utf-8"))
+    else:
+        pred = None
+    if pred is not None:
+        # The app loads only the field of view on screen, without the test-only image positions (img_x, img_y:
+        # tests/js/geom.test.mjs checks them against predictions.json).
+        for vn, v in pred["variants"].items():
+            name = f"predictions_{vn or 'default'}.json"
+            slim = {**v, "hypotheses": {h: {fn: {k: x for k, x in f.items() if k not in ("img_x", "img_y")}
+                                            for fn, f in fits.items()} for h, fits in v["hypotheses"].items()}}
+            _write(out / name, {"case": cid, "variant": vn, "picture": pred["picture"], "measured": pred["measured"],
+                                "method": pred["method"], "data": slim})
+            pred_files[vn] = name
+            files.append(name)
     claims = AP.testimony_claims(cid)
     if claims:
         _write(out / "testimony.json", {"case": cid, "source": f"data/testimony/{cid}.yaml, data/testimony/scorable.yaml",
@@ -344,6 +368,11 @@ def export_case(cid: str, spec: dict, frames: bool, force_frames: bool, predicti
                 d["value"][i] = r["value"] if r["value"] != "" else None
                 d["confidence"][i] = _round(_num(r["confidence"]), 3)
                 d["method"][i] = r["method"]
+        for f, ph in spec.get("placeholders", {}).items():
+            read = {x for x in fields.get(f, {}).get("value", []) if x not in (None, "blank")}
+            if read != {ph["value"]}:
+                raise SystemExit(f"{cid}: {f} was declared a placeholder ({ph['value']}) but reads {sorted(read)[:5]}")
+            fields[f]["placeholder"] = ph
         _write(out / "readings.json", {"case": cid, "source": f"data/derived/{spec['folder']}/symbology_final.csv",
                                        "n_frames": n, "fields": fields})
         files.append("readings.json")
@@ -385,14 +414,62 @@ def export_case(cid: str, spec: dict, frames: bool, force_frames: bool, predicti
         "source_sha256": meta_src.get("source_sha256"),
         "variants": [v["variant"] for v in variants], "files": files,
         "frames_path": f"data/frames/{cid}/", "frame_pattern": "f{index:06d}.jpg",
+        "video": f"data/video/{cid}.mp4",
+        "predictions_files": pred_files,
         "scored": bool(variants),
         "markers": {"rotation_steps": steps},
+        "summary": case_summary(cid),
     }
     _write(out / "meta.json", meta)
 
     if frames:
         export_frames(spec["folder"], cid, n, force_frames)
+        export_video(spec["folder"], cid, n, meta["fps"], force_frames)
     return meta
+
+
+def case_summary(cid: str) -> dict | None:
+    """The plain verdict for the app's rail and welcome card: the case file's verdict (tools/export_cases.py) and
+    the first measurement under "What would settle it" (data/discriminators/notes.yaml, the results pages' text)."""
+    import re
+
+    import yaml
+
+    p = EXPORTS / f"{cid}.json"
+    if not p.exists():
+        return None
+    v = json.loads(p.read_text(encoding="utf-8"))["verdict"]
+    out = {"verdict_text": v["text"], "decisive": v["decisive"], "leader_physics_only": v["leader_physics_only"],
+           "source": f"exports/cases/{cid}.json verdict; data/discriminators/notes.yaml results_page_settle.{cid}"}
+    settle = (yaml.safe_load(NOTES.read_text(encoding="utf-8")).get("results_page_settle") or {}).get(cid, "")
+    m = re.search(r"- \*\*(.+?)\*\*\s*(.+?)(?:\n\s*\n|\Z)", settle, re.S)
+    if m:
+        clean = lambda s: re.sub(r"\s+", " ", re.sub(r"`|\*\*|\[([^\]]+)\]\([^)]+\)", r"\1", s)).strip()
+        out["settle_title"] = clean(m.group(1)).rstrip(".")
+        out["settle_text"] = clean(m.group(2))
+    return out
+
+
+def export_video(folder: str, cid: str, n: int, fps: float, force: bool) -> None:
+    """One H.264 video per case from the same extracted frames as the JPEGs, at the exact frame rate, so frame i is
+    shown at i / fps: the app plays it and reads the frame on screen from the video's own clock. CRF 26 keeps the picture (PSNR about 38 dB against the frames; it smooths only the sensor grain) at a fifth of the size. A keyframe every 30
+    frames keeps seeking quick; +faststart lets it start before it has fully downloaded."""
+    import shutil
+    import subprocess
+    from fractions import Fraction
+
+    dst = OUT / "video" / f"{cid}.mp4"
+    if dst.exists() and not force:
+        print(f"  video {cid}: up to date")
+        return
+    if shutil.which("ffmpeg") is None:
+        raise SystemExit("ffmpeg not found: it is needed for the app's playback videos")
+    rate = "30000/1001" if abs(fps - 30000 / 1001) < 1e-6 else str(Fraction(fps).limit_denominator(1001))
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", rate, "-i", str(FRAMES / folder / "f%06d.png"),
+                    "-frames:v", str(n), "-c:v", "libx264", "-preset", "slow", "-crf", "26", "-g", "30",
+                    "-pix_fmt", "yuv420p", "-an", "-movflags", "+faststart", str(dst)], check=True)
+    print(f"  video {cid}: {dst.stat().st_size / 1e6:.1f} MB")
 
 
 def export_frames(folder: str, cid: str, n: int, force: bool) -> None:
@@ -429,7 +506,7 @@ def main(argv: list[str]) -> int:
     for cid, spec in CASES.items():
         meta = export_case(cid, spec, frames=not a.no_frames, force_frames=a.force_frames,
                            predictions=not a.no_predictions)
-        index.append({k: meta[k] for k in ("case", "label", "date", "platform", "n_frames", "fps", "scored", "variants")})
+        index.append({k: meta[k] for k in ("case", "label", "date", "platform", "n_frames", "fps", "scored", "variants", "summary")})
         print(f"{cid}: {meta['n_frames']} frames, variants {meta['variants'] or 'none (not scored yet)'}")
     _write(OUT / "index.json", {"cases": index})
     if not a.no_predictions and a.out is None:

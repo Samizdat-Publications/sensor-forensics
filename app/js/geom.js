@@ -193,3 +193,38 @@ export function pathKinematics(t, pts, smooth = 15, h = 5) {
     max_accel_g: Math.max(...inner(acc)) / G0,
   };
 }
+
+// Rotate ENU points about the vertical so the jet's nose at frame i0 points north (+y), with the jet's first
+// position at the origin. The nose is the first sight line's horizontal bearing minus the pod azimuth read on screen
+// (az_deg, from the nose). Each fit has its own heading and the wind crabs each jet differently, so aligning on the
+// ground track (alignToJet) leaves the fits' sight lines up to 25 deg apart; aligning on the nose puts every fit's
+// sight lines where the pod pointed them. i0: the frame to align at (the first scored frame; before it a fit is
+// extrapolated). Returns a function (e, n, u) -> [e', n', u] in metres.
+export function alignToNose(fit, i0 = 0) {
+  const n = fit.jet_e.length;
+  let i = Math.max(0, Math.min(n - 1, i0));
+  while (i < n - 1 && !(Number.isFinite(fit.obj_e[i]) && Number.isFinite(fit.az_deg?.[i]))) i++;
+  if (!Number.isFinite(fit.az_deg?.[i])) return alignToJet(fit);
+  const e0 = fit.jet_e[0], n0 = fit.jet_n[0];
+  const brg = Math.atan2(fit.obj_e[i] - fit.jet_e[i], fit.obj_n[i] - fit.jet_n[i]);
+  const a = brg - (fit.az_deg[i] * Math.PI) / 180; // nose, rad clockwise from north
+  const c = Math.cos(a), s = Math.sin(a);
+  return (e, n2, u) => { const x = e - e0, y = n2 - n0; return [x * c - y * s, x * s + y * c, u]; };
+}
+
+// Altitude above sea level (m) of an ENU point on the spherical Earth the scorer uses (solve/frames.py R_EARTH; the
+// ENU origin is at sea level). The scorer's altitudes (results.json derived.altitude_ft_mean) use this, so every view
+// does too; the flat "up" coordinate reads up to a few thousand feet low at 40 nmi.
+export const R_EARTH = 6371008.8;
+export function altitudeM(e, n, u) {
+  return Math.sqrt(e * e + n * n + (R_EARTH + u) * (R_EARTH + u)) - R_EARTH;
+}
+
+// The assumed-range domain (nmi) shared by the god's-eye slider and the range explorer: 1 nmi to just past the
+// farthest range any curve or best fit reaches. extraNmi: best-fit mean ranges.
+export function rangeDomain(data, variant, extraNmi = []) {
+  const vk = variant ?? "";
+  const xs = [...(data.rangeCurve?.variants?.[vk] ?? []).map((p) => p.range_nmi),
+    ...Object.values(data.rangeCurves?.variants?.[vk] ?? {}).flat().map((p) => p.range_nmi), ...extraNmi].filter(Number.isFinite);
+  return [1, Math.max(2, Math.ceil(Math.max(...xs, 1) * 1.04))];
+}

@@ -20,9 +20,52 @@ APP = Path(__file__).resolve().parents[1] / "app"
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     extensions_map = {**http.server.SimpleHTTPRequestHandler.extensions_map,
-                      ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json"}
+                      ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json", ".mp4": "video/mp4"}
+
+    # Byte ranges (206 Partial Content), so the playback video can seek: the standard handler sends whole files only.
+    def send_head(self):
+        rng = self.headers.get("Range")
+        path = self.translate_path(self.path)
+        if not rng or not rng.startswith("bytes=") or not Path(path).is_file():
+            return super().send_head()
+        size = Path(path).stat().st_size
+        a, _, b = rng[6:].split(",")[0].strip().partition("-")
+        try:
+            start, end = (int(a), int(b) if b else size - 1) if a else (max(0, size - int(b)), size - 1)
+        except ValueError:
+            return super().send_head()
+        if start >= size or start > end:
+            self.send_response(416)
+            self.send_header("Content-Range", f"bytes */{size}")
+            self.end_headers()
+            return None
+        end = min(end, size - 1)
+        f = open(path, "rb")
+        f.seek(start)
+        self.send_response(206)
+        self.send_header("Content-Type", self.guess_type(path))
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        self.send_header("Content-Length", str(end - start + 1))
+        self.end_headers()
+        self._remaining = end - start + 1
+        return f
+
+    def copyfile(self, source, outputfile):
+        n = getattr(self, "_remaining", None)
+        if n is None:
+            return super().copyfile(source, outputfile)
+        self._remaining = None
+        while n > 0:
+            buf = source.read(min(65536, n))
+            if not buf:
+                break
+            outputfile.write(buf)
+            n -= len(buf)
 
     def end_headers(self):
+        if self.command == "GET" and "Range" not in self.headers and self.path.split("?")[0].endswith(".mp4"):
+            self.send_header("Accept-Ranges", "bytes")
         if self.path.split("?")[0].endswith((".json", ".js", ".css", ".html", "/")):
             self.send_header("Cache-Control", "no-store")
         super().end_headers()

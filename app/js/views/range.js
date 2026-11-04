@@ -8,10 +8,10 @@
 // Reference marks: balloon drift (near 0 kt air speed), birds 15 to 60 kt, airliners 400 to 500 kt, Mach 1 at
 // the curve's altitude (ISA), 1 g and 9 g. One range slider drives a cursor through every chart.
 
-import { num, kt, ft, nmi, hypColor, KT_TO_MPH } from "../units.js";
-import { esc } from "../rail.js";
-import { interpCurve, soundSpeedKt, ticks } from "../geom.js";
-import { fitPredictions } from "../data.js";
+import { num, kt, ft, nmi, hypColor, KT_TO_MPH, esc } from "../units.js";
+import { interpCurve, soundSpeedKt, ticks, rangeDomain } from "../geom.js";
+import { fitPredictions, partState } from "../data.js";
+import { plainName, q } from "../glossary.js";
 
 export { interpCurve };
 
@@ -29,8 +29,9 @@ export function mount(el, a) {
   el.innerHTML = `
     <div class="rg">
       <div class="panel rg-top"><div class="panel-b">
-        <div class="range-ctl"><label for="rg-r">Assumed range</label><input id="rg-r" type="range" min="1" max="45" step="0.5" value="10"><output id="rg-out"></output></div>
+        <div class="range-ctl"><label for="rg-r">Assumed range ${q("assumedrange")}</label><input id="rg-r" type="range" min="1" max="45" step="0.5" value="10"><output id="rg-out"></output></div>
         <div class="rg-legend" id="rg-legend"></div>
+        <p class="rg-plain" id="rg-plain"></p>
       </div></div>
       <div class="rg-charts">
         <div class="panel fill"><div class="panel-h"><h2>Air speed</h2><span class="src">kt, log scale (mph = kt x ${KT_TO_MPH.toFixed(3)}); dotted: Mach 1 at the probe's altitude</span></div><div class="panel-b chart" id="rg-speed"></div></div>
@@ -119,8 +120,12 @@ function render() {
   const charts = ["#rg-speed", "#rg-alt", "#rg-acc", "#rg-mis"].map((q) => root.querySelector(q));
   const read = root.querySelector("#rg-read");
   if (!probe.length && !perH) {
-    for (const c of charts) c.innerHTML = `<div class="empty"><div><b>No range grid for ${esc(s.data.meta.label)}.</b>The scoring run did not write curves over range for this case.</div></div>`;
+    const st = partState(s.data, "rangeCurve");
+    const msg = st === "loading" ? "<b>Loading the curves over range...</b>" : st === "failed" ? "<b>The curves over range did not load.</b>Reload the page to try again."
+      : `<b>No range grid for ${esc(s.data.meta.label)}.</b>The scoring run did not write curves over range for this case.`;
+    for (const c of charts) c.innerHTML = `<div class="empty"><div>${msg}</div></div>`;
     read.innerHTML = "";
+    root.querySelector("#rg-plain").textContent = "";
     return;
   }
   // markers: each hypothesis's own best fit at the live weight
@@ -129,11 +134,14 @@ function render() {
     const pf = fitPredictions(s.data, s.variant, r.h.id, r.testimonyFit);
     return { id: r.h.id, color: hypColor(r.h.id, k), x: f.derived.range_nmi_mean, speed: f.derived.air_speed_kt, alt: f.derived.altitude_ft_mean, acc: pf?.max_accel_g ?? null, label: `${r.h.id} best fit` };
   }).filter((p) => Number.isFinite(p.x));
-  const xs = [...probe.map((p) => p.range_nmi), ...markers.map((p) => p.x), ...Object.values(perH ?? {}).flat().map((p) => p.range_nmi)].filter(Number.isFinite);
-  const xDomain = [0, Math.max(...xs) * 1.04];
+  // one range domain for this slider and the god's-eye one (geom.rangeDomain)
+  const dom = rangeDomain(s.data, api.currentVariant()?.variant, markers.map((p) => p.x));
+  const xDomain = [0, dom[1]];
   const sl = root.querySelector("#rg-r");
-  sl.min = "1"; sl.max = String(Math.ceil(xDomain[1]));
-  const cur = s.range ?? Math.round((markers[0]?.x ?? 10) * 2) / 2;
+  sl.min = String(dom[0]); sl.max = String(dom[1]);
+  // default: the selected explanation's mean range, the same default as the god's-eye view
+  const selM = markers.find((p) => p.id === api.currentHyp()?.h.id) ?? markers[0];
+  const cur = s.range ?? Math.round((selM?.x ?? 10) * 2) / 2;
   if (+sl.value !== cur) sl.value = String(cur);
   root.querySelector("#rg-out").textContent = nmi(cur);
   const xBand = markers.length ? [Math.min(...markers.map((p) => p.x)), Math.max(...markers.map((p) => p.x))] : null;
@@ -179,6 +187,11 @@ function render() {
 
   // readout at the cursor
   const at = probe.length ? interpCurve(probe, cur) : null;
+  const selH = api.currentHyp();
+  const selC = selH && perH?.[selH.h.id] ? interpCurve(perH[selH.h.id], cur) : null;
+  root.querySelector("#rg-plain").innerHTML = s.expert ? "" : selC
+    ? `At <b>${esc(nmi(cur))}</b>, ${esc(plainName(selH.h.id))} (${esc(selH.h.id)}) would be at about <b>${esc(ft(selC.altitude_ft_mean))}</b>, moving at <b>${esc(kt(selC.air_speed_kt))}</b> through the air. Drag the range to see how that changes.`
+    : at ? `At <b>${esc(nmi(cur))}</b>, the simplest object (a straight line at constant speed) would be at about <b>${esc(ft(at.altitude_ft_mean))}</b>, moving at <b>${esc(kt(at.air_speed_kt))}</b> through the air.` : "";
   const tr = [];
   if (at) tr.push(["Angles-only probe", at.air_speed_kt, at.ground_speed_kt, at.altitude_ft_mean, null, at.line_of_sight_loglik]);
   else if (probe.length) tr.push(["Angles-only probe", null, null, null, null, null, "outside the grid"]);
@@ -190,5 +203,7 @@ function render() {
 }
 
 export function update(s, ch) {
-  if (["data", "variant", "range", "wT", "hyp", "overrides"].some((k) => ch.has(k))) render();
+  if (["data", "variant", "range", "wT", "hyp", "overrides", "expert"].some((k) => ch.has(k))) render();
 }
+
+export function show() { render(); }

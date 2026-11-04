@@ -1,8 +1,11 @@
 {
- "/media/flir1.mp4": 874022,
- "/media/godseye.mp4": 359175,
- "/media/gofast.mp4": 2500489,
- "/media/hero.mp4": 1789480,
- "/media/ledger.mp4": 272220,
- "/media/range.mp4": 188326
+ "/media/flir1.mp4": 1001688,
+ "/media/godseye.mp4": 197087,
+ "/media/gofast.mp4": 2877674,
+ "/media/hero.mp4": 2135596,
+ "/media/ledger.mp4": 219072,
+ "/media/range.mp4": 283869,
+ "/lab/data/video/flir1.mp4": 1018938,
+ "/lab/data/video/gimbal.mp4": 2702961,
+ "/lab/data/video/gofast.mp4": 5429276
 }
