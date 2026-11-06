@@ -29,6 +29,10 @@ Last updated: 11/04/2026. The M0 to M6 plan is complete, the project is publishe
 2. Cosmetic app items logged in `checkpoints/CP-05.md` (cursor over chart labels, compare-view axis title at 1440).
 3. Rerun if new data appears: a released radar track for GIMBAL or FLIR1 would be scored as a new criterion through the same path.
 
+## Disk space
+
+`tools/free_space.py` lists (and with `--delete` removes) about 37 GiB of gitignored working files nothing uses now: the PURSUE PNG frames, the raw PURSUE clips outside the Bounded tier, the contact sheets and `artifacts/tmp/`. Its docstring says how to bring each back. The 16 Bounded clips, the Navy frames and videos, and the app's files stay.
+
 ## House rules
 
 - Commit after every result; never `git add -A` or `git add .`; commit messages via `git commit -F`; no em dashes in reader-facing text.
